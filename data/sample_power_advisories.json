@@ -1,0 +1,1433 @@
+[
+  {
+    "id": "90c3fd1f54a6bba45d0875bf82cadc8af4a2f3c0792efcce9ee30c9af3bbffd0",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-06",
+    "start_time": "08:00",
+    "end_time": "18:00",
+    "overnight_span": false,
+    "duration_hours": 10,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Mambaling & South Reclamation Area by facilitating installation of line device hardware (DS/FCO/LBS) and reconstruction of primary lines.",
+    "city": "Cebu City",
+    "barangay": [
+      "Mambaling"
+    ],
+    "streets": [
+      "Candido Padilla St"
+    ],
+    "areas_affected_raw": "Portion of Mambaling & South Reclamation Area, Cebu City, along Candido Padilla St., F. Vestil St., SRP Back Rd., and SRP Bypass Rd., including SM Seaside and SM Arena.",
+    "lat": 10.2911211,
+    "lon": 123.8772574,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "879898df73465b1a699201db1651d148c9f2639f9622cb6484164c77a7661a73",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-06",
+    "start_time": "08:00",
+    "end_time": "18:00",
+    "overnight_span": false,
+    "duration_hours": 10,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Mambaling & South Reclamation Area by facilitating installation of line device hardware (DS/FCO/LBS) and reconstruction of primary lines.",
+    "city": "Cebu City",
+    "barangay": [
+      "South Reclamation Area"
+    ],
+    "streets": [
+      "Candido Padilla St"
+    ],
+    "areas_affected_raw": "Portion of Mambaling & South Reclamation Area, Cebu City, along Candido Padilla St., F. Vestil St., SRP Back Rd., and SRP Bypass Rd., including SM Seaside and SM Arena.",
+    "lat": 10.2751445,
+    "lon": 123.874464,
+    "coordinate_source": "manual_verified",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "d9c26b00645e5a311ca61109d75f2a2c6e3d7afb451375b739326a9e3544f980",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-06",
+    "start_time": "08:00",
+    "end_time": "18:00",
+    "overnight_span": false,
+    "duration_hours": 10,
+    "purpose": "To increase the capacity of the distribution system serving South Reclamation Area by facilitating extension of primary lines (line stringing).",
+    "city": "Cebu City",
+    "barangay": [
+      "South Reclamation Area"
+    ],
+    "streets": [
+      "Talabong Rd"
+    ],
+    "areas_affected_raw": "Portion of South Reclamation Area, Cebu City, along Talabong Rd., including CCTO and DOH.",
+    "lat": 10.2751445,
+    "lon": 123.874464,
+    "coordinate_source": "manual_verified",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "b39e0d0bc755b3bc156edcd827dbbbd947969c796e1e2a51a801d852e81aef6e",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-06",
+    "start_time": "08:00",
+    "end_time": "18:00",
+    "overnight_span": false,
+    "duration_hours": 10,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Tangke by facilitating reconstruction of primary lines.",
+    "city": "Talisay City",
+    "barangay": [
+      "Tangke"
+    ],
+    "streets": [
+      "Cebu South Coastal Road",
+      "including Cebu South Harbor"
+    ],
+    "areas_affected_raw": "Portion of Tangke, Talisay City, along Cebu South Coastal Road, including Cebu South Harbor.",
+    "lat": 10.2509649,
+    "lon": 123.8613078,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "bc332f0bdf169862ea890eaa91d80c5deb80fdf8c5b803dd9e3bada86c64312b",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-07",
+    "start_time": "09:00",
+    "end_time": "12:00",
+    "overnight_span": false,
+    "duration_hours": 3,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Tayud & Yati by facilitating reconstruction of primary lines.",
+    "city": "Liloan",
+    "barangay": [
+      "Tayud"
+    ],
+    "streets": [
+      "Bayong-Yati Road"
+    ],
+    "areas_affected_raw": "Portion of Tayud & Yati, Liloan, along Bayong-Yati Road.",
+    "lat": 10.3782144,
+    "lon": 123.9940355,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "995f498ab0cd54e7bffe2e48eb5c69f97b83c222252fdc3bd9ed6d4e68bd52e5",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-07",
+    "start_time": "09:00",
+    "end_time": "12:00",
+    "overnight_span": false,
+    "duration_hours": 3,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Tayud & Yati by facilitating reconstruction of primary lines.",
+    "city": "Liloan",
+    "barangay": [
+      "Yati"
+    ],
+    "streets": [
+      "Bayong-Yati Road"
+    ],
+    "areas_affected_raw": "Portion of Tayud & Yati, Liloan, along Bayong-Yati Road.",
+    "lat": 10.3897294,
+    "lon": 123.981378,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "6c8d6f193595d8b0cc9c96b63061b16beec640933cad815c453bcba3dfb08478",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-08",
+    "start_time": "09:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 8,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Linao by facilitating secondary line maintenance.",
+    "city": "Minglanilla",
+    "barangay": [
+      "Linao"
+    ],
+    "streets": [
+      "portion of Cebu South Road"
+    ],
+    "areas_affected_raw": "Portion of Linao, Minglanilla, along portion of Cebu South Road.",
+    "lat": 10.2546036,
+    "lon": 123.8098978,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "7bc98e7a8ba63ff52a3a8c9d05363732f52aa90c68de3cdd71daa3c63a6fcf9f",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-08",
+    "start_time": "09:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 8,
+    "purpose": "To increase the capacity of the distribution system serving Brgy. Dumlog & Poblacion by facilitating installation of distribution transformer.",
+    "city": "Talisay City",
+    "barangay": [
+      "Dumlog"
+    ],
+    "streets": [
+      "portion of Jose Rizal Street",
+      "Main Street",
+      "First Street",
+      "Second Street",
+      "Third Street",
+      "Fourth Street",
+      "Fifth Street",
+      "and Sixth Street"
+    ],
+    "areas_affected_raw": "Portion of Dumlog & Poblacion, Talisay City, along portion of Jose Rizal Street, Main Street, First Street, Second Street, Third Street, Fourth Street, Fifth Street, and Sixth Street.",
+    "lat": 10.2450076,
+    "lon": 123.8395501,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "ce2cd9b418784fdcf86cd6e2f72f6f1eace62c8781e7dc3cbedcf04ec0d08dea",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-08",
+    "start_time": "09:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 8,
+    "purpose": "To increase the capacity of the distribution system serving Brgy. Dumlog & Poblacion by facilitating installation of distribution transformer.",
+    "city": "Talisay City",
+    "barangay": [
+      "Poblacion"
+    ],
+    "streets": [
+      "portion of Jose Rizal Street",
+      "Main Street",
+      "First Street",
+      "Second Street",
+      "Third Street",
+      "Fourth Street",
+      "Fifth Street",
+      "and Sixth Street"
+    ],
+    "areas_affected_raw": "Portion of Dumlog & Poblacion, Talisay City, along portion of Jose Rizal Street, Main Street, First Street, Second Street, Third Street, Fourth Street, Fifth Street, and Sixth Street.",
+    "lat": 10.2446342,
+    "lon": 123.8464893,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "12b10507d660021c1c8af9261f547c50ad1964d6285d2cfbbe57018e215a6be0",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-08",
+    "start_time": "08:50",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 8.17,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Alang-Alang by facilitating installation of automatic reclosing device (recloser).",
+    "city": "Mandaue City",
+    "barangay": [
+      "Alang-Alang"
+    ],
+    "streets": [],
+    "areas_affected_raw": "Portion of Alang-Alang, Mandaue City, R. Colina St., R. Colina Extn., and Marciano Quizon Road.",
+    "lat": 10.3316796,
+    "lon": 123.9458976,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "f0cebc4df291248115e1ba76ef0494cbd4709a514b5c1c58a90a78a56ee012fc",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-08",
+    "start_time": "09:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 8,
+    "purpose": "To increase the capacity of the distribution system serving Brgy. Lawaan II & Lawaan III by facilitating upgrading of distribution transformer.",
+    "city": "Talisay City",
+    "barangay": [
+      "Lawaan II"
+    ],
+    "streets": [
+      "Cebu South Road"
+    ],
+    "areas_affected_raw": "Portion of Lawaan II & Lawaan III, Talisay City, along Cebu South Road.",
+    "lat": 10.253557,
+    "lon": 123.832139,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "46e777578de2a8395a2ef271a167572772b39559ee5d52033f476a53a738e671",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-08",
+    "start_time": "09:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 8,
+    "purpose": "To increase the capacity of the distribution system serving Brgy. Lawaan II & Lawaan III by facilitating upgrading of distribution transformer.",
+    "city": "Talisay City",
+    "barangay": [
+      "Lawaan III"
+    ],
+    "streets": [
+      "Cebu South Road"
+    ],
+    "areas_affected_raw": "Portion of Lawaan II & Lawaan III, Talisay City, along Cebu South Road.",
+    "lat": 10.2653932,
+    "lon": 123.8315307,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "6dc739f83c257f41b0c980beb9da37df65f3b1b2b1e227a6d833a2c9682d9a27",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-08",
+    "start_time": "09:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 8,
+    "purpose": "To prevent unnecessary interruptions due to obstruction of pole in the distribution system serving Brgy. Sudlon I by facilitating relocation of primary pole as per customer request",
+    "city": "Cebu City",
+    "barangay": [
+      "Sudlon I"
+    ],
+    "streets": [
+      "Ecotech RoadSunset Drive"
+    ],
+    "areas_affected_raw": "Portion of Sudlon I, Cebu City, along Ecotech Road and Sunset Drive.",
+    "lat": 10.363557,
+    "lon": 123.7862912,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "90b262602d13c08f7bb3c27463aa2a0bb94c1d1a5948a8e03ed41de6d61c9f50",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-08",
+    "start_time": "06:00",
+    "end_time": "08:00",
+    "overnight_span": false,
+    "duration_hours": 2,
+    "purpose": "To prevent unnecessary interruptions due to anticipated system fault/damage Brgy. Ibabao-Estancia by facilitating Hotspot Correction.",
+    "city": "Mandaue City",
+    "barangay": [
+      "Ibabao-Estancia"
+    ],
+    "streets": [
+      "portion of M"
+    ],
+    "areas_affected_raw": "Portion of Ibabao-Estancia, Mandaue City, along portion of M.C. Briones Street.",
+    "lat": 10.3350548,
+    "lon": 123.944774,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "15fd1f718e6b86dc57662c214db9c61d3c1865fefd43fc0807acd7454070c02a",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-09",
+    "start_time": "08:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 9,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Cabangahan, Danglag, Garing, Panoypoy, Polog & Tolotolo by facilitating primary line maintenance.",
+    "city": "Consolacion",
+    "barangay": [
+      "Cabangahan"
+    ],
+    "streets": [],
+    "areas_affected_raw": "Portion of Cabangahan, Danglag, Garing, Panoypoy, Polog & Tolotolo, Consolacion, Cabangahan Road, Polog Road, going to Panoypoy Road and Polog-Garing Road.",
+    "lat": 10.4039618,
+    "lon": 123.924634,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "a18f82f9e8abc0ee03a8b93a5287cb02911a17f8d7fe944b6d83b72b619709a9",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-09",
+    "start_time": "08:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 9,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Cabangahan, Danglag, Garing, Panoypoy, Polog & Tolotolo by facilitating primary line maintenance.",
+    "city": "Consolacion",
+    "barangay": [
+      "Danglag"
+    ],
+    "streets": [],
+    "areas_affected_raw": "Portion of Cabangahan, Danglag, Garing, Panoypoy, Polog & Tolotolo, Consolacion, Cabangahan Road, Polog Road, going to Panoypoy Road and Polog-Garing Road.",
+    "lat": 10.3902251,
+    "lon": 123.9562271,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "5b1f08425e365bd79154697b386049fd705f8901bfd13570195c00e3874c032e",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-09",
+    "start_time": "08:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 9,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Cabangahan, Danglag, Garing, Panoypoy, Polog & Tolotolo by facilitating primary line maintenance.",
+    "city": "Consolacion",
+    "barangay": [
+      "Garing"
+    ],
+    "streets": [],
+    "areas_affected_raw": "Portion of Cabangahan, Danglag, Garing, Panoypoy, Polog & Tolotolo, Consolacion, Cabangahan Road, Polog Road, going to Panoypoy Road and Polog-Garing Road.",
+    "lat": 10.4196776,
+    "lon": 123.9450688,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "81a02d7e057054990fe0b2f4f2afc00ddafa3208455c80635276e2fff896cd6f",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-09",
+    "start_time": "08:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 9,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Cabangahan, Danglag, Garing, Panoypoy, Polog & Tolotolo by facilitating primary line maintenance.",
+    "city": "Consolacion",
+    "barangay": [
+      "Panoypoy"
+    ],
+    "streets": [],
+    "areas_affected_raw": "Portion of Cabangahan, Danglag, Garing, Panoypoy, Polog & Tolotolo, Consolacion, Cabangahan Road, Polog Road, going to Panoypoy Road and Polog-Garing Road.",
+    "lat": 10.4178208,
+    "lon": 123.9287441,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "560ae6e54f0605d1101c205f033e4fd6e874beb7c9e2ac3e4d37a0b8aaf1fa9d",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-09",
+    "start_time": "08:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 9,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Cabangahan, Danglag, Garing, Panoypoy, Polog & Tolotolo by facilitating primary line maintenance.",
+    "city": "Consolacion",
+    "barangay": [
+      "Polog"
+    ],
+    "streets": [],
+    "areas_affected_raw": "Portion of Cabangahan, Danglag, Garing, Panoypoy, Polog & Tolotolo, Consolacion, Cabangahan Road, Polog Road, going to Panoypoy Road and Polog-Garing Road.",
+    "lat": 10.4073172,
+    "lon": 123.9424843,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "2929340808fce041ee03c07c869d783d4363401b65358fae3fd0d0f302662b35",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-09",
+    "start_time": "08:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 9,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Cabangahan, Danglag, Garing, Panoypoy, Polog & Tolotolo by facilitating primary line maintenance.",
+    "city": "Consolacion",
+    "barangay": [
+      "Tolotolo"
+    ],
+    "streets": [],
+    "areas_affected_raw": "Portion of Cabangahan, Danglag, Garing, Panoypoy, Polog & Tolotolo, Consolacion, Cabangahan Road, Polog Road, going to Panoypoy Road and Polog-Garing Road.",
+    "lat": 10.3921561,
+    "lon": 123.9423088,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "464c21cafa3d2a8673bac4738323414c05588ac1d6569c17280c1eade64ded75",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-09",
+    "start_time": "09:00",
+    "end_time": "14:00",
+    "overnight_span": false,
+    "duration_hours": 5,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Talamban by facilitating secondary line maintenance.",
+    "city": "Cebu City",
+    "barangay": [
+      "Talamban"
+    ],
+    "streets": [
+      "portion of Gov"
+    ],
+    "areas_affected_raw": "Portion of Talamban, Cebu City, along portion of Gov. M. Cuenco Avenue, Banilad Road, and Borbajo Street.",
+    "lat": 10.3693575,
+    "lon": 123.9169315,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "133d14b8b61915729bdbf393d981511bd91ebbc3b7b1cd469eb8a7ee3fa0af2d",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-09",
+    "start_time": "07:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 10,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Alang-Alang, Centro, Guizo, Looc, Mantuyong & Ibabao-Estancia by facilitating primary line upgrading.",
+    "city": "Mandaue City",
+    "barangay": [
+      "Alang-Alang"
+    ],
+    "streets": [
+      "portions of A"
+    ],
+    "areas_affected_raw": "Portion of Alang-Alang, Centro, Guizo, Looc, Mantuyong & Ibabao-Estancia, Mandaue City, along portions of A. Del Rosario Street, B. Ceniza Street, B.B. Cabahug Street, Echivaree Street, F.S. Rosal Street, Jose L. Briones Street, Orlacsan Road, Ouano Avenue, P. Gomez Street, S.B. Cabahug Street, Susan Road, & U.M. Seno Street.",
+    "lat": 10.3316796,
+    "lon": 123.9458976,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "87781738ec5d962011de9bde1291d95b6d284fc52560cd2b0f4fc5f0728d1f13",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-09",
+    "start_time": "07:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 10,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Alang-Alang, Centro, Guizo, Looc, Mantuyong & Ibabao-Estancia by facilitating primary line upgrading.",
+    "city": "Mandaue City",
+    "barangay": [
+      "Centro"
+    ],
+    "streets": [
+      "portions of A"
+    ],
+    "areas_affected_raw": "Portion of Alang-Alang, Centro, Guizo, Looc, Mantuyong & Ibabao-Estancia, Mandaue City, along portions of A. Del Rosario Street, B. Ceniza Street, B.B. Cabahug Street, Echivaree Street, F.S. Rosal Street, Jose L. Briones Street, Orlacsan Road, Ouano Avenue, P. Gomez Street, S.B. Cabahug Street, Susan Road, & U.M. Seno Street.",
+    "lat": 10.3257279,
+    "lon": 123.9427006,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "dc2eda1d3ee4e0d4e7e4ac7f579920e5af77c52f6d9391440465e3d033d4f6db",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-09",
+    "start_time": "07:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 10,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Alang-Alang, Centro, Guizo, Looc, Mantuyong & Ibabao-Estancia by facilitating primary line upgrading.",
+    "city": "Mandaue City",
+    "barangay": [
+      "Guizo"
+    ],
+    "streets": [
+      "portions of A"
+    ],
+    "areas_affected_raw": "Portion of Alang-Alang, Centro, Guizo, Looc, Mantuyong & Ibabao-Estancia, Mandaue City, along portions of A. Del Rosario Street, B. Ceniza Street, B.B. Cabahug Street, Echivaree Street, F.S. Rosal Street, Jose L. Briones Street, Orlacsan Road, Ouano Avenue, P. Gomez Street, S.B. Cabahug Street, Susan Road, & U.M. Seno Street.",
+    "lat": 10.3314147,
+    "lon": 123.937993,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "b897043a76fea8b92cbccf12069c87fafcaee34f40de348150c830fef288ae36",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-09",
+    "start_time": "07:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 10,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Alang-Alang, Centro, Guizo, Looc, Mantuyong & Ibabao-Estancia by facilitating primary line upgrading.",
+    "city": "Mandaue City",
+    "barangay": [
+      "Looc"
+    ],
+    "streets": [
+      "portions of A"
+    ],
+    "areas_affected_raw": "Portion of Alang-Alang, Centro, Guizo, Looc, Mantuyong & Ibabao-Estancia, Mandaue City, along portions of A. Del Rosario Street, B. Ceniza Street, B.B. Cabahug Street, Echivaree Street, F.S. Rosal Street, Jose L. Briones Street, Orlacsan Road, Ouano Avenue, P. Gomez Street, S.B. Cabahug Street, Susan Road, & U.M. Seno Street.",
+    "lat": 10.3228534,
+    "lon": 123.9494884,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "a12c302595c15d9fecac2712b224936112b4912b421d18cc3b4cd4222ffccebe",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-09",
+    "start_time": "07:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 10,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Alang-Alang, Centro, Guizo, Looc, Mantuyong & Ibabao-Estancia by facilitating primary line upgrading.",
+    "city": "Mandaue City",
+    "barangay": [
+      "Mantuyong"
+    ],
+    "streets": [
+      "portions of A"
+    ],
+    "areas_affected_raw": "Portion of Alang-Alang, Centro, Guizo, Looc, Mantuyong & Ibabao-Estancia, Mandaue City, along portions of A. Del Rosario Street, B. Ceniza Street, B.B. Cabahug Street, Echivaree Street, F.S. Rosal Street, Jose L. Briones Street, Orlacsan Road, Ouano Avenue, P. Gomez Street, S.B. Cabahug Street, Susan Road, & U.M. Seno Street.",
+    "lat": 10.3293593,
+    "lon": 123.9404936,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "ba22ce3c8d73509489364ea2f13e0d8c0c6ab407035405e96712c5d6786f9fb2",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-09",
+    "start_time": "07:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 10,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Alang-Alang, Centro, Guizo, Looc, Mantuyong & Ibabao-Estancia by facilitating primary line upgrading.",
+    "city": "Mandaue City",
+    "barangay": [
+      "Ibabao-Estancia"
+    ],
+    "streets": [
+      "portions of A"
+    ],
+    "areas_affected_raw": "Portion of Alang-Alang, Centro, Guizo, Looc, Mantuyong & Ibabao-Estancia, Mandaue City, along portions of A. Del Rosario Street, B. Ceniza Street, B.B. Cabahug Street, Echivaree Street, F.S. Rosal Street, Jose L. Briones Street, Orlacsan Road, Ouano Avenue, P. Gomez Street, S.B. Cabahug Street, Susan Road, & U.M. Seno Street.",
+    "lat": 10.3350548,
+    "lon": 123.944774,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "e78d8bce3de38ae07ba856c54d3017051c6203bac1adac19260439a736608f40",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-09",
+    "start_time": "10:00",
+    "end_time": "12:00",
+    "overnight_span": false,
+    "duration_hours": 2,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Guba by facilitating tapping of primary lines.",
+    "city": "Cebu City",
+    "barangay": [
+      "Guba"
+    ],
+    "streets": [
+      "Cayetano StreetSitio Nino"
+    ],
+    "areas_affected_raw": "Portion of Guba, Cebu City, along Cayetano Street and Sitio Nino.",
+    "lat": 10.4282293,
+    "lon": 123.8898991,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "78ec9d0fd81fc4fb2bb827ff652ead3252390ed810914b3ef7970c705c69903d",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-09",
+    "start_time": "13:00",
+    "end_time": "15:00",
+    "overnight_span": false,
+    "duration_hours": 2,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Guba by facilitating tapping of primary lines.",
+    "city": "Cebu City",
+    "barangay": [
+      "Guba"
+    ],
+    "streets": [
+      "Sitio Agnawe"
+    ],
+    "areas_affected_raw": "Portion of Guba, Cebu City, along Sitio Agnawe.",
+    "lat": 10.4282293,
+    "lon": 123.8898991,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "9beb899e642acd7c59a6f9a4c9bba4471ae2e6a39dfd60c734c6190115841b47",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-09",
+    "start_time": "09:00",
+    "end_time": "15:00",
+    "overnight_span": false,
+    "duration_hours": 6,
+    "purpose": "To increase the capacity of the distribution system serving Brgy. Basak by facilitating upgrading of distribution transformer.",
+    "city": "Mandaue City",
+    "barangay": [
+      "Basak"
+    ],
+    "streets": [
+      "portions of Cebu North Rd"
+    ],
+    "areas_affected_raw": "Portion of Basak, Mandaue City, along portions of Cebu North Rd., Labogon Rd.",
+    "lat": 10.3546385,
+    "lon": 123.9500297,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "7e4f27dc8c6b0419b3e7c881e535fbcec9f9f1b1393e06167cd2d0236633ffb1",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-10",
+    "start_time": "08:00",
+    "end_time": "12:00",
+    "overnight_span": false,
+    "duration_hours": 4,
+    "purpose": "To prevent unnecessary interruptions due to obstruction of pole in the distribution system serving Brgy. Punta Princesa by facilitating relocation of primary pole as per customer request.",
+    "city": "Cebu City",
+    "barangay": [
+      "Punta Princesa"
+    ],
+    "streets": [
+      "Hannibal Street"
+    ],
+    "areas_affected_raw": "Portion of Punta Princesa, Cebu City, along Hannibal Street.",
+    "lat": 10.2949316,
+    "lon": 123.8701668,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "6df9ed343308f89793900d477ff1fcfda20d7843ce9a305667695b73faf0de59",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-10",
+    "start_time": "08:50",
+    "end_time": "16:00",
+    "overnight_span": false,
+    "duration_hours": 7.17,
+    "purpose": "To increase the capacity of the distribution system serving South Reclamation Area by facilitating installation of distribution transformer.",
+    "city": "Cebu City",
+    "barangay": [
+      "South Reclamation Area"
+    ],
+    "streets": [
+      "portions of Cebu South Coastal RoadEl Pardo Street"
+    ],
+    "areas_affected_raw": "Portion of South Reclamation Area, Cebu City, along portions of Cebu South Coastal Road and El Pardo Street.",
+    "lat": 10.2751445,
+    "lon": 123.874464,
+    "coordinate_source": "manual_verified",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "684e0cb7c4b277737e99cd1277fa104d933818d2fa6371defbd9e5dcf62bfd03",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-10",
+    "start_time": "09:00",
+    "end_time": "14:00",
+    "overnight_span": false,
+    "duration_hours": 5,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Tayud by facilitating removal of distribution transformer and removal of primary pole.",
+    "city": "Liloan",
+    "barangay": [
+      "Tayud"
+    ],
+    "streets": [
+      "portion of Cebu - North Coastal Road"
+    ],
+    "areas_affected_raw": "Portion of Tayud, Liloan, along portion of Cebu - North Coastal Road.",
+    "lat": 10.3782144,
+    "lon": 123.9940355,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "a2217f4b28f55cd8744b671d38897a6646eda506fa809803b21963a737420d12",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-10",
+    "start_time": "09:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 8,
+    "purpose": "To prevent unnecessary interruptions due to obstruction of pole in the distribution system serving Brgy. Banilad by facilitating relocation of primary pole as per customer request.",
+    "city": "Mandaue City",
+    "barangay": [
+      "Banilad"
+    ],
+    "streets": [
+      "portion of A"
+    ],
+    "areas_affected_raw": "Portion of Banilad, Mandaue City, along portion of A.S. Fortuna Street.",
+    "lat": 10.3413827,
+    "lon": 123.9196727,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "7648d7837a02052afbcf2c1d3262454958d9e1be61282d34028fc76913cb7adc",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-10",
+    "start_time": "09:00",
+    "end_time": "16:00",
+    "overnight_span": false,
+    "duration_hours": 7,
+    "purpose": "To increase the capacity of the distribution system serving Brgy. Dumlog by facilitating installation of distribution transformer.",
+    "city": "Talisay City",
+    "barangay": [
+      "Dumlog"
+    ],
+    "streets": [
+      "Jose Rizal Street"
+    ],
+    "areas_affected_raw": "Portion of Dumlog, Talisay City, along Jose Rizal Street.",
+    "lat": 10.2450076,
+    "lon": 123.8395501,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "f3ae9f0165dee31a7594cbfad6a583ae0c4812713a622a24ff8c3c71668d055d",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-10",
+    "start_time": "09:00",
+    "end_time": "15:00",
+    "overnight_span": false,
+    "duration_hours": 6,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Tipolo by facilitating installation of secondary pole.",
+    "city": "Mandaue City",
+    "barangay": [
+      "Tipolo"
+    ],
+    "streets": [
+      "Lopez Jaena Street"
+    ],
+    "areas_affected_raw": "Portion of Tipolo, Mandaue City, along Lopez Jaena Street.",
+    "lat": 10.3328177,
+    "lon": 123.927546,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "4b19474e17cddf2590cdd88a24c76459b66f264d784896bbcd66e4a4c86d9500",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-10",
+    "start_time": "22:00",
+    "end_time": "06:00",
+    "overnight_span": true,
+    "duration_hours": 8,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Casuntingan, Maguikay & Bakilid by facilitating 69kV pole installation and dressing.",
+    "city": "Mandaue City",
+    "barangay": [
+      "Casuntingan"
+    ],
+    "streets": [
+      "portion of M"
+    ],
+    "areas_affected_raw": "Portion of Casuntingan, Maguikay & Bakilid, Mandaue City, along portion of M.L. Quezon Avenue, including portions of Sitios Nangka & Tambis, and Country Club Village & Holy Family Townhouse.",
+    "lat": 10.3452982,
+    "lon": 123.9305388,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "f291eaef3ee1af16bceee3d56c2e591cf5aae773aee449658b0344b19fe73063",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-10",
+    "start_time": "22:00",
+    "end_time": "06:00",
+    "overnight_span": true,
+    "duration_hours": 8,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Casuntingan, Maguikay & Bakilid by facilitating 69kV pole installation and dressing.",
+    "city": "Mandaue City",
+    "barangay": [
+      "Maguikay"
+    ],
+    "streets": [
+      "portion of M"
+    ],
+    "areas_affected_raw": "Portion of Casuntingan, Maguikay & Bakilid, Mandaue City, along portion of M.L. Quezon Avenue, including portions of Sitios Nangka & Tambis, and Country Club Village & Holy Family Townhouse.",
+    "lat": 10.3397601,
+    "lon": 123.9360042,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "4494f162afd237590ce8296a41ee4f5586ee839165d22222cc8029a257bdeb59",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-10",
+    "start_time": "22:00",
+    "end_time": "06:00",
+    "overnight_span": true,
+    "duration_hours": 8,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Casuntingan, Maguikay & Bakilid by facilitating 69kV pole installation and dressing.",
+    "city": "Mandaue City",
+    "barangay": [
+      "Bakilid"
+    ],
+    "streets": [
+      "portion of M"
+    ],
+    "areas_affected_raw": "Portion of Casuntingan, Maguikay & Bakilid, Mandaue City, along portion of M.L. Quezon Avenue, including portions of Sitios Nangka & Tambis, and Country Club Village & Holy Family Townhouse.",
+    "lat": 10.3366996,
+    "lon": 123.934233,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "d8482119d2ee19c20fda8e6df2d5ea6ddce9805f175c90d586b0e2f7822f5074",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-11",
+    "start_time": "09:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 8,
+    "purpose": "To prevent unnecessary interruptions due to obstruction of pole in the distribution system serving Brgy. Tolotolo by facilitating relocation of primary pole as per customer request.",
+    "city": "Consolacion",
+    "barangay": [
+      "Tolotolo"
+    ],
+    "streets": [
+      "portions of Atlanta Rd"
+    ],
+    "areas_affected_raw": "Portion of Tolotolo, Consolacion, along portions of Atlanta Rd.",
+    "lat": 10.3921561,
+    "lon": 123.9423088,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "085eaaa349d069c454c144d3bcb9738cfcb18e1a25254877a507006f50a5994f",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-11",
+    "start_time": "08:00",
+    "end_time": "16:00",
+    "overnight_span": false,
+    "duration_hours": 8,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Binaliw by facilitating primary line maintenance.",
+    "city": "Cebu City",
+    "barangay": [
+      "Binaliw"
+    ],
+    "streets": [
+      "portions of Binaliw Rd"
+    ],
+    "areas_affected_raw": "Portion of Binaliw, Cebu City, along portions of Binaliw Rd., MIramonte-Riverdale Rd.",
+    "lat": 10.4227922,
+    "lon": 123.916084,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "b0024531cf70c1afa06c6285dac3e43f64935ee6057a4d018e94b42f1cdd5fec",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-11",
+    "start_time": "09:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 8,
+    "purpose": "To increase the capacity of the distribution system serving Brgy. Centro by facilitating upgrading of distribution transformer.",
+    "city": "Mandaue City",
+    "barangay": [
+      "Centro"
+    ],
+    "streets": [
+      "portions of P"
+    ],
+    "areas_affected_raw": "Portion of Centro, Mandaue City, along portions of P.J. Burgos St., P. Gomez St.",
+    "lat": 10.3257279,
+    "lon": 123.9427006,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "1e3fbde446fb67eb2542aa9fc22da3e106ee5e2973db8f833a1416da12d856b2",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-11",
+    "start_time": "09:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 8,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Lorega-San Miguel by facilitating rerouting of secondary lines.",
+    "city": "Cebu City",
+    "barangay": [
+      "Lorega-San Miguel"
+    ],
+    "streets": [
+      "portion of San Miguel Street"
+    ],
+    "areas_affected_raw": "Portion of Lorega-San Miguel, Cebu City, along portion of San Miguel Street.",
+    "lat": 10.306554,
+    "lon": 123.9042216,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "5db38c402422d109307d930d93d012d68f512ba8cbdba714c0ec7c8affa6fc0e",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-11",
+    "start_time": "09:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 8,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Biasong by facilitating rerouting of secondary lines.",
+    "city": "Talisay City",
+    "barangay": [
+      "Biasong"
+    ],
+    "streets": [
+      "portion of Burgos Street"
+    ],
+    "areas_affected_raw": "Portion of Biasong, Talisay City, along portion of Burgos Street.",
+    "lat": 10.2374589,
+    "lon": 123.8287524,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "780fa2ddd569cae3ea4105bdb8bc058de8a1219813fbca6fa23478e96a37542f",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-11",
+    "start_time": "09:30",
+    "end_time": "14:30",
+    "overnight_span": false,
+    "duration_hours": 5,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Dumlog by facilitating rerouting of secondary lines.",
+    "city": "Talisay City",
+    "barangay": [
+      "Dumlog"
+    ],
+    "streets": [
+      "portions of Deca Homes"
+    ],
+    "areas_affected_raw": "Portion of Dumlog, Talisay City, along portions of Deca Homes.",
+    "lat": 10.2450076,
+    "lon": 123.8395501,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "9566dab6e0c0130fc06cec975ec48bb9cbcfa369ad09deae9d2707dee00c4863",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-12",
+    "start_time": "09:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 8,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Ward IV & Tunghaan by facilitating replacement of primary pole.",
+    "city": "Minglanilla",
+    "barangay": [
+      "Ward IV"
+    ],
+    "streets": [
+      "portions of Tres de Mayo St"
+    ],
+    "areas_affected_raw": "Portion of Ward IV & Tunghaan, Minglanilla, along portions of Tres de Mayo St.",
+    "lat": 10.2465562,
+    "lon": 123.7941156,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "29c8f62782c03d1949accf535b18feda010160bb52284e2162d97946f50b7f35",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-12",
+    "start_time": "09:00",
+    "end_time": "17:00",
+    "overnight_span": false,
+    "duration_hours": 8,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Ward IV & Tunghaan by facilitating replacement of primary pole.",
+    "city": "Minglanilla",
+    "barangay": [
+      "Tunghaan"
+    ],
+    "streets": [
+      "portions of Tres de Mayo St"
+    ],
+    "areas_affected_raw": "Portion of Ward IV & Tunghaan, Minglanilla, along portions of Tres de Mayo St.",
+    "lat": 10.2454911,
+    "lon": 123.7808689,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "4062dc6849670bd02a4c044cdf3d3aaaa08e495db554eb1ddf1d8fb88cf838d9",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-12",
+    "start_time": "18:00",
+    "end_time": "20:00",
+    "overnight_span": false,
+    "duration_hours": 2,
+    "purpose": "To ensure the safety of personnel working on the line.",
+    "city": "Mandaue City",
+    "barangay": [
+      "Banilad"
+    ],
+    "streets": [
+      "portions of H"
+    ],
+    "areas_affected_raw": "Portion of Banilad, Mandaue City, along portions of H. Cortes St.",
+    "lat": 10.3413827,
+    "lon": 123.9196727,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "3698d84b2ea3787510045be377b20eb831e7089f4aa5c44ad976261f6ed3728c",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-12",
+    "start_time": "20:00",
+    "end_time": "06:00",
+    "overnight_span": true,
+    "duration_hours": 10,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Subangdaku by facilitating 69kV pole installation and dressing.",
+    "city": "Mandaue City",
+    "barangay": [
+      "Subangdaku"
+    ],
+    "streets": [
+      "portions of H"
+    ],
+    "areas_affected_raw": "Portion of Subangdaku, Mandaue City, along portions of H. Cortes St.",
+    "lat": 10.323182,
+    "lon": 123.9245216,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "bb2c27b0964137783a48b7fad31002de75eb184a2b5eea259b7a7039b63bf3de",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-12",
+    "start_time": "20:00",
+    "end_time": "06:00",
+    "overnight_span": true,
+    "duration_hours": 10,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Mabolo & Subangdaku by facilitating reconstruction of primary pole.",
+    "city": "Cebu City",
+    "barangay": [
+      "Mabolo"
+    ],
+    "streets": [
+      "portions of Albaño Street",
+      "E"
+    ],
+    "areas_affected_raw": "Portion of Cebu City & Mandaue City (Mabolo & Subangdaku), along portions of Albaño Street, E.O Perez Street, Hernan Cortes Street, Lopez Jaina Street, M. Logarta Avenue, S. Cabahug Ext., Santa Rita Street, & Sta.Lucia Street.",
+    "lat": 10.3142998,
+    "lon": 123.9147025,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  },
+  {
+    "id": "403b17d924f52cc91fb3413d84b83446f2b5c77c775d725772d68a84dc7e571c",
+    "source_url": "https://www.visayanelectric.com/post/service-interruption-september-6-12-2026",
+    "fetched_at": "2026-09-06T00:00:00.000Z",
+    "advisory_week_start": "2026-09-06",
+    "date": "2026-09-12",
+    "start_time": "20:00",
+    "end_time": "06:00",
+    "overnight_span": true,
+    "duration_hours": 10,
+    "purpose": "To improve the reliability of the distribution system serving Brgy. Mabolo & Subangdaku by facilitating reconstruction of primary pole.",
+    "city": "Cebu City",
+    "barangay": [
+      "Subangdaku"
+    ],
+    "streets": [
+      "portions of Albaño Street",
+      "E"
+    ],
+    "areas_affected_raw": "Portion of Cebu City & Mandaue City (Mabolo & Subangdaku), along portions of Albaño Street, E.O Perez Street, Hernan Cortes Street, Lopez Jaina Street, M. Logarta Avenue, S. Cabahug Ext., Santa Rita Street, & Sta.Lucia Street.",
+    "lat": 10.2900261,
+    "lon": 123.893812,
+    "coordinate_source": "osm_point",
+    "geocode_query": null,
+    "geocode_provider": null,
+    "business_confidence": "scheduled",
+    "parse_confidence": "high",
+    "parse_notes": null
+  }
+]

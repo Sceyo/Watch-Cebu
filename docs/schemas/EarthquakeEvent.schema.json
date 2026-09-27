@@ -1,0 +1,50 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://watchcebu.local/schemas/EarthquakeEvent.schema.json",
+  "title": "EarthquakeEvent",
+  "description": "One seismic event from a PHIVOLCS Earthquake Bulletin, filtered to within 300 km of Cebu City.",
+  "type": "object",
+  "required": [
+    "id", "source_url", "fetched_at", "datetime_pst", "datetime_utc",
+    "lat", "lon", "coordinate_source", "location_description",
+    "depth_km", "magnitude", "origin_type", "expecting_damage",
+    "expecting_aftershocks", "distance_from_cebu_km", "within_watch_radius",
+    "parse_confidence"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "SHA-256 of source_url. Stable across re-fetches.",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "source_url": {
+      "type": "string", "format": "uri",
+      "pattern": "^https://earthquake\\.phivolcs\\.dost\\.gov\\.ph/"
+    },
+    "fetched_at": { "type": "string", "format": "date-time", "description": "UTC" },
+    "datetime_pst": { "type": "string", "format": "date-time", "description": "PST (UTC+8), e.g. 2026-09-05T17:46:53+08:00" },
+    "datetime_utc": { "type": "string", "format": "date-time", "description": "UTC equivalent" },
+    "lat": { "type": "number", "minimum": 0, "maximum": 25, "description": "From bulletin verbatim. Never null; absence = invalid record." },
+    "lon": { "type": "number", "minimum": 115, "maximum": 135, "description": "From bulletin verbatim. Never null; absence = invalid record." },
+    "coordinate_source": { "type": "string", "const": "bulletin", "description": "Always 'bulletin'. Hardcoded." },
+    "location_description": { "type": "string", "minLength": 1 },
+    "nearest_town": { "type": ["string", "null"] },
+    "nearest_province": { "type": ["string", "null"] },
+    "depth_km": { "type": "integer", "minimum": 0 },
+    "magnitude": { "type": "number", "minimum": 0 },
+    "magnitude_type": { "type": ["string", "null"], "description": "e.g. Ms, Mw, ML" },
+    "origin_type": { "type": "string", "examples": ["TECTONIC", "VOLCANIC"] },
+    "reported_intensities": { "type": ["string", "null"] },
+    "expecting_damage": { "type": "boolean" },
+    "expecting_aftershocks": { "type": "boolean" },
+    "issued_on_pst": { "type": ["string", "null"], "format": "date-time" },
+    "distance_from_cebu_km": {
+      "type": "number", "minimum": 0,
+      "description": "Great-circle km from Cebu City (10.3157N, 123.8854E). Computed, not from bulletin."
+    },
+    "within_watch_radius": { "type": "boolean", "description": "true when distance_from_cebu_km <= 300" },
+    "parse_confidence": { "type": "string", "enum": ["high", "low"] },
+    "parse_notes": { "type": ["string", "null"] }
+  }
+}

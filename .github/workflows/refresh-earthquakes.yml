@@ -1,0 +1,103 @@
+﻿# Watch Cebu — Earthquake Data Refresh
+#
+# Runs every 10 minutes to fetch the latest PHIVOLCS earthquake bulletins
+# within 300km of Cebu City and write them to data/live_earthquake_events.json.
+#
+# PHIVOLCS bulletin information is time-sensitive — the primary value is how
+# quickly a user learns about a seismic event. 10 minutes is the GitHub Actions
+# practical minimum (5-min cron floor + platform scheduling lag). Treat this
+# as best-effort, not a real-time guarantee.
+#
+# The PHIVOLCS bulletin fetcher uses a batch-of-5 / 200ms concurrency limit
+# (implemented in Stage 4, closing the Stage 2 carryover) so even an active
+# seismic swarm with many new bulletins does not spike concurrent connections
+# to PHIVOLCS's legacy infrastructure.
+#
+# NO SECRETS REQUIRED:
+#   PHIVOLCS's earthquake index is public and unauthenticated. This is
+#   intentional and must not be "fixed" by adding credentials. If PHIVOLCS
+#   ever requires auth, update this comment and use GitHub Secrets.
+#
+# File ownership (ADR 2 — race condition prevention):
+#   This workflow owns ONLY:
+#     data/live_earthquake_events.json
+#     data/status_earthquakes.json
+#   It never touches data/live_power_advisories.json or data/status_power.json.
+#   The two workflows can run concurrently without any git or application-level conflict.
+#
+# Heartbeat (ADR 1 §4.1):
+#   The "Commit snapshot" step runs with if: always() so it fires even when
+#   the fetch step exits non-zero (e.g. staleness breach). status_earthquakes.json
+#   is committed on every run, guaranteeing repository activity and preventing
+#   GitHub's 60-day auto-disable from compounding an upstream outage.
+
+name: Refresh Earthquake Data
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'  # every 10 minutes (GitHub Actions practical minimum)
+  workflow_dispatch:          # allow manual trigger for testing
+
+permissions:
+  contents: write             # required for bot commit/push via default GITHUB_TOKEN
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    env:
+      WATCH_CEBU_FEED: earthquakes  # script reads this and processes ONLY the earthquake feed
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch earthquake data snapshot
+        id: fetch
+        # continue-on-error: true means a non-zero exit (staleness breach, network error)
+        # does NOT abort subsequent steps — heartbeat commit and notification still run.
+        continue-on-error: true
+        run: npx tsx scripts/run_scheduled_fetch.ts
+
+      - name: Commit snapshot
+        # if: always() — must run even when fetch step failed or set exitCode=1.
+        if: always()
+        run: |
+          git config user.name  "WatchCebu Bot"
+          git config user.email "actions@github.com"
+          git pull --rebase origin ${{ github.ref_name }} || true
+          git add data/live_earthquake_events.json data/status_earthquakes.json
+          git diff --staged --quiet || git commit -m "chore: earthquake snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push
+
+      - name: Notify on staleness breach
+        # Only fires when the fetch step failed — not on routine successful runs.
+        if: steps.fetch.outcome == 'failure' && env.DISCORD_WEBHOOK_URL != ''
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          RUN_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          curl -s -X POST "$DISCORD_WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"embeds\": [{
+                \"title\": \"⚠️ Watch Cebu — Earthquake Feed Stale\",
+                \"description\": \"The PHIVOLCS earthquake snapshot has not updated within the 24-hour threshold. Users may be missing recent seismic events.\",
+                \"color\": 16744272,
+                \"fields\": [
+                  { \"name\": \"Feed\", \"value\": \"earthquakes\", \"inline\": true },
+                  { \"name\": \"Threshold\", \"value\": \"24 hours\", \"inline\": true },
+                  { \"name\": \"Workflow Run\", \"value\": \"[View logs](${RUN_URL})\" }
+                ]
+              }]
+            }"

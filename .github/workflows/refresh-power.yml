@@ -1,0 +1,106 @@
+﻿# Watch Cebu — Power Data Refresh
+#
+# Runs every 4 hours to fetch the latest VECO service interruption advisory
+# and write it to data/live_power_advisories.json.
+#
+# VECO posts are published weekly with hour-level scheduling precision.
+# Checking every 4 hours vs every 30 minutes changes nothing a user would
+# notice; it is also a small kindness to VECO's Wix-hosted infrastructure.
+#
+# NO SECRETS REQUIRED:
+#   VECO's advisory page is public and unauthenticated. This is intentional
+#   and must not be "fixed" by adding an API key. If VECO ever requires auth,
+#   update this comment and store credentials in GitHub Secrets explicitly.
+#
+# File ownership (ADR 2 — race condition prevention):
+#   This workflow owns ONLY:
+#     data/live_power_advisories.json
+#     data/status_power.json
+#   It never touches data/live_earthquake_events.json or data/status_earthquakes.json.
+#   The two workflows can run concurrently without any git or application-level conflict.
+#
+# Heartbeat (ADR 1 §4.1):
+#   The "Commit snapshot" step runs with if: always() so it fires even when
+#   the fetch step exits non-zero (e.g. staleness breach). status_power.json
+#   is committed on every run, guaranteeing repository activity and preventing
+#   GitHub's 60-day auto-disable from compounding an upstream outage.
+
+name: Refresh Power Data
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'   # every 4 hours
+  workflow_dispatch:          # allow manual trigger for testing
+
+permissions:
+  contents: write             # required for bot commit/push via default GITHUB_TOKEN
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    env:
+      WATCH_CEBU_FEED: power  # script reads this and processes ONLY the power feed
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Fetch full history so git pull --rebase has context
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch power data snapshot
+        id: fetch
+        # continue-on-error: true means a non-zero exit (e.g. staleness breach) does
+        # NOT abort subsequent steps — the heartbeat commit and notification both still run.
+        # steps.fetch.outcome is set to 'failure' so the notify step can check it explicitly.
+        continue-on-error: true
+        run: npx tsx scripts/run_scheduled_fetch.ts
+
+      - name: Commit snapshot
+        # if: always() — this MUST run even when the fetch step failed or set exitCode=1.
+        # Without this, the heartbeat commit is skipped on exactly the run where it matters
+        # most (a staleness breach), compounding the 60-day-disable risk.
+        if: always()
+        run: |
+          git config user.name  "WatchCebu Bot"
+          git config user.email "actions@github.com"
+          # Pull with rebase as defense-in-depth; the per-feed file split is the primary
+          # race prevention mechanism — this handles any other concurrent activity.
+          git pull --rebase origin ${{ github.ref_name }} || true
+          git add data/live_power_advisories.json data/status_power.json
+          # Only commit if there is something staged; --quiet exits 0 when nothing to commit
+          git diff --staged --quiet || git commit -m "chore: power snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push
+
+      - name: Notify on staleness breach
+        # Only fire when the fetch step actually failed — not on routine successful runs.
+        # Uses the DISCORD_WEBHOOK_URL repo secret (Settings → Secrets → Actions).
+        # If DISCORD_WEBHOOK_URL is not set, this step is silently skipped.
+        if: steps.fetch.outcome == 'failure' && env.DISCORD_WEBHOOK_URL != ''
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          RUN_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          curl -s -X POST "$DISCORD_WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"embeds\": [{
+                \"title\": \"⚠️ Watch Cebu — Power Feed Stale\",
+                \"description\": \"The VECO power advisory snapshot has not updated within the 48-hour threshold. Users may be seeing outdated data.\",
+                \"color\": 16744272,
+                \"fields\": [
+                  { \"name\": \"Feed\", \"value\": \"power\", \"inline\": true },
+                  { \"name\": \"Threshold\", \"value\": \"48 hours\", \"inline\": true },
+                  { \"name\": \"Workflow Run\", \"value\": \"[View logs](${RUN_URL})\" }
+                ]
+              }]
+            }"

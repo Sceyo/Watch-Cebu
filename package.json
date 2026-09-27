@@ -1,0 +1,40 @@
+{
+  "name": "watch-cebu",
+  "version": "0.1.0",
+  "description": "Civic-awareness PWA for Metro Cebu — power interruptions and earthquakes",
+  "type": "module",
+  "main": "dist/index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "dev": "vite",
+    "dev:snapshot": "cross-env WATCH_CEBU_USE_SNAPSHOT=true vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [
+    "cebu",
+    "pwa",
+    "civic"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/leaflet": "^1.9.22",
+    "@types/node": "^22.0.0",
+    "cheerio": "^1.0.0",
+    "cross-env": "^10.1.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0",
+    "vite": "^7.3.6",
+    "vitest": "^3.0.0"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4"
+  }
+}

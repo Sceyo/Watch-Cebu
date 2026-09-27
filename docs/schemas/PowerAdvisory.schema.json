@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://watchcebu.local/schemas/PowerAdvisory.schema.json",
+  "title": "PowerAdvisory",
+  "description": "One scheduled power interruption event published by VECO in their weekly Service Advisory post.",
+  "type": "object",
+  "required": [
+    "id", "source_url", "fetched_at", "advisory_week_start", "date",
+    "start_time", "end_time", "purpose", "city", "barangay", "streets",
+    "areas_affected_raw", "business_confidence", "parse_confidence"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "SHA-256 of (source_url + date + start_time + areas_affected_raw). Never auto-increment.",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "source_url": { "type": "string", "format": "uri" },
+    "fetched_at": { "type": "string", "format": "date-time", "description": "UTC" },
+    "advisory_week_start": { "type": "string", "format": "date", "description": "ISO date of the Sunday opening the advisory week." },
+    "date": { "type": "string", "format": "date" },
+    "start_time": { "type": "string", "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$", "description": "HH:MM 24-hour PST" },
+    "end_time": { "type": "string", "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$", "description": "HH:MM 24-hour PST" },
+    "overnight_span": { "type": "boolean", "default": false, "description": "True when window crosses midnight." },
+    "duration_hours": { "type": ["number", "null"] },
+    "purpose": { "type": "string", "minLength": 1 },
+    "city": {
+      "type": "string",
+      "enum": ["Cebu City", "Mandaue City", "Talisay City", "Naga City", "Consolacion", "Liloan", "Minglanilla", "San Fernando"]
+    },
+    "barangay": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "streets": { "type": "array", "items": { "type": "string" } },
+    "areas_affected_raw": { "type": "string", "minLength": 1 },
+    "lat": { "type": ["number", "null"], "minimum": -90, "maximum": 90 },
+    "lon": { "type": ["number", "null"], "minimum": -180, "maximum": 180 },
+    "coordinate_source": { "type": ["string", "null"], "enum": ["osm_point", "boundary_centroid", "manual_verified", "geocoded", null] },
+    "geocode_query": { "type": ["string", "null"] },
+    "geocode_provider": { "type": ["string", "null"], "description": "e.g. nominatim, google" },
+    "business_confidence": { "type": "string", "enum": ["scheduled"] },
+    "parse_confidence": { "type": "string", "enum": ["high", "low"] },
+    "parse_notes": { "type": ["string", "null"] }
+  }
+}

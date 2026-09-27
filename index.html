@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Watch Cebu — Civic Awareness Map</title>
+    <meta name="description" content="Metro Cebu civic awareness map for scheduled power interruptions (VECO) and earthquake activity (PHIVOLCS)." />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="app">
+      <!-- Fallback Data Warning Banner (rendered dynamically when fixture_fallback is active) -->
+      <div id="data-source-banner-container"></div>
+
+      <!-- App Header & Controls -->
+      <header id="app-header" class="app-header"></header>
+
+      <!-- Day Tabs Filter Bar (for VECO power advisories) -->
+      <nav id="day-tabs-bar" class="day-tabs-bar"></nav>
+
+      <!-- Main Map Container -->
+      <main id="map-container" class="map-container">
+        <div id="map"></div>
+      </main>
+
+      <!-- Scrim / Backdrop Overlay for Drawers -->
+      <div id="drawer-backdrop" class="drawer-backdrop" aria-hidden="true"></div>
+
+      <!-- Persistent Info & Legend Drawer -->
+      <aside id="legend-drawer" class="legend-drawer" role="dialog" aria-modal="true" aria-label="Map Guide & Legend"></aside>
+
+      <!-- About & Attribution Drawer -->
+      <aside id="about-drawer" class="legend-drawer" role="dialog" aria-modal="true" aria-label="About Watch Cebu"></aside>
+
+      <!-- Air Quality & Haze Advisory Drawer -->
+      <aside id="air-drawer" class="legend-drawer" role="dialog" aria-modal="true" aria-label="Air Quality and Haze Advisory"></aside>
+
+      <!-- Weather Forecast Drawer (Top Dropdown) -->
+      <aside id="forecast-drawer" class="legend-drawer forecast-drawer" role="dialog" aria-modal="true" aria-label="Today's Weather Forecast for Metro Cebu"></aside>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

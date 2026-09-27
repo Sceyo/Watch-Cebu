@@ -1,0 +1,8497 @@
+{
+  "type": "FeatureCollection",
+  "name": "metro-cebu-barangays",
+  "metadata": {
+    "source_url": "https://overpass-api.de/api/interpreter",
+    "retrieved_at": "2026-09-06T16:05:00Z",
+    "license": "ODbL 1.0 (OpenStreetMap contributors)",
+    "total_features": 349,
+    "sources_breakdown": {
+      "osm_point": 348,
+      "manual_verified": 1,
+      "boundary_centroid": 0
+    },
+    "description": "Barangay points and centroids for Metro Cebu (8 LGUs). 348 features are genuine OpenStreetMap nodes (osm_point); 1 feature is a manually verified special economic zone (manual_verified)."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Adlaon",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 947697459,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8679501,
+          10.4369103
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8679501,
+          10.4369103
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Apas",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217003",
+        "admin_level": 10,
+        "osm_id": 6241282738,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9055677,
+          10.337504
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9055677,
+          10.337504
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Babag Ⅱ",
+        "city": "Cebu City",
+        "alt_names": [
+          "Babag Dos"
+        ],
+        "psgc_code": "0730600004",
+        "admin_level": 10,
+        "osm_id": 1288652146,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8500003,
+          10.3739747
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8500003,
+          10.3739747
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Banawa",
+        "city": "Cebu City",
+        "alt_names": [
+          "Sitio Banawa"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 5857023312,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8780487,
+          10.3180226
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8780487,
+          10.3180226
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Banilad",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217007",
+        "admin_level": 10,
+        "osm_id": 797072839,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.911112,
+          10.3465194
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.911112,
+          10.3465194
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Basak Pardo",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217005",
+        "admin_level": 10,
+        "osm_id": 6241376170,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8645696,
+          10.2864551
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8645696,
+          10.2864551
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Basak San Nicolas",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0730600008",
+        "admin_level": 10,
+        "osm_id": 1680294282,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8703173,
+          10.2864738
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8703173,
+          10.2864738
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Binaliw",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0730600010",
+        "admin_level": 10,
+        "osm_id": 10242784036,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.916084,
+          10.4227922
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.916084,
+          10.4227922
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Binaliw Barangay Disaster Risk Reduction and Management Committee",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13055615672,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9158879,
+          10.422765
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9158879,
+          10.422765
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Buhisan",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217014",
+        "admin_level": 10,
+        "osm_id": 797072996,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8534727,
+          10.3087947
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8534727,
+          10.3087947
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Bulacao",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0730600015",
+        "admin_level": 10,
+        "osm_id": 5895466305,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8513835,
+          10.2754986
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8513835,
+          10.2754986
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Bulacao Health Center",
+        "city": "Cebu City",
+        "alt_names": [
+          "Bulacao Health Center"
+        ],
+        "psgc_code": "DOH000000000026609",
+        "admin_level": 10,
+        "osm_id": 4340936047,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8513012,
+          10.2754071
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8513012,
+          10.2754071
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Buot",
+        "city": "Cebu City",
+        "alt_names": [
+          "Buot-Taup Pardo"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 1393190574,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8081377,
+          10.34797
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8081377,
+          10.34797
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Calamba",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217018",
+        "admin_level": 10,
+        "osm_id": 9518382152,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8845396,
+          10.3016086
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8845396,
+          10.3016086
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Camputhaw",
+        "city": "Cebu City",
+        "alt_names": [
+          "Kamputhaw"
+        ],
+        "psgc_code": "072217036",
+        "admin_level": 10,
+        "osm_id": 4676001742,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8971524,
+          10.3182394
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8971524,
+          10.3182394
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Capitol Site",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0730600020",
+        "admin_level": 10,
+        "osm_id": 4674145780,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8902409,
+          10.3246868
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8902409,
+          10.3246868
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Carreta",
+        "city": "Cebu City",
+        "alt_names": [
+          "Village Gonzalo"
+        ],
+        "psgc_code": "072217021",
+        "admin_level": 10,
+        "osm_id": 5813153595,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9149237,
+          10.3082007
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9149237,
+          10.3082007
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Carreta Barangay Disaster Risk Reduction and Management Committee",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13044386740,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9086867,
+          10.307996
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9086867,
+          10.307996
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Cogon Pardo",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0730600024",
+        "admin_level": 10,
+        "osm_id": 5779664707,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8621163,
+          10.2773977
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8621163,
+          10.2773977
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Cogon Ramos",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217023",
+        "admin_level": 10,
+        "osm_id": 5812892049,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8983895,
+          10.3049369
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8983895,
+          10.3049369
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Day-as",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0730600025",
+        "admin_level": 10,
+        "osm_id": 536531177,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9022529,
+          10.3014515
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9022529,
+          10.3014515
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Duljo Fatima",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0730600027",
+        "admin_level": 10,
+        "osm_id": 5944435316,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8849138,
+          10.2917103
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8849138,
+          10.2917103
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Ermita",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217028",
+        "admin_level": 10,
+        "osm_id": 5775251413,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8974115,
+          10.2916595
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8974115,
+          10.2916595
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Guadalupe",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0730600029",
+        "admin_level": 10,
+        "osm_id": 797072847,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8839389,
+          10.3228797
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8839389,
+          10.3228797
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Guba",
+        "city": "Cebu City",
+        "alt_names": [
+          "Barangay Guba"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 947697513,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8898991,
+          10.4282293
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8898991,
+          10.4282293
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Hipodromo",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217031",
+        "admin_level": 10,
+        "osm_id": 5825224017,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9070131,
+          10.3140702
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9070131,
+          10.3140702
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Hipodromo Local Government Unit",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13944336121,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9068646,
+          10.314059
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9068646,
+          10.314059
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Holy Family Village",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 534507099,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9132874,
+          10.3442009
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9132874,
+          10.3442009
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Holy Name",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 11198869090,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9178687,
+          10.3203474
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9178687,
+          10.3203474
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Inayawan",
+        "city": "Cebu City",
+        "alt_names": [
+          "Inayawan Pardo"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 4666476540,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8563842,
+          10.2702421
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8563842,
+          10.2702421
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Kalubihan",
+        "city": "Cebu City",
+        "alt_names": [
+          "Cebu City Downtown"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 5773507439,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8990986,
+          10.2977029
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8990986,
+          10.2977029
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Kalunasan",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217034",
+        "admin_level": 10,
+        "osm_id": 797072851,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.879596,
+          10.3389029
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.879596,
+          10.3389029
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Kamagayan",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0730600035",
+        "admin_level": 10,
+        "osm_id": 5773524255,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8995491,
+          10.2997569
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8995491,
+          10.2997569
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Kasambagan",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217037",
+        "admin_level": 10,
+        "osm_id": 5825327374,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9113295,
+          10.3250945
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9113295,
+          10.3250945
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Kinasang-an Pardo",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0730600038",
+        "admin_level": 10,
+        "osm_id": 6241376167,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8590937,
+          10.2822739
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8590937,
+          10.2822739
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Labangon",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217040",
+        "admin_level": 10,
+        "osm_id": 1140343092,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8790934,
+          10.2993851
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8790934,
+          10.2993851
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Lahug",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217041",
+        "admin_level": 10,
+        "osm_id": 797072834,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8981322,
+          10.3309342
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8981322,
+          10.3309342
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Lorega",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217042",
+        "admin_level": 10,
+        "osm_id": 9518382151,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9042216,
+          10.306554
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9042216,
+          10.306554
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Lower Acacia",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12608639097,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8590814,
+          10.2805911
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8590814,
+          10.2805911
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Luz",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217044",
+        "admin_level": 10,
+        "osm_id": 5825224011,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9077997,
+          10.3211047
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9077997,
+          10.3211047
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Mabolo",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217046",
+        "admin_level": 10,
+        "osm_id": 536531084,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9147025,
+          10.3142998
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9147025,
+          10.3142998
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Magpalacir",
+        "city": "Cebu City",
+        "alt_names": [
+          "Sitio Magpalacir"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13360149641,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9063384,
+          10.3144837
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9063384,
+          10.3144837
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Malubog",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 10242784035,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8692672,
+          10.3803941
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8692672,
+          10.3803941
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Mambaling",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217049",
+        "admin_level": 10,
+        "osm_id": 5779701556,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8772574,
+          10.2911211
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8772574,
+          10.2911211
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Mangabon",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 11,
+        "osm_id": 7967847256,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8537157,
+          10.4753605
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8537157,
+          10.4753605
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Maria Luisa Estate",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 402297004,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9047385,
+          10.3497984
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9047385,
+          10.3497984
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Nalupi",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 9845593709,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8602146,
+          10.2793982
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8602146,
+          10.2793982
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Nivel Hills",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 5870278188,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8954213,
+          10.3423411
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8954213,
+          10.3423411
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "OPRRA",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 5849125066,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8874015,
+          10.3292005
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8874015,
+          10.3292005
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pahina Central",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0730600050",
+        "admin_level": 10,
+        "osm_id": 9518382150,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8923973,
+          10.2965682
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8923973,
+          10.2965682
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pahina San Nicolas",
+        "city": "Cebu City",
+        "alt_names": [
+          "Pahina"
+        ],
+        "psgc_code": "072217050",
+        "admin_level": 10,
+        "osm_id": 5773474885,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8928115,
+          10.2940135
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8928115,
+          10.2940135
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pailob",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 11,
+        "osm_id": 12293294009,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8892643,
+          10.3026206
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8892643,
+          10.3026206
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pamutan",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 10242784032,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8354802,
+          10.3334453
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8354802,
+          10.3334453
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Panagdait",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 10242784037,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9176635,
+          10.3256482
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9176635,
+          10.3256482
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pardo Health Center",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "DOH000000000026616",
+        "admin_level": 10,
+        "osm_id": 4340940589,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8556026,
+          10.2792119
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8556026,
+          10.2792119
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pari-an",
+        "city": "Cebu City",
+        "alt_names": [
+          "Parian"
+        ],
+        "psgc_code": "0730600054",
+        "admin_level": 10,
+        "osm_id": 5812707824,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9026574,
+          10.2988566
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9026574,
+          10.2988566
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pasil",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0730600056",
+        "admin_level": 10,
+        "osm_id": 5773395611,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8946731,
+          10.2901866
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8946731,
+          10.2901866
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Poblacion Pardo",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0730600053",
+        "admin_level": 10,
+        "osm_id": 797072979,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8554165,
+          10.2794327
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8554165,
+          10.2794327
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pulangbato",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0702217059",
+        "admin_level": 10,
+        "osm_id": 1255290132,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9063182,
+          10.3979391
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9063182,
+          10.3979391
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pung-ol Sibugay",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0702217060",
+        "admin_level": 10,
+        "osm_id": 1533734148,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8495485,
+          10.3969512
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8495485,
+          10.3969512
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Punta Princesa",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217062",
+        "admin_level": 10,
+        "osm_id": 797072975,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8701668,
+          10.2949316
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8701668,
+          10.2949316
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Punta Princesa Barangay Disaster Risk Reduction and Management Committee",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13030812204,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8718129,
+          10.2952206
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8718129,
+          10.2952206
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Purok 1",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 11,
+        "osm_id": 12622766382,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9177708,
+          10.3782574
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9177708,
+          10.3782574
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Purok 4",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 11,
+        "osm_id": 7967849942,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8970313,
+          10.3191606
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8970313,
+          10.3191606
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Purok 8",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 11,
+        "osm_id": 7972149902,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8962025,
+          10.3220039
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8962025,
+          10.3220039
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Quiot Pardo",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217063",
+        "admin_level": 10,
+        "osm_id": 6241376162,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8586203,
+          10.2889855
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8586203,
+          10.2889855
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Riverside",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 7968027427,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8719627,
+          10.3335016
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8719627,
+          10.3335016
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sambag I",
+        "city": "Cebu City",
+        "alt_names": [
+          "Sambag 1"
+        ],
+        "psgc_code": "072217064",
+        "admin_level": 10,
+        "osm_id": 1681093441,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8920387,
+          10.3008064
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8920387,
+          10.3008064
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sambag Ⅱ",
+        "city": "Cebu City",
+        "alt_names": [
+          "Sambag 2"
+        ],
+        "psgc_code": "072217065",
+        "admin_level": 10,
+        "osm_id": 5003156887,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8912229,
+          10.3058273
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8912229,
+          10.3058273
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "San Antonio",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0730600066",
+        "admin_level": 10,
+        "osm_id": 5773507438,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8983449,
+          10.3018656
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8983449,
+          10.3018656
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "San Jose",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0730600067",
+        "admin_level": 10,
+        "osm_id": 1288652404,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9164422,
+          10.3790912
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9164422,
+          10.3790912
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "San Jose Barangay Health Station",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "DOH000000000024843",
+        "admin_level": 10,
+        "osm_id": 12622766390,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9164069,
+          10.3790229
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9164069,
+          10.3790229
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "San Nicolas Proper",
+        "city": "Cebu City",
+        "alt_names": [
+          "San Nicolas Central"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 5772793059,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.890545,
+          10.2949345
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.890545,
+          10.2949345
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "San Roque",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0730600069",
+        "admin_level": 10,
+        "osm_id": 5775303709,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9060166,
+          10.2939163
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9060166,
+          10.2939163
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Babag",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13025984636,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8496806,
+          10.3740605
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8496806,
+          10.3740605
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Binaliw",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13055615671,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9158896,
+          10.4227879
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9158896,
+          10.4227879
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Bulacao",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12606414094,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8512849,
+          10.2753869
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8512849,
+          10.2753869
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Carreta",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13044386739,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9086966,
+          10.3080127
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9086966,
+          10.3080127
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Guadalupe",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12293209923,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8840729,
+          10.322874
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8840729,
+          10.322874
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Hipodromo",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13944336122,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9069827,
+          10.3140824
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9069827,
+          10.3140824
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Poblacion Pardo",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12606430586,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8555273,
+          10.2792486
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8555273,
+          10.2792486
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Punta Princesa",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13030812203,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8718263,
+          10.2951998
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8718263,
+          10.2951998
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng San Jose",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12622766391,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9164552,
+          10.3790384
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9164552,
+          10.3790384
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Sawang Calero",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13036840443,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8911124,
+          10.2922734
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8911124,
+          10.2922734
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Sinsin",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12818214748,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.780949,
+          10.3449316
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.780949,
+          10.3449316
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Talamban",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13055585561,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9183316,
+          10.3698013
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9183316,
+          10.3698013
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Babag",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13025984637,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8496831,
+          10.3740784
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8496831,
+          10.3740784
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Binaliw",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13055615673,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9158862,
+          10.4227421
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9158862,
+          10.4227421
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Bulacao",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12606414095,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8512835,
+          10.2753994
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8512835,
+          10.2753994
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Carreta",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13044386741,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9086768,
+          10.3079793
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9086768,
+          10.3079793
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Guadalupe",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12293209922,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8840769,
+          10.3228496
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8840769,
+          10.3228496
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Hippodromo",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 10892438976,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9069736,
+          10.314099
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9069736,
+          10.314099
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Paril",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 10613094500,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9158611,
+          10.4747525
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9158611,
+          10.4747525
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Poblacion Pardo",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12606430587,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8555181,
+          10.2792615
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8555181,
+          10.2792615
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Punta Princesa",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13030812205,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8718001,
+          10.2952413
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8718001,
+          10.2952413
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng San Jose",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 9178012885,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9164291,
+          10.3790522
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9164291,
+          10.3790522
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Sawang Calero",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13036840445,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8911082,
+          10.2922988
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8911082,
+          10.2922988
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Sinsin",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 9193538244,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7809496,
+          10.3449462
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7809496,
+          10.3449462
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Talamban",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13055585563,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9183457,
+          10.3697713
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9183457,
+          10.3697713
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Santa Cruz",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 5812892047,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8958777,
+          10.3060662
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8958777,
+          10.3060662
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sapangdaku",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217077",
+        "admin_level": 10,
+        "osm_id": 6241415146,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8726559,
+          10.335043
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8726559,
+          10.335043
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sawang Calero",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217071",
+        "admin_level": 10,
+        "osm_id": 5773409291,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8907892,
+          10.291174
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8907892,
+          10.291174
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sawang Calero Barangay Disaster Risk Reduction and Management Committee",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13036840444,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8911102,
+          10.2922858
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8911102,
+          10.2922858
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Señor Santo Niño",
+        "city": "Cebu City",
+        "alt_names": [
+          "Poblacion"
+        ],
+        "psgc_code": "0730600022",
+        "admin_level": 10,
+        "osm_id": 5775276392,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9028269,
+          10.2951153
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9028269,
+          10.2951153
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sin-sin",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0730600073",
+        "admin_level": 10,
+        "osm_id": 6021543240,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7810116,
+          10.3449392
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7810116,
+          10.3449392
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sirao",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 1255322689,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8722133,
+          10.4141258
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8722133,
+          10.4141258
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Son-oc",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 11,
+        "osm_id": 12810866707,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9171687,
+          10.3773222
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9171687,
+          10.3773222
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "South Reclamation Area",
+        "city": "Cebu City",
+        "alt_names": [
+          "SRP",
+          "South Road Properties",
+          "Cebu South Road Properties",
+          "City South Special Economic Administrative Zone"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 597926764,
+        "osm_type": "way",
+        "source": "manual_verified",
+        "centroid": [
+          123.874464,
+          10.2751445
+        ],
+        "verified_by": "Watch Cebu Maintainer",
+        "verified_at": "2026-09-08T14:40:00Z",
+        "verification_source": "OpenStreetMap Way 597926764 (Cebu South Road Properties: 10.2751445, 123.8744640) / Cebu City South Road Properties Master Plan",
+        "verification_note": "South Reclamation Area (SRP) is a 300-hectare special economic zone not designated as a separate PSA administrative barangay. Point anchored to the Cebu South Road Properties administrative spine (OSM way 597926764), centered within the VECO service interruption corridor covering Talabong Rd., F. Vestil St., and SM Seaside."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.874464,
+          10.2751445
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Suba",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0730600075",
+        "admin_level": 10,
+        "osm_id": 5773409292,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.893812,
+          10.2900261
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.893812,
+          10.2900261
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sudlon I",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 6224947974,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7862912,
+          10.363557
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7862912,
+          10.363557
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sudlon II",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 6224947946,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.784669,
+          10.3795813
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.784669,
+          10.3795813
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sun-oc",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 11,
+        "osm_id": 11266271239,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8950177,
+          10.3382433
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8950177,
+          10.3382433
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "T. Padilla",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217078",
+        "admin_level": 10,
+        "osm_id": 9518382149,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9042914,
+          10.3018092
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9042914,
+          10.3018092
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tabunan",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 827167491,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8213735,
+          10.4397331
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8213735,
+          10.4397331
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tagba-o",
+        "city": "Cebu City",
+        "alt_names": [
+          "Tagbao"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 10242784033,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8399222,
+          10.4425202
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8399222,
+          10.4425202
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Talamban",
+        "city": "Cebu City",
+        "alt_names": [
+          "Barangay Talamban"
+        ],
+        "psgc_code": "072217081",
+        "admin_level": 10,
+        "osm_id": 687162212,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9169315,
+          10.3693575
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9169315,
+          10.3693575
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Talamban Barangay Disaster Risk Reduction and Management Committee",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13055585562,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9183386,
+          10.3697863
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9183386,
+          10.3697863
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Talamban Local Government Unit",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13948792083,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9184662,
+          10.3698227
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9184662,
+          10.3698227
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Talamban VAW Desk",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13948792082,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9184588,
+          10.3698351
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9184588,
+          10.3698351
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Taptap",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 10242784034,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8479649,
+          10.4299251
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8479649,
+          10.4299251
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tejero",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217083",
+        "admin_level": 10,
+        "osm_id": 5813151353,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9074242,
+          10.3019728
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9074242,
+          10.3019728
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "The Peaks",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 5846688629,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8661745,
+          10.32382
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8661745,
+          10.32382
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tiguib",
+        "city": "Cebu City",
+        "alt_names": [
+          "Tigib"
+        ],
+        "psgc_code": null,
+        "admin_level": 12,
+        "osm_id": 8015294552,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8684235,
+          10.3789685
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8684235,
+          10.3789685
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tinago",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0730600084",
+        "admin_level": 10,
+        "osm_id": 5813278033,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9081484,
+          10.2985884
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9081484,
+          10.2985884
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tisa",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "0730600085",
+        "admin_level": 10,
+        "osm_id": 1140343091,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8689577,
+          10.3020584
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8689577,
+          10.3020584
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Zapatera",
+        "city": "Cebu City",
+        "alt_names": [],
+        "psgc_code": "072217087",
+        "admin_level": 10,
+        "osm_id": 9518382148,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9012713,
+          10.3063692
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9012713,
+          10.3063692
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Cabangahan",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219001",
+        "admin_level": 10,
+        "osm_id": 947697491,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.924634,
+          10.4039618
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.924634,
+          10.4039618
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Calachuchi",
+        "city": "Consolacion",
+        "alt_names": [
+          "Purok 2",
+          "Purok Calachuchi"
+        ],
+        "psgc_code": null,
+        "admin_level": 11,
+        "osm_id": 12704154052,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9824482,
+          10.3627487
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9824482,
+          10.3627487
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Cansaga",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219002",
+        "admin_level": 10,
+        "osm_id": 10817240744,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9614677,
+          10.3776176
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9614677,
+          10.3776176
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Casili",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219003",
+        "admin_level": 10,
+        "osm_id": 10817240725,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9480512,
+          10.3740774
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9480512,
+          10.3740774
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Danglag",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219005",
+        "admin_level": 10,
+        "osm_id": 10838694708,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9562271,
+          10.3902251
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9562271,
+          10.3902251
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Garing",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219005",
+        "admin_level": 10,
+        "osm_id": 2061518165,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9450688,
+          10.4196776
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9450688,
+          10.4196776
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Jugan",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219006",
+        "admin_level": 10,
+        "osm_id": 7983653037,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.972291,
+          10.3784898
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.972291,
+          10.3784898
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Lamac",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219007",
+        "admin_level": 10,
+        "osm_id": 10838694670,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9680975,
+          10.3876855
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9680975,
+          10.3876855
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Lanipga",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219008",
+        "admin_level": 10,
+        "osm_id": 1261873622,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.932975,
+          10.4576997
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.932975,
+          10.4576997
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Nangka",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219009",
+        "admin_level": 10,
+        "osm_id": 10817240735,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9628197,
+          10.370753
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9628197,
+          10.370753
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Panas",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219010",
+        "admin_level": 10,
+        "osm_id": 1261873709,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9306921,
+          10.4465863
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9306921,
+          10.4465863
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Panoypoy",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219011",
+        "admin_level": 10,
+        "osm_id": 2061518155,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9287441,
+          10.4178208
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9287441,
+          10.4178208
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pitogo",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219012",
+        "admin_level": 10,
+        "osm_id": 10838694659,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9711561,
+          10.3826637
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9711561,
+          10.3826637
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Poblacion Occidental",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219013",
+        "admin_level": 10,
+        "osm_id": 10817240714,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9529404,
+          10.3741863
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9529404,
+          10.3741863
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Poblacion Occidental Barangay Health Station",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "DOH000000000025086",
+        "admin_level": 10,
+        "osm_id": 12701787247,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9535626,
+          10.3734306
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9535626,
+          10.3734306
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Poblacion Oriental",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219014",
+        "admin_level": 10,
+        "osm_id": 7983242878,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.957203,
+          10.3753084
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.957203,
+          10.3753084
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Poblacion Oriental Barangay Hall",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 10798533711,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9571885,
+          10.3754404
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9571885,
+          10.3754404
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Polog",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219015",
+        "admin_level": 10,
+        "osm_id": 2061518162,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9424843,
+          10.4073172
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9424843,
+          10.4073172
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pulpogan",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219016",
+        "admin_level": 10,
+        "osm_id": 1135759207,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9569595,
+          10.385799
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9569595,
+          10.385799
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sacsac",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219017",
+        "admin_level": 10,
+        "osm_id": 10838694761,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9277663,
+          10.397449
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9277663,
+          10.397449
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Panoypoy",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12706709713,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9290287,
+          10.4182486
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9290287,
+          10.4182486
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Poblacion Occidental",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12701787245,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9536088,
+          10.3734062
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9536088,
+          10.3734062
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Sacsac",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12714794186,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9277976,
+          10.3975245
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9277976,
+          10.3975245
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Tayud",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12704154042,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9825489,
+          10.362898
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9825489,
+          10.362898
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Panoypoy",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12706709714,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9290167,
+          10.4182625
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9290167,
+          10.4182625
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng poblacion Occidental",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12701787246,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9536165,
+          10.3734177
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9536165,
+          10.3734177
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Sacsac",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12714794187,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9277916,
+          10.3975041
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9277916,
+          10.3975041
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Tayud",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12704154043,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9825646,
+          10.3629234
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9825646,
+          10.3629234
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tagaytay",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 11,
+        "osm_id": 13592002595,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9619938,
+          10.40047
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9619938,
+          10.40047
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tayud",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219018",
+        "admin_level": 10,
+        "osm_id": 837467077,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9824304,
+          10.3624068
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9824304,
+          10.3624068
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tilhaong",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219019",
+        "admin_level": 10,
+        "osm_id": 10838694703,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9633262,
+          10.398678
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9633262,
+          10.398678
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tolotolo",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219020",
+        "admin_level": 10,
+        "osm_id": 1135759205,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9423088,
+          10.3921561
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9423088,
+          10.3921561
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tugbongan",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": "0702219021",
+        "admin_level": 10,
+        "osm_id": 10817240730,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9657648,
+          10.363269
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9657648,
+          10.363269
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Villa Monilar",
+        "city": "Consolacion",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13172905557,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9739568,
+          10.379944
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9739568,
+          10.379944
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Cabadiangan",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": "0702227001",
+        "admin_level": 10,
+        "osm_id": 7959370197,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9691459,
+          10.4454827
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9691459,
+          10.4454827
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Calero",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": "0702227002",
+        "admin_level": 10,
+        "osm_id": 10861581414,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9986063,
+          10.3632562
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9986063,
+          10.3632562
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Camote",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 11,
+        "osm_id": 13922299901,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9958042,
+          10.3624639
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9958042,
+          10.3624639
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Catarman",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": "0702227003",
+        "admin_level": 10,
+        "osm_id": 911916595,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          124.0109598,
+          10.3868244
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.0109598,
+          10.3868244
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Catarman Barangay Disaster Risk Reduction and Management Committee",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13018301780,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          124.010982,
+          10.386851
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.010982,
+          10.386851
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Cotcot",
+        "city": "Liloan",
+        "alt_names": [
+          "Kotkot"
+        ],
+        "psgc_code": "0702227004",
+        "admin_level": 10,
+        "osm_id": 367831560,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          124.0016688,
+          10.4275771
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.0016688,
+          10.4275771
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Jubay",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": "0702227005",
+        "admin_level": 10,
+        "osm_id": 911916600,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.996835,
+          10.4150599
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.996835,
+          10.4150599
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Kamatis",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 11,
+        "osm_id": 13936940934,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9959204,
+          10.3682374
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9959204,
+          10.3682374
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Lataban",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": "0702227006",
+        "admin_level": 10,
+        "osm_id": 1255204735,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9630305,
+          10.4320035
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9630305,
+          10.4320035
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Mulao",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": "0702227007",
+        "admin_level": 10,
+        "osm_id": 2527378535,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9516509,
+          10.4651889
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9516509,
+          10.4651889
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Orchids",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 11,
+        "osm_id": 9890775270,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9786672,
+          10.3930591
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9786672,
+          10.3930591
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Poblacion",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": "072227008",
+        "admin_level": 10,
+        "osm_id": 8444282560,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          124.0002957,
+          10.3989386
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.0002957,
+          10.3989386
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "San Roque",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": "0702227009",
+        "admin_level": 10,
+        "osm_id": 3929942001,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9567497,
+          10.4358667
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9567497,
+          10.4358667
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "San Vicente",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": "0702227010",
+        "admin_level": 10,
+        "osm_id": 10861581413,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9736778,
+          10.3990929
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9736778,
+          10.3990929
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Tayud",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13018332873,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9964891,
+          10.3820121
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9964891,
+          10.3820121
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Catarman",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13018301781,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          124.0109726,
+          10.3868355
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.0109726,
+          10.3868355
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Tayud",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13018332875,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9964714,
+          10.381989
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9964714,
+          10.381989
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Santa Cruz",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": "0702227011",
+        "admin_level": 10,
+        "osm_id": 7686326363,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9636827,
+          10.4125584
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9636827,
+          10.4125584
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tabla",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": "0702227012",
+        "admin_level": 10,
+        "osm_id": 1255204685,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9402276,
+          10.4503955
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9402276,
+          10.4503955
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tagaytay",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13936940933,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9955761,
+          10.3690624
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9955761,
+          10.3690624
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tayud",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": "0702227011",
+        "admin_level": 10,
+        "osm_id": 911916503,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9940355,
+          10.3782144
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9940355,
+          10.3782144
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tayud Barangay Disaster Risk Reduction and Management Committee",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13018332874,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9964803,
+          10.3820005
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9964803,
+          10.3820005
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Upper Looc",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13922299902,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9951103,
+          10.3618789
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9951103,
+          10.3618789
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Yati",
+        "city": "Liloan",
+        "alt_names": [],
+        "psgc_code": "0702227014",
+        "admin_level": 10,
+        "osm_id": 911916627,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.981378,
+          10.3897294
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.981378,
+          10.3897294
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Alang-alang",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300001",
+        "admin_level": 10,
+        "osm_id": 8326579287,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9458976,
+          10.3316796
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9458976,
+          10.3316796
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Bacayan",
+        "city": "Mandaue City",
+        "alt_names": [
+          "Bakayan"
+        ],
+        "psgc_code": "072217006",
+        "admin_level": 10,
+        "osm_id": 2081774940,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9198756,
+          10.3855454
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9198756,
+          10.3855454
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Bakilid",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300002",
+        "admin_level": 10,
+        "osm_id": 8329075866,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.934233,
+          10.3366996
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.934233,
+          10.3366996
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Banilad",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300003",
+        "admin_level": 10,
+        "osm_id": 5866009920,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9196727,
+          10.3413827
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9196727,
+          10.3413827
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Basak",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300004",
+        "admin_level": 10,
+        "osm_id": 4561358740,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9500297,
+          10.3546385
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9500297,
+          10.3546385
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Cabancalan",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300005",
+        "admin_level": 10,
+        "osm_id": 911916588,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9241562,
+          10.3509984
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9241562,
+          10.3509984
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Cambaro",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300006",
+        "admin_level": 10,
+        "osm_id": 797072896,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9494885,
+          10.3281927
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9494885,
+          10.3281927
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Canduman",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300007",
+        "admin_level": 10,
+        "osm_id": 911916551,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.933558,
+          10.3677145
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.933558,
+          10.3677145
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Canduman Barangay Hall",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 11502841800,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9319634,
+          10.3670333
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9319634,
+          10.3670333
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Capanasan",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 11,
+        "osm_id": 7983333151,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9276749,
+          10.3843849
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9276749,
+          10.3843849
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Casili",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300008",
+        "admin_level": 10,
+        "osm_id": 8340337363,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9338842,
+          10.3796543
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9338842,
+          10.3796543
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Casili Hills",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 7611744685,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9363587,
+          10.3770411
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9363587,
+          10.3770411
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Casuntingan",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300009",
+        "admin_level": 10,
+        "osm_id": 8331236039,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9305388,
+          10.3452982
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9305388,
+          10.3452982
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Centro",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300010",
+        "admin_level": 10,
+        "osm_id": 8309654643,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9427006,
+          10.3257279
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9427006,
+          10.3257279
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Consuelo Village",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 2582236349,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9487602,
+          10.3593169
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9487602,
+          10.3593169
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Cubacub",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300011",
+        "admin_level": 10,
+        "osm_id": 8343690576,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9400479,
+          10.3713621
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9400479,
+          10.3713621
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Guizo",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300012",
+        "admin_level": 10,
+        "osm_id": 2257770163,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.937993,
+          10.3314147
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.937993,
+          10.3314147
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Ibabao-Estancia",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300013",
+        "admin_level": 10,
+        "osm_id": 8326579286,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.944774,
+          10.3350548
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.944774,
+          10.3350548
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Jagobiao",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300014",
+        "admin_level": 10,
+        "osm_id": 8343690575,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9519287,
+          10.3668886
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9519287,
+          10.3668886
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Labogon",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300015",
+        "admin_level": 10,
+        "osm_id": 2527365316,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9544765,
+          10.3525794
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9544765,
+          10.3525794
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Looc",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300016",
+        "admin_level": 10,
+        "osm_id": 797072879,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9494884,
+          10.3228534
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9494884,
+          10.3228534
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Lower Casili",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 9184195203,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9385928,
+          10.3785239
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9385928,
+          10.3785239
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Lupa",
+        "city": "Mandaue City",
+        "alt_names": [
+          "Sitio Lupa"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 11743127752,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9301345,
+          10.3506105
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9301345,
+          10.3506105
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Maguikay",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300017",
+        "admin_level": 10,
+        "osm_id": 797072871,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9360042,
+          10.3397601
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9360042,
+          10.3397601
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Maguikay Barangay Disaster Risk Reduction and Management Committee",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13055503414,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9379501,
+          10.3442178
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9379501,
+          10.3442178
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Mantuyong",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300018",
+        "admin_level": 10,
+        "osm_id": 7980124716,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9404936,
+          10.3293593
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9404936,
+          10.3293593
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Opao",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300019",
+        "admin_level": 10,
+        "osm_id": 797072876,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9569421,
+          10.328849
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9569421,
+          10.328849
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pagsabungan",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300021",
+        "admin_level": 10,
+        "osm_id": 5863533973,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9406626,
+          10.3565067
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9406626,
+          10.3565067
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Paknaan",
+        "city": "Mandaue City",
+        "alt_names": [
+          "Pakna-an"
+        ],
+        "psgc_code": "0731300020",
+        "admin_level": 10,
+        "osm_id": 3899161815,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9602134,
+          10.3462184
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9602134,
+          10.3462184
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pilit",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 10996221140,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9242765,
+          10.3555129
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9242765,
+          10.3555129
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "San Jose",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 12,
+        "osm_id": 9184229352,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.956404,
+          10.364613
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.956404,
+          10.364613
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Maguikay",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13055503413,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9379437,
+          10.3442027
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9379437,
+          10.3442027
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Paknaan",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12803424133,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9601876,
+          10.3462474
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9601876,
+          10.3462474
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Tabok",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13020280119,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9465526,
+          10.3471068
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9465526,
+          10.3471068
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Tingub",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12293589080,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9343799,
+          10.3520615
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9343799,
+          10.3520615
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Maguikay",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13055503415,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9379565,
+          10.344231
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9379565,
+          10.344231
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Paknaan",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12803424134,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.960198,
+          10.3462436
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.960198,
+          10.3462436
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Tabok",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13020280121,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9466012,
+          10.3471253
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9466012,
+          10.3471253
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Tingub",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12293589081,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9343802,
+          10.3520668
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9343802,
+          10.3520668
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Subangdaku",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300022",
+        "admin_level": 10,
+        "osm_id": 8329153530,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9245216,
+          10.323182
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9245216,
+          10.323182
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sudlon",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 11,
+        "osm_id": 13993246870,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9447632,
+          10.3274272
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9447632,
+          10.3274272
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tabok",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300023",
+        "admin_level": 10,
+        "osm_id": 5863442874,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9439345,
+          10.3486632
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9439345,
+          10.3486632
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tabok Barangay Disaster Risk Reduction and Management Committee",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13020280120,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9465769,
+          10.347116
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9465769,
+          10.347116
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tawason",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300024",
+        "admin_level": 10,
+        "osm_id": 8340337364,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9287209,
+          10.3778023
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9287209,
+          10.3778023
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tingub",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300025",
+        "admin_level": 10,
+        "osm_id": 5863508189,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9353755,
+          10.354497
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9353755,
+          10.354497
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tipolo",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300026",
+        "admin_level": 10,
+        "osm_id": 797072866,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.927546,
+          10.3328177
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.927546,
+          10.3328177
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Umapad",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": "0731300027",
+        "admin_level": 10,
+        "osm_id": 4561503879,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9543881,
+          10.3344078
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9543881,
+          10.3344078
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Upper Casili",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 7310984691,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9344206,
+          10.379541
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9344206,
+          10.379541
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Villa Vanesa",
+        "city": "Mandaue City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 9184195204,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9368802,
+          10.3795753
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9368802,
+          10.3795753
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Cadulawan",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": "072232001",
+        "admin_level": 10,
+        "osm_id": 7647992576,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.785573,
+          10.2569264
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.785573,
+          10.2569264
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Calajo-an",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": "0702232002",
+        "admin_level": 10,
+        "osm_id": 4676161926,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8025683,
+          10.23969
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8025683,
+          10.23969
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Camp 7",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": "0702232003",
+        "admin_level": 10,
+        "osm_id": 5877814723,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7731465,
+          10.3220901
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7731465,
+          10.3220901
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Camp 8",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": "0702232004",
+        "admin_level": 10,
+        "osm_id": 2061746477,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7548844,
+          10.3108269
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7548844,
+          10.3108269
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Camp 8 Barangay Health Station",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": "DOH000000000015275",
+        "admin_level": 10,
+        "osm_id": 12675653532,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7549072,
+          10.3108813
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7549072,
+          10.3108813
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Cuanos",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": "072232005",
+        "admin_level": 10,
+        "osm_id": 8869181238,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7938405,
+          10.2861647
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7938405,
+          10.2861647
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Guindaruhan",
+        "city": "Minglanilla",
+        "alt_names": [
+          "Guindarohan"
+        ],
+        "psgc_code": "0702232006",
+        "admin_level": 10,
+        "osm_id": 5894519832,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7634982,
+          10.261106
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7634982,
+          10.261106
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Guindaruhan Barangay Health Station",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": "DOH000000000015247",
+        "admin_level": 10,
+        "osm_id": 12784785774,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7635043,
+          10.261202
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7635043,
+          10.261202
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Linao",
+        "city": "Minglanilla",
+        "alt_names": [
+          "Linao-Lipata"
+        ],
+        "psgc_code": "0702232007",
+        "admin_level": 10,
+        "osm_id": 10631228463,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8098978,
+          10.2546036
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8098978,
+          10.2546036
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Manduang",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": "072232008",
+        "admin_level": 10,
+        "osm_id": 10620348145,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7856083,
+          10.2787159
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7856083,
+          10.2787159
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pakigne",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": "0702232009",
+        "admin_level": 10,
+        "osm_id": 10620076768,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8055744,
+          10.2511072
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8055744,
+          10.2511072
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Poblacion Ward Ⅰ",
+        "city": "Minglanilla",
+        "alt_names": [
+          "Poblacion 1"
+        ],
+        "psgc_code": "0702232010",
+        "admin_level": 10,
+        "osm_id": 7965790968,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7979595,
+          10.2445568
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7979595,
+          10.2445568
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Camp 8",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12675653533,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7549589,
+          10.310917
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7549589,
+          10.310917
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Guindaruhan",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12784785772,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7635324,
+          10.2611502
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7635324,
+          10.2611502
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Linao-Lipata",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12608944837,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.809821,
+          10.2545684
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.809821,
+          10.2545684
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Poblacion Ward Ⅳ",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12616969188,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.794088,
+          10.2466118
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.794088,
+          10.2466118
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Camp 8",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12675653534,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7549455,
+          10.3109262
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7549455,
+          10.3109262
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Guindaruhan",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12784785773,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7635089,
+          10.2611466
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7635089,
+          10.2611466
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Linao-Lipata",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12608944838,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8098287,
+          10.2545568
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8098287,
+          10.2545568
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Poblacion Ward Ⅳ",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12616969189,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7940875,
+          10.2466063
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7940875,
+          10.2466063
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tubod",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": "072232014",
+        "admin_level": 10,
+        "osm_id": 10620348112,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7988735,
+          10.2637769
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7988735,
+          10.2637769
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tulay",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": "072232015",
+        "admin_level": 10,
+        "osm_id": 10620069957,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7914088,
+          10.2389623
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7914088,
+          10.2389623
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tunghaan",
+        "city": "Minglanilla",
+        "alt_names": [
+          "Tungha-an"
+        ],
+        "psgc_code": "0702232016",
+        "admin_level": 10,
+        "osm_id": 10536367483,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7808689,
+          10.2454911
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7808689,
+          10.2454911
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tungkil",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": "072232019",
+        "admin_level": 10,
+        "osm_id": 10620383668,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.813742,
+          10.2446681
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.813742,
+          10.2446681
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tungkop",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": "0702232017",
+        "admin_level": 10,
+        "osm_id": 10536447869,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7851624,
+          10.2327375
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7851624,
+          10.2327375
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Velmiro Heights Subdivision",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 9102665519,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7847804,
+          10.2475072
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7847804,
+          10.2475072
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Vito",
+        "city": "Minglanilla",
+        "alt_names": [],
+        "psgc_code": "072232018",
+        "admin_level": 10,
+        "osm_id": 8012398155,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7921218,
+          10.254845
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7921218,
+          10.254845
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Ward IV",
+        "city": "Minglanilla",
+        "alt_names": [
+          "Poblacion Ward Ⅳ",
+          "Poblacion Ward IV",
+          "Ward 4",
+          "Pobacion 4"
+        ],
+        "psgc_code": "0702232013",
+        "admin_level": 10,
+        "osm_id": 10620076758,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7941156,
+          10.2465562
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7941156,
+          10.2465562
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Alpaco",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "072234001",
+        "admin_level": 10,
+        "osm_id": 7641890791,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.6942369,
+          10.2420559
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.6942369,
+          10.2420559
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Bairan",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "072234002",
+        "admin_level": 10,
+        "osm_id": 7641828404,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7196796,
+          10.1977072
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7196796,
+          10.1977072
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Balirong",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "072234003",
+        "admin_level": 10,
+        "osm_id": 941296738,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7107728,
+          10.2567041
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7107728,
+          10.2567041
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Cabungahan",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "072234004",
+        "admin_level": 10,
+        "osm_id": 9181758592,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7202845,
+          10.2136387
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7202845,
+          10.2136387
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Caimito",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 5232112421,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7086637,
+          10.2821582
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7086637,
+          10.2821582
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Cantao-an",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "0702234005",
+        "admin_level": 10,
+        "osm_id": 5887901702,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7524586,
+          10.2450741
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7524586,
+          10.2450741
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Central Poblacion",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "0702234006",
+        "admin_level": 10,
+        "osm_id": 10593365363,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7572468,
+          10.2074679
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7572468,
+          10.2074679
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Cogon",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "0702234007",
+        "admin_level": 10,
+        "osm_id": 5894519831,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7399857,
+          10.2686376
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7399857,
+          10.2686376
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Colon",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "072234008",
+        "admin_level": 10,
+        "osm_id": 5887901700,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7614917,
+          10.2198901
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7614917,
+          10.2198901
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "East Poblacion",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "072234009",
+        "admin_level": 10,
+        "osm_id": 10593365381,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7594282,
+          10.2098713
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7594282,
+          10.2098713
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Inayagan",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "072234011",
+        "admin_level": 10,
+        "osm_id": 5888009474,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7745232,
+          10.2364477
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7745232,
+          10.2364477
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Inoburan",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "072234010",
+        "admin_level": 10,
+        "osm_id": 10593365309,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7397385,
+          10.1889096
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7397385,
+          10.1889096
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Jaguimit",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "072234012",
+        "admin_level": 10,
+        "osm_id": 10593365339,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7090698,
+          10.22919
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7090698,
+          10.22919
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Lanas",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "072234013",
+        "admin_level": 10,
+        "osm_id": 6004323597,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7170102,
+          10.2724432
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7170102,
+          10.2724432
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Langtad",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "072234014",
+        "admin_level": 10,
+        "osm_id": 10593328400,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7327873,
+          10.183638
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7327873,
+          10.183638
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Lutac",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "072234015",
+        "admin_level": 10,
+        "osm_id": 5894521661,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7258696,
+          10.2489206
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7258696,
+          10.2489206
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Mainit",
+        "city": "Naga City",
+        "alt_names": [
+          "Upper Mainit"
+        ],
+        "psgc_code": "072234016",
+        "admin_level": 10,
+        "osm_id": 9181758594,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.731356,
+          10.2169377
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.731356,
+          10.2169377
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Mayana",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "072234017",
+        "admin_level": 10,
+        "osm_id": 7631045660,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.6948871,
+          10.2887962
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.6948871,
+          10.2887962
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Na-alad",
+        "city": "Naga City",
+        "alt_names": [
+          "Naalad",
+          "Lower Naalad"
+        ],
+        "psgc_code": "072234018",
+        "admin_level": 10,
+        "osm_id": 9181812982,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7442902,
+          10.2095386
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7442902,
+          10.2095386
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "North Poblacion",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "072234019",
+        "admin_level": 10,
+        "osm_id": 10593365385,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7587881,
+          10.21241
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7587881,
+          10.21241
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pangdan",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "072234020",
+        "admin_level": 10,
+        "osm_id": 7641880206,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7273142,
+          10.2326268
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7273142,
+          10.2326268
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Patag",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "072234021",
+        "admin_level": 10,
+        "osm_id": 7641883192,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.6993109,
+          10.2302425
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.6993109,
+          10.2302425
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "South Poblacion",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "072234022",
+        "admin_level": 10,
+        "osm_id": 10593365362,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7552411,
+          10.2034781
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7552411,
+          10.2034781
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tagjaguimit",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "072234023",
+        "admin_level": 10,
+        "osm_id": 7631031254,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.6811305,
+          10.2657624
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.6811305,
+          10.2657624
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tangke",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "0702234024",
+        "admin_level": 10,
+        "osm_id": 10593365386,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7535324,
+          10.2161148
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7535324,
+          10.2161148
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tinaan",
+        "city": "Naga City",
+        "alt_names": [
+          "Tinaan"
+        ],
+        "psgc_code": "072234025",
+        "admin_level": 10,
+        "osm_id": 367832190,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.745126,
+          10.1935558
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.745126,
+          10.1935558
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tuyan",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "072234027",
+        "admin_level": 10,
+        "osm_id": 5887901701,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7672784,
+          10.228245
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7672784,
+          10.228245
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Uling",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "0702234028",
+        "admin_level": 10,
+        "osm_id": 6004318823,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7115157,
+          10.2801918
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7115157,
+          10.2801918
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Upper Na-alad",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 9181812977,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7427044,
+          10.2188145
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7427044,
+          10.2188145
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "West Poblacion",
+        "city": "Naga City",
+        "alt_names": [],
+        "psgc_code": "072234029",
+        "admin_level": 10,
+        "osm_id": 10593365382,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7535576,
+          10.2110903
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7535576,
+          10.2110903
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Balud",
+        "city": "San Fernando",
+        "alt_names": [],
+        "psgc_code": "072241002",
+        "admin_level": 10,
+        "osm_id": 10538368149,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.6946472,
+          10.1483818
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.6946472,
+          10.1483818
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Basak",
+        "city": "San Fernando",
+        "alt_names": [],
+        "psgc_code": "072241005",
+        "admin_level": 10,
+        "osm_id": 10542157826,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.6657649,
+          10.178425
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.6657649,
+          10.178425
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Bugho",
+        "city": "San Fernando",
+        "alt_names": [],
+        "psgc_code": "072241007",
+        "admin_level": 10,
+        "osm_id": 7641890076,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.6717396,
+          10.2248739
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.6717396,
+          10.2248739
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Cabatbatan",
+        "city": "San Fernando",
+        "alt_names": [],
+        "psgc_code": "072241008",
+        "admin_level": 10,
+        "osm_id": 10542161978,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.6857514,
+          10.2164174
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.6857514,
+          10.2164174
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Greenhills",
+        "city": "San Fernando",
+        "alt_names": [],
+        "psgc_code": "072241009",
+        "admin_level": 10,
+        "osm_id": 10538368241,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.6748087,
+          10.1388856
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.6748087,
+          10.1388856
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Ilaya",
+        "city": "San Fernando",
+        "alt_names": [],
+        "psgc_code": "072241024",
+        "admin_level": 10,
+        "osm_id": 10542161973,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7080488,
+          10.1878361
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7080488,
+          10.1878361
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Lantawan",
+        "city": "San Fernando",
+        "alt_names": [],
+        "psgc_code": "072241010",
+        "admin_level": 10,
+        "osm_id": 10542157821,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.6536605,
+          10.169498
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.6536605,
+          10.169498
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Magsico",
+        "city": "San Fernando",
+        "alt_names": [],
+        "psgc_code": "072241012",
+        "admin_level": 10,
+        "osm_id": 7641894829,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.6781072,
+          10.2042475
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.6781072,
+          10.2042475
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "North Poblacion",
+        "city": "San Fernando",
+        "alt_names": [
+          "Poblacion North"
+        ],
+        "psgc_code": "0702241013",
+        "admin_level": 10,
+        "osm_id": 10538310375,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7077005,
+          10.1650249
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7077005,
+          10.1650249
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Panadtaran",
+        "city": "San Fernando",
+        "alt_names": [],
+        "psgc_code": "072241014",
+        "admin_level": 10,
+        "osm_id": 10538310381,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.6988033,
+          10.153462
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.6988033,
+          10.153462
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pitalo",
+        "city": "San Fernando",
+        "alt_names": [],
+        "psgc_code": "0702241015",
+        "admin_level": 10,
+        "osm_id": 7641828314,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7216585,
+          10.176444
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7216585,
+          10.176444
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "San Isidro",
+        "city": "San Fernando",
+        "alt_names": [],
+        "psgc_code": "072241016",
+        "admin_level": 10,
+        "osm_id": 2160525408,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7156228,
+          10.1717441
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7156228,
+          10.1717441
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangat",
+        "city": "San Fernando",
+        "alt_names": [],
+        "psgc_code": "0702241017",
+        "admin_level": 10,
+        "osm_id": 7641790638,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.6877218,
+          10.1332463
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.6877218,
+          10.1332463
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng North Poblacion",
+        "city": "San Fernando",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12780242568,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7077726,
+          10.1650434
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7077726,
+          10.1650434
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng North Poblacion",
+        "city": "San Fernando",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12780242569,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7077565,
+          10.1650625
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7077565,
+          10.1650625
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "South Poblacion",
+        "city": "San Fernando",
+        "alt_names": [
+          "Poblacion South"
+        ],
+        "psgc_code": "0702241018",
+        "admin_level": 10,
+        "osm_id": 10538310380,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7054775,
+          10.1601649
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7054775,
+          10.1601649
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tabionan",
+        "city": "San Fernando",
+        "alt_names": [],
+        "psgc_code": "072241019",
+        "admin_level": 10,
+        "osm_id": 10542157886,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.6701012,
+          10.193267
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.6701012,
+          10.193267
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tañañas",
+        "city": "San Fernando",
+        "alt_names": [
+          "Tananas"
+        ],
+        "psgc_code": "072241020",
+        "admin_level": 10,
+        "osm_id": 10542161936,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.6990765,
+          10.1830633
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.6990765,
+          10.1830633
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tinubdan",
+        "city": "San Fernando",
+        "alt_names": [],
+        "psgc_code": "072241021",
+        "admin_level": 10,
+        "osm_id": 7968419930,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.6837597,
+          10.1758899
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.6837597,
+          10.1758899
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tonggo",
+        "city": "San Fernando",
+        "alt_names": [],
+        "psgc_code": "072241022",
+        "admin_level": 10,
+        "osm_id": 7642406984,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.6847358,
+          10.1639583
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.6847358,
+          10.1639583
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tubod",
+        "city": "San Fernando",
+        "alt_names": [],
+        "psgc_code": "072241023",
+        "admin_level": 10,
+        "osm_id": 10542161931,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.6510917,
+          10.2137668
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.6510917,
+          10.2137668
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Biasong",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": "0702250019",
+        "admin_level": 10,
+        "osm_id": 771212704,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8287524,
+          10.2374589
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8287524,
+          10.2374589
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Bulacao",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": "0702250001",
+        "admin_level": 10,
+        "osm_id": 9179343219,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8451143,
+          10.2710678
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8451143,
+          10.2710678
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Camp 4",
+        "city": "Talisay City",
+        "alt_names": [
+          "Camp IV"
+        ],
+        "psgc_code": "072250020",
+        "admin_level": 10,
+        "osm_id": 928713358,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8203463,
+          10.32056
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8203463,
+          10.32056
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Candulawan",
+        "city": "Talisay City",
+        "alt_names": [
+          "Cadulawan"
+        ],
+        "psgc_code": "0702250002",
+        "admin_level": 10,
+        "osm_id": 9179378765,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8434834,
+          10.2788736
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8434834,
+          10.2788736
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Cansojong",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": "072250003",
+        "admin_level": 10,
+        "osm_id": 4674003869,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8548827,
+          10.2495232
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8548827,
+          10.2495232
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Dumlog",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": "0702250004",
+        "admin_level": 10,
+        "osm_id": 4666814253,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8395501,
+          10.2450076
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8395501,
+          10.2450076
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Jaclupan",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": "072250005",
+        "admin_level": 10,
+        "osm_id": 6021551129,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8175723,
+          10.3009319
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8175723,
+          10.3009319
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Lagtang",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": "0702250006",
+        "admin_level": 10,
+        "osm_id": 6244086539,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8335173,
+          10.2669491
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8335173,
+          10.2669491
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Laray",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 7967831516,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8602525,
+          10.2570319
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8602525,
+          10.2570319
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Lawaan I",
+        "city": "Talisay City",
+        "alt_names": [
+          "Lawaan 1"
+        ],
+        "psgc_code": "072250007",
+        "admin_level": 10,
+        "osm_id": 797073000,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8230524,
+          10.258248
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8230524,
+          10.258248
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Lawaan II",
+        "city": "Talisay City",
+        "alt_names": [
+          "Lawaan 2"
+        ],
+        "psgc_code": "072250021",
+        "admin_level": 10,
+        "osm_id": 6244086575,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.832139,
+          10.253557
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.832139,
+          10.253557
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Lawaan III",
+        "city": "Talisay City",
+        "alt_names": [
+          "Lawaan 3",
+          "Lawa-an 3"
+        ],
+        "psgc_code": "072250022",
+        "admin_level": 10,
+        "osm_id": 6244086571,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8315307,
+          10.2653932
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8315307,
+          10.2653932
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Linao",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": "072250008",
+        "admin_level": 10,
+        "osm_id": 6244086558,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8181609,
+          10.2623108
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8181609,
+          10.2623108
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Maghaway",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": "072250009",
+        "admin_level": 10,
+        "osm_id": 928702964,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8161747,
+          10.2782379
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8161747,
+          10.2782379
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Makulay",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12177714729,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8337069,
+          10.2421601
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8337069,
+          10.2421601
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Malipayon",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12177714731,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8330155,
+          10.2423563
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8330155,
+          10.2423563
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Manipis",
+        "city": "Talisay City",
+        "alt_names": [
+          "Camp 6"
+        ],
+        "psgc_code": "072250010",
+        "admin_level": 10,
+        "osm_id": 949074351,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7861982,
+          10.3212828
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7861982,
+          10.3212828
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Mohon",
+        "city": "Talisay City",
+        "alt_names": [
+          "Mojon"
+        ],
+        "psgc_code": "072250011",
+        "admin_level": 10,
+        "osm_id": 771212814,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8271516,
+          10.2493722
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8271516,
+          10.2493722
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pag-laum",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 11180589185,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8488461,
+          10.2656255
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8488461,
+          10.2656255
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pangpang",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 11,
+        "osm_id": 9139626450,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8374346,
+          10.257181
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8374346,
+          10.257181
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pidanna",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 12,
+        "osm_id": 12177729485,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.830925,
+          10.2422682
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.830925,
+          10.2422682
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Poblacion",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": "072250012",
+        "admin_level": 10,
+        "osm_id": 6244086686,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8464893,
+          10.2446342
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8464893,
+          10.2446342
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pooc",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": "072250013",
+        "admin_level": 10,
+        "osm_id": 367831568,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8244385,
+          10.2383782
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8244385,
+          10.2383782
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "San Isidro",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": "072250014",
+        "admin_level": 10,
+        "osm_id": 4045068027,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8403749,
+          10.2598872
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8403749,
+          10.2598872
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "San Isidro Barangay Disaster Risk Reduction and Management Committee",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13040394661,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.840427,
+          10.2596419
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.840427,
+          10.2596419
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "San Lucas",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12177714730,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8330564,
+          10.2427545
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8330564,
+          10.2427545
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "San Roque",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": "072250011",
+        "admin_level": 10,
+        "osm_id": 9559429217,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.860595,
+          10.2556475
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.860595,
+          10.2556475
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Lagtang",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12292567520,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8354475,
+          10.2661553
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8354475,
+          10.2661553
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng Lawaan Uno",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12818660217,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8215737,
+          10.2585287
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8215737,
+          10.2585287
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Kabataan ng San Isidro",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13040394660,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8404253,
+          10.2596316
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8404253,
+          10.2596316
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Lagtang",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12292567521,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8354558,
+          10.266152
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8354558,
+          10.266152
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng Lawaan Uno",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 12818660218,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8215761,
+          10.2585172
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8215761,
+          10.2585172
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sangguniang Pambarangay ng San Isidro",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": 13040394662,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8404273,
+          10.2596511
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8404273,
+          10.2596511
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Selma Crusher",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": null,
+        "admin_level": 12,
+        "osm_id": 9181581123,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8293049,
+          10.2651992
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8293049,
+          10.2651992
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tabunok",
+        "city": "Talisay City",
+        "alt_names": [
+          "Tabunoc"
+        ],
+        "psgc_code": "0702250016",
+        "admin_level": 10,
+        "osm_id": 6244086551,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8398179,
+          10.2635799
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8398179,
+          10.2635799
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tangke",
+        "city": "Talisay City",
+        "alt_names": [
+          "Tanke"
+        ],
+        "psgc_code": "072250017",
+        "admin_level": 10,
+        "osm_id": 4666810366,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8613078,
+          10.2509649
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8613078,
+          10.2509649
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Tapul",
+        "city": "Talisay City",
+        "alt_names": [],
+        "psgc_code": "072250018",
+        "admin_level": 10,
+        "osm_id": 6244086436,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8034437,
+          10.2889433
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8034437,
+          10.2889433
+        ]
+      }
+    }
+  ]
+}

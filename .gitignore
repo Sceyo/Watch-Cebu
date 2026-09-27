@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-client/
+
+# Environment / secrets — never commit real values
+.env
+.env.local
+.env.*.local
+
+# Editor/OS cruft
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+npm-debug.log*
+*.log
+
+# ZIP FILES
+.zip
+*.zip
+
+# Vite
+.vite/
+
+# Test coverage output
+coverage/
+
+# Keep committed intentionally — do not add:
+# certs/phivolcs-intermediate.pem (public certificate, required at runtime)
+# .env.example (template only, contains no real secrets)
+# data/*.json (scheduled-job-written snapshots, intentionally versioned)
