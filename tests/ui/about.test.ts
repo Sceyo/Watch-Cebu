@@ -53,14 +53,16 @@ function createMockElement(): any {
 }
 
 describe("About Drawer Component", () => {
-  it("ABOUT_METADATA contains required fields and valid feedback URL", () => {
+  it("ABOUT_METADATA contains required fields and valid URLs", () => {
     expect(ABOUT_METADATA.appName).toBe("WATCH CEBU");
     expect(ABOUT_METADATA.tagline).toBeDefined();
     expect(ABOUT_METADATA.description).toBeDefined();
     expect(ABOUT_METADATA.feedbackUrl).toMatch(/^https?:\/\//);
+    expect(ABOUT_METADATA.githubUrl).toMatch(/^https?:\/\//);
+    expect(ABOUT_METADATA.linkedinUrl).toMatch(/^https?:\/\//);
   });
 
-  it("renderAbout outputs real authoritative data attribution for VECO, PHIVOLCS, OpenStreetMap, CARTO", () => {
+  it("renderAbout outputs real authoritative data attribution and developer connect links", () => {
     const container = createMockElement();
     renderAbout(container, true, () => {});
 
@@ -69,6 +71,9 @@ describe("About Drawer Component", () => {
     expect(container.innerHTML).toContain("OpenStreetMap");
     expect(container.innerHTML).toContain("CARTO Basemaps");
     expect(container.innerHTML).toContain("Report an Issue or Feedback");
+    expect(container.innerHTML).toContain("GitHub");
+    expect(container.innerHTML).toContain("LinkedIn");
+    expect(container.innerHTML).not.toContain("// PLACEHOLDER");
   });
 
   it("renderAbout sets accessibility attributes role='dialog' and aria-modal='true'", () => {

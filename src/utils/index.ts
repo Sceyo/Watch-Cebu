@@ -377,7 +377,7 @@ export function formatPhilippineDateTime(
       hour: "numeric",
       minute: "2-digit",
       hour12: true,
-    }) + " PST";
+    }) + " PHT";
 
   let relative: string | null = null;
   const diffSec = Math.floor((now.getTime() - d.getTime()) / 1000);
@@ -398,4 +398,87 @@ export function formatPhilippineDateTime(
     relative,
   };
 }
+
+/**
+ * Format an ISO date string like "2026-09-27" into readable "Sun, Sep 27" format.
+ */
+export function formatReadableDate(dateStr: string): string {
+  if (!dateStr) return "";
+  const parts = dateStr.split("-").map(Number);
+  if (parts.length < 3 || isNaN(parts[0]) || isNaN(parts[1]) || isNaN(parts[2])) {
+    return dateStr;
+  }
+  const [y, m, d] = parts;
+  // Manila is UTC+8, so 04:00 UTC is 12:00 noon Manila
+  const date = new Date(Date.UTC(y, m - 1, d, 4, 0, 0));
+  return date.toLocaleDateString("en-US", {
+    timeZone: "Asia/Manila",
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  });
+}
+
+/**
+ * Convert 24-hour "HH:MM" string to 12-hour "H:MM AM/PM" format.
+ */
+export function to12Hour(t: string): string {
+  if (!t) return "";
+  const trimmed = t.trim();
+  if (/AM|PM/i.test(trimmed)) return trimmed;
+  const parts = trimmed.split(":");
+  if (parts.length < 2) return trimmed;
+  let h = parseInt(parts[0], 10);
+  const m = parts[1];
+  if (isNaN(h)) return trimmed;
+  const ampm = h >= 12 ? "PM" : "AM";
+  if (h === 0) h = 12;
+  else if (h > 12) h -= 12;
+  return `${h}:${m} ${ampm}`;
+}
+
+/**
+ * Format start and end times into a friendly 12-hour Philippine Standard Time range.
+ * e.g. "08:00", "17:00" -> "8:00 AM – 5:00 PM PHT"
+ */
+export function formatPhilippineTimeRange(
+  startTime: string,
+  endTime: string,
+  overnight = false
+): string {
+  const start12 = to12Hour(startTime);
+  const end12 = to12Hour(endTime);
+  const suffix = overnight ? " (Overnight)" : "";
+  return `${start12} – ${end12} PHT${suffix}`;
+}
+
+/**
+ * Normalizes and deduplicates street lists by stripping duplicate punctuation,
+ * unifying abbreviations, and removing case-insensitive duplicates.
+ */
+export function normalizeStreetList(streets: string[]): string[] {
+  if (!streets || streets.length === 0) return [];
+  const seen = new Set<string>();
+  const result: string[] = [];
+
+  for (const raw of streets) {
+    if (!raw) continue;
+    let s = raw.trim().replace(/\s+/g, " ");
+    s = s.replace(/[,.]+$/, "");
+    s = s.replace(/\bSt\b\.?/gi, "St");
+    s = s.replace(/\bAve\b\.?/gi, "Ave");
+    s = s.replace(/\bRd\b\.?/gi, "Rd");
+    s = s.replace(/\bExt\b\.?/gi, "Ext");
+    s = s.replace(/\bBrgy\b\.?/gi, "Brgy");
+
+    // Key collapses periods and extra whitespace so "M.L. Quezon St" and "M.L Quezon St" match
+    const key = s.toLowerCase().replace(/\./g, "").replace(/\s+/g, " ");
+    if (!seen.has(key)) {
+      seen.add(key);
+      result.push(s);
+    }
+  }
+  return result;
+}
+
 

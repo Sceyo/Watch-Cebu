@@ -1,21 +1,27 @@
 /**
  * Main Application Bootstrapper for Watch Cebu.
  *
- * Implements Stage 3 Architecture:
+ * Implements Stage 3 Architecture & Mobile-First Responsive Overhaul:
  * - Bootstraps decoupled data fetches for Power Advisories and Earthquakes.
  * - Manages application state: LayerSelection, FilterState, FeedState.
- * - Renders MapController, Header, DayTabs, Legend, and Fallback Banner.
- * - Manages Multi-Hazard Drawers (Legend, About, Air Quality) with backdrop & focus traps.
+ * - Renders MapController, Header, DayTabs, Legend, About, Air Quality, and Forecast Drawers.
+ * - Mobile Touch Bottom Sheet for marker details (C1).
+ * - Mobile Compact 52px Header + Consolidated System Status Popover (C2).
+ * - Fixed 56px Mobile Bottom Action Bar (C2).
+ * - Metro Cebu default map view without auto-fit jumping (H2).
+ * - Preselect Today (PHT) on initial load with past tabs dimmed (H3).
+ * - Interactive Search and Locate Me controls (H5).
+ * - 44×44px touch targets and full keyboard accessibility.
  */
 
 import "leaflet/dist/leaflet.css";
 import "./ui/styles/main.css";
 import type { PowerAdvisory, EarthquakeEvent } from "./types/index.js";
-import type { LayerSelection, FilterState, FeedState } from "./ui/types.js";
+import type { LayerSelection, FilterState, FeedState, SelectedLocationDetails } from "./ui/types.js";
 import { fetchPowerAdvisories, fetchEarthquakeEvents } from "./ui/services/dataFeed.js";
 import { MapController } from "./ui/map/mapController.js";
 import { renderHeader } from "./ui/components/header.js";
-import { renderDayTabs } from "./ui/components/dayTabs.js";
+import { renderDayTabs, getTodayPhtString } from "./ui/components/dayTabs.js";
 import { renderDataSourceBanner } from "./ui/components/dataSourceBanner.js";
 import { renderLegend } from "./ui/components/legend.js";
 import { renderAbout } from "./ui/components/about.js";
@@ -30,17 +36,28 @@ import {
   type ForecastResult,
 } from "./ui/services/forecast.js";
 import { renderForecastDrawer } from "./ui/components/forecastDrawer.js";
+import { renderMapControls } from "./ui/components/mapControls.js";
+import {
+  renderMobileBottomBar,
+  renderStatusPopover,
+  renderMobileBottomSheet,
+  showToast,
+} from "./ui/components/mobileNav.js";
 
 // Global App State
 let currentLayer: LayerSelection = "both";
 let filterState: FilterState = {
   selectedDate: "all",
   minMagnitude: 0,
+  searchQuery: "",
 };
+
 let isLegendOpen = false;
 let isAboutOpen = false;
 let isAirQualityOpen = false;
 let isForecastOpen = false;
+let isStatusPopoverOpen = false;
+let selectedLocation: SelectedLocationDetails | null = null;
 let lastFocusedTrigger: HTMLElement | null = null;
 
 let powerFeedState: FeedState<PowerAdvisory[]> = {
@@ -53,18 +70,28 @@ let eqFeedState: FeedState<EarthquakeEvent[]> = {
   data: [],
 };
 
-// Optimistic UI cache for instant header render (Task 10)
+// Optimistic UI cache for instant header render
 let airQualityData: AirQualityReading | null = getCachedAirQuality();
 let forecastData: ForecastResult | null = null;
 
 let mapController: MapController | null = null;
 
 function closeAllDrawers() {
-  if (isLegendOpen || isAboutOpen || isAirQualityOpen || isForecastOpen) {
+  if (
+    isLegendOpen ||
+    isAboutOpen ||
+    isAirQualityOpen ||
+    isForecastOpen ||
+    isStatusPopoverOpen ||
+    selectedLocation !== null
+  ) {
     isLegendOpen = false;
     isAboutOpen = false;
     isAirQualityOpen = false;
     isForecastOpen = false;
+    isStatusPopoverOpen = false;
+    selectedLocation = null;
+    document.body.classList.remove("modal-open");
     updateUI();
     if (lastFocusedTrigger) {
       lastFocusedTrigger.focus();
@@ -78,6 +105,8 @@ function getActiveDrawerElement(): HTMLElement | null {
   if (isAirQualityOpen) return document.getElementById("air-drawer");
   if (isLegendOpen) return document.getElementById("legend-drawer");
   if (isAboutOpen) return document.getElementById("about-drawer");
+  if (isStatusPopoverOpen) return document.getElementById("status-popover");
+  if (selectedLocation) return document.getElementById("mobile-bottom-sheet");
   return null;
 }
 
@@ -85,7 +114,9 @@ function focusActiveDrawer() {
   setTimeout(() => {
     const activeEl = getActiveDrawerElement();
     if (activeEl) {
-      const closeBtn = activeEl.querySelector<HTMLButtonElement>("button.legend-close-btn, button.drawer-close-btn");
+      const closeBtn = activeEl.querySelector<HTMLButtonElement>(
+        "button.legend-close-btn, button.drawer-close-btn, button.sheet-close-btn"
+      );
       closeBtn?.focus();
     }
   }, 50);
@@ -100,13 +131,31 @@ function updateUI() {
   const airDrawerEl = document.getElementById("air-drawer");
   const forecastDrawerEl = document.getElementById("forecast-drawer");
   const backdropEl = document.getElementById("drawer-backdrop");
+  const mapControlsEl = document.getElementById("map-controls-container");
+  const mobileBottomBarEl = document.getElementById("mobile-bottom-bar");
+  const mobileBottomSheetEl = document.getElementById("mobile-bottom-sheet");
+  const statusPopoverEl = document.getElementById("status-popover");
 
-  const isAnyDrawerOpen = isLegendOpen || isAboutOpen || isAirQualityOpen || isForecastOpen;
+  const isAnyDrawerOpen =
+    isLegendOpen ||
+    isAboutOpen ||
+    isAirQualityOpen ||
+    isForecastOpen ||
+    isStatusPopoverOpen ||
+    selectedLocation !== null;
+
   if (backdropEl) {
     backdropEl.classList.toggle("active", isAnyDrawerOpen);
     backdropEl.setAttribute("aria-hidden", isAnyDrawerOpen ? "false" : "true");
   }
 
+  if (isAnyDrawerOpen) {
+    document.body.classList.add("modal-open");
+  } else {
+    document.body.classList.remove("modal-open");
+  }
+
+  // Header Component (Desktop full / Mobile 52px top bar)
   if (headerEl) {
     renderHeader(
       headerEl,
@@ -124,6 +173,9 @@ function updateUI() {
           if (isLegendOpen) {
             isAboutOpen = false;
             isAirQualityOpen = false;
+            isForecastOpen = false;
+            isStatusPopoverOpen = false;
+            selectedLocation = null;
             lastFocusedTrigger = document.getElementById("btn-toggle-legend");
             focusActiveDrawer();
           }
@@ -134,6 +186,9 @@ function updateUI() {
           if (isAboutOpen) {
             isLegendOpen = false;
             isAirQualityOpen = false;
+            isForecastOpen = false;
+            isStatusPopoverOpen = false;
+            selectedLocation = null;
             lastFocusedTrigger = document.getElementById("btn-toggle-about");
             focusActiveDrawer();
           }
@@ -145,6 +200,8 @@ function updateUI() {
             isLegendOpen = false;
             isAboutOpen = false;
             isForecastOpen = false;
+            isStatusPopoverOpen = false;
+            selectedLocation = null;
             lastFocusedTrigger = document.getElementById("btn-toggle-air");
             focusActiveDrawer();
           }
@@ -156,7 +213,22 @@ function updateUI() {
             isLegendOpen = false;
             isAboutOpen = false;
             isAirQualityOpen = false;
+            isStatusPopoverOpen = false;
+            selectedLocation = null;
             lastFocusedTrigger = document.getElementById("btn-toggle-forecast");
+            focusActiveDrawer();
+          }
+          updateUI();
+        },
+        onStatusPopoverToggle: () => {
+          isStatusPopoverOpen = !isStatusPopoverOpen;
+          if (isStatusPopoverOpen) {
+            isLegendOpen = false;
+            isAboutOpen = false;
+            isAirQualityOpen = false;
+            isForecastOpen = false;
+            selectedLocation = null;
+            lastFocusedTrigger = document.getElementById("btn-mobile-status");
             focusActiveDrawer();
           }
           updateUI();
@@ -165,6 +237,121 @@ function updateUI() {
       {
         airQuality: airQualityData,
         isForecastActive: isForecastOpen,
+      }
+    );
+  }
+
+  // Floating Map Controls (Search, Locate Me, Mobile Layer Toggle)
+  if (mapControlsEl) {
+    renderMapControls(mapControlsEl, currentLayer, {
+      onSearchChange: (query) => {
+        filterState.searchQuery = query;
+        mapController?.renderPowerAdvisories(powerFeedState.data, filterState);
+        mapController?.renderEarthquakeEvents(eqFeedState.data, filterState);
+      },
+      onLocateUser: (coords) => {
+        mapController?.centerOnUser(coords);
+      },
+      onLayerChange: (layer) => {
+        currentLayer = layer;
+        mapController?.setLayerVisibility(currentLayer);
+        updateUI();
+      },
+      onToast: (msg) => {
+        showToast(msg);
+      },
+    });
+  }
+
+  // Mobile Fixed Bottom Action Bar (56px + safe area)
+  if (mobileBottomBarEl) {
+    renderMobileBottomBar(
+      mobileBottomBarEl,
+      {
+        isForecastOpen,
+        isAirOpen: isAirQualityOpen,
+        isLegendOpen,
+        isAboutOpen,
+        airQuality: airQualityData,
+      },
+      {
+        onForecastToggle: () => {
+          isForecastOpen = !isForecastOpen;
+          if (isForecastOpen) {
+            isLegendOpen = false;
+            isAboutOpen = false;
+            isAirQualityOpen = false;
+            isStatusPopoverOpen = false;
+            selectedLocation = null;
+            lastFocusedTrigger = document.getElementById("btn-bottom-forecast");
+            focusActiveDrawer();
+          }
+          updateUI();
+        },
+        onAirQualityToggle: () => {
+          isAirQualityOpen = !isAirQualityOpen;
+          if (isAirQualityOpen) {
+            isLegendOpen = false;
+            isAboutOpen = false;
+            isForecastOpen = false;
+            isStatusPopoverOpen = false;
+            selectedLocation = null;
+            lastFocusedTrigger = document.getElementById("btn-bottom-air");
+            focusActiveDrawer();
+          }
+          updateUI();
+        },
+        onLegendToggle: () => {
+          isLegendOpen = !isLegendOpen;
+          if (isLegendOpen) {
+            isAboutOpen = false;
+            isAirQualityOpen = false;
+            isForecastOpen = false;
+            isStatusPopoverOpen = false;
+            selectedLocation = null;
+            lastFocusedTrigger = document.getElementById("btn-bottom-legend");
+            focusActiveDrawer();
+          }
+          updateUI();
+        },
+        onAboutToggle: () => {
+          isAboutOpen = !isAboutOpen;
+          if (isAboutOpen) {
+            isLegendOpen = false;
+            isAirQualityOpen = false;
+            isForecastOpen = false;
+            isStatusPopoverOpen = false;
+            selectedLocation = null;
+            lastFocusedTrigger = document.getElementById("btn-bottom-about");
+            focusActiveDrawer();
+          }
+          updateUI();
+        },
+      }
+    );
+  }
+
+  // Mobile Touch Bottom Sheet
+  if (mobileBottomSheetEl) {
+    renderMobileBottomSheet(mobileBottomSheetEl, selectedLocation, () => {
+      selectedLocation = null;
+      document.body.classList.remove("modal-open");
+      updateUI();
+    });
+  }
+
+  // Mobile Consolidated Status Popover
+  if (statusPopoverEl) {
+    renderStatusPopover(
+      statusPopoverEl,
+      isStatusPopoverOpen,
+      powerFeedState,
+      eqFeedState,
+      airQualityData,
+      () => {
+        isStatusPopoverOpen = false;
+        document.body.classList.remove("modal-open");
+        updateUI();
       }
     );
   }
@@ -219,25 +406,49 @@ function updateUI() {
 }
 
 async function init() {
-  // Initialize Map
+  // Initialize Map centered on Metro Cebu
   mapController = new MapController("map");
 
-  // Initial UI render (using cached air quality if available, eliminating layout shift)
+  // Wire mobile/touch selection callback to bottom sheet (C1)
+  mapController.setOnSelectLocation((details) => {
+    selectedLocation = details;
+    isLegendOpen = false;
+    isAboutOpen = false;
+    isAirQualityOpen = false;
+    isForecastOpen = false;
+    isStatusPopoverOpen = false;
+    updateUI();
+    focusActiveDrawer();
+  });
+
+  // Initial UI render
   updateUI();
 
-  // Backdrop click listener to close open drawer (Task 6)
+  // Backdrop click listener to close open drawer or bottom sheet
   const backdropEl = document.getElementById("drawer-backdrop");
   backdropEl?.addEventListener("click", () => {
     closeAllDrawers();
   });
 
-  // Kick off decoupled fetches in parallel — none awaits the other
-  const powerPromise = fetchPowerAdvisories().then((state) => {
+  // Kick off decoupled fetches in parallel
+  fetchPowerAdvisories().then((state) => {
     powerFeedState = state;
+    // Preselect Today (PHT) on initial load (H3)
+    if (state.data.length > 0 && filterState.selectedDate === "all") {
+      const todayPht = getTodayPhtString();
+      if (state.data.some((a) => a.date === todayPht)) {
+        filterState.selectedDate = todayPht;
+      } else {
+        const sortedDates = [...new Set(state.data.map((a) => a.date))].sort();
+        if (sortedDates.length > 0) {
+          filterState.selectedDate = sortedDates[0];
+        }
+      }
+    }
     updateUI();
   });
 
-  const eqPromise = fetchEarthquakeEvents().then((state) => {
+  fetchEarthquakeEvents().then((state) => {
     eqFeedState = state;
     updateUI();
   });
@@ -254,15 +465,17 @@ async function init() {
     }
   });
 
-  // When power and earthquakes settle, fit bounds if appropriate
-  Promise.allSettled([powerPromise, eqPromise]).then(() => {
-    mapController?.fitBoundsIfNotEmpty();
-  });
-
-  // Global Keyboard listener: Escape closes drawers & Tab focus trapping (Task 7)
+  // Global Keyboard listener: Escape closes dialogs & Tab focus trapping
   window.addEventListener("keydown", (e) => {
-    const isAnyDrawerOpen = isLegendOpen || isAboutOpen || isAirQualityOpen || isForecastOpen;
-    if (!isAnyDrawerOpen) return;
+    const isAnyOpen =
+      isLegendOpen ||
+      isAboutOpen ||
+      isAirQualityOpen ||
+      isForecastOpen ||
+      isStatusPopoverOpen ||
+      selectedLocation !== null;
+
+    if (!isAnyOpen) return;
 
     if (e.key === "Escape") {
       e.preventDefault();
@@ -271,10 +484,10 @@ async function init() {
     }
 
     if (e.key === "Tab") {
-      const activeDrawer = getActiveDrawerElement();
-      if (!activeDrawer) return;
+      const activeDialog = getActiveDrawerElement();
+      if (!activeDialog) return;
 
-      const focusable = activeDrawer.querySelectorAll<HTMLElement>(
+      const focusable = activeDialog.querySelectorAll<HTMLElement>(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
       );
       if (focusable.length === 0) return;

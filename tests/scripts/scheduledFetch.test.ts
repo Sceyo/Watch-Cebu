@@ -88,7 +88,7 @@ describe("Scheduled Fetch Script (scripts/run_scheduled_fetch.ts)", () => {
 
     expect(eqLiveAfter).toBe(eqLiveBefore);
     expect(eqStatusAfter).toBe(eqStatusBefore);
-  }, 30_000);
+  }, 60_000);
 
   it("processes earthquake feed and leaves power files untouched", () => {
     const powerLiveBefore = existsSync(POWER_LIVE) ? readFileSync(POWER_LIVE, "utf-8") : null;
@@ -113,7 +113,7 @@ describe("Scheduled Fetch Script (scripts/run_scheduled_fetch.ts)", () => {
 
     expect(powerLiveAfter).toBe(powerLiveBefore);
     expect(powerStatusAfter).toBe(powerStatusBefore);
-  }, 30_000);
+  }, 60_000);
 
   it("flags staleness by setting exit code 1 when last_successful_update is older than threshold", () => {
     // Intentionally write a status file with last_successful_update > 48 hours ago

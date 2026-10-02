@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Watch Cebu — Civic Awareness Map</title>
     <meta name="description" content="Metro Cebu civic awareness map for scheduled power interruptions (VECO) and earthquake activity (PHIVOLCS)." />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
@@ -25,10 +25,24 @@
       <!-- Main Map Container -->
       <main id="map-container" class="map-container">
         <div id="map"></div>
+        <!-- Floating search, locate me, and mobile layer toggle -->
+        <div id="map-controls-container" class="map-controls-container"></div>
       </main>
 
-      <!-- Scrim / Backdrop Overlay for Drawers -->
+      <!-- Fixed Mobile Bottom Action Bar (C2: 56px + safe-area) -->
+      <nav id="mobile-bottom-bar" class="mobile-bottom-bar mobile-only" aria-label="Mobile Navigation"></nav>
+
+      <!-- Scrim / Backdrop Overlay for Drawers & Bottom Sheet -->
       <div id="drawer-backdrop" class="drawer-backdrop" aria-hidden="true"></div>
+
+      <!-- Mobile Bottom Sheet (C1: Slide up from bottom on mobile/touch) -->
+      <section id="mobile-bottom-sheet" class="mobile-bottom-sheet closed" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Location Details"></section>
+
+      <!-- Mobile Consolidated Status Popover (C2) -->
+      <div id="status-popover" class="status-popover closed" role="dialog" aria-modal="true" aria-hidden="true" aria-label="System Feed Status"></div>
+
+      <!-- Toast Feedback Container -->
+      <div id="toast-container" class="toast-container" aria-live="polite"></div>
 
       <!-- Persistent Info & Legend Drawer -->
       <aside id="legend-drawer" class="legend-drawer" role="dialog" aria-modal="true" aria-label="Map Guide & Legend"></aside>

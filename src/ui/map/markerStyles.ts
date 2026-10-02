@@ -57,6 +57,9 @@ export function computePowerStatus(
       category: "active",
       label: "Active Outage Now",
       hex: "#EF4444",
+      glyph: "⚡",
+      iconName: "bolt",
+      opacity: 1.0,
       description: "Scheduled interruption currently underway",
     };
   } else if (diffToStartMs > 0 && diffToStartMs <= TWO_HOURS_MS) {
@@ -64,6 +67,9 @@ export function computePowerStatus(
       category: "upcoming",
       label: "Upcoming (< 2h)",
       hex: "#F59E0B",
+      glyph: "⏱",
+      iconName: "clock",
+      opacity: 1.0,
       description: "Interruption scheduled within the next 2 hours",
     };
   } else if (currentMs < startMs) {
@@ -71,6 +77,9 @@ export function computePowerStatus(
       category: "later",
       label: "Later / Scheduled",
       hex: "#3B82F6",
+      glyph: "📅",
+      iconName: "calendar",
+      opacity: 1.0,
       description: "Scheduled for later today or upcoming date",
     };
   } else {
@@ -78,6 +87,9 @@ export function computePowerStatus(
       category: "restored",
       label: "Restored / Concluded",
       hex: "#22C55E",
+      glyph: "✓",
+      iconName: "check",
+      opacity: 0.45,
       description: "Scheduled window has passed",
     };
   }
@@ -134,6 +146,37 @@ export interface EarthquakeMarkerOptions {
 }
 
 /**
+ * Normalizes and formats town/city names for the compact Option C wedge.
+ * Strips verbose administrative prefixes like "City of " and "Municipality of "
+ * so the actual town name is clearly legible instead of truncating to "City Of …".
+ */
+export function cleanTownName(name: string): string {
+  if (!name) return "Visayas";
+  let cleaned = name
+    .replace(/\(.*?\)/g, "") // remove parentheticals like (Southern Leyte)
+    .replace(/^city\s+of\s+/i, "")
+    .replace(/^municipality\s+of\s+/i, "")
+    .replace(/^town\s+of\s+/i, "")
+    .replace(/^island\s+of\s+/i, "")
+    .replace(/,\s*.*$/, "") // remove comma suffixes like ", Cebu"
+    .trim();
+
+  // Common abbreviations for long Philippine place names
+  cleaned = cleaned.replace(/^General\s+/i, "Gen. ");
+  cleaned = cleaned.replace(/^Captain\s+/i, "Capt. ");
+  cleaned = cleaned.replace(/^Governor\s+/i, "Gov. ");
+  cleaned = cleaned.replace(/^President\s+/i, "Pres. ");
+  cleaned = cleaned.replace(/^Barangay\s+/i, "Brgy. ");
+  cleaned = cleaned.replace(/^Santa\s+/i, "Sta. ");
+  cleaned = cleaned.replace(/^Santo\s+/i, "Sto. ");
+
+  if (cleaned.length > 9) {
+    return cleaned.slice(0, 8).trim() + "…";
+  }
+  return cleaned || "Visayas";
+}
+
+/**
  * Renders the Option C compound earthquake marker:
  * - Bottom circle with bold magnitude number
  * - Top curved annular wedge with location name
@@ -141,8 +184,7 @@ export interface EarthquakeMarkerOptions {
  */
 export function renderEarthquakeMarkerSvg(opts: EarthquakeMarkerOptions): string {
   const magStr = opts.magnitude.toFixed(1);
-  const town = (opts.locationLabel || "Visayas").trim();
-  const shortTown = town.length > 9 ? town.slice(0, 8) + "…" : town;
+  const shortTown = cleanTownName(opts.locationLabel);
   const pulseClass = opts.isRecentOrSignificant ? "has-pulse" : "";
 
   return `

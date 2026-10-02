@@ -7,6 +7,7 @@
  */
 
 import type { ForecastResult, HourlyForecastEntry } from "../services/forecast.js";
+import { ICONS } from "./icons.js";
 
 export function renderForecastDrawer(
   container: HTMLElement,
@@ -32,10 +33,10 @@ export function renderForecastDrawer(
     container.innerHTML = `
       <div class="drawer-header">
         <div class="drawer-title" id="forecast-drawer-title">
-          <span style="font-size: 1.25rem;" aria-hidden="true">🌦️</span>
+          <span style="display: inline-flex; align-items: center; color: var(--accent-blue);" aria-hidden="true">${ICONS.weather}</span>
           <span>Today's Weather Forecast — Metro Cebu</span>
         </div>
-        <button class="drawer-close-btn" id="btn-close-forecast-drawer" aria-label="Close Forecast" title="Close Forecast">✕</button>
+        <button class="drawer-close-btn" id="btn-close-forecast-drawer" aria-label="Close Forecast" title="Close Forecast">${ICONS.close}</button>
       </div>
       <div class="drawer-content" style="padding: 2rem; text-align: center; color: var(--text-secondary);">
         <p>Fetching today's hourly weather forecast for Metro Cebu...</p>
@@ -50,10 +51,10 @@ export function renderForecastDrawer(
     container.innerHTML = `
       <div class="drawer-header">
         <div class="drawer-title" id="forecast-drawer-title">
-          <span style="font-size: 1.25rem;" aria-hidden="true">🌦️</span>
+          <span style="display: inline-flex; align-items: center; color: var(--accent-blue);" aria-hidden="true">${ICONS.weather}</span>
           <span>Today's Weather Forecast — Metro Cebu</span>
         </div>
-        <button class="drawer-close-btn" id="btn-close-forecast-drawer" aria-label="Close Forecast" title="Close Forecast">✕</button>
+        <button class="drawer-close-btn" id="btn-close-forecast-drawer" aria-label="Close Forecast" title="Close Forecast">${ICONS.close}</button>
       </div>
       <div class="drawer-content" style="padding: 1.5rem;">
         <div style="background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 16px; color: #FCA5A5; font-size: 0.85rem; line-height: 1.4;">
@@ -82,11 +83,11 @@ export function renderForecastDrawer(
           </div>
           <div class="hour-card-icon" aria-hidden="true">${entry.icon}</div>
           <div class="hour-card-rain" title="Precipitation probability">
-            <span class="hour-metric-icon">🌧️</span>
+            <span class="hour-metric-icon" style="display: inline-flex; align-items: center; color: #60A5FA;">${ICONS.rain}</span>
             <span class="hour-metric-val">${entry.precipitationProbability}%</span>
           </div>
           <div class="hour-card-wind" title="Wind speed">
-            <span class="hour-metric-icon">💨</span>
+            <span class="hour-metric-icon" style="display: inline-flex; align-items: center; color: #94A3B8;">${ICONS.wind}</span>
             <span class="hour-metric-val">${entry.windSpeedKmh}<small>km/h</small></span>
           </div>
         </div>
@@ -97,16 +98,16 @@ export function renderForecastDrawer(
   container.innerHTML = `
     <div class="drawer-header">
       <div class="drawer-title" id="forecast-drawer-title">
-        <span style="font-size: 1.25rem;" aria-hidden="true">🌦️</span>
+        <span style="display: inline-flex; align-items: center; color: var(--accent-blue);" aria-hidden="true">${ICONS.weather}</span>
         <span>Today's Weather Forecast — Metro Cebu</span>
       </div>
-      <button class="drawer-close-btn" id="btn-close-forecast-drawer" aria-label="Close Forecast" title="Close Forecast">✕</button>
+      <button class="drawer-close-btn" id="btn-close-forecast-drawer" aria-label="Close Forecast" title="Close Forecast">${ICONS.close}</button>
     </div>
 
     <div class="drawer-content forecast-drawer-content">
       <div class="forecast-meta-row">
         <span>● Metro Cebu (10.32°N, 123.89°E)</span>
-        <span>Open-Meteo Hourly Model • 24-Hour Horizon</span>
+        <span>Open-Meteo Hourly Model • Today (PHT)</span>
       </div>
 
       <!-- Single Horizontal Scrolling Row of Today's Hours -->

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Day-Tab Navigation Component for VECO Power Advisories.
  *
  * Implements Stage 3 requirements:
@@ -26,12 +26,22 @@ export function formatTabDateLabel(dateStr: string): string {
   return `${monthNames[m] || parts[1]} ${d}`;
 }
 
+export function getTodayPhtString(): string {
+  try {
+    return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Manila" }).format(new Date());
+  } catch {
+    return new Date().toISOString().slice(0, 10);
+  }
+}
+
 export function renderDayTabs(
   container: HTMLElement,
   advisories: PowerAdvisory[],
   selectedDate: string,
-  onSelectDate: (date: string) => void
+  onSelectDate: (date: string) => void,
+  todayPht?: string
 ): void {
+  const currentToday = todayPht || getTodayPhtString();
   const distribution = calculateDayDistribution(advisories);
   const sortedDates = Object.keys(distribution).sort();
   const totalCount = advisories.length;
@@ -47,9 +57,15 @@ export function renderDayTabs(
     const count = distribution[date];
     const label = formatTabDateLabel(date);
     const isActive = selectedDate === date ? "active" : "";
+    const isPast = date < currentToday;
+    const isToday = date === currentToday;
+    const pastClass = isPast ? " past-tab" : "";
+    const todayClass = isToday ? " today-tab" : "";
+    const todayTag = isToday ? ` <span class="today-tag">Today</span>` : "";
+
     tabsHtml += `
-      <button class="day-tab ${isActive}" data-date="${date}">
-        <span class="tab-label">${label}</span>
+      <button class="day-tab ${isActive}${pastClass}${todayClass}" data-date="${date}">
+        <span class="tab-label">${label}${todayTag}</span>
         <span class="tab-badge">${count}</span>
       </button>
     `;

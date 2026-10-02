@@ -1,4 +1,4 @@
-﻿/**
+/**
  * UI State and Domain Types for Watch Cebu.
  */
 
@@ -20,7 +20,12 @@ export interface FeedState<T> {
 export interface FilterState {
   selectedDate: string; // "all" or specific ISO date like "2026-09-09"
   minMagnitude: number; // 0 for all
+  searchQuery?: string;
 }
+
+export type SelectedLocationDetails =
+  | { type: "power"; advisories: PowerAdvisory[] }
+  | { type: "earthquake"; event: EarthquakeEvent };
 
 export type PowerStatusCategory = "active" | "upcoming" | "later" | "restored";
 
@@ -28,6 +33,9 @@ export interface PowerStatusStyle {
   category: PowerStatusCategory;
   label: string;
   hex: string;
+  glyph?: string;
+  iconName?: "bolt" | "clock" | "calendar" | "check";
+  opacity?: number;
   description: string;
 }
 

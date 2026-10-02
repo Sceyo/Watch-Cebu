@@ -16,9 +16,14 @@
  */
 
 import { describe, it, expect } from "vitest";
-import { computePowerStatus, computeEarthquakeSeverity } from "../../src/ui/map/markerStyles.js";
+import { computePowerStatus, computeEarthquakeSeverity, cleanTownName } from "../../src/ui/map/markerStyles.js";
 import { calculateDayDistribution } from "../../src/ui/components/dayTabs.js";
-import { formatPhilippineDateTime } from "../../src/utils/index.js";
+import {
+  formatPhilippineDateTime,
+  formatReadableDate,
+  formatPhilippineTimeRange,
+  normalizeStreetList,
+} from "../../src/utils/index.js";
 import { readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -122,12 +127,12 @@ describe("formatPhilippineDateTime", () => {
     // 2026-09-05T23:15:20+08:00 (15:15:20 UTC)
     const result = formatPhilippineDateTime("2026-09-05T23:15:20+08:00", new Date("2026-09-20T00:00:00.000Z"));
     expect(result.date).toBe("Sep 5, 2026");
-    expect(result.time).toBe("11:15 PM PST");
-    expect(result.full).toContain("Sep 5, 2026 · 11:15 PM PST");
+    expect(result.time).toBe("11:15 PM PHT");
+    expect(result.full).toContain("Sep 5, 2026 · 11:15 PM PHT");
   });
 
   it("calculates relative time for recent events", () => {
-    const now = new Date("2026-09-05T15:15:20.000Z"); // 23:15:20 PST
+    const now = new Date("2026-09-05T15:15:20.000Z"); // 23:15:20 PHT
     // 30 seconds ago
     const justNow = formatPhilippineDateTime("2026-09-05T23:14:55+08:00", now);
     expect(justNow.relative).toBe("Just now");
@@ -155,4 +160,78 @@ describe("formatPhilippineDateTime", () => {
     expect(invalid.time).toBe("");
   });
 });
+
+describe("cleanTownName for Option C Wedge Pin", () => {
+  it("strips 'City of ' and 'City Of ' prefixes", () => {
+    expect(cleanTownName("City Of Bogo")).toBe("Bogo");
+    expect(cleanTownName("City of Tagbilaran")).toBe("Tagbilar…");
+    expect(cleanTownName("City Of Talisay")).toBe("Talisay");
+    expect(cleanTownName("City Of Baybay")).toBe("Baybay");
+  });
+
+  it("strips parentheticals and municipality prefixes", () => {
+    expect(cleanTownName("Municipality of Borbon")).toBe("Borbon");
+    expect(cleanTownName("San Juan (Southern Leyte)")).toBe("San Juan");
+    expect(cleanTownName("Borbon (Cebu)")).toBe("Borbon");
+  });
+
+  it("abbreviates common honorifics and truncates long names cleanly", () => {
+    expect(cleanTownName("General Luna")).toBe("Gen. Luna");
+    expect(cleanTownName("Santa Fe")).toBe("Sta. Fe");
+    expect(cleanTownName("Santo Nino")).toBe("Sto. Nino");
+    // Long names > 10 chars get 9 chars + ellipsis
+    const longName = cleanTownName("VeryLongTownName");
+    expect(longName.endsWith("…")).toBe(true);
+    expect(longName.length).toBeLessThanOrEqual(10);
+  });
+
+  it("handles empty or falsy names with fallback", () => {
+    expect(cleanTownName("")).toBe("Visayas");
+  });
+});
+
+describe("formatReadableDate", () => {
+  it("formats ISO date string into readable weekday and date", () => {
+    expect(formatReadableDate("2026-09-27")).toBe("Sun, Sep 27");
+    expect(formatReadableDate("2026-09-06")).toBe("Sun, Sep 6");
+    expect(formatReadableDate("2026-09-21")).toBe("Mon, Sep 21");
+  });
+
+  it("handles empty or invalid date gracefully", () => {
+    expect(formatReadableDate("")).toBe("");
+    expect(formatReadableDate("invalid-date")).toBe("invalid-date");
+  });
+});
+
+describe("formatPhilippineTimeRange", () => {
+  it("formats 24h start/end times into 12h range with PHT suffix", () => {
+    expect(formatPhilippineTimeRange("08:00", "17:00")).toBe("8:00 AM – 5:00 PM PHT");
+    expect(formatPhilippineTimeRange("00:30", "06:00")).toBe("12:30 AM – 6:00 AM PHT");
+    expect(formatPhilippineTimeRange("22:00", "06:00", true)).toBe("10:00 PM – 6:00 AM PHT (Overnight)");
+  });
+});
+
+describe("normalizeStreetList", () => {
+  it("deduplicates case variants and trims trailing punctuation", () => {
+    const raw = [
+      "M.L. Quezon St.",
+      "M.L Quezon St",
+      "m.l. quezon st",
+      "A.S. Fortuna Ave,",
+      "A.S. Fortuna Ave",
+      "Banilad Rd.",
+    ];
+    const cleaned = normalizeStreetList(raw);
+    expect(cleaned).toEqual([
+      "M.L. Quezon St",
+      "A.S. Fortuna Ave",
+      "Banilad Rd",
+    ]);
+  });
+
+  it("handles empty array gracefully", () => {
+    expect(normalizeStreetList([])).toEqual([]);
+  });
+});
+
 
