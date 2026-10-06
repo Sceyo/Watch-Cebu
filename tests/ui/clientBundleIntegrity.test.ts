@@ -108,4 +108,23 @@ describe("Client Bundle Integrity — Browser Safety Guard", () => {
       }
     }
   });
+
+  it("no client-side file under src/ui/ or src/main.ts contains placeholder template URLs (Regression Guard)", () => {
+    const clientFiles = [...getAllFiles(uiDir), mainTs];
+    const FORBIDDEN_TEMPLATES = [
+      "YOUR_GITHUB_USERNAME",
+      "YOUR_LINKEDIN_USERNAME",
+      "YOUR_USERNAME",
+    ];
+
+    for (const file of clientFiles) {
+      const content = readFileSync(file, "utf-8");
+      for (const tpl of FORBIDDEN_TEMPLATES) {
+        expect(
+          content.includes(tpl),
+          `Client file ${file} must NOT contain template string "${tpl}". Use null or configure real URL.`
+        ).toBe(false);
+      }
+    }
+  });
 });

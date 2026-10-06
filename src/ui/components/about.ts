@@ -14,9 +14,12 @@ export const ABOUT_METADATA = {
   version: "Stage 6 Production Preview",
   description:
     "Watch Cebu is an open, independent civic transparency platform monitoring scheduled power interruptions, seismic activity, air quality, and daily weather forecasts across Metro Cebu and the Visayas. Data is parsed directly from public utility and agency announcements with coordinate mapping from OpenStreetMap and atmospheric models from Open-Meteo.",
-  githubUrl: "https://github.com/YOUR_GITHUB_USERNAME", // Placeholder for GitHub profile URL
-  linkedinUrl: "https://www.linkedin.com/in/YOUR_LINKEDIN_USERNAME", // Placeholder for LinkedIn profile URL
-  feedbackUrl: "https://github.com/YOUR_GITHUB_USERNAME/Watch-Cebu/issues", // Placeholder for repository issue tracker
+  // TODO: set real GitHub profile URL before deploy
+  githubUrl: null as string | null,
+  // TODO: set real LinkedIn profile URL before deploy
+  linkedinUrl: null as string | null,
+  // TODO: set real repository issues URL before deploy
+  feedbackUrl: null as string | null,
   feedbackLabel: "Report an Issue or Feedback (GitHub)",
 };
 
@@ -29,6 +32,80 @@ export function renderAbout(
   container.setAttribute("role", "dialog");
   container.setAttribute("aria-modal", "true");
   container.setAttribute("aria-label", "About Watch Cebu");
+
+  const githubHtml = ABOUT_METADATA.githubUrl
+    ? `
+      <a href="${ABOUT_METADATA.githubUrl}" target="_blank" rel="noopener noreferrer" class="source-link" style="display: flex; flex-direction: column; padding: 10px 12px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none;">
+        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+          <span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #FFFFFF;">
+            <span style="font-size: 1.15rem; line-height: 1;">🐙</span>
+            <span>GitHub</span>
+          </span>
+          <span style="color: #60A5FA; font-size: 0.85rem;">↗</span>
+        </div>
+        <div style="font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+          ${ABOUT_METADATA.githubUrl}
+        </div>
+      </a>
+    `
+    : `
+      <div class="source-link pending-link" style="display: flex; flex-direction: column; padding: 10px 12px; background: rgba(239, 68, 68, 0.06); border: 1px dashed rgba(239, 68, 68, 0.4); border-radius: 8px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+          <span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #FFFFFF;">
+            <span style="font-size: 1.15rem; line-height: 1;">🐙</span>
+            <span>GitHub</span>
+          </span>
+          <span style="color: #F87171; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; background: rgba(239, 68, 68, 0.15); padding: 2px 6px; border-radius: 4px;">Pending Configuration</span>
+        </div>
+        <div style="font-size: 0.72rem; color: #FCA5A5; font-family: var(--font-mono); margin-top: 4px;">
+          Not yet set — configure maintainer GitHub profile before public launch
+        </div>
+      </div>
+    `;
+
+  const linkedinHtml = ABOUT_METADATA.linkedinUrl
+    ? `
+      <a href="${ABOUT_METADATA.linkedinUrl}" target="_blank" rel="noopener noreferrer" class="source-link" style="display: flex; flex-direction: column; padding: 10px 12px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none;">
+        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+          <span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #FFFFFF;">
+            <span style="font-size: 1.15rem; line-height: 1;">💼</span>
+            <span>LinkedIn</span>
+          </span>
+          <span style="color: #60A5FA; font-size: 0.85rem;">↗</span>
+        </div>
+        <div style="font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+          ${ABOUT_METADATA.linkedinUrl}
+        </div>
+      </a>
+    `
+    : `
+      <div class="source-link pending-link" style="display: flex; flex-direction: column; padding: 10px 12px; background: rgba(239, 68, 68, 0.06); border: 1px dashed rgba(239, 68, 68, 0.4); border-radius: 8px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+          <span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #FFFFFF;">
+            <span style="font-size: 1.15rem; line-height: 1;">💼</span>
+            <span>LinkedIn</span>
+          </span>
+          <span style="color: #F87171; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; background: rgba(239, 68, 68, 0.15); padding: 2px 6px; border-radius: 4px;">Pending Configuration</span>
+        </div>
+        <div style="font-size: 0.72rem; color: #FCA5A5; font-family: var(--font-mono); margin-top: 4px;">
+          Not yet set — configure maintainer LinkedIn profile before public launch
+        </div>
+      </div>
+    `;
+
+  const feedbackHtml = ABOUT_METADATA.feedbackUrl
+    ? `
+      <a href="${ABOUT_METADATA.feedbackUrl}" target="_blank" rel="noopener noreferrer" class="source-link" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 600;">
+        <span>${ABOUT_METADATA.feedbackLabel}</span>
+        <span>↗</span>
+      </a>
+    `
+    : `
+      <div class="source-link pending-link" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #94A3B8; font-size: 0.85rem;">
+        <span>${ABOUT_METADATA.feedbackLabel}</span>
+        <span style="color: #F87171; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; background: rgba(239, 68, 68, 0.15); padding: 2px 6px; border-radius: 4px;">Pending Configuration</span>
+      </div>
+    `;
 
   container.innerHTML = `
     <div class="legend-header">
@@ -99,30 +176,8 @@ export function renderAbout(
         <h3 class="section-title">👤 Developer & Connect</h3>
         <p class="section-desc">Connect with the project maintainer or inspect the source code:</p>
         <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
-          <a href="${ABOUT_METADATA.githubUrl}" target="_blank" rel="noopener noreferrer" class="source-link" style="display: flex; flex-direction: column; padding: 10px 12px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none;">
-            <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-              <span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #FFFFFF;">
-                <span style="font-size: 1.15rem; line-height: 1;">🐙</span>
-                <span>GitHub</span>
-              </span>
-              <span style="color: #60A5FA; font-size: 0.85rem;">↗</span>
-            </div>
-            <div style="font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-              ${ABOUT_METADATA.githubUrl}
-            </div>
-          </a>
-          <a href="${ABOUT_METADATA.linkedinUrl}" target="_blank" rel="noopener noreferrer" class="source-link" style="display: flex; flex-direction: column; padding: 10px 12px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none;">
-            <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-              <span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #FFFFFF;">
-                <span style="font-size: 1.15rem; line-height: 1;">💼</span>
-                <span>LinkedIn</span>
-              </span>
-              <span style="color: #60A5FA; font-size: 0.85rem;">↗</span>
-            </div>
-            <div style="font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-              ${ABOUT_METADATA.linkedinUrl}
-            </div>
-          </a>
+          ${githubHtml}
+          ${linkedinHtml}
         </div>
       </div>
 
@@ -130,10 +185,7 @@ export function renderAbout(
       <div class="legend-section">
         <h3 class="section-title">💬 Issues & Feedback</h3>
         <p class="section-desc">Have suggestions or found a data discrepancy?</p>
-        <a href="${ABOUT_METADATA.feedbackUrl}" target="_blank" rel="noopener noreferrer" class="source-link" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 600;">
-          <span>${ABOUT_METADATA.feedbackLabel}</span>
-          <span>↗</span>
-        </a>
+        ${feedbackHtml}
       </div>
 
       <div class="legend-footer">

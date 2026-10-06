@@ -157,8 +157,8 @@ export function renderAirQualityDrawer(
         </div>
       </details>
 
-      <!-- Structured Transboundary Haze Callout Card (collapsible when AQI < 101) -->
-      <details class="haze-context-card" ${data.aqi >= 101 || data.isWildfireHazeDetected ? "open" : ""}>
+      <!-- Structured Transboundary Haze Callout Card (collapsible when AQI < 101 per M4) -->
+      <details class="haze-context-card" ${data.aqi >= 101 ? "open" : ""}>
         <summary class="haze-card-header" style="cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between;">
           <div style="display: flex; align-items: center; gap: 8px;">
             <span style="display: inline-flex; align-items: center; color: #F59E0B;" aria-hidden="true">${ICONS.alertTriangle}</span>

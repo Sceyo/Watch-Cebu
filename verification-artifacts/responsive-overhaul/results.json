@@ -1,0 +1,179 @@
+{
+  "timestamp": "2026-10-06T12:49:03.184Z",
+  "chromePath": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "totalConsoleErrors": 0,
+  "consoleErrors": [],
+  "viewports": {
+    "iphoneSe": {
+      "viewport": "iPhone SE",
+      "dimensions": {
+        "width": 375,
+        "height": 667
+      },
+      "tests": [
+        {
+          "name": "Header clamped to compact 52px",
+          "passed": true,
+          "details": {
+            "headerHeight": 52
+          }
+        },
+        {
+          "name": "Bottom action bar clamped to 56px",
+          "passed": true,
+          "details": {
+            "bottomBarHeight": 56
+          }
+        },
+        {
+          "name": "Desktop chips hidden on mobile",
+          "passed": true
+        },
+        {
+          "name": "Bottom sheet opens on pin click",
+          "passed": true,
+          "details": {
+            "isOpen": true,
+            "hasCloseBtn": true,
+            "title": "Tingub",
+            "contentHeight": 378
+          }
+        },
+        {
+          "name": "Air drawer opens with CAMS model disclosure and hazard-aware haze state (open when AQI >= 101, collapsed when AQI < 101)",
+          "passed": true,
+          "details": {
+            "isOpen": true,
+            "hasHazeDetails": true,
+            "isHazeOpen": false,
+            "aqi": 48,
+            "expectedHazeOpen": false,
+            "matchesHazardRule": true,
+            "hasModelDisclosure": true,
+            "modelDisclosureText": "Model estimate (CAMS via Open-Meteo). Not an official station reading. For official ground telemetry, refer to DENR EMB Region VII bulletins."
+          }
+        },
+        {
+          "name": "Status popover modal opens and displays feed list",
+          "passed": true,
+          "details": {
+            "isOpen": true,
+            "hasCloseBtn": true,
+            "hasFeedsList": true
+          }
+        },
+        {
+          "name": "About drawer opens with visible Pending Configuration indicators",
+          "passed": true,
+          "details": {
+            "isOpen": true,
+            "hasPendingBadges": true,
+            "pendingCount": 3
+          }
+        }
+      ],
+      "measuredMetrics": {
+        "headerHeight": 52,
+        "dayTabsHeight": 57,
+        "hasBottomBar": true,
+        "bottomBarHeight": 56,
+        "hasStatusBtn": true,
+        "statusBtnText": "Connecting...",
+        "desktopChipsVisible": false
+      },
+      "consoleErrors": []
+    },
+    "pixel7": {
+      "viewport": "Pixel 7",
+      "dimensions": {
+        "width": 412,
+        "height": 915
+      },
+      "tests": [
+        {
+          "name": "Search bar filters pins and reveals clear button",
+          "passed": true,
+          "details": {
+            "clearBtnVisible": true,
+            "visiblePinsCount": 3
+          }
+        }
+      ],
+      "measuredMetrics": {
+        "clearBtnVisible": true,
+        "visiblePinsCount": 3
+      },
+      "consoleErrors": []
+    },
+    "desktop": {
+      "viewport": "Desktop",
+      "dimensions": {
+        "width": 1440,
+        "height": 900
+      },
+      "tests": [
+        {
+          "name": "Desktop header renders at 56px with visible freshness chips",
+          "passed": true,
+          "details": {
+            "headerHeight": 56,
+            "desktopChipsVisible": true,
+            "mobileBottomBarHidden": true,
+            "mobileStatusBtnHidden": true,
+            "popupHeadroom": {
+              "hasPopup": true,
+              "popupTop": 210.84375,
+              "topObstructionHeight": 101,
+              "headroomPx": 109.84375,
+              "isClipped": false,
+              "popupHeight": 396.15625
+            }
+          }
+        },
+        {
+          "name": "Mobile bottom bar and mobile status button hidden on desktop",
+          "passed": true
+        },
+        {
+          "name": "Popup maintains positive headroom above header and day tabs (no clipping)",
+          "passed": true,
+          "details": {
+            "hasPopup": true,
+            "popupTop": 210.84375,
+            "topObstructionHeight": 101,
+            "headroomPx": 109.84375,
+            "isClipped": false,
+            "popupHeight": 396.15625
+          }
+        },
+        {
+          "name": "About drawer opens with active backdrop on desktop",
+          "passed": true
+        },
+        {
+          "name": "Drawer dismisses on backdrop click",
+          "passed": true
+        },
+        {
+          "name": "Drawer dismisses on Escape key press",
+          "passed": true
+        }
+      ],
+      "measuredMetrics": {
+        "headerHeight": 56,
+        "desktopChipsVisible": true,
+        "mobileBottomBarHidden": true,
+        "mobileStatusBtnHidden": true,
+        "popupHeadroom": {
+          "hasPopup": true,
+          "popupTop": 210.84375,
+          "topObstructionHeight": 101,
+          "headroomPx": 109.84375,
+          "isClipped": false,
+          "popupHeight": 396.15625
+        }
+      },
+      "consoleErrors": []
+    }
+  }
+}

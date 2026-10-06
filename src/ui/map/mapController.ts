@@ -100,7 +100,7 @@ export class MapController {
     const query = filter.searchQuery ? filter.searchQuery.toLowerCase() : "";
 
     const filtered = advisories.filter((a) => {
-      if (filter.selectedDate !== "all" && a.date !== filter.selectedDate) {
+      if (!query && filter.selectedDate !== "all" && a.date !== filter.selectedDate) {
         return false;
       }
       if (a.lat === null || a.lon === null) {

@@ -124,7 +124,9 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
 .app-header {
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
-  padding: 10px 16px;
+  padding: 8px 16px;
+  height: 56px;
+  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -137,7 +139,7 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   display: flex;
   align-items: center;
   gap: 16px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .brand {
