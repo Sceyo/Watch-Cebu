@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-06T12:49:03.184Z",
+  "timestamp": "2026-10-07T15:45:44.038Z",
   "chromePath": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
   "totalConsoleErrors": 0,
   "consoleErrors": [],
@@ -35,8 +35,8 @@
           "details": {
             "isOpen": true,
             "hasCloseBtn": true,
-            "title": "Tingub",
-            "contentHeight": 378
+            "title": "Lahug",
+            "contentHeight": 395
           }
         },
         {
@@ -46,7 +46,7 @@
             "isOpen": true,
             "hasHazeDetails": true,
             "isHazeOpen": false,
-            "aqi": 48,
+            "aqi": 42,
             "expectedHazeOpen": false,
             "matchesHazardRule": true,
             "hasModelDisclosure": true,
@@ -122,11 +122,11 @@
             "mobileStatusBtnHidden": true,
             "popupHeadroom": {
               "hasPopup": true,
-              "popupTop": 210.84375,
+              "popupTop": 210.875,
               "topObstructionHeight": 101,
-              "headroomPx": 109.84375,
+              "headroomPx": 109.875,
               "isClipped": false,
-              "popupHeight": 396.15625
+              "popupHeight": 450.125
             }
           }
         },
@@ -139,11 +139,11 @@
           "passed": true,
           "details": {
             "hasPopup": true,
-            "popupTop": 210.84375,
+            "popupTop": 210.875,
             "topObstructionHeight": 101,
-            "headroomPx": 109.84375,
+            "headroomPx": 109.875,
             "isClipped": false,
-            "popupHeight": 396.15625
+            "popupHeight": 450.125
           }
         },
         {
@@ -166,11 +166,11 @@
         "mobileStatusBtnHidden": true,
         "popupHeadroom": {
           "hasPopup": true,
-          "popupTop": 210.84375,
+          "popupTop": 210.875,
           "topObstructionHeight": 101,
-          "headroomPx": 109.84375,
+          "headroomPx": 109.875,
           "isClipped": false,
-          "popupHeight": 396.15625
+          "popupHeight": 450.125
         }
       },
       "consoleErrors": []
