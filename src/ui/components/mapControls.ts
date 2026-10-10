@@ -12,6 +12,7 @@ import { ICONS } from "./icons.js";
 
 export interface MapControlsCallbacks {
   onSearchChange: (query: string) => void;
+  onSearchSubmit?: (query: string) => void;
   onLocateUser: (coords: { lat: number; lon: number }) => void;
   onLayerChange: (layer: LayerSelection) => void;
   onToast: (msg: string) => void;
@@ -26,21 +27,26 @@ export function renderMapControls(
     <div class="map-floating-overlay">
       <!-- Search and Locate Row -->
       <div class="map-search-row">
-        <div class="search-input-wrapper">
-          <span class="search-icon" aria-hidden="true" style="display: inline-flex; align-items: center;">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          </span>
-          <input
-            type="search"
-            id="map-search-input"
-            class="map-search-input"
-            placeholder="Search barangay, street, or city..."
-            aria-label="Search barangay, street, or city"
-            autocomplete="off"
-            spellcheck="false"
-          />
-          <button id="btn-clear-search" class="search-clear-btn" aria-label="Clear search" title="Clear search" style="display: none;">${ICONS.close}</button>
-        </div>
+        <form class="search-form" id="map-search-form" action="javascript:void(0);">
+          <div class="search-input-wrapper">
+            <button type="submit" class="search-submit-btn" aria-label="Search and zoom to area" title="Search and zoom to area">
+              <span class="search-icon" aria-hidden="true" style="display: inline-flex; align-items: center;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </span>
+            </button>
+            <input
+              type="search"
+              id="map-search-input"
+              class="map-search-input"
+              placeholder="Search barangay, street, or city..."
+              aria-label="Search barangay, street, or city"
+              autocomplete="off"
+              spellcheck="false"
+              enterkeyhint="search"
+            />
+            <button type="button" id="btn-clear-search" class="search-clear-btn" aria-label="Clear search" title="Clear search" style="display: none;">${ICONS.close}</button>
+          </div>
+        </form>
         <button id="btn-locate-me" class="map-ctrl-btn btn-locate-me" aria-label="Locate me on map" title="Center on my location">
           <span class="ctrl-icon" aria-hidden="true" style="display: inline-flex; align-items: center;">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
@@ -64,6 +70,7 @@ export function renderMapControls(
   `;
 
   // Search input listeners
+  const searchForm = container.querySelector<HTMLFormElement>("#map-search-form");
   const searchInput = container.querySelector<HTMLInputElement>("#map-search-input");
   const clearBtn = container.querySelector<HTMLButtonElement>("#btn-clear-search");
 
@@ -79,6 +86,27 @@ export function renderMapControls(
       clearBtn.style.display = "none";
       callbacks.onSearchChange("");
       searchInput.focus();
+    });
+
+    // Explicit Enter key submission for desktop and mobile soft keyboards
+    searchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const val = searchInput.value.trim();
+        if (val) {
+          callbacks.onSearchSubmit?.(val);
+        }
+      }
+    });
+  }
+
+  if (searchForm) {
+    searchForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const val = searchInput ? searchInput.value.trim() : "";
+      if (val) {
+        callbacks.onSearchSubmit?.(val);
+      }
     });
   }
 

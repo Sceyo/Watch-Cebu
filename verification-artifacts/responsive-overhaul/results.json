@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-07T15:45:44.038Z",
+  "timestamp": "2026-10-10T13:56:56.171Z",
   "chromePath": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
   "totalConsoleErrors": 0,
   "consoleErrors": [],
@@ -35,7 +35,7 @@
           "details": {
             "isOpen": true,
             "hasCloseBtn": true,
-            "title": "Lahug",
+            "title": "Tingub",
             "contentHeight": 395
           }
         },
@@ -46,7 +46,7 @@
             "isOpen": true,
             "hasHazeDetails": true,
             "isHazeOpen": false,
-            "aqi": 42,
+            "aqi": 36,
             "expectedHazeOpen": false,
             "matchesHazardRule": true,
             "hasModelDisclosure": true,
@@ -92,16 +92,16 @@
       "tests": [
         {
           "name": "Search bar filters pins and reveals clear button",
-          "passed": true,
+          "passed": false,
           "details": {
             "clearBtnVisible": true,
-            "visiblePinsCount": 3
+            "visiblePinsCount": 0
           }
         }
       ],
       "measuredMetrics": {
         "clearBtnVisible": true,
-        "visiblePinsCount": 3
+        "visiblePinsCount": 0
       },
       "consoleErrors": []
     },
@@ -122,11 +122,11 @@
             "mobileStatusBtnHidden": true,
             "popupHeadroom": {
               "hasPopup": true,
-              "popupTop": 210.875,
+              "popupTop": 211.34375,
               "topObstructionHeight": 101,
-              "headroomPx": 109.875,
+              "headroomPx": 110.34375,
               "isClipped": false,
-              "popupHeight": 450.125
+              "popupHeight": 432.65625
             }
           }
         },
@@ -139,11 +139,11 @@
           "passed": true,
           "details": {
             "hasPopup": true,
-            "popupTop": 210.875,
+            "popupTop": 211.34375,
             "topObstructionHeight": 101,
-            "headroomPx": 109.875,
+            "headroomPx": 110.34375,
             "isClipped": false,
-            "popupHeight": 450.125
+            "popupHeight": 432.65625
           }
         },
         {
@@ -166,11 +166,11 @@
         "mobileStatusBtnHidden": true,
         "popupHeadroom": {
           "hasPopup": true,
-          "popupTop": 210.875,
+          "popupTop": 211.34375,
           "topObstructionHeight": 101,
-          "headroomPx": 109.875,
+          "headroomPx": 110.34375,
           "isClipped": false,
-          "popupHeight": 450.125
+          "popupHeight": 432.65625
         }
       },
       "consoleErrors": []

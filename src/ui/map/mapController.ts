@@ -20,6 +20,14 @@ import {
   normalizeStreetList,
 } from "../../utils/index.js";
 import { ICONS } from "../components/icons.js";
+import { lookupCebuLocation, geocodeCebuOnline } from "../services/cebuLocations.js";
+
+export interface SearchAndZoomResult {
+  found: boolean;
+  tier: 1 | 2 | 3 | null;
+  message: string;
+  coords?: [number, number];
+}
 
 export class MapController {
   private map: L.Map;
@@ -451,5 +459,172 @@ export class MapController {
     if (bounds.isValid()) {
       this.map.fitBounds(bounds, { padding: [50, 50], maxZoom: 14 });
     }
+  }
+
+  /**
+   * Smoothly pans and zooms the map to a target coordinate.
+   */
+  zoomToLocation(lat: number, lon: number, zoom = 15): void {
+    this.map.flyTo([lat, lon], zoom, { duration: 1.2, easeLinearity: 0.25 });
+  }
+
+  /**
+   * Hybrid 3-Tier Search and Auto-Zoom:
+   * - Tier 1: Matches active power outage or earthquake pins in memory (0ms, 100% offline).
+   * - Tier 2: Matches curated Metro Cebu LGUs, Barangays & Landmarks offline index (0ms, 100% offline).
+   * - Tier 3: Bounded online public geocoding fallback for specific street names and avenues.
+   */
+  async searchAndZoom(
+    query: string,
+    powerAdvisories: PowerAdvisory[],
+    eqEvents: EarthquakeEvent[]
+  ): Promise<SearchAndZoomResult> {
+    const raw = query.trim();
+    if (!raw) {
+      return { found: false, tier: null, message: "Please enter a location to search." };
+    }
+    const q = raw.toLowerCase();
+
+    // -------------------------------------------------------------------------
+    // Tier 1: Active Advisory / Earthquake Pins in Memory (0ms, 100% offline)
+    // -------------------------------------------------------------------------
+    const matchedPower = powerAdvisories.filter((a) => {
+      if (a.lat === null || a.lon === null) return false;
+      const bMatch = a.barangay.some((b) => b.toLowerCase().includes(q) || q.includes(b.toLowerCase()));
+      const cMatch = a.city.toLowerCase().includes(q) || q.includes(a.city.toLowerCase());
+      const sMatch = a.streets.some((s) => s.toLowerCase().includes(q) || q.includes(s.toLowerCase()));
+      const rMatch = a.areas_affected_raw ? a.areas_affected_raw.toLowerCase().includes(q) : false;
+      const pMatch = a.purpose.toLowerCase().includes(q);
+      return bMatch || cMatch || sMatch || rMatch || pMatch;
+    });
+
+    const matchedEq = eqEvents.filter((e) => {
+      if (e.lat === null || e.lon === null) return false;
+      const dMatch = e.location_description.toLowerCase().includes(q);
+      const tMatch = e.nearest_town ? e.nearest_town.toLowerCase().includes(q) : false;
+      const pMatch = e.nearest_province ? e.nearest_province.toLowerCase().includes(q) : false;
+      return (dMatch || tMatch || pMatch) && e.within_watch_radius;
+    });
+
+    const totalMatches = matchedPower.length + matchedEq.length;
+
+    if (totalMatches > 0) {
+      if (totalMatches === 1) {
+        if (matchedPower.length === 1) {
+          const adv = matchedPower[0];
+          const coords: [number, number] = [adv.lat!, adv.lon!];
+          this.map.flyTo(coords, 16, { duration: 1.0 });
+
+          const isMobile =
+            typeof window !== "undefined" &&
+            (window.innerWidth < 768 ||
+              (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
+          if (isMobile && this.onSelectLocation) {
+            this.onSelectLocation({ type: "power", advisories: [adv] });
+          } else {
+            this.powerLayerGroup.eachLayer((layer: any) => {
+              if (layer.getLatLng && Math.abs(layer.getLatLng().lat - adv.lat!) < 0.0001) {
+                layer.openPopup();
+              }
+            });
+          }
+
+          const locLabel = adv.barangay[0] || adv.city;
+          return {
+            found: true,
+            tier: 1,
+            message: `Found 1 active outage advisory in ${locLabel}.`,
+            coords,
+          };
+        } else {
+          const eq = matchedEq[0];
+          const coords: [number, number] = [eq.lat, eq.lon];
+          this.map.flyTo(coords, 14, { duration: 1.0 });
+
+          const isMobile =
+            typeof window !== "undefined" &&
+            (window.innerWidth < 768 ||
+              (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
+          if (isMobile && this.onSelectLocation) {
+            this.onSelectLocation({ type: "earthquake", event: eq });
+          } else {
+            this.earthquakeLayerGroup.eachLayer((layer: any) => {
+              if (layer.getLatLng && Math.abs(layer.getLatLng().lat - eq.lat) < 0.001) {
+                layer.openPopup();
+              }
+            });
+          }
+
+          return {
+            found: true,
+            tier: 1,
+            message: `Found M${eq.magnitude.toFixed(1)} earthquake in ${eq.nearest_town || eq.location_description}.`,
+            coords,
+          };
+        }
+      } else {
+        const latLngs: L.LatLng[] = [];
+        matchedPower.forEach((p) => latLngs.push(L.latLng(p.lat!, p.lon!)));
+        matchedEq.forEach((e) => latLngs.push(L.latLng(e.lat, e.lon)));
+
+        const bounds = L.latLngBounds(latLngs);
+        if (bounds.isValid()) {
+          this.map.fitBounds(bounds, { padding: [60, 60], maxZoom: 16 });
+        }
+
+        const breakdown =
+          matchedPower.length > 0 && matchedEq.length > 0
+            ? `${matchedPower.length} power, ${matchedEq.length} quakes`
+            : matchedPower.length > 0
+            ? `${matchedPower.length} power`
+            : `${matchedEq.length} quakes`;
+
+        return {
+          found: true,
+          tier: 1,
+          message: `Found ${totalMatches} active pins (${breakdown}) for "${raw}".`,
+          coords: [bounds.getCenter().lat, bounds.getCenter().lng],
+        };
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // Tier 2: Curated Metro Cebu LGUs, Barangays & Landmarks (0ms, 100% offline)
+    // -------------------------------------------------------------------------
+    const offlineLoc = lookupCebuLocation(raw);
+    if (offlineLoc) {
+      const zoom = offlineLoc.type === "city" || offlineLoc.type === "municipality" ? 13 : 15;
+      const coords: [number, number] = [offlineLoc.lat, offlineLoc.lon];
+      this.map.flyTo(coords, zoom, { duration: 1.2 });
+
+      return {
+        found: true,
+        tier: 2,
+        message: `Centered on ${offlineLoc.name}, ${offlineLoc.city} — No active advisories in this area.`,
+        coords,
+      };
+    }
+
+    // -------------------------------------------------------------------------
+    // Tier 3: Cebu-Bounded Public Online Geocoding Fallback (Streets & Avenues)
+    // -------------------------------------------------------------------------
+    const onlineResult = await geocodeCebuOnline(raw);
+    if (onlineResult) {
+      const coords: [number, number] = [onlineResult.lat, onlineResult.lon];
+      this.map.flyTo(coords, 16, { duration: 1.2 });
+
+      return {
+        found: true,
+        tier: 3,
+        message: `Centered on ${onlineResult.displayName} — No active advisories found.`,
+        coords,
+      };
+    }
+
+    return {
+      found: false,
+      tier: null,
+      message: `No location found for "${raw}" in Cebu.`,
+    };
   }
 }

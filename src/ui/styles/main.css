@@ -1573,6 +1573,14 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   pointer-events: auto;
 }
 
+.search-form {
+  flex: 1;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
 .search-input-wrapper {
   flex: 1;
   display: flex;
@@ -1587,9 +1595,27 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
 }
 
+.search-submit-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.search-submit-btn:hover {
+  color: #3B82F6;
+  transform: scale(1.08);
+}
+
 .search-icon {
   font-size: 0.95rem;
-  color: var(--text-muted);
+  color: inherit;
 }
 
 .map-search-input {

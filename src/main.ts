@@ -249,6 +249,13 @@ function updateUI() {
         mapController?.renderPowerAdvisories(powerFeedState.data, filterState);
         mapController?.renderEarthquakeEvents(eqFeedState.data, filterState);
       },
+      onSearchSubmit: async (query) => {
+        if (!mapController) return;
+        const res = await mapController.searchAndZoom(query, powerFeedState.data, eqFeedState.data);
+        if (res.message) {
+          showToast(res.message);
+        }
+      },
       onLocateUser: (coords) => {
         mapController?.centerOnUser(coords);
       },
