@@ -5,7 +5,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Leaflet](https://img.shields.io/badge/Leaflet-1.9.4-green?logo=leaflet&logoColor=white)](https://leafletjs.com/)
 [![Vite](https://img.shields.io/badge/Vite-7.x-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Vitest](https://img.shields.io/badge/Vitest-207%20Passed-FCC72B?logo=vitest&logoColor=black)](https://vitest.dev/)
+[![Vitest](https://img.shields.io/badge/Vitest-253%20Passed-FCC72B?logo=vitest&logoColor=black)](https://vitest.dev/)
 [![Accessibility](https://img.shields.io/badge/a11y-WCAG%202.1%20AAA-brightgreen)](https://www.w3.org/WAI/WCAG21/quickref/)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
@@ -66,6 +66,12 @@ Unlike traditional platforms riddled with ads, analytics trackers, and heavy dep
 - **Transparent Freshness Indicators**: Header freshness chips display `Live · Verified`, `Fetching...`, or `⚠️ Backup Fixture Data` with fallback warnings.
 - **Full Keyboard & Screen Reader Accessibility**: Complete `Tab` and `Shift+Tab` focus traps inside modal drawers, backdrop scrim click dismissal, and `Escape` key support.
 - **Strict Viewport Containment**: Leaflet viewport clamped (`minZoom: 7`, bounds `[7.4, 120.9]` to `[13.2, 126.9]`, `viscosity: 1.0`) preventing unnecessary world panning.
+
+### 🔍 6. Hybrid 3-Tier Search & Auto-Zoom (Cities, Barangays, Streets)
+- **Instant Camera Navigation**: Searching any barangay, municipality, street, or landmark and submitting (`Enter` or search button) automatically flies the map camera and zooms directly to that area.
+- **Tier 1 (Instant Active Pins)**: Matches in-memory power outage advisories and seismic events (0ms latency, offline). If a single pin matches, auto-pans, zooms to Level 16, and opens its details; if multiple pins match, fits the map bounds around all pins.
+- **Tier 2 (Offline Barangay & LGU Centroids)**: Built-in offline dictionary of 444 Metro Cebu LGUs, barangays, and landmarks extracted from `metro-cebu-barangays.geojson`. Cleans prefixes (*"Brgy."*, *"Barangay"*, *"City of"*) and zooms instantly without network calls.
+- **Tier 3 (Cebu-Bounded Public Geocoding)**: OpenStreetMap Nominatim fallback strictly geo-fenced to Cebu Province (`[9.3°N, 123.1°E]` to `[11.4°N, 124.4°E]`) for specific streets (*e.g. Gorordo Ave, Colon St*). Only executes on explicit form submission to strictly adhere to free-tier fair-use limits.
 
 ---
 
@@ -131,7 +137,7 @@ Watch-Cebu/
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/francis/Watch-Cebu.git
+   git clone https://github.com/Sceyo/Watch-Cebu.git
    cd Watch-Cebu
    ```
 2. Install project dependencies:
@@ -164,7 +170,7 @@ Watch Cebu maintains a strict 100% test pass requirement across all parsers, UI 
 ```bash
 npm test
 ```
-*Current Suite: 16 test files, 207 tests passed in ~14s.*
+*Current Suite: 20 test files, 253 tests passed (100% green).*
 
 ### Run TypeScript & Production Build
 ```bash
@@ -173,9 +179,9 @@ npm run build
 Generates an optimized client bundle in `dist-client/` with zero TypeScript compiler errors.
 
 ### Real Browser CDP Audit
-Run the automated Chrome DevTools Protocol verification script (launches headless Chrome, navigates to the app, exercises the Forecast drawer, and captures screenshots):
+Run the automated Chrome DevTools Protocol verification script (launches headless Chrome, audits iPhone SE, Pixel 7, and Desktop viewports, exercises drawers/search auto-zoom, and captures inspectable screenshots in `verification-artifacts/responsive-overhaul/`):
 ```bash
-npx tsx scripts/verify_phase6_forecast.ts
+npx tsx scripts/verify_responsive_overhaul.ts
 ```
 
 ---
@@ -188,7 +194,17 @@ npx tsx scripts/verify_phase6_forecast.ts
 - [x] **Phase 4: Street Extraction & Filter Ergonomics** — Heuristic street/landmark parser (`extractStreets`), day tabs filter bar.
 - [x] **Phase 5: Rate Parser & Attribution** — Historical VECO tariff rate parser, legal attribution, and About drawer.
 - [x] **Phase 6: Multi-Hazard Expansion** — Option C earthquake markers, Open-Meteo Air Quality & recurring haze advisory, Stage 6b viewport containment, and Today's Weather Forecast button & drawer.
+- [x] **Responsive Overhaul & Auto-Zoom** — Mobile bottom sheet, compact 52px chrome, WCAG AAA contrast, and Hybrid 3-Tier Search Auto-Zoom.
 - [ ] **Phase 7: PWA Hardening & Cloud Deployment (Upcoming)** — Manifest, offline service worker, standalone display mode, and deployment to Cloudflare Pages / Vercel.
+
+---
+
+## 👨‍💻 Author & Maintainer
+
+- **Developer & Maintainer**: **Francis Aliser**
+  - **GitHub**: [@Sceyo](https://github.com/Sceyo)
+  - **LinkedIn**: [francis-aliser](https://www.linkedin.com/in/francis-aliser/)
+- **Issues & Community Feedback**: [GitHub Issues](https://github.com/Sceyo/Watch-Cebu/issues)
 
 ---
 

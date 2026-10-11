@@ -85,5 +85,6 @@ Metro Cebu experienced a significant transboundary haze event in **early Septemb
 ### Manual Acceptance Testing
 1. Live AQI badge renders with correct color/number
 2. Advisory drawer shows haze context in recurring-hazard framing, not live-crisis framing, unless the current live reading genuinely warrants it
-3. Rain radar toggle renders cleanly
+3. Today's Weather Forecast drawer slides down and displays hourly forecast cleanly
 4. Earthquake markers match the Option C sketch; pulse behavior correct for recent/strong events
+5. Hybrid 3-Tier Search auto-zooms to active pins, barangay centroids, or bounded street geocodes

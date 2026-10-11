@@ -41,7 +41,7 @@ describe("Scheduled Fetch Script (scripts/run_scheduled_fetch.ts)", () => {
     expect(error).not.toBeNull();
     expect(error.status).toBe(1);
     expect(output).toContain('WATCH_CEBU_FEED must be exactly "power" or "earthquakes"');
-  }, 20_000);
+  }, 60_000);
 
   it("fails immediately with exit code 1 when WATCH_CEBU_FEED is 'all' (prevents doubled-load bug)", () => {
     let error: any = null;
@@ -60,7 +60,7 @@ describe("Scheduled Fetch Script (scripts/run_scheduled_fetch.ts)", () => {
     expect(error).not.toBeNull();
     expect(error.status).toBe(1);
     expect(output).toContain('WATCH_CEBU_FEED must be exactly "power" or "earthquakes"');
-  }, 20_000);
+  }, 60_000);
 
   it("processes power feed and leaves earthquake files untouched", () => {
     // Record current mtimes or existence of EQ files

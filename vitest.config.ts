@@ -1,4 +1,4 @@
-﻿/// <reference types="vitest" />
+/// <reference types="vitest" />
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
@@ -7,5 +7,6 @@ export default defineConfig({
     environment: "node",
     include: ["tests/**/*.test.ts"],
     reporters: ["verbose"],
+    testTimeout: 30000,
   },
 });

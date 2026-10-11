@@ -78,20 +78,18 @@ describe("About Drawer Component", () => {
     }
   });
 
-  it("renderAbout visibly displays 'Pending Configuration' when links are not yet configured", () => {
+  it("renderAbout visibly outputs real configured GitHub, LinkedIn, and issues links", () => {
     const container = createMockElement();
     renderAbout(container, true, () => {});
 
-    // Must output Pending Configuration badges when URLs are null
-    if (!ABOUT_METADATA.githubUrl) {
-      expect(container.innerHTML).toContain("Pending Configuration");
-      expect(container.innerHTML).toContain("Not yet set — configure maintainer GitHub profile");
-      expect(container.innerHTML).not.toContain('href="https://github.com/YOUR_GITHUB_USERNAME"');
-    }
-    if (!ABOUT_METADATA.linkedinUrl) {
-      expect(container.innerHTML).toContain("Not yet set — configure maintainer LinkedIn profile");
-      expect(container.innerHTML).not.toContain('href="https://www.linkedin.com/in/YOUR_LINKEDIN_USERNAME"');
-    }
+    expect(ABOUT_METADATA.githubUrl).toBe("https://github.com/Sceyo");
+    expect(ABOUT_METADATA.linkedinUrl).toBe("https://www.linkedin.com/in/francis-aliser/");
+    expect(ABOUT_METADATA.feedbackUrl).toBe("https://github.com/Sceyo/Watch-Cebu/issues");
+
+    expect(container.innerHTML).toContain('href="https://github.com/Sceyo"');
+    expect(container.innerHTML).toContain('href="https://www.linkedin.com/in/francis-aliser/"');
+    expect(container.innerHTML).toContain('href="https://github.com/Sceyo/Watch-Cebu/issues"');
+    expect(container.innerHTML).not.toContain("Pending Configuration");
   });
 
   it("renderAbout outputs real authoritative data attribution and developer connect section", () => {

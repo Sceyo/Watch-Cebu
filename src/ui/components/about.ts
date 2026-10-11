@@ -14,12 +14,9 @@ export const ABOUT_METADATA = {
   version: "Stage 6 Production Preview",
   description:
     "Watch Cebu is an open, independent civic transparency platform monitoring scheduled power interruptions, seismic activity, air quality, and daily weather forecasts across Metro Cebu and the Visayas. Data is parsed directly from public utility and agency announcements with coordinate mapping from OpenStreetMap and atmospheric models from Open-Meteo.",
-  // TODO: set real GitHub profile URL before deploy
-  githubUrl: null as string | null,
-  // TODO: set real LinkedIn profile URL before deploy
-  linkedinUrl: null as string | null,
-  // TODO: set real repository issues URL before deploy
-  feedbackUrl: null as string | null,
+  githubUrl: "https://github.com/Sceyo",
+  linkedinUrl: "https://www.linkedin.com/in/francis-aliser/",
+  feedbackUrl: "https://github.com/Sceyo/Watch-Cebu/issues",
   feedbackLabel: "Report an Issue or Feedback (GitHub)",
 };
 

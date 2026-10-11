@@ -24,7 +24,7 @@ Following a thorough multi-device audit (iPhone SE 375×667 on slow 4G, Pixel 7 
 - **Data Provenance:** Removed internal jargon (e.g. "Rule C-1") and overstatements. Disclosed OpenStreetMap points as *"approximate community-maintained coordinates, not official cadastral boundaries"*.
 - **Air Quality Transparency:** Prominently labeled air quality readings as a *"Model estimate (CAMS via Open-Meteo). Not an official station reading. For official ground telemetry, refer to DENR EMB Region VII bulletins."*
 - **Haze & Health Actions:** Documented both September 2026 haze waves (Sept 2–3 and Sept 20–22, noting EMB-7 peak AQI of 248). Clarified that class and work suspensions are determined at the discretion of local government units (LGUs).
-- **Maintainer Links:** About panel links are guarded: when unconfigured, they visibly display "Pending Configuration" without fake links.
+- **Maintainer Links Configured & Live:** Real maintainer URLs configured and verified: Francis Aliser (GitHub: [`@Sceyo`](https://github.com/Sceyo), LinkedIn: [`francis-aliser`](https://www.linkedin.com/in/francis-aliser/), Feedback/Issues: [`Watch-Cebu Issues`](https://github.com/Sceyo/Watch-Cebu/issues)). Guard tests enforce that no template strings (`YOUR_GITHUB_USERNAME`) can ship to production.
 
 ### D. Map Behavior & Accessibility (H1–H6, M1–M7)
 - **Multi-Advisory Clustering:** Grouped pins sharing identical barangay coordinates into a single marker with a count badge. Clicking shows a structured list of all scheduled interruptions for that location in the popup or bottom sheet.
@@ -36,6 +36,12 @@ Following a thorough multi-device audit (iPhone SE 375×667 on slow 4G, Pixel 7 
 - **Inline SVG Icons:** Built `src/ui/components/icons.ts` replacing OS-dependent emojis with uniform inline SVGs.
 - **Air Quality Drawer:** Streamlined hero card focusing on AQI, health verdict, actionable guidance, and PM2.5. Secondary metrics (PM10, CO, AOD) are tucked inside an expandable `<details>` section. Transboundary Haze context auto-collapses when AQI < 101.
 - **Forecast Drawer:** 24-hour hourly forecast queried from Open-Meteo (`#forecast-drawer`), auto-scrolling to the `NOW` card on open.
+
+### E. Hybrid 3-Tier Search & Auto-Zoom
+- **Submission Trigger:** Enter key and mobile virtual keyboard "Search/Go" submission (`enterkeyhint="search"`) or tapping the search button.
+- **Tier 1 (Instant In-Memory Match):** Auto-zooms to active power outage pins or seismic events matching the search query; opens details immediately.
+- **Tier 2 (Offline Centroids):** Instant 0ms offline centroid lookup for 444 curated Metro Cebu LGUs, barangays, and landmarks from `metro-cebu-barangays.geojson`. Cleans prefixes (*"Brgy."*, *"Barangay"*, *"City of"*) and zooms instantly without network calls.
+- **Tier 3 (Bounded Public Geocoding):** OpenStreetMap Nominatim fallback strictly geo-fenced to Cebu Province (`[9.3°N, 123.1°E]` to `[11.4°N, 124.4°E]`) for specific streets (*e.g. Gorordo Ave, Colon St*). Only executes on explicit form submission to strictly adhere to free-tier fair-use limits.
 
 ---
 
@@ -56,7 +62,7 @@ Browser verification is performed via headless Chrome using the Chrome DevTools 
   - `iphone_se_bottom_sheet_open.png`: Touch bottom sheet opened from marker click showing multi-advisory listing.
   - `iphone_se_air_drawer_open.png`: Mobile Air Quality drawer with model disclosure and collapsed secondary metrics.
   - `iphone_se_status_popover_open.png`: Consolidated system status popover.
-  - `iphone_se_about_drawer_open.png`: About panel displaying pending/configured developer links.
+  - `iphone_se_about_drawer_open.png`: About panel displaying active developer links (GitHub and LinkedIn).
   - `pixel7_default_load.png`: Pixel 7 (412×915) layout.
   - `pixel7_search_active.png`: Search bar in use with active query filtering pins.
   - `desktop_default_load.png`: Desktop layout (1440×900) with desktop freshness chips and layer toggles.
@@ -67,8 +73,10 @@ Browser verification is performed via headless Chrome using the Chrome DevTools 
 ## 3. Test Suite Integrity
 
 The codebase is protected by comprehensive unit, component, schema, and regression test suites:
-- **18 test files, 235 passing tests (100% green)**.
+- **20 test files, 253 passing tests (100% green)**.
 - `tests/ui/responsiveGuards.test.ts`: Enforces 44×44px hit areas, 52px mobile header, 56px bottom bar, 16px search font (preventing iOS zoom), prefers-reduced-motion, all 6 AQI hazard tiers, and haze auto-collapse.
 - `tests/ui/about.test.ts`: Verifies real authoritative attribution and enforces regression guards against unconfigured template URLs (`YOUR_GITHUB_USERNAME`).
 - `tests/ui/clientBundleIntegrity.test.ts`: Guarantees zero Node built-ins and zero template string URLs in the client bundle.
+- `tests/ui/cebuLocations.test.ts`: Verifies offline centroid indexing and bounded geocoder validation.
+- `tests/ui/searchAndZoom.test.ts`: Tests MapController camera flight and auto-zoom across all 3 tiers.
 - Production payload: Total gzipped CSS + JS is **~78 kB**, well below the 150 kB budget.
