@@ -8,5 +8,6 @@ export default defineConfig({
     include: ["tests/**/*.test.ts"],
     reporters: ["verbose"],
     testTimeout: 30000,
+    globalSetup: ["tests/setup/globalDataGuard.ts"],
   },
 });

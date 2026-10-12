@@ -5,7 +5,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Leaflet](https://img.shields.io/badge/Leaflet-1.9.4-green?logo=leaflet&logoColor=white)](https://leafletjs.com/)
 [![Vite](https://img.shields.io/badge/Vite-7.x-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Vitest](https://img.shields.io/badge/Vitest-253%20Passed-FCC72B?logo=vitest&logoColor=black)](https://vitest.dev/)
+[![Vitest](https://img.shields.io/badge/Vitest-269%20Passed-FCC72B?logo=vitest&logoColor=black)](https://vitest.dev/)
 [![Accessibility](https://img.shields.io/badge/a11y-WCAG%202.1%20AAA-brightgreen)](https://www.w3.org/WAI/WCAG21/quickref/)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
@@ -170,7 +170,7 @@ Watch Cebu maintains a strict 100% test pass requirement across all parsers, UI 
 ```bash
 npm test
 ```
-*Current Suite: 20 test files, 253 tests passed (100% green).*
+*Current Suite: 22 test files, 269 tests passed (100% green).*
 
 ### Run TypeScript & Production Build
 ```bash
@@ -186,6 +186,60 @@ npx tsx scripts/verify_responsive_overhaul.ts
 
 ---
 
+## 🚀 Production Deployment & Cloud Architecture (Vercel)
+
+Watch Cebu is deployed to production on Vercel at [`https://watch-cebu.vercel.app/`](https://watch-cebu.vercel.app/) using an edge-optimized, serverless architecture documented in [ADR-005](docs/adr/ADR-005-production-deployment-and-snapshot-distribution.md).
+
+```
+  ┌────────────────────────────────────────────────────────────────────────┐
+  │                           GITHUB ACTIONS                               │
+  │  • refresh-power.yml (every 4h)  ──┐                                   │
+  │  • refresh-earthquakes.yml (10m) ──┴──> git push data/*.json to main   │
+  └───────────────────────────────────────────────────┬────────────────────┘
+                                                      │ (144 commits/day)
+                                                      ▼
+  ┌────────────────────────────────────────────────────────────────────────┐
+  │                           VERCEL HOBBY PLATFORM                        │
+  │  Git Ignored Build Step:                                               │
+  │  bash scripts/vercel-ignore-build.sh                                   │
+  │  Exit 0 -> SKIPS redeployment when only data/ changed (no quota burn!)  │
+  └───────────────────────────────────────────────────┬────────────────────┘
+                                                      │ User Visits
+                                                      ▼
+  ┌────────────────────────────────────────────────────────────────────────┐
+  │                            EDGE RUNTIME                                │
+  │  Client App: Served from dist-client/ (Vite outputDirectory)           │
+  │  API Routes: /api/power & /api/earthquakes (Serverless Functions)      │
+  │  Snapshot Source: Fetches raw.githubusercontent.com/.../data at runtime│
+  │  Edge Caching: Cache-Control: s-maxage=60, stale-while-revalidate=300  │
+  └────────────────────────────────────────────────────────────────────────┘
+```
+
+### 1. Output Directory Configuration (`vercel.json`)
+Vite outputs the client SPA bundle to `dist-client/`, while `tsc` outputs backend server modules to `dist/`. `vercel.json` configures `"outputDirectory": "dist-client"` to ensure Vercel serves the root `index.html` rather than an empty server output folder (resolving 404s).
+
+### 2. Runtime Snapshot Distribution (Decoupled from Deployments)
+Instead of embedding snapshot JSON files into the build bundle, production routes (`api/power.ts` and `api/earthquakes.ts`) use `GitHubSnapshotSource` to dynamically fetch snapshots from the public GitHub repository at runtime (`https://raw.githubusercontent.com/Sceyo/Watch-Cebu/main/data/`).
+- Responses are cached at Vercel's Edge CDN with `Cache-Control: s-maxage=60, stale-while-revalidate=300`.
+- Function executions are capped at ~1 invocation/minute under continuous load, well within the 100k/month Hobby limit.
+- If upstream GitHub raw requests ever experience an outage, functions fall back seamlessly to bundled verified backup fixtures (`data_source: "fixture_fallback"`).
+
+### 3. Vercel Hobby Deploy-Limit Protection (Ignored Build Step)
+The earthquake ingestion workflow commits a heartbeat status every 10 minutes (up to 144 commits/day). Because Vercel's Hobby tier enforces a strict limit of **100 deployments per day**, automated snapshot commits would quickly exhaust the daily quota.
+- Configured via `"ignoreCommand": "bash scripts/vercel-ignore-build.sh"` in `vercel.json` (and Vercel Dashboard -> Git -> Ignored Build Step):
+  ```bash
+  git diff --quiet HEAD^ HEAD -- . ':(exclude)data'
+  ```
+- **Exit 0 (Skip)**: When a commit only touches `data/`, the deployment is cancelled without burning daily quota.
+- **Exit 1 (Proceed)**: When code, styles, tests, or documentation change, Vercel triggers a full build and deployment.
+
+### 4. Zero-Leak Test Isolation (`WATCH_CEBU_DATA_DIR`)
+Running `npm test` never writes to authentic `data/` snapshots:
+- Test executions use `WATCH_CEBU_DATA_DIR` pointing to an ephemeral directory (`tests/fixtures/tmp_scheduled_data`).
+- A global integrity guard (`tests/setup/globalDataGuard.ts`) computes SHA-256 hashes of all files in `data/` before and after test runs, failing immediately if any test mutates production snapshots.
+
+---
+
 ## 📋 Master Roadmap
 
 - [x] **Phase 1: Parsers & Ingestion** — Cheerio scrapers for VECO HTML & PHIVOLCS seismic bulletins with deterministic hashing.
@@ -195,7 +249,8 @@ npx tsx scripts/verify_responsive_overhaul.ts
 - [x] **Phase 5: Rate Parser & Attribution** — Historical VECO tariff rate parser, legal attribution, and About drawer.
 - [x] **Phase 6: Multi-Hazard Expansion** — Option C earthquake markers, Open-Meteo Air Quality & recurring haze advisory, Stage 6b viewport containment, and Today's Weather Forecast button & drawer.
 - [x] **Responsive Overhaul & Auto-Zoom** — Mobile bottom sheet, compact 52px chrome, WCAG AAA contrast, and Hybrid 3-Tier Search Auto-Zoom.
-- [ ] **Phase 7: PWA Hardening & Cloud Deployment (Upcoming)** — Manifest, offline service worker, standalone display mode, and deployment to Cloudflare Pages / Vercel.
+- [x] **Production Deployment & Cloud Architecture (ADR-005)** — Vercel `dist-client` output, edge-cached serverless API routes (`/api/power`, `/api/earthquakes`), runtime GitHub raw snapshot distribution, 100/day Hobby deploy-limit bypass, and SHA-256 test data isolation.
+- [ ] **Phase 7: PWA Hardening & Standalone Mode (Upcoming)** — Manifest, offline service worker, and add-to-home-screen installability.
 
 ---
 

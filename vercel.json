@@ -1,0 +1,11 @@
+{
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist-client",
+  "ignoreCommand": "bash scripts/vercel-ignore-build.sh",
+  "functions": {
+    "api/*.ts": {
+      "includeFiles": "data/**"
+    }
+  }
+}

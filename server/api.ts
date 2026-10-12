@@ -1,5 +1,5 @@
 import { readFileSync, existsSync } from "fs";
-import { join, dirname } from "path";
+import { join, dirname, isAbsolute } from "path";
 import { fileURLToPath } from "url";
 import type { PowerAdvisory, EarthquakeEvent } from "../src/types/index.js";
 import { extractCurrentPostUrl, parsePostHtml } from "../src/parsers/veco.js";
@@ -26,6 +26,14 @@ function getProjectRoot(): string {
 
 const ROOT_DIR = getProjectRoot();
 const CERT_PATH = join(ROOT_DIR, "certs", "phivolcs-intermediate.pem");
+
+export function getDataDir(): string {
+  const envDir = process.env.WATCH_CEBU_DATA_DIR;
+  if (envDir) {
+    return isAbsolute(envDir) ? envDir : join(ROOT_DIR, envDir);
+  }
+  return join(ROOT_DIR, "data");
+}
 
 /**
  * Scoped dispatcher specifically for PHIVOLCS endpoints.
@@ -67,14 +75,6 @@ const PHIVOLCS_SAMPLE_PATH = join(ROOT_DIR, "tests", "fixtures", "phivolcs_bulle
 const PHIVOLCS_INDEX_PATH = join(ROOT_DIR, "tests", "fixtures", "phivolcs_index.html");
 const SAMPLE_EQ_JSON_PATH = join(ROOT_DIR, "data", "sample_earthquake_events.json");
 
-// Snapshot paths — written exclusively by scripts/run_scheduled_fetch.ts.
-// Each feed owns its own pair of files; the two workflows never share a file,
-// eliminating git-level and application-level race conditions (ADR 2).
-const LIVE_POWER_PATH = join(ROOT_DIR, "data", "live_power_advisories.json");
-const LIVE_EQ_PATH = join(ROOT_DIR, "data", "live_earthquake_events.json");
-const STATUS_POWER_PATH = join(ROOT_DIR, "data", "status_power.json");
-const STATUS_EQ_PATH = join(ROOT_DIR, "data", "status_earthquakes.json");
-
 // Staleness thresholds for snapshot monitoring
 const STALE_POWER_MS = 48 * 60 * 60 * 1000;     // 48 hours
 const STALE_EQ_MS   = 24 * 60 * 60 * 1000;       // 24 hours
@@ -106,6 +106,162 @@ export interface ServerApiOptions {
   statusPowerPath?: string;
   /** Override path to status_earthquakes.json (for testing) */
   statusEqPath?: string;
+  /** Snapshot source provider abstraction (e.g. FileSnapshotSource or GitHubSnapshotSource) */
+  snapshotSource?: ISnapshotSource;
+}
+
+export interface SnapshotFeedData<T> {
+  data: T;
+  status: FeedStatus | null;
+}
+
+export interface ISnapshotSource {
+  readPowerSnapshot(): Promise<SnapshotFeedData<PowerAdvisory[]> | null>;
+  readEarthquakeSnapshot(): Promise<SnapshotFeedData<EarthquakeEvent[]> | null>;
+}
+
+export class FileSnapshotSource implements ISnapshotSource {
+  private options: ServerApiOptions;
+
+  constructor(options: ServerApiOptions = {}) {
+    this.options = options;
+  }
+
+  async readPowerSnapshot(): Promise<SnapshotFeedData<PowerAdvisory[]> | null> {
+    const dataDir = getDataDir();
+    const livePath = this.options.livePowerPath || join(dataDir, "live_power_advisories.json");
+    const statusPath = this.options.statusPowerPath || join(dataDir, "status_power.json");
+
+    if (!existsSync(livePath)) {
+      return null;
+    }
+
+    const data: PowerAdvisory[] = JSON.parse(readFileSync(livePath, "utf-8"));
+    if (!Array.isArray(data) || data.length === 0) {
+      return null;
+    }
+
+    let status: FeedStatus | null = null;
+    if (existsSync(statusPath)) {
+      try {
+        status = JSON.parse(readFileSync(statusPath, "utf-8"));
+      } catch {}
+    }
+
+    return { data, status };
+  }
+
+  async readEarthquakeSnapshot(): Promise<SnapshotFeedData<EarthquakeEvent[]> | null> {
+    const dataDir = getDataDir();
+    const livePath = this.options.liveEqPath || join(dataDir, "live_earthquake_events.json");
+    const statusPath = this.options.statusEqPath || join(dataDir, "status_earthquakes.json");
+
+    if (!existsSync(livePath)) {
+      return null;
+    }
+
+    const data: EarthquakeEvent[] = JSON.parse(readFileSync(livePath, "utf-8"));
+    if (!Array.isArray(data) || data.length === 0) {
+      return null;
+    }
+
+    let status: FeedStatus | null = null;
+    if (existsSync(statusPath)) {
+      try {
+        status = JSON.parse(readFileSync(statusPath, "utf-8"));
+      } catch {}
+    }
+
+    return { data, status };
+  }
+}
+
+export interface GitHubSnapshotSourceConfig {
+  repoOwner?: string;
+  repoName?: string;
+  branch?: string;
+  baseUrl?: string;
+  fetchFn?: typeof fetch;
+}
+
+export class GitHubSnapshotSource implements ISnapshotSource {
+  private repoOwner: string;
+  private repoName: string;
+  private branch: string;
+  private baseUrl: string;
+  private fetchFn: typeof fetch;
+
+  constructor(config: GitHubSnapshotSourceConfig = {}) {
+    this.repoOwner = config.repoOwner || process.env.WATCH_CEBU_REPO_OWNER || "Sceyo";
+    this.repoName = config.repoName || process.env.WATCH_CEBU_REPO_NAME || "Watch-Cebu";
+    this.branch = config.branch || process.env.WATCH_CEBU_BRANCH || "main";
+    this.fetchFn = config.fetchFn || fetch;
+    this.baseUrl = config.baseUrl || `https://raw.githubusercontent.com/${this.repoOwner}/${this.repoName}/${this.branch}/data`;
+  }
+
+  getBaseUrl(): string {
+    return this.baseUrl;
+  }
+
+  async readPowerSnapshot(): Promise<SnapshotFeedData<PowerAdvisory[]> | null> {
+    const liveUrl = `${this.baseUrl}/live_power_advisories.json`;
+    const statusUrl = `${this.baseUrl}/status_power.json`;
+
+    const liveRes = await this.fetchFn(liveUrl, {
+      headers: { "User-Agent": "WatchCebu/0.1.0 (Vercel Serverless Function)" },
+    });
+    if (!liveRes.ok) {
+      throw new Error(`GitHub raw power advisory returned HTTP ${liveRes.status} ${liveRes.statusText}`);
+    }
+    const data: PowerAdvisory[] = await liveRes.json();
+    if (!Array.isArray(data) || data.length === 0) {
+      throw new Error("GitHub raw power snapshot is empty or malformed");
+    }
+
+    let status: FeedStatus | null = null;
+    try {
+      const statusRes = await this.fetchFn(statusUrl, {
+        headers: { "User-Agent": "WatchCebu/0.1.0 (Vercel Serverless Function)" },
+      });
+      if (statusRes.ok) {
+        status = await statusRes.json();
+      }
+    } catch {
+      // Status fetch failure does not discard valid power data
+    }
+
+    return { data, status };
+  }
+
+  async readEarthquakeSnapshot(): Promise<SnapshotFeedData<EarthquakeEvent[]> | null> {
+    const liveUrl = `${this.baseUrl}/live_earthquake_events.json`;
+    const statusUrl = `${this.baseUrl}/status_earthquakes.json`;
+
+    const liveRes = await this.fetchFn(liveUrl, {
+      headers: { "User-Agent": "WatchCebu/0.1.0 (Vercel Serverless Function)" },
+    });
+    if (!liveRes.ok) {
+      throw new Error(`GitHub raw earthquake events returned HTTP ${liveRes.status} ${liveRes.statusText}`);
+    }
+    const data: EarthquakeEvent[] = await liveRes.json();
+    if (!Array.isArray(data) || data.length === 0) {
+      throw new Error("GitHub raw earthquake snapshot is empty or malformed");
+    }
+
+    let status: FeedStatus | null = null;
+    try {
+      const statusRes = await this.fetchFn(statusUrl, {
+        headers: { "User-Agent": "WatchCebu/0.1.0 (Vercel Serverless Function)" },
+      });
+      if (statusRes.ok) {
+        status = await statusRes.json();
+      }
+    } catch {
+      // Status fetch failure does not discard valid earthquake data
+    }
+
+    return { data, status };
+  }
 }
 
 
@@ -333,38 +489,29 @@ export interface FeedStatus {
 export async function getPowerAdvisoriesSnapshot(
   options: ServerApiOptions = {}
 ): Promise<ApiResponse<PowerAdvisory[]>> {
-  const livePath   = options.livePowerPath   || LIVE_POWER_PATH;
-  const statusPath = options.statusPowerPath || STATUS_POWER_PATH;
-  const fetchedAt  = new Date().toISOString();
-
-  if (!existsSync(livePath)) {
-    return getPowerAdvisoriesFallback("Power snapshot file not found — job has not run yet", options);
-  }
+  const source = options.snapshotSource || new FileSnapshotSource(options);
+  const fetchedAt = new Date().toISOString();
 
   try {
-    const data: PowerAdvisory[] = JSON.parse(readFileSync(livePath, "utf-8"));
-
-    if (!Array.isArray(data) || data.length === 0) {
-      return getPowerAdvisoriesFallback("Power snapshot file is empty or malformed", options);
+    const result = await source.readPowerSnapshot();
+    if (!result || !result.data || !Array.isArray(result.data) || result.data.length === 0) {
+      return getPowerAdvisoriesFallback("Power snapshot file not found or empty — job has not run yet", options);
     }
 
     // Read per-feed status (does NOT read status_earthquakes.json)
     let stalenessNote: string | undefined;
-    if (existsSync(statusPath)) {
-      const feedStatus: FeedStatus = JSON.parse(readFileSync(statusPath, "utf-8"));
-      if (feedStatus.last_successful_update) {
-        const age = Date.now() - new Date(feedStatus.last_successful_update).getTime();
-        if (age > STALE_POWER_MS) {
-          const ageHours = Math.round(age / 3_600_000);
-          stalenessNote = `Power snapshot is stale: last updated ${ageHours}h ago (threshold: 48h)`;
-        }
+    if (result.status && result.status.last_successful_update) {
+      const age = Date.now() - new Date(result.status.last_successful_update).getTime();
+      if (age > STALE_POWER_MS) {
+        const ageHours = Math.round(age / 3_600_000);
+        stalenessNote = `Power snapshot is stale: last updated ${ageHours}h ago (threshold: 48h)`;
       }
     }
 
     return {
       data_source: "snapshot",
       fetched_at: fetchedAt,
-      data,
+      data: result.data,
       ...(stalenessNote ? { parse_notes: stalenessNote } : {}),
     };
   } catch (err: any) {
@@ -389,38 +536,29 @@ export async function getPowerAdvisoriesSnapshot(
 export async function getEarthquakeEventsSnapshot(
   options: ServerApiOptions = {}
 ): Promise<ApiResponse<EarthquakeEvent[]>> {
-  const livePath   = options.liveEqPath   || LIVE_EQ_PATH;
-  const statusPath = options.statusEqPath || STATUS_EQ_PATH;
-  const fetchedAt  = new Date().toISOString();
-
-  if (!existsSync(livePath)) {
-    return getEarthquakeEventsFallback("Earthquake snapshot file not found — job has not run yet", options);
-  }
+  const source = options.snapshotSource || new FileSnapshotSource(options);
+  const fetchedAt = new Date().toISOString();
 
   try {
-    const data: EarthquakeEvent[] = JSON.parse(readFileSync(livePath, "utf-8"));
-
-    if (!Array.isArray(data) || data.length === 0) {
-      return getEarthquakeEventsFallback("Earthquake snapshot file is empty or malformed", options);
+    const result = await source.readEarthquakeSnapshot();
+    if (!result || !result.data || !Array.isArray(result.data) || result.data.length === 0) {
+      return getEarthquakeEventsFallback("Earthquake snapshot file not found or empty — job has not run yet", options);
     }
 
     // Read per-feed status (does NOT read status_power.json)
     let stalenessNote: string | undefined;
-    if (existsSync(statusPath)) {
-      const feedStatus: FeedStatus = JSON.parse(readFileSync(statusPath, "utf-8"));
-      if (feedStatus.last_successful_update) {
-        const age = Date.now() - new Date(feedStatus.last_successful_update).getTime();
-        if (age > STALE_EQ_MS) {
-          const ageHours = Math.round(age / 3_600_000);
-          stalenessNote = `Earthquake snapshot is stale: last updated ${ageHours}h ago (threshold: 24h)`;
-        }
+    if (result.status && result.status.last_successful_update) {
+      const age = Date.now() - new Date(result.status.last_successful_update).getTime();
+      if (age > STALE_EQ_MS) {
+        const ageHours = Math.round(age / 3_600_000);
+        stalenessNote = `Earthquake snapshot is stale: last updated ${ageHours}h ago (threshold: 24h)`;
       }
     }
 
     return {
       data_source: "snapshot",
       fetched_at: fetchedAt,
-      data,
+      data: result.data,
       ...(stalenessNote ? { parse_notes: stalenessNote } : {}),
     };
   } catch (err: any) {

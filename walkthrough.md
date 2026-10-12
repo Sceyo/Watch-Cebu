@@ -47,6 +47,17 @@ Following a thorough multi-device audit (iPhone SE 375×667 on slow 4G, Pixel 7 
 
 ## 2. Automated Browser Verification & Inspection Artifacts
 
+### F. Production Deployment Architecture (ADR-005)
+- **Vercel Output Alignment:** Added root `vercel.json` configuring `outputDirectory: "dist-client"` to ensure Vercel serves Vite's static SPA bundle containing `index.html`, eliminating 404s.
+- **Production API Serverless Adapters:** Implemented `api/power.ts` and `api/earthquakes.ts` with `GitHubSnapshotSource` to fetch live committed snapshots directly from the public GitHub repository at runtime (`https://raw.githubusercontent.com/Sceyo/Watch-Cebu/main/data/`).
+- **Edge CDN Caching:** Armed endpoints with `Cache-Control: s-maxage=60, stale-while-revalidate=300` to constrain serverless function invocations to ~1 per minute maximum, far below the Hobby tier allowance.
+- **Hobby Plan Quota Shield:** Configured `scripts/vercel-ignore-build.sh` (`git diff --quiet HEAD^ HEAD -- . ':(exclude)data'`) so 10-minute automated earthquake commits update live data without consuming Vercel's 100/day deployment quota.
+- **Zero-Leak Test Isolation:** Added `WATCH_CEBU_DATA_DIR` dynamic path resolution and a global SHA-256 integrity guard (`tests/setup/globalDataGuard.ts`) preventing test runs from dirtying or modifying authentic production snapshots.
+
+---
+
+## 2. Automated Browser Verification & Inspection Artifacts
+
 Browser verification is performed via headless Chrome using the Chrome DevTools Protocol (CDP) via `scripts/verify_responsive_overhaul.ts`. The script tests the real application across multiple viewports and stores inspectable evidence in `verification-artifacts/responsive-overhaul/`:
 
 ### A. Shipped Inspection Evidence (`verification-artifacts/responsive-overhaul/`)
@@ -73,10 +84,13 @@ Browser verification is performed via headless Chrome using the Chrome DevTools 
 ## 3. Test Suite Integrity
 
 The codebase is protected by comprehensive unit, component, schema, and regression test suites:
-- **20 test files, 253 passing tests (100% green)**.
-- `tests/ui/responsiveGuards.test.ts`: Enforces 44×44px hit areas, 52px mobile header, 56px bottom bar, 16px search font (preventing iOS zoom), prefers-reduced-motion, all 6 AQI hazard tiers, and haze auto-collapse.
+- **22 test files, 269 passing tests (100% green)**.
+- `tests/guards/dataDirectoryGuard.test.ts`: Verifies directory isolation and proves tampering detection works.
+- `tests/setup/globalDataGuard.ts`: Enforces zero snapshot mutations across all test executions.
+- `tests/server/apiProductionRoutes.test.ts`: Tests `GitHubSnapshotSource`, edge CDN caching headers, and fallback resiliency.
+- `tests/ui/responsiveGuards.test.ts`: Enforces 44×44px hit areas, 52px mobile header, 56px bottom bar, 16px search font, prefers-reduced-motion, all 6 AQI hazard tiers, and haze auto-collapse.
 - `tests/ui/about.test.ts`: Verifies real authoritative attribution and enforces regression guards against unconfigured template URLs (`YOUR_GITHUB_USERNAME`).
 - `tests/ui/clientBundleIntegrity.test.ts`: Guarantees zero Node built-ins and zero template string URLs in the client bundle.
 - `tests/ui/cebuLocations.test.ts`: Verifies offline centroid indexing and bounded geocoder validation.
 - `tests/ui/searchAndZoom.test.ts`: Tests MapController camera flight and auto-zoom across all 3 tiers.
-- Production payload: Total gzipped CSS + JS is **~78 kB**, well below the 150 kB budget.
+- Production payload: Total gzipped CSS + JS is **~88 kB**, well below the 150 kB budget.

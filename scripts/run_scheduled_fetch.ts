@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Watch Cebu — Scheduled Data Fetch Script
  *
  * Invoked by two independent GitHub Actions workflows:
@@ -47,7 +47,7 @@
  */
 
 import { writeFileSync, readFileSync, renameSync, existsSync, mkdirSync } from "fs";
-import { join, dirname } from "path";
+import { join, dirname, isAbsolute } from "path";
 import { fileURLToPath } from "url";
 
 // Import the same scrape-live functions used by the dev server — no logic duplication.
@@ -69,7 +69,16 @@ function getProjectRoot(): string {
 }
 
 const ROOT_DIR = getProjectRoot();
-const DATA_DIR = join(ROOT_DIR, "data");
+
+function getDataDir(): string {
+  const envDir = process.env.WATCH_CEBU_DATA_DIR;
+  if (envDir) {
+    return isAbsolute(envDir) ? envDir : join(ROOT_DIR, envDir);
+  }
+  return join(ROOT_DIR, "data");
+}
+
+const DATA_DIR = getDataDir();
 
 // ─── Staleness thresholds (must match server/api.ts) ──────────────────────────
 

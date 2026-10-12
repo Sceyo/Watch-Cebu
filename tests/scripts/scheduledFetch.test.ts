@@ -1,14 +1,15 @@
 /**
- * Scheduled Fetch Script Tests (Stage 4).
+ * Scheduled Fetch Script Tests (Stage 4 & Fix 4).
  *
  * Tests the behavior, feed isolation, staleness signaling, and heartbeat
  * guarantees of `scripts/run_scheduled_fetch.ts`.
  *
- * Tests run against child processes via node / tsx to verify realistic process exits,
- * stdout/stderr logs, and filesystem side-effects.
+ * CRITICAL (Fix 4): Tests MUST isolate WATCH_CEBU_DATA_DIR to an ephemeral
+ * test directory (TEST_DATA_DIR) so running `npm test` NEVER mutates the authentic
+ * production snapshots in `data/`.
  */
 
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, afterAll } from "vitest";
 import { execSync } from "child_process";
 import { existsSync, rmSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
@@ -16,21 +17,33 @@ import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = join(__dirname, "../..");
-const DATA_DIR = join(ROOT_DIR, "data");
+const TEST_DATA_DIR = join(ROOT_DIR, "tests", "fixtures", "tmp_scheduled_data");
 
-const POWER_LIVE = join(DATA_DIR, "live_power_advisories.json");
-const POWER_STATUS = join(DATA_DIR, "status_power.json");
-const EQ_LIVE = join(DATA_DIR, "live_earthquake_events.json");
-const EQ_STATUS = join(DATA_DIR, "status_earthquakes.json");
+const POWER_LIVE = join(TEST_DATA_DIR, "live_power_advisories.json");
+const POWER_STATUS = join(TEST_DATA_DIR, "status_power.json");
+const EQ_LIVE = join(TEST_DATA_DIR, "live_earthquake_events.json");
+const EQ_STATUS = join(TEST_DATA_DIR, "status_earthquakes.json");
 
 describe("Scheduled Fetch Script (scripts/run_scheduled_fetch.ts)", () => {
+  beforeEach(() => {
+    if (!existsSync(TEST_DATA_DIR)) {
+      mkdirSync(TEST_DATA_DIR, { recursive: true });
+    }
+  });
+
+  afterAll(() => {
+    if (existsSync(TEST_DATA_DIR)) {
+      rmSync(TEST_DATA_DIR, { recursive: true, force: true });
+    }
+  });
+
   it("fails immediately with exit code 1 when WATCH_CEBU_FEED is unset or invalid", () => {
     let error: any = null;
     let output = "";
     try {
       output = execSync("npx tsx scripts/run_scheduled_fetch.ts", {
         cwd: ROOT_DIR,
-        env: { ...process.env, WATCH_CEBU_FEED: "" },
+        env: { ...process.env, WATCH_CEBU_FEED: "", WATCH_CEBU_DATA_DIR: TEST_DATA_DIR },
         stdio: "pipe",
       }).toString();
     } catch (err: any) {
@@ -49,7 +62,7 @@ describe("Scheduled Fetch Script (scripts/run_scheduled_fetch.ts)", () => {
     try {
       execSync("npx tsx scripts/run_scheduled_fetch.ts", {
         cwd: ROOT_DIR,
-        env: { ...process.env, WATCH_CEBU_FEED: "all" },
+        env: { ...process.env, WATCH_CEBU_FEED: "all", WATCH_CEBU_DATA_DIR: TEST_DATA_DIR },
         stdio: "pipe",
       });
     } catch (err: any) {
@@ -63,14 +76,14 @@ describe("Scheduled Fetch Script (scripts/run_scheduled_fetch.ts)", () => {
   }, 60_000);
 
   it("processes power feed and leaves earthquake files untouched", () => {
-    // Record current mtimes or existence of EQ files
+    // Record current mtimes or existence of EQ files in isolated test dir
     const eqLiveBefore = existsSync(EQ_LIVE) ? readFileSync(EQ_LIVE, "utf-8") : null;
     const eqStatusBefore = existsSync(EQ_STATUS) ? readFileSync(EQ_STATUS, "utf-8") : null;
 
-    // Run power feed
+    // Run power feed directed at isolated test dir
     const res = execSync("npx tsx scripts/run_scheduled_fetch.ts", {
       cwd: ROOT_DIR,
-      env: { ...process.env, WATCH_CEBU_FEED: "power" },
+      env: { ...process.env, WATCH_CEBU_FEED: "power", WATCH_CEBU_DATA_DIR: TEST_DATA_DIR },
       stdio: "pipe",
     }).toString();
 
@@ -96,7 +109,7 @@ describe("Scheduled Fetch Script (scripts/run_scheduled_fetch.ts)", () => {
 
     const res = execSync("npx tsx scripts/run_scheduled_fetch.ts", {
       cwd: ROOT_DIR,
-      env: { ...process.env, WATCH_CEBU_FEED: "earthquakes" },
+      env: { ...process.env, WATCH_CEBU_FEED: "earthquakes", WATCH_CEBU_DATA_DIR: TEST_DATA_DIR },
       stdio: "pipe",
     }).toString();
 
@@ -116,7 +129,7 @@ describe("Scheduled Fetch Script (scripts/run_scheduled_fetch.ts)", () => {
   }, 60_000);
 
   it("flags staleness by setting exit code 1 when last_successful_update is older than threshold", () => {
-    // Intentionally write a status file with last_successful_update > 48 hours ago
+    // Intentionally write a status file with last_successful_update > 48 hours ago in isolated test dir
     const threeDaysAgo = new Date(Date.now() - 72 * 60 * 60 * 1000).toISOString();
     writeFileSync(
       POWER_STATUS,
@@ -129,10 +142,6 @@ describe("Scheduled Fetch Script (scripts/run_scheduled_fetch.ts)", () => {
       "utf-8"
     );
 
-    // If live fetch fails, it must preserve the old timestamp and trigger the exit code 1 staleness signal.
-    // In our test, if live fetch succeeds, last_successful_update advances to now.
-    // To specifically test staleness failure exit without breaking live scrape:
-    // We can simulate an update with a mocked failure or verify staleness detection logic in unit form:
     const statusData = JSON.parse(readFileSync(POWER_STATUS, "utf-8"));
     const age = Date.now() - new Date(statusData.last_successful_update).getTime();
     expect(age).toBeGreaterThan(48 * 60 * 60 * 1000);
