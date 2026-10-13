@@ -48,6 +48,11 @@ describe("Responsive CSS & Touch Target Guards", () => {
     expect(css).toMatch(/\.map-search-input\s*\{[^}]*font-size:\s*16px/);
   });
 
+  it("suppresses native browser search cancel button to avoid duplicate X marks", () => {
+    expect(css).toMatch(/::-webkit-search-cancel-button/);
+    expect(css).toMatch(/::-ms-clear/);
+  });
+
   it("respects prefers-reduced-motion for pulsing and animated elements", () => {
     expect(css).toMatch(/@media\s*\(prefers-reduced-motion:\s*reduce\)/);
     expect(css).toMatch(/animation-duration:\s*0\.01ms/);

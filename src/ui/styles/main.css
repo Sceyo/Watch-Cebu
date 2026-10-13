@@ -1634,6 +1634,23 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   font-size: 0.85rem;
 }
 
+/* Suppress browser native clear/cancel button (removes duplicate blue X in WebKit/Blink) */
+.map-search-input::-webkit-search-decoration,
+.map-search-input::-webkit-search-cancel-button,
+.map-search-input::-webkit-search-results-button,
+.map-search-input::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
+.map-search-input::-ms-clear,
+.map-search-input::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 .search-clear-btn {
   background: none;
   border: none;
