@@ -50,7 +50,14 @@ export function parsePagasaBulletinHtml(
     return createBaselineBulletin(sourceUrl, fetchedAt, "Empty or non-string HTML payload", "low");
   }
 
-  // Max payload cap (1MB) to prevent ReDoS
+  // Max payload cap (1MB) to prevent ReDoS & OOM
+  let parseNotes: string | null = null;
+  let parseConfidence: "high" | "low" = "high";
+  if (html.length > 1024 * 1024) {
+    parseNotes = "Payload exceeds maximum size limit (1MB)";
+    parseConfidence = "low";
+  }
+
   const safeHtml = html.slice(0, 1024 * 1024);
   const $ = cheerio.load(safeHtml);
 
@@ -172,8 +179,8 @@ export function parsePagasaBulletinHtml(
       advisory_areas: rainfallAreas
     },
     storm_center: stormCenter,
-    parse_confidence: "high",
-    parse_notes: null
+    parse_confidence: parseConfidence,
+    parse_notes: parseNotes
   };
 }
 

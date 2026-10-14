@@ -370,6 +370,7 @@ export async function getPowerAdvisories(
     const INDEX_URL = "https://www.visayanelectric.com/customer-services/service-advisory";
     const indexRes = await fetchImpl(INDEX_URL, {
       headers: { "User-Agent": "WatchCebu/0.1.0 (Civic Awareness App)" },
+      signal: AbortSignal.timeout(10_000),
     });
     if (!indexRes.ok) {
       throw new Error(`VECO index returned HTTP ${indexRes.status} ${indexRes.statusText}`);
@@ -382,6 +383,7 @@ export async function getPowerAdvisories(
 
     const postRes = await fetchImpl(postUrl, {
       headers: { "User-Agent": "WatchCebu/0.1.0 (Civic Awareness App)" },
+      signal: AbortSignal.timeout(10_000),
     });
     if (!postRes.ok) {
       throw new Error(`VECO post page returned HTTP ${postRes.status} ${postRes.statusText}`);
@@ -473,6 +475,7 @@ export async function getEarthquakeEvents(
     const isCustomFetch = !!options.fetchFn;
     const fetchOptions: any = {
       headers: { "User-Agent": "WatchCebu/0.1.0 (Civic Awareness App)" },
+      signal: AbortSignal.timeout(10_000),
       ...(!isCustomFetch ? { dispatcher: getPhivolcsDispatcher() } : {}),
     };
 
