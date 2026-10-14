@@ -286,8 +286,8 @@ describe("GeoJSON Provenance Integrity", () => {
   it("metadata sources_breakdown matches the exact feature counts", () => {
     const raw = JSON.parse(readFileSync(geojsonPath, "utf-8"));
     const { osm_point, manual_verified, boundary_centroid } = raw.metadata.sources_breakdown;
-    expect(osm_point).toBe(348);
-    expect(manual_verified).toBe(1);
+    expect(osm_point).toBe(365);
+    expect(manual_verified).toBe(2);
     expect(boundary_centroid).toBe(0);
     expect(osm_point + manual_verified + boundary_centroid).toBe(raw.features.length);
   });

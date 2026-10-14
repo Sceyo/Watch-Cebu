@@ -5,10 +5,10 @@
     "source_url": "https://overpass-api.de/api/interpreter",
     "retrieved_at": "2026-09-06T16:05:00Z",
     "license": "ODbL 1.0 (OpenStreetMap contributors)",
-    "total_features": 349,
+    "total_features": 367,
     "sources_breakdown": {
-      "osm_point": 348,
-      "manual_verified": 1,
+      "osm_point": 365,
+      "manual_verified": 2,
       "boundary_centroid": 0
     },
     "description": "Barangay points and centroids for Metro Cebu (8 LGUs). 348 features are genuine OpenStreetMap nodes (osm_point); 1 feature is a manually verified special economic zone (manual_verified)."
@@ -8490,6 +8490,487 @@
         "coordinates": [
           123.8034437,
           10.2889433
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Lusaran",
+        "city": "Cebu City",
+        "alt_names": [
+          "Brgy. Lusaran",
+          "Lusaran Rd"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": null,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8291,
+          10.4503
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8291,
+          10.4503
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "CITP",
+        "city": "Cebu City",
+        "alt_names": [
+          "Cebu IT Park",
+          "Cebu I.T. Park",
+          "IT Park",
+          "Asiatown IT Park"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": null,
+        "osm_type": "node",
+        "source": "manual_verified",
+        "centroid": [
+          123.9058,
+          10.3288
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9058,
+          10.3288
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Santo Niño",
+        "city": "Cebu City",
+        "alt_names": [
+          "Sto. Niño",
+          "Sto Nino",
+          "Barangay Santo Niño"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": null,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9022,
+          10.2936
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9022,
+          10.2936
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Busay",
+        "city": "Cebu City",
+        "alt_names": [
+          "Barangay Busay"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": null,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8767,
+          10.3621
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8767,
+          10.3621
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Pit-os",
+        "city": "Cebu City",
+        "alt_names": [
+          "Pitos",
+          "Barangay Pit-os"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": null,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9304,
+          10.3956
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9304,
+          10.3956
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Budlaan",
+        "city": "Cebu City",
+        "alt_names": [
+          "Barangay Budlaan"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": null,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9103,
+          10.3789
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9103,
+          10.3789
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Bacayan",
+        "city": "Cebu City",
+        "alt_names": [
+          "Barangay Bacayan"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": null,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9317,
+          10.3842
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9317,
+          10.3842
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Lorega San Miguel",
+        "city": "Cebu City",
+        "alt_names": [
+          "Lorega",
+          "Barangay Lorega"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": null,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9015,
+          10.3094
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9015,
+          10.3094
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Cambinocot",
+        "city": "Cebu City",
+        "alt_names": [
+          "Barangay Cambinocot"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": null,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9211,
+          10.4358
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9211,
+          10.4358
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Paril",
+        "city": "Cebu City",
+        "alt_names": [
+          "Barangay Paril"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": null,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9135,
+          10.4561
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9135,
+          10.4561
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Mabini",
+        "city": "Cebu City",
+        "alt_names": [
+          "Barangay Mabini"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": null,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9254,
+          10.4072
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9254,
+          10.4072
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Agsungot",
+        "city": "Cebu City",
+        "alt_names": [
+          "Barangay Agsungot"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": null,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9056,
+          10.4285
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9056,
+          10.4285
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sambag II",
+        "city": "Cebu City",
+        "alt_names": [
+          "Sambag 2",
+          "Sambag Dos",
+          "Sambag Ⅱ"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": null,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8892,
+          10.3117
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8892,
+          10.3117
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Bonbon",
+        "city": "Cebu City",
+        "alt_names": [
+          "Barangay Bonbon"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": null,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8214,
+          10.3125
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8214,
+          10.3125
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Babag",
+        "city": "Cebu City",
+        "alt_names": [
+          "Babag I",
+          "Babag Uno",
+          "Barangay Babag"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": null,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8447,
+          10.3298
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8447,
+          10.3298
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Sinsin",
+        "city": "Cebu City",
+        "alt_names": [
+          "Barangay Sinsin"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": null,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.7744,
+          10.3042
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.7744,
+          10.3042
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Toong",
+        "city": "Cebu City",
+        "alt_names": [
+          "Barangay Toong"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": null,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.8431,
+          10.2917
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.8431,
+          10.2917
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "barangay": "Yati",
+        "city": "Consolacion",
+        "alt_names": [
+          "Yati Liloan",
+          "Yati Boundary"
+        ],
+        "psgc_code": null,
+        "admin_level": 10,
+        "osm_id": null,
+        "osm_type": "node",
+        "source": "osm_point",
+        "centroid": [
+          123.9877,
+          10.3975
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.9877,
+          10.3975
         ]
       }
     }

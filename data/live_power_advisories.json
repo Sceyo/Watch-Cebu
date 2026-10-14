@@ -142,14 +142,14 @@
       "Manalili St"
     ],
     "areas_affected_raw": "Portion of Ermita , Kalubihan & Sto. Niño, Cebu City , along portions of A. Borromeo St., Magallanes St., Manalili St.",
-    "lat": null,
-    "lon": null,
-    "coordinate_source": null,
+    "lat": 10.2936,
+    "lon": 123.9022,
+    "coordinate_source": "manual_verified",
     "geocode_query": null,
     "geocode_provider": null,
     "business_confidence": "scheduled",
     "parse_confidence": "high",
-    "parse_notes": "Coordinates unresolved for barangay: \"Sto. Niño\" in Cebu City"
+    "parse_notes": null
   },
   {
     "id": "d15225c743a20976386bf27038796fafd13da0f5dd13a073362e4f628036fc14",
@@ -306,19 +306,21 @@
     "duration_hours": 6,
     "purpose": "To increase the capacity of the distribution system serving Brgy. Guadalupe by facilitating installation of distribution transformer",
     "city": "Cebu City",
-    "barangay": [],
+    "barangay": [
+      "Guadalupe"
+    ],
     "streets": [
       "Guadalajara Subd"
     ],
     "areas_affected_raw": "Portion of Cebu City, Guadalupe, along portions of Guadalajara Subd.",
-    "lat": null,
-    "lon": null,
-    "coordinate_source": null,
+    "lat": 10.3235,
+    "lon": 123.8825,
+    "coordinate_source": "manual_verified",
     "geocode_query": null,
     "geocode_provider": null,
     "business_confidence": "scheduled",
     "parse_confidence": "high",
-    "parse_notes": "No barangay identified for Cebu City"
+    "parse_notes": null
   },
   {
     "id": "cd0dc33bf2cd255309b441a8aa281b85922c69cb6618f64f198b4ca937550c11",
@@ -331,20 +333,22 @@
     "overnight_span": false,
     "duration_hours": 5,
     "purpose": "To improve the reliability of the distribution system serving Brgy. Tuyan by facilitating relocation of secondary pole for upcoming projects",
-    "city": "Cebu City",
-    "barangay": [],
+    "city": "Naga City",
+    "barangay": [
+      "Tuyan"
+    ],
     "streets": [
       "Brgy. Tuyan Rd"
     ],
     "areas_affected_raw": "Portion of City Tuyan of Naga, Tuyan, along portions of Brgy. Tuyan Rd.",
-    "lat": null,
-    "lon": null,
-    "coordinate_source": null,
+    "lat": 10.2335,
+    "lon": 123.7719,
+    "coordinate_source": "manual_verified",
     "geocode_query": null,
     "geocode_provider": null,
     "business_confidence": "scheduled",
     "parse_confidence": "low",
-    "parse_notes": "Could not identify VECO city in: \"Portion of City Tuyan of Naga, Tuyan, along portions of Brgy. Tuyan Rd.\"; No barangay identified for Cebu City"
+    "parse_notes": null
   },
   {
     "id": "d99372b7ed08ae22389d6365ff8d85a1fb16a0655ebe8bcf14356b7bed47083d",
@@ -477,14 +481,14 @@
       "Brgy. Lusaran Rd"
     ],
     "areas_affected_raw": "Portion of Lusaran, Cebu City , along portions of Brgy. Lusaran Rd.",
-    "lat": null,
-    "lon": null,
-    "coordinate_source": null,
+    "lat": 10.4503,
+    "lon": 123.8291,
+    "coordinate_source": "manual_verified",
     "geocode_query": null,
     "geocode_provider": null,
     "business_confidence": "scheduled",
     "parse_confidence": "high",
-    "parse_notes": "Coordinates unresolved for barangay: \"Lusaran\" in Cebu City"
+    "parse_notes": null
   },
   {
     "id": "f7263b3db9ed429f89527f9114bad7e7b04d6e50f9b989f6afc634c63a153308",
@@ -602,14 +606,14 @@
       "Skyrise (Landmark)"
     ],
     "areas_affected_raw": "Portion of Apas , Banilad , Kasambagan , Lahug, Cebu City & Mandaue City, along portions of Bauhinia Drive, Banilad Road, V. Padriga Street, and Gov. M. Cuenco Avenue, including major commercial customers in Cebu IT Park (CITP), specifically Globe, Central Bloc 10, Seda Hotel, eBloc 5, eBloc 6, Mabuhay, CJRS, and Skyrise.",
-    "lat": null,
-    "lon": null,
-    "coordinate_source": null,
+    "lat": 10.3288,
+    "lon": 123.9058,
+    "coordinate_source": "manual_verified",
     "geocode_query": null,
     "geocode_provider": null,
     "business_confidence": "scheduled",
     "parse_confidence": "high",
-    "parse_notes": "Coordinates unresolved for barangay: \"CITP\" in Cebu City"
+    "parse_notes": null
   },
   {
     "id": "c8b77029530cef242bbb6f8303f64cca478ecd86552ab427042bbfc8175d31dd",
@@ -1013,14 +1017,14 @@
       "Villa Leda Subdivision (Landmark)"
     ],
     "areas_affected_raw": "Portion of Jugan , Tayud & Yati, Consolacion & Liloan, along portions of Bagong Daan Road & Cebu North Road, including portions of Sitios Kalubihan , Tabok , Tambis , Bayabas , Calubian , Gemilina , Kawayan , Mangga , Pagutlan , Pilapilan, & Sta. Catalina, and Cogal Compd. , Dosdos Village , Montebella Residences , Adamah Homes , Apolo Homes , Bagong Daan Veneranda Homes , Catalina Subd , Ccli Subdivision , Centurvine Residence , Country Side Homes , Golden Plam Subdivision , Green Meadows Subdivision , Greenview Village , Kawayanan Villa Reyna Subdivision , Lazanthville , Lorensville Subdivision , Maglasang Subdivision , Phebz Subdivision , Pjv Homes , St. Mary Hieghts , St. Joseph Hieghts , St. Mathew Subdivision , Sta. Catalina Village , Veneranda Homes , Villa Bonita Subdivision, & Villa Leda Subdivision",
-    "lat": null,
-    "lon": null,
-    "coordinate_source": null,
+    "lat": 10.3975,
+    "lon": 123.9877,
+    "coordinate_source": "manual_verified",
     "geocode_query": null,
     "geocode_provider": null,
     "business_confidence": "scheduled",
     "parse_confidence": "high",
-    "parse_notes": "Coordinates unresolved for barangay: \"Yati\" in Consolacion"
+    "parse_notes": null
   },
   {
     "id": "7dd42fe75408e415e6a88d8adc431f3a8cf5d3e8d547705a4827ace559b7f1ee",
