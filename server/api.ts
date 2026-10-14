@@ -1,9 +1,10 @@
 import { readFileSync, existsSync } from "fs";
 import { join, dirname, isAbsolute } from "path";
 import { fileURLToPath } from "url";
-import type { PowerAdvisory, EarthquakeEvent } from "../src/types/index.js";
+import type { PowerAdvisory, EarthquakeEvent, PagasaBulletin } from "../src/types/index.js";
 import { extractCurrentPostUrl, parsePostHtml } from "../src/parsers/veco.js";
 import { extractBulletinLinks, parseBulletinHtml, decodePhivolcsBuffer, runBatched } from "../src/parsers/phivolcs.js";
+import { fetchPagasaBulletin } from "../src/parsers/pagasa.js";
 import { BarangayCentroidLookup, fanOutAndResolveAdvisories } from "../src/resolvers/coordinates.js";
 import { MemoryCache, serverCache } from "./cache.js";
 import { Agent } from "undici";
@@ -102,10 +103,14 @@ export interface ServerApiOptions {
   livePowerPath?: string;
   /** Override path to live_earthquake_events.json (for testing) */
   liveEqPath?: string;
+  /** Override path to live_pagasa_bulletin.json (for testing) */
+  livePagasaPath?: string;
   /** Override path to status_power.json (for testing) */
   statusPowerPath?: string;
   /** Override path to status_earthquakes.json (for testing) */
   statusEqPath?: string;
+  /** Override path to status_pagasa.json (for testing) */
+  statusPagasaPath?: string;
   /** Snapshot source provider abstraction (e.g. FileSnapshotSource or GitHubSnapshotSource) */
   snapshotSource?: ISnapshotSource;
 }
@@ -118,6 +123,7 @@ export interface SnapshotFeedData<T> {
 export interface ISnapshotSource {
   readPowerSnapshot(): Promise<SnapshotFeedData<PowerAdvisory[]> | null>;
   readEarthquakeSnapshot(): Promise<SnapshotFeedData<EarthquakeEvent[]> | null>;
+  readPagasaSnapshot?(): Promise<SnapshotFeedData<PagasaBulletin> | null>;
 }
 
 export class FileSnapshotSource implements ISnapshotSource {
@@ -162,6 +168,30 @@ export class FileSnapshotSource implements ISnapshotSource {
 
     const data: EarthquakeEvent[] = JSON.parse(readFileSync(livePath, "utf-8"));
     if (!Array.isArray(data) || data.length === 0) {
+      return null;
+    }
+
+    let status: FeedStatus | null = null;
+    if (existsSync(statusPath)) {
+      try {
+        status = JSON.parse(readFileSync(statusPath, "utf-8"));
+      } catch {}
+    }
+
+    return { data, status };
+  }
+
+  async readPagasaSnapshot(): Promise<SnapshotFeedData<PagasaBulletin> | null> {
+    const dataDir = getDataDir();
+    const livePath = this.options.livePagasaPath || join(dataDir, "live_pagasa_bulletin.json");
+    const statusPath = this.options.statusPagasaPath || join(dataDir, "status_pagasa.json");
+
+    if (!existsSync(livePath)) {
+      return null;
+    }
+
+    const data: PagasaBulletin = JSON.parse(readFileSync(livePath, "utf-8"));
+    if (!data || typeof data !== "object") {
       return null;
     }
 
@@ -258,6 +288,36 @@ export class GitHubSnapshotSource implements ISnapshotSource {
       }
     } catch {
       // Status fetch failure does not discard valid earthquake data
+    }
+
+    return { data, status };
+  }
+
+  async readPagasaSnapshot(): Promise<SnapshotFeedData<PagasaBulletin> | null> {
+    const liveUrl = `${this.baseUrl}/live_pagasa_bulletin.json`;
+    const statusUrl = `${this.baseUrl}/status_pagasa.json`;
+
+    const liveRes = await this.fetchFn(liveUrl, {
+      headers: { "User-Agent": "WatchCebu/0.1.0 (Vercel Serverless Function)" },
+    });
+    if (!liveRes.ok) {
+      throw new Error(`GitHub raw PAGASA bulletin returned HTTP ${liveRes.status} ${liveRes.statusText}`);
+    }
+    const data: PagasaBulletin = await liveRes.json();
+    if (!data || typeof data !== "object") {
+      throw new Error("GitHub raw PAGASA snapshot is empty or malformed");
+    }
+
+    let status: FeedStatus | null = null;
+    try {
+      const statusRes = await this.fetchFn(statusUrl, {
+        headers: { "User-Agent": "WatchCebu/0.1.0 (Vercel Serverless Function)" },
+      });
+      if (statusRes.ok) {
+        status = await statusRes.json();
+      }
+    } catch {
+      // Status fetch failure does not discard valid PAGASA data
     }
 
     return { data, status };
@@ -568,4 +628,71 @@ export async function getEarthquakeEventsSnapshot(
     );
   }
 }
+
+/**
+ * Read the latest PAGASA weather and flood bulletin from the snapshot file.
+ */
+export async function getPagasaBulletinSnapshot(
+  options: ServerApiOptions = {}
+): Promise<ApiResponse<PagasaBulletin>> {
+  const source = options.snapshotSource || new FileSnapshotSource(options);
+  const fetchedAt = new Date().toISOString();
+
+  try {
+    const result = await source.readPagasaSnapshot?.();
+    if (!result || !result.data) {
+      return getPagasaBulletinFallback(
+        "PAGASA snapshot file not found or empty — scheduled job has not run yet",
+        options
+      );
+    }
+
+    return {
+      data_source: "snapshot",
+      fetched_at: fetchedAt,
+      data: result.data,
+    };
+  } catch (err: any) {
+    return getPagasaBulletinFallback(
+      `PAGASA snapshot read failed: ${err?.message || String(err)}`,
+      options
+    );
+  }
+}
+
+export function getPagasaBulletinFallback(
+  reason: string,
+  _options: ServerApiOptions = {}
+): ApiResponse<PagasaBulletin> {
+  const fetchedAt = new Date().toISOString();
+  return {
+    data_source: "fixture_fallback",
+    fetched_at: fetchedAt,
+    data: {
+      id: "baseline-fallback",
+      source_url: "https://bagong.pagasa.dost.gov.ph/weather",
+      fetched_at: fetchedAt,
+      issued_at_pst: fetchedAt,
+      cyclone_name: null,
+      has_active_cyclone: false,
+      tcws_cebu: {
+        active: false,
+        signal_level: 0,
+        wind_speed_kmh: null,
+        areas_affected: [],
+      },
+      heavy_rainfall_alert: {
+        level: "none",
+        warning_type: null,
+        description: "No severe weather or flood warnings active for Cebu.",
+        advisory_areas: [],
+      },
+      storm_center: null,
+      parse_confidence: "high",
+      parse_notes: reason,
+    },
+    parse_notes: reason,
+  };
+}
+
 

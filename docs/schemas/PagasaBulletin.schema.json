@@ -1,0 +1,92 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://watchcebu.local/schemas/PagasaBulletin.schema.json",
+  "title": "PagasaBulletin",
+  "description": "Severe weather and heavy rainfall flood advisory parsed from DOST-PAGASA bulletins for Metro Cebu and Visayas.",
+  "type": "object",
+  "required": [
+    "id",
+    "source_url",
+    "fetched_at",
+    "issued_at_pst",
+    "has_active_cyclone",
+    "tcws_cebu",
+    "heavy_rainfall_alert",
+    "parse_confidence"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 deterministic hash of source URL and issued timestamp."
+    },
+    "source_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "fetched_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "issued_at_pst": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "cyclone_name": {
+      "type": ["string", "null"]
+    },
+    "has_active_cyclone": {
+      "type": "boolean"
+    },
+    "tcws_cebu": {
+      "type": "object",
+      "required": ["active", "signal_level", "areas_affected"],
+      "additionalProperties": false,
+      "properties": {
+        "active": { "type": "boolean" },
+        "signal_level": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "wind_speed_kmh": { "type": ["string", "null"] },
+        "areas_affected": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "heavy_rainfall_alert": {
+      "type": "object",
+      "required": ["level", "description", "advisory_areas"],
+      "additionalProperties": false,
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": ["none", "yellow", "orange", "red"]
+        },
+        "warning_type": { "type": ["string", "null"] },
+        "description": { "type": "string" },
+        "advisory_areas": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "storm_center": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "lat": { "type": "number", "minimum": 0, "maximum": 30 },
+        "lon": { "type": "number", "minimum": 110, "maximum": 145 },
+        "movement": { "type": ["string", "null"] },
+        "max_sustained_winds_kmh": { "type": ["number", "null"] },
+        "gustiness_kmh": { "type": ["number", "null"] }
+      }
+    },
+    "parse_confidence": {
+      "type": "string",
+      "enum": ["high", "low"]
+    },
+    "parse_notes": {
+      "type": ["string", "null"]
+    }
+  }
+}

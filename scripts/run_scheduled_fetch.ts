@@ -53,6 +53,7 @@ import { fileURLToPath } from "url";
 // Import the same scrape-live functions used by the dev server — no logic duplication.
 // The scheduled job IS the scrape-live path; the snapshot functions just read what this writes.
 import { getPowerAdvisories, getEarthquakeEvents, FeedStatus } from "../server/api.js";
+import { fetchPagasaBulletin } from "../src/parsers/pagasa.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -84,6 +85,7 @@ const DATA_DIR = getDataDir();
 
 const STALE_POWER_MS = 48 * 60 * 60 * 1000; // 48 hours
 const STALE_EQ_MS   = 24 * 60 * 60 * 1000;  // 24 hours
+const STALE_PAGASA_MS = 6 * 60 * 60 * 1000; // 6 hours
 
 // ─── Logging ──────────────────────────────────────────────────────────────────
 
@@ -99,9 +101,9 @@ function logErr(msg: string) {
 
 const FEED = process.env.WATCH_CEBU_FEED;
 
-if (FEED !== "power" && FEED !== "earthquakes") {
+if (FEED !== "power" && FEED !== "earthquakes" && FEED !== "pagasa") {
   console.error(
-    `[run_scheduled_fetch] FATAL: WATCH_CEBU_FEED must be exactly "power" or "earthquakes".` +
+    `[run_scheduled_fetch] FATAL: WATCH_CEBU_FEED must be exactly "power", "earthquakes", or "pagasa".` +
     ` Got: ${JSON.stringify(FEED)}. Exiting without touching any data files.`
   );
   process.exit(1);
@@ -111,15 +113,19 @@ if (FEED !== "power" && FEED !== "earthquakes") {
 
 const LIVE_PATH   = FEED === "power"
   ? join(DATA_DIR, "live_power_advisories.json")
-  : join(DATA_DIR, "live_earthquake_events.json");
+  : FEED === "earthquakes"
+  ? join(DATA_DIR, "live_earthquake_events.json")
+  : join(DATA_DIR, "live_pagasa_bulletin.json");
 
 const TMP_PATH    = LIVE_PATH.replace(".json", "_tmp.json");
 
 const STATUS_PATH = FEED === "power"
   ? join(DATA_DIR, "status_power.json")
-  : join(DATA_DIR, "status_earthquakes.json");
+  : FEED === "earthquakes"
+  ? join(DATA_DIR, "status_earthquakes.json")
+  : join(DATA_DIR, "status_pagasa.json");
 
-const STALE_MS    = FEED === "power" ? STALE_POWER_MS : STALE_EQ_MS;
+const STALE_MS    = FEED === "power" ? STALE_POWER_MS : FEED === "earthquakes" ? STALE_EQ_MS : STALE_PAGASA_MS;
 
 // ─── Status file helpers ───────────────────────────────────────────────────────
 
@@ -166,7 +172,7 @@ async function main() {
       renameSync(TMP_PATH, LIVE_PATH);
       log(`Wrote ${LIVE_PATH}`);
 
-    } else {
+    } else if (FEED === "earthquakes") {
       log("Fetching PHIVOLCS earthquake events...");
       const result = await getEarthquakeEvents();
       recordCount = result.data.length;
@@ -174,6 +180,17 @@ async function main() {
 
       // Atomic write
       writeFileSync(TMP_PATH, JSON.stringify(result.data, null, 2) + "\n", "utf-8");
+      renameSync(TMP_PATH, LIVE_PATH);
+      log(`Wrote ${LIVE_PATH}`);
+
+    } else {
+      log("Fetching PAGASA severe weather and flood bulletin...");
+      const bulletin = await fetchPagasaBulletin();
+      recordCount = 1;
+      log(`Fetched PAGASA bulletin (cyclone: ${bulletin.cyclone_name || "none"}, tcws: ${bulletin.tcws_cebu.signal_level}, rainfall: ${bulletin.heavy_rainfall_alert.level})`);
+
+      // Atomic write
+      writeFileSync(TMP_PATH, JSON.stringify(bulletin, null, 2) + "\n", "utf-8");
       renameSync(TMP_PATH, LIVE_PATH);
       log(`Wrote ${LIVE_PATH}`);
     }

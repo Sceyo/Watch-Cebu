@@ -150,3 +150,7 @@ export interface ElectricityRate {
   parse_confidence: ParseConfidence;
   parse_notes: string | null;
 }
+
+// ─── PAGASA Severe Weather & Flood (Phase 2) ────────────────────────────────────
+export * from "./pagasa.js";
+

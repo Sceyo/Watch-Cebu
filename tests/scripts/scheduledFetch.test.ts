@@ -53,7 +53,7 @@ describe("Scheduled Fetch Script (scripts/run_scheduled_fetch.ts)", () => {
 
     expect(error).not.toBeNull();
     expect(error.status).toBe(1);
-    expect(output).toContain('WATCH_CEBU_FEED must be exactly "power" or "earthquakes"');
+    expect(output).toContain('WATCH_CEBU_FEED must be exactly "power", "earthquakes", or "pagasa"');
   }, 60_000);
 
   it("fails immediately with exit code 1 when WATCH_CEBU_FEED is 'all' (prevents doubled-load bug)", () => {
@@ -72,7 +72,7 @@ describe("Scheduled Fetch Script (scripts/run_scheduled_fetch.ts)", () => {
 
     expect(error).not.toBeNull();
     expect(error.status).toBe(1);
-    expect(output).toContain('WATCH_CEBU_FEED must be exactly "power" or "earthquakes"');
+    expect(output).toContain('WATCH_CEBU_FEED must be exactly "power", "earthquakes", or "pagasa"');
   }, 60_000);
 
   it("processes power feed and leaves earthquake files untouched", () => {

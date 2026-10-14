@@ -63,6 +63,8 @@ describe("Data Directory Integrity Guard & Isolation (Fix 4)", () => {
       "status_power.json",
       "live_earthquake_events.json",
       "status_earthquakes.json",
+      "live_pagasa_bulletin.json",
+      "status_pagasa.json",
       "metro-cebu-barangays.geojson",
       "sample_earthquake_events.json",
     ];

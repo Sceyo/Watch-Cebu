@@ -15,9 +15,11 @@ import {
   GitHubSnapshotSource,
   getPowerAdvisoriesSnapshot,
   getEarthquakeEventsSnapshot,
+  getPagasaBulletinSnapshot,
 } from "../../server/api.js";
 import powerHandler, { GET as powerGet } from "../../api/power.js";
 import earthquakesHandler, { GET as earthquakesGet } from "../../api/earthquakes.js";
+import pagasaHandler, { GET as pagasaGet } from "../../api/pagasa.js";
 
 describe("GitHubSnapshotSource (ADR-005)", () => {
   it("defaults to pinned repo owner 'Sceyo', repo 'Watch-Cebu', and branch 'main'", () => {
@@ -234,6 +236,47 @@ describe("Vercel Serverless Function Endpoints (/api/power & /api/earthquakes)",
   it("api/earthquakes GET() returns standard Web Response with CDN cache header", async () => {
     const request = new Request("https://watch-cebu.vercel.app/api/earthquakes");
     const response = await earthquakesGet(request);
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get("content-type")).toContain("application/json");
+    expect(response.headers.get("cache-control")).toBe("s-maxage=60, stale-while-revalidate=300");
+
+    const json = await response.json();
+    expect(json).toHaveProperty("data_source");
+    expect(json).toHaveProperty("data");
+  });
+
+  it("api/pagasa handler sets CDN caching headers for Node req/res", async () => {
+    const headers: Record<string, string> = {};
+    let statusCode = 0;
+    let body = "";
+
+    const mockRes = {
+      setHeader: vi.fn((k: string, v: string) => {
+        headers[k.toLowerCase()] = v;
+      }),
+      set statusCode(val: number) {
+        statusCode = val;
+      },
+      end: vi.fn((val: string) => {
+        body = val;
+      }),
+    };
+
+    await pagasaHandler({} as any, mockRes as any);
+
+    expect(headers["content-type"]).toContain("application/json");
+    expect(headers["cache-control"]).toBe("s-maxage=60, stale-while-revalidate=300");
+    expect(statusCode).toBe(200);
+
+    const parsed = JSON.parse(body);
+    expect(parsed).toHaveProperty("data_source");
+    expect(parsed).toHaveProperty("data");
+  });
+
+  it("api/pagasa GET() returns standard Web Response with CDN cache header", async () => {
+    const request = new Request("https://watch-cebu.vercel.app/api/pagasa");
+    const response = await pagasaGet(request);
 
     expect(response.status).toBe(200);
     expect(response.headers.get("content-type")).toContain("application/json");

@@ -1,0 +1,23 @@
+{
+  "id": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "source_url": "https://bagong.pagasa.dost.gov.ph/weather",
+  "fetched_at": "2026-10-14T03:00:00.000Z",
+  "issued_at_pst": "2026-10-14T11:00:00+08:00",
+  "cyclone_name": null,
+  "has_active_cyclone": false,
+  "tcws_cebu": {
+    "active": false,
+    "signal_level": 0,
+    "wind_speed_kmh": null,
+    "areas_affected": []
+  },
+  "heavy_rainfall_alert": {
+    "level": "none",
+    "warning_type": null,
+    "description": "No active severe rainfall warning in effect for Metro Cebu.",
+    "advisory_areas": []
+  },
+  "storm_center": null,
+  "parse_confidence": "high",
+  "parse_notes": null
+}
