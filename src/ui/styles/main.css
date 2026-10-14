@@ -118,6 +118,20 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   background: rgba(251, 191, 36, 0.2);
 }
 
+.offline-banner {
+  background: #0F172A;
+  border-bottom: 2px solid #38BDF8;
+  color: #E0F2FE;
+}
+
+.offline-banner .banner-heading {
+  color: #38BDF8;
+}
+
+.offline-banner .banner-details {
+  color: #BAE6FD;
+}
+
 /* --------------------------------------------------------------------------
    App Header & Controls
    -------------------------------------------------------------------------- */

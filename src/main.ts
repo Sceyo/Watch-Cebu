@@ -23,6 +23,8 @@ import { MapController } from "./ui/map/mapController.js";
 import { renderHeader } from "./ui/components/header.js";
 import { renderDayTabs, getTodayPhtString } from "./ui/components/dayTabs.js";
 import { renderDataSourceBanner } from "./ui/components/dataSourceBanner.js";
+import { renderOfflineBanner } from "./ui/components/offlineBanner.js";
+import { isOnline, onNetworkChange } from "./ui/services/networkStatus.js";
 import { renderLegend } from "./ui/components/legend.js";
 import { renderAbout } from "./ui/components/about.js";
 import { renderAirQualityDrawer } from "./ui/components/airQualityDrawer.js";
@@ -371,6 +373,7 @@ function updateUI() {
 
   if (bannerEl) {
     renderDataSourceBanner(bannerEl, powerFeedState, eqFeedState);
+    renderOfflineBanner(bannerEl, isOnline());
   }
 
   if (dayTabsEl) {
@@ -515,6 +518,38 @@ async function init() {
       }
     }
   });
+
+  // Track Online / Offline connectivity transitions
+  onNetworkChange((online) => {
+    updateUI();
+    if (online) {
+      showToast("Online: Reconnected to civic alert network.");
+      fetchPowerAdvisories().then((state) => {
+        powerFeedState = state;
+        updateUI();
+      });
+      fetchEarthquakeEvents().then((state) => {
+        eqFeedState = state;
+        updateUI();
+      });
+    } else {
+      showToast("Offline: Viewing locally cached civic advisories.");
+    }
+  });
+
+  // Register PWA Service Worker for offline resilience
+  if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then((reg) => {
+          console.log("[WatchCebu PWA] Service Worker registered:", reg.scope);
+        })
+        .catch((err) => {
+          console.warn("[WatchCebu PWA] Service Worker registration failed:", err);
+        });
+    });
+  }
 }
 
 // Boot on DOM ready

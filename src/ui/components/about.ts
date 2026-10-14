@@ -8,6 +8,8 @@
  * - Provides genuine civic data attribution for VECO, PHIVOLCS, OpenStreetMap, and CARTO.
  */
 
+import { CEBU_EMERGENCY_HOTLINES } from "../services/networkStatus.js";
+
 export const ABOUT_METADATA = {
   appName: "WATCH CEBU",
   tagline: "Civic Awareness & Critical Infrastructure Tracker",
@@ -165,6 +167,28 @@ export function renderAbout(
             <span class="item-name">CARTO Basemaps</span>
             <span class="item-sub">Dark Matter high-contrast map tiles for control-room civic clarity.</span>
           </div>
+        </div>
+      </div>
+
+      <!-- Emergency Hotlines (Civic Lifeline & Offline Reference) -->
+      <div class="legend-section">
+        <h3 class="section-title">🚨 Emergency Hotlines (Cebu)</h3>
+        <p class="section-desc">Tap-to-call emergency responders for disasters, grid hazards, and medical aid:</p>
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+          ${CEBU_EMERGENCY_HOTLINES.map(
+            (h) => `
+            <a href="${h.phone}" class="source-link" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 8px; text-decoration: none;">
+              <div>
+                <div style="font-weight: 600; color: #FFFFFF; font-size: 0.85rem;">${h.name}</div>
+                <div style="font-size: 0.72rem; color: var(--text-muted);">${h.description}</div>
+              </div>
+              <div style="text-align: right; margin-left: 8px; flex-shrink: 0;">
+                <span style="font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700; color: #F87171;">${h.displayPhone}</span>
+                <span style="display: block; font-size: 0.65rem; color: #34D399; font-weight: 600;">${h.available}</span>
+              </div>
+            </a>
+          `
+          ).join("")}
         </div>
       </div>
 
