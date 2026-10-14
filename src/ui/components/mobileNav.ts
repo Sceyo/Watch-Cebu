@@ -11,7 +11,7 @@
  */
 
 import type { FeedState, SelectedLocationDetails } from "../types.js";
-import type { PowerAdvisory, EarthquakeEvent } from "../../types/index.js";
+import type { PowerAdvisory, EarthquakeEvent, PagasaBulletin } from "../../types/index.js";
 import type { AirQualityReading } from "../services/airQuality.js";
 import { computePowerStatus, computeEarthquakeSeverity } from "../map/markerStyles.js";
 import {
@@ -82,7 +82,8 @@ export function renderStatusPopover(
   powerState: FeedState<PowerAdvisory[]>,
   eqState: FeedState<EarthquakeEvent[]>,
   airQuality: AirQualityReading | null,
-  onClose: () => void
+  onClose: () => void,
+  pagasaState?: FeedState<PagasaBulletin | null> | null
 ): void {
   if (!isOpen) {
     container.classList.remove("open");
@@ -97,9 +98,9 @@ export function renderStatusPopover(
   container.setAttribute("aria-modal", "true");
   container.setAttribute("aria-label", "System Data Feeds Status");
 
-  const formatFeedRow = (name: string, state: FeedState<any>, provider: string) => {
+  const formatFeedRow = (name: string, state: FeedState<any>, provider: string, customDetail?: string) => {
     let statusBadge = `<span class="popover-badge live">● Live Feed</span>`;
-    let detail = `Verified updates received from ${provider}.`;
+    let detail = customDetail || `Verified updates received from ${provider}.`;
 
     if (state.status === "loading") {
       statusBadge = `<span class="popover-badge loading">Fetching...</span>`;
@@ -109,7 +110,7 @@ export function renderStatusPopover(
       detail = `Direct feed unreachable. Network or upstream issue.`;
     } else if (state.dataSource === "fixture_fallback") {
       statusBadge = `<span class="popover-badge fallback">⚠️ Backup Fixture</span>`;
-      detail = `Displaying verified offline fixture dataset.`;
+      detail = customDetail || `Displaying verified offline fixture dataset.`;
     }
 
     return `
@@ -135,6 +136,22 @@ export function renderStatusPopover(
     </div>
   `;
 
+  let pagasaDetail = "TCWS Signals, storm tracks, and heavy rainfall alerts.";
+  if (pagasaState?.data) {
+    const b = pagasaState.data;
+    if (b.tcws_cebu?.active) {
+      pagasaDetail = `TCWS Signal #${b.tcws_cebu.signal_level} in effect for Cebu (${b.cyclone_name || 'Active Cyclone'}).`;
+    } else if (b.heavy_rainfall_alert && b.heavy_rainfall_alert.level !== "none") {
+      pagasaDetail = `Heavy Rainfall Alert: ${b.heavy_rainfall_alert.level.toUpperCase()} level warning in effect.`;
+    } else {
+      pagasaDetail = "No active storm signals or heavy rainfall alerts in Cebu.";
+    }
+  }
+
+  const pagasaRow = pagasaState
+    ? formatFeedRow("PAGASA Severe Weather", pagasaState, "DOST-PAGASA", pagasaDetail)
+    : "";
+
   container.innerHTML = `
     <div class="status-popover-card">
       <div class="popover-header">
@@ -148,6 +165,7 @@ export function renderStatusPopover(
         ${formatFeedRow("VECO Power Advisories", powerState, "Visayan Electric Company")}
         ${formatFeedRow("PHIVOLCS Seismic Activity", eqState, "DOST-PHIVOLCS")}
         ${airRow}
+        ${pagasaRow}
       </div>
     </div>
   `;

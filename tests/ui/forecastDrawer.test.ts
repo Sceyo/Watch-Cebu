@@ -5,6 +5,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { renderForecastDrawer } from "../../src/ui/components/forecastDrawer.js";
 import type { ForecastResult } from "../../src/ui/services/forecast.js";
+import type { PagasaBulletin } from "../../src/types/index.js";
 
 function createMockElement(): any {
   const listeners: Record<string, ((...args: any[]) => void)[]> = {};
@@ -132,5 +133,96 @@ describe("Forecast Drawer Component — Accessibility and Rendering", () => {
     expect(container.innerHTML).toContain("24<small>km/h</small>");
     expect(container.innerHTML).toContain("current-hour-pill");
     expect(container.innerHTML).toContain("NOW");
+  });
+
+  it("renders PAGASA normal civic status banner when no severe weather alerts active", () => {
+    const container = createMockElement();
+    const mockBulletin: PagasaBulletin = {
+      id: "pagasa-norm",
+      source_url: "https://pagasa.dost.gov.ph",
+      fetched_at: "2026-10-14T04:00:00Z",
+      issued_at_pst: "12:00 PM, 14 October 2026",
+      cyclone_name: null,
+      has_active_cyclone: false,
+      tcws_cebu: { active: false, signal_level: 0, wind_speed_kmh: null, areas_affected: [] },
+      heavy_rainfall_alert: { level: "none", warning_type: null, description: "", advisory_areas: [] },
+      storm_center: null,
+      parse_confidence: "high",
+      parse_notes: null,
+    };
+
+    renderForecastDrawer(container, null, true, () => {}, mockBulletin);
+
+    expect(container.innerHTML).toContain("PAGASA Civic Status: Normal");
+    expect(container.innerHTML).toContain("No active Tropical Cyclone Wind Signals");
+    expect(container.innerHTML).toContain("12:00 PM, 14 October 2026");
+  });
+
+  it("renders PAGASA TCWS Signal card with storm details when active for Cebu", () => {
+    const container = createMockElement();
+    const mockBulletin: PagasaBulletin = {
+      id: "pagasa-storm",
+      source_url: "https://pagasa.dost.gov.ph",
+      fetched_at: "2026-10-14T04:00:00Z",
+      issued_at_pst: "11:00 AM, 14 October 2026",
+      cyclone_name: "KRISTINE",
+      has_active_cyclone: true,
+      tcws_cebu: {
+        active: true,
+        signal_level: 2,
+        wind_speed_kmh: "62–88 km/h",
+        areas_affected: ["Northern Cebu", "Camotes Islands", "Bantayan Islands"],
+      },
+      heavy_rainfall_alert: { level: "none", warning_type: null, description: "", advisory_areas: [] },
+      storm_center: {
+        lat: 10.8,
+        lon: 124.5,
+        movement: "West Northwest at 15 km/h",
+        max_sustained_winds_kmh: 85,
+      },
+      parse_confidence: "high",
+      parse_notes: null,
+    };
+
+    renderForecastDrawer(container, null, true, () => {}, mockBulletin);
+
+    expect(container.innerHTML).toContain("SIGNAL #2");
+    expect(container.innerHTML).toContain("Tropical Cyclone \"KRISTINE\"");
+    expect(container.innerHTML).toContain("Expected Winds: 62–88 km/h");
+    expect(container.innerHTML).toContain("Northern Cebu");
+    expect(container.innerHTML).toContain("Camotes Islands");
+    expect(container.innerHTML).toContain("10.8°N, 124.5°E");
+    expect(container.innerHTML).toContain("Max Winds: 85 km/h");
+    expect(container.innerHTML).toContain("Sea travel is hazardous");
+  });
+
+  it("renders PAGASA Heavy Rainfall alert card when alert level is orange or red", () => {
+    const container = createMockElement();
+    const mockBulletin: PagasaBulletin = {
+      id: "pagasa-rain",
+      source_url: "https://pagasa.dost.gov.ph",
+      fetched_at: "2026-10-14T04:00:00Z",
+      issued_at_pst: "11:00 AM, 14 October 2026",
+      cyclone_name: null,
+      has_active_cyclone: false,
+      tcws_cebu: { active: false, signal_level: 0, wind_speed_kmh: null, areas_affected: [] },
+      heavy_rainfall_alert: {
+        level: "orange",
+        warning_type: "Intense Rainfall & Flood Threat",
+        description: "Flooding is threatening in low-lying areas and landslides along mountain slopes.",
+        advisory_areas: ["Metro Cebu", "Talisay City", "Naga City"],
+      },
+      storm_center: null,
+      parse_confidence: "high",
+      parse_notes: null,
+    };
+
+    renderForecastDrawer(container, null, true, () => {}, mockBulletin);
+
+    expect(container.innerHTML).toContain("ORANGE WARNING");
+    expect(container.innerHTML).toContain("Intense Rainfall &amp; Flood Threat");
+    expect(container.innerHTML).toContain("Flooding is threatening in low-lying areas");
+    expect(container.innerHTML).toContain("Metro Cebu");
+    expect(container.innerHTML).toContain("Talisay City");
   });
 });

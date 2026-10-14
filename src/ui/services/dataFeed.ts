@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Client Data Feed Service.
  *
  * Implements Stage 3 requirements:
@@ -8,7 +8,7 @@
  * - Fully decoupled: fetching Power never awaits Earthquakes, and vice versa.
  */
 
-import type { PowerAdvisory, EarthquakeEvent } from "../../types/index.js";
+import type { PowerAdvisory, EarthquakeEvent, PagasaBulletin } from "../../types/index.js";
 import type { FeedState } from "../types.js";
 
 export async function fetchPowerAdvisories(
@@ -61,6 +61,33 @@ export async function fetchEarthquakeEvents(
       status: "error",
       error: err?.message || String(err),
       data: [],
+    };
+  }
+}
+
+export async function fetchPagasaBulletin(
+  fetchImpl: typeof fetch = fetch
+): Promise<FeedState<PagasaBulletin | null>> {
+  try {
+    const res = await fetchImpl("/api/pagasa");
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status} ${res.statusText}`);
+    }
+    const json = await res.json();
+    const data: PagasaBulletin | null = json.data || null;
+
+    return {
+      status: data ? "success" : "empty",
+      dataSource: json.data_source,
+      fetchedAt: json.fetched_at,
+      data,
+      parseNotes: json.parse_notes,
+    };
+  } catch (err: any) {
+    return {
+      status: "error",
+      error: err?.message || String(err),
+      data: null,
     };
   }
 }

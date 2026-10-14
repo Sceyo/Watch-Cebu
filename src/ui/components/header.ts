@@ -8,7 +8,7 @@
  */
 
 import type { LayerSelection, FeedState } from "../types.js";
-import type { PowerAdvisory, EarthquakeEvent } from "../../types/index.js";
+import type { PowerAdvisory, EarthquakeEvent, PagasaBulletin } from "../../types/index.js";
 import type { AirQualityReading } from "../services/airQuality.js";
 import { ICONS } from "./icons.js";
 
@@ -24,6 +24,7 @@ export interface HeaderCallbacks {
 export interface HeaderExtraState {
   airQuality?: AirQualityReading | null;
   isForecastActive?: boolean;
+  pagasaState?: FeedState<PagasaBulletin | null>;
 }
 
 export function renderHeader(
@@ -58,10 +59,46 @@ export function renderHeader(
     airChip = `<button class="freshness-chip air-chip" id="btn-toggle-air" style="border-color: ${air.hex}88;" title="Click for Air Quality & Haze Advisory"><span class="live-dot" style="background: ${air.hex};"></span>Air: AQI ${air.aqi} (${air.categoryLabel}${hazeNotice})</button>`;
   }
 
+  let pagasaChip = `<button class="freshness-chip loading" id="btn-header-storm" title="Fetching PAGASA severe weather..."><span class="pulse-dot"></span>PAGASA: Fetching...</button>`;
+  if (extra?.pagasaState) {
+    const pState = extra.pagasaState;
+    if (pState.status === "loading") {
+      pagasaChip = `<button class="freshness-chip loading" id="btn-header-storm" title="Fetching PAGASA severe weather..."><span class="pulse-dot"></span>PAGASA: Fetching...</button>`;
+    } else if (pState.status === "error") {
+      pagasaChip = `<button class="freshness-chip error" id="btn-header-storm" title="PAGASA feed unreachable">PAGASA: Offline</button>`;
+    } else if (pState.dataSource === "fixture_fallback") {
+      pagasaChip = `<button class="freshness-chip fallback" id="btn-header-storm" title="${pState.parseNotes || 'Backup Fixture Data'}">⚠️ PAGASA: Backup Data</button>`;
+    } else if (pState.data) {
+      const bulletin = pState.data;
+      if (bulletin.tcws_cebu?.active) {
+        pagasaChip = `<button class="freshness-chip storm-chip active tcws-active" id="btn-header-storm" style="border-color: #EF4444; color: #FCA5A5; background: rgba(239, 68, 68, 0.15);" title="Active TCWS Signal #${bulletin.tcws_cebu.signal_level} for Cebu — Click for details"><span class="pulse-dot" style="background: #EF4444;"></span>TCWS #${bulletin.tcws_cebu.signal_level}: ${bulletin.cyclone_name || 'Active'}</button>`;
+      } else if (bulletin.heavy_rainfall_alert && bulletin.heavy_rainfall_alert.level !== "none") {
+        const rColor = bulletin.heavy_rainfall_alert.level === "red" ? "#EF4444" : bulletin.heavy_rainfall_alert.level === "orange" ? "#F97316" : "#EAB308";
+        pagasaChip = `<button class="freshness-chip storm-chip active rainfall-active" id="btn-header-storm" style="border-color: ${rColor}; color: #FDE047; background: rgba(245, 158, 11, 0.15);" title="Heavy Rainfall Warning: ${bulletin.heavy_rainfall_alert.level.toUpperCase()} — Click for details"><span class="pulse-dot" style="background: ${rColor};"></span>Rainfall: ${bulletin.heavy_rainfall_alert.level.toUpperCase()}</button>`;
+      } else {
+        pagasaChip = `<button class="freshness-chip live" id="btn-header-storm" title="PAGASA Severe Weather: Normal — Click for weather forecast"><span class="live-dot"></span>PAGASA: Normal</button>`;
+      }
+    }
+  }
+
   // Consolidated system status for compact mobile header (52px top bar)
-  const isAnyFallback = powerState.dataSource === "fixture_fallback" || eqState.dataSource === "fixture_fallback" || extra?.airQuality?.isFallback;
-  const isAnyLoading = powerState.status === "loading" || eqState.status === "loading";
-  let mobileStatusHtml = `<button class="freshness-chip mobile-status-btn live" id="btn-mobile-status" aria-label="System status: Live feeds"><span class="live-dot"></span><span>3 Feeds Live</span></button>`;
+  const isAnyFallback =
+    powerState.dataSource === "fixture_fallback" ||
+    eqState.dataSource === "fixture_fallback" ||
+    extra?.airQuality?.isFallback ||
+    extra?.pagasaState?.dataSource === "fixture_fallback";
+  const isAnyLoading =
+    powerState.status === "loading" ||
+    eqState.status === "loading" ||
+    extra?.pagasaState?.status === "loading";
+
+  let liveCount = 0;
+  if (powerState.status === "success" && powerState.dataSource !== "fixture_fallback") liveCount++;
+  if (eqState.status === "success" && eqState.dataSource !== "fixture_fallback") liveCount++;
+  if (extra?.airQuality && !extra.airQuality.isFallback) liveCount++;
+  if (extra?.pagasaState?.status === "success" && extra?.pagasaState?.dataSource !== "fixture_fallback") liveCount++;
+
+  let mobileStatusHtml = `<button class="freshness-chip mobile-status-btn live" id="btn-mobile-status" aria-label="System status: ${liveCount || 4} feeds live"><span class="live-dot"></span><span>${liveCount || 4} Feeds Live</span></button>`;
   if (isAnyLoading) {
     mobileStatusHtml = `<button class="freshness-chip mobile-status-btn loading" id="btn-mobile-status" aria-label="System status: Fetching data"><span class="pulse-dot"></span><span>Connecting...</span></button>`;
   } else if (isAnyFallback) {
@@ -78,6 +115,7 @@ export function renderHeader(
         ${powerChip}
         ${eqChip}
         ${airChip}
+        ${pagasaChip}
       </div>
       <div class="mobile-status-container mobile-only">
         ${mobileStatusHtml}
@@ -146,5 +184,10 @@ export function renderHeader(
   const mobileStatusBtn = container.querySelector<HTMLButtonElement>("#btn-mobile-status");
   mobileStatusBtn?.addEventListener("click", () => {
     callbacks.onStatusPopoverToggle?.();
+  });
+
+  const stormBtn = container.querySelector<HTMLButtonElement>("#btn-header-storm");
+  stormBtn?.addEventListener("click", () => {
+    callbacks.onForecastToggle?.();
   });
 }

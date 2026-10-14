@@ -1201,6 +1201,112 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   font-style: italic;
 }
 
+/* --------------------------------------------------------------------------
+   PAGASA Severe Weather & Flood Advisories (Phase 3)
+   -------------------------------------------------------------------------- */
+.pagasa-status-banner.normal {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+}
+
+.pagasa-alerts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.pagasa-alert-card {
+  border-radius: 8px;
+  padding: 12px 14px;
+  border: 1px solid;
+  transition: transform 0.15s ease;
+}
+
+.pagasa-alert-card.tcws-card {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.pagasa-alert-card.rainfall-card {
+  border: 1px solid;
+}
+
+.pagasa-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.pagasa-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  font-family: var(--font-mono);
+}
+
+.pagasa-badge.tcws-badge {
+  background: #EF4444;
+  color: #FFFFFF;
+}
+
+.pagasa-storm-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #FFFFFF;
+}
+
+.pagasa-source-tag {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+.pagasa-card-body {
+  line-height: 1.4;
+}
+
+.pagasa-precaution {
+  margin-top: 8px;
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+  background: rgba(0, 0, 0, 0.25);
+  padding: 6px 10px;
+  border-radius: 6px;
+  border-left: 3px solid #EF4444;
+}
+
+.storm-chip {
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.storm-chip:hover {
+  filter: brightness(1.15);
+}
+
+.storm-popup .popup-title {
+  color: #FCA5A5;
+}
+
+.pagasa-storm-eye-icon {
+  background: transparent;
+  border: none;
+}
+
+@keyframes storm-pulse {
+  0% { transform: scale(1); box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
+  50% { transform: scale(1.08); box-shadow: 0 0 20px rgba(239, 68, 68, 0.9); }
+  100% { transform: scale(1); box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
+}
+
 /* Air Quality Drawer Components */
 .drawer-timestamp-row {
   display: flex;

@@ -16,9 +16,9 @@
 
 import "leaflet/dist/leaflet.css";
 import "./ui/styles/main.css";
-import type { PowerAdvisory, EarthquakeEvent } from "./types/index.js";
+import type { PowerAdvisory, EarthquakeEvent, PagasaBulletin } from "./types/index.js";
 import type { LayerSelection, FilterState, FeedState, SelectedLocationDetails } from "./ui/types.js";
-import { fetchPowerAdvisories, fetchEarthquakeEvents } from "./ui/services/dataFeed.js";
+import { fetchPowerAdvisories, fetchEarthquakeEvents, fetchPagasaBulletin } from "./ui/services/dataFeed.js";
 import { MapController } from "./ui/map/mapController.js";
 import { renderHeader } from "./ui/components/header.js";
 import { renderDayTabs, getTodayPhtString } from "./ui/components/dayTabs.js";
@@ -70,6 +70,11 @@ let powerFeedState: FeedState<PowerAdvisory[]> = {
 let eqFeedState: FeedState<EarthquakeEvent[]> = {
   status: "loading",
   data: [],
+};
+
+let pagasaFeedState: FeedState<PagasaBulletin | null> = {
+  status: "loading",
+  data: null,
 };
 
 // Optimistic UI cache for instant header render
@@ -239,6 +244,7 @@ function updateUI() {
       {
         airQuality: airQualityData,
         isForecastActive: isForecastOpen,
+        pagasaState: pagasaFeedState,
       }
     );
   }
@@ -361,14 +367,21 @@ function updateUI() {
         isStatusPopoverOpen = false;
         document.body.classList.remove("modal-open");
         updateUI();
-      }
+      },
+      pagasaFeedState
     );
   }
 
   if (forecastDrawerEl) {
-    renderForecastDrawer(forecastDrawerEl, forecastData, isForecastOpen, () => {
-      closeAllDrawers();
-    });
+    renderForecastDrawer(
+      forecastDrawerEl,
+      forecastData,
+      isForecastOpen,
+      () => {
+        closeAllDrawers();
+      },
+      pagasaFeedState.data
+    );
   }
 
   if (bannerEl) {
@@ -412,6 +425,7 @@ function updateUI() {
     mapController.setLayerVisibility(currentLayer);
     mapController.renderPowerAdvisories(powerFeedState.data, filterState);
     mapController.renderEarthquakeEvents(eqFeedState.data, filterState);
+    mapController.renderPagasaBulletin(pagasaFeedState.data);
   }
 }
 
@@ -475,6 +489,11 @@ async function init() {
     }
   });
 
+  fetchPagasaBulletin().then((state) => {
+    pagasaFeedState = state;
+    updateUI();
+  });
+
   // Global Keyboard listener: Escape closes dialogs & Tab focus trapping
   window.addEventListener("keydown", (e) => {
     const isAnyOpen =
@@ -530,6 +549,10 @@ async function init() {
       });
       fetchEarthquakeEvents().then((state) => {
         eqFeedState = state;
+        updateUI();
+      });
+      fetchPagasaBulletin().then((state) => {
+        pagasaFeedState = state;
         updateUI();
       });
     } else {

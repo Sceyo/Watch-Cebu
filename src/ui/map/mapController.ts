@@ -10,7 +10,7 @@
  */
 
 import L from "leaflet";
-import type { PowerAdvisory, EarthquakeEvent } from "../../types/index.js";
+import type { PowerAdvisory, EarthquakeEvent, PagasaBulletin } from "../../types/index.js";
 import type { LayerSelection, FilterState, SelectedLocationDetails } from "../types.js";
 import { computePowerStatus, computeEarthquakeSeverity, renderEarthquakeMarkerSvg, cleanTownName } from "./markerStyles.js";
 import {
@@ -33,6 +33,7 @@ export class MapController {
   private map: L.Map;
   private powerLayerGroup: L.LayerGroup;
   private earthquakeLayerGroup: L.LayerGroup;
+  private pagasaLayerGroup: L.LayerGroup;
   private onSelectLocation?: (details: SelectedLocationDetails) => void;
   private userLocationMarker?: L.CircleMarker;
 
@@ -66,6 +67,7 @@ export class MapController {
 
     this.powerLayerGroup = L.layerGroup().addTo(this.map);
     this.earthquakeLayerGroup = L.layerGroup().addTo(this.map);
+    this.pagasaLayerGroup = L.layerGroup().addTo(this.map);
   }
 
   setOnSelectLocation(callback: (details: SelectedLocationDetails) => void): void {
@@ -443,6 +445,112 @@ export class MapController {
 
       this.earthquakeLayerGroup.addLayer(marker);
     }
+  }
+
+  renderPagasaBulletin(bulletin: PagasaBulletin | null): void {
+    this.pagasaLayerGroup.clearLayers();
+
+    if (!bulletin?.storm_center) {
+      return;
+    }
+
+    const { lat, lon, movement, max_sustained_winds_kmh, gustiness_kmh } = bulletin.storm_center;
+    const isTcwsActive = bulletin.tcws_cebu?.active;
+    const cycloneName = bulletin.cyclone_name || "Active Cyclone";
+    const sigLevel = bulletin.tcws_cebu?.signal_level ?? 0;
+
+    // Outer Wind Buffer (120 km radius circle)
+    const bufferCircle = L.circle([lat, lon], {
+      radius: 120_000,
+      color: isTcwsActive ? "#EF4444" : "#F59E0B",
+      weight: 1.5,
+      dashArray: "6, 6",
+      fillColor: isTcwsActive ? "#EF4444" : "#F59E0B",
+      fillOpacity: 0.08,
+      interactive: false,
+    });
+    this.pagasaLayerGroup.addLayer(bufferCircle);
+
+    // Inner Gale Wind Buffer (60 km radius circle)
+    const innerBuffer = L.circle([lat, lon], {
+      radius: 60_000,
+      color: isTcwsActive ? "#DC2626" : "#D97706",
+      weight: 1,
+      fillColor: isTcwsActive ? "#DC2626" : "#D97706",
+      fillOpacity: 0.12,
+      interactive: false,
+    });
+    this.pagasaLayerGroup.addLayer(innerBuffer);
+
+    // Storm Center Eye Icon
+    const eyeSvg = `
+      <div class="storm-eye-marker-pin" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: rgba(239, 68, 68, 0.25); border: 2px solid #EF4444; border-radius: 50%; box-shadow: 0 0 16px rgba(239, 68, 68, 0.6);">
+        <span style="font-size: 1.15rem; line-height: 1; display: inline-block;">🌀</span>
+      </div>
+    `;
+
+    const icon = L.divIcon({
+      html: eyeSvg,
+      className: "pagasa-storm-eye-icon",
+      iconSize: [32, 32],
+      iconAnchor: [16, 16],
+      popupAnchor: [0, -18],
+    });
+
+    const marker = L.marker([lat, lon], { icon });
+
+    const tcwsBadgeText = isTcwsActive ? `TCWS Signal #${sigLevel} (Cebu)` : "No TCWS in Cebu";
+    const tcwsBadgeBg = isTcwsActive ? "#EF4444" : "#10B981";
+
+    const popupHtml = `
+      <div class="popup-card storm-popup">
+        <div class="popup-header">
+          <span class="popup-badge" style="background: ${tcwsBadgeBg}22; color: ${tcwsBadgeBg}; border: 1px solid ${tcwsBadgeBg}55;">
+            ${tcwsBadgeText}
+          </span>
+          <span class="popup-city">DOST-PAGASA</span>
+        </div>
+        <h3 class="popup-title" style="color: #FCA5A5;">Tropical Cyclone "${cycloneName}"</h3>
+        <p class="popup-time">Eye Center: ${lat.toFixed(2)}°N, ${lon.toFixed(2)}°E</p>
+
+        <div class="popup-field-row">
+          <span class="field-label">Movement:</span>
+          <span class="field-value">${movement || 'Stationary or slow'}</span>
+        </div>
+        ${max_sustained_winds_kmh ? `
+          <div class="popup-field-row">
+            <span class="field-label">Max Winds:</span>
+            <span class="field-value">${max_sustained_winds_kmh} km/h</span>
+          </div>` : ""}
+        ${gustiness_kmh ? `
+          <div class="popup-field-row">
+            <span class="field-label">Gustiness:</span>
+            <span class="field-value">${gustiness_kmh} km/h</span>
+          </div>` : ""}
+
+        <div class="popup-provenance-box">
+          <div class="popup-field-row">
+            <span class="field-label">Data Source:</span>
+            <span class="field-value source-highlight bulletin">Official PAGASA Severe Weather Bulletin</span>
+          </div>
+        </div>
+
+        <div class="popup-footer">
+          <a href="${bulletin.source_url}" target="_blank" rel="noopener noreferrer" class="source-link">
+            Verify PAGASA Bulletin ↗
+          </a>
+        </div>
+      </div>
+    `;
+
+    marker.bindPopup(popupHtml, {
+      maxWidth: 320,
+      autoPan: true,
+      autoPanPaddingTopLeft: L.point(20, 110),
+      autoPanPaddingBottomRight: L.point(20, 40),
+    });
+
+    this.pagasaLayerGroup.addLayer(marker);
   }
 
   fitBoundsIfNotEmpty(): void {

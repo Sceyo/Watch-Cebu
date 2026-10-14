@@ -146,6 +146,14 @@ export function renderAbout(
         </div>
 
         <div class="legend-item" style="align-items: flex-start;">
+          <span style="font-size: 1.2rem; line-height: 1;">🌀</span>
+          <div class="item-text">
+            <span class="item-name">DOST-PAGASA</span>
+            <span class="item-sub">Philippine Atmospheric, Geophysical and Astronomical Services Administration official severe weather bulletins, Tropical Cyclone Wind Signals (TCWS), and Heavy Rainfall Warnings.</span>
+          </div>
+        </div>
+
+        <div class="legend-item" style="align-items: flex-start;">
           <span style="font-size: 1.2rem; line-height: 1;">🍃</span>
           <div class="item-text">
             <span class="item-name">Open-Meteo</span>
