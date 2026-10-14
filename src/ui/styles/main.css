@@ -1957,7 +1957,7 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   background: var(--bg-secondary);
   border-top: 1px solid var(--border-color);
   border-radius: 16px 16px 0 0;
-  z-index: 600;
+  z-index: 1500;
   transform: translateY(105%);
   transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
@@ -2153,7 +2153,7 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   left: 14px;
   max-width: 380px;
   margin: 0 auto;
-  z-index: 650;
+  z-index: 1500;
   display: none;
 }
 
@@ -2251,7 +2251,7 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   bottom: calc(72px + env(safe-area-inset-bottom, 0px));
   left: 50%;
   transform: translateX(-50%);
-  z-index: 700;
+  z-index: 1600;
   pointer-events: none;
   display: flex;
   flex-direction: column;
