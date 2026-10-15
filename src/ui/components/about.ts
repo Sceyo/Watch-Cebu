@@ -178,6 +178,70 @@ export function renderAbout(
         </div>
       </div>
 
+      <!-- Scope Boundaries, Limitations & Disclaimers -->
+      <div class="legend-section">
+        <h3 class="section-title">⚠️ Scope Limitations & Civic Disclaimers</h3>
+        <p class="section-desc">What Watch Cebu covers, what is currently out of scope, and essential civic boundaries:</p>
+
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+          <!-- Power Coverage Boundaries -->
+          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px;">
+            <div style="font-size: 0.82rem; font-weight: 700; color: #F59E0B; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+              <span>⚡ Power Coverage: VECO Franchise Only</span>
+            </div>
+            <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.4;">
+              Covers scheduled maintenance for <strong>4 cities & 4 municipalities</strong> (Cebu City, Mandaue, Talisay, Naga, Consolacion, Liloan, Minglanilla, San Fernando).<br>
+              <strong style="color: #F87171;">Currently Out of Scope (Cons):</strong>
+              <ul style="margin: 4px 0 0 16px; padding: 0;">
+                <li><strong>MECO (Mactan Electric):</strong> Lapu-Lapu City & Cordova (Mactan Island) are not covered.</li>
+                <li><strong>CEBECO I, II, & III:</strong> Provincial towns in Northern, Southern, and Western Cebu are not covered due to a lack of machine-readable data feeds.</li>
+                <li><strong>Unscheduled / Emergency Outages:</strong> Spontaneous breaker tripping, blown transformers, and emergency blackouts cannot be detected in real time.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Geocoding Centroid Accuracy -->
+          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px;">
+            <div style="font-size: 0.82rem; font-weight: 700; color: #60A5FA; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+              <span>📍 Approximate Geographic Centroids</span>
+            </div>
+            <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.4;">
+              Map pins indicate approximate barangay and street center points derived from OpenStreetMap and VECO text descriptions. An advisory pin in your barangay does <em>not</em> guarantee your specific household or meter will lose power, as outages often isolate specific transformer feeders.
+            </div>
+          </div>
+
+          <!-- Seismic Disclaimer -->
+          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px;">
+            <div style="font-size: 0.82rem; font-weight: 700; color: #A78BFA; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+              <span>🌋 Seismic Epicenters (Not Early Warning)</span>
+            </div>
+            <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.4;">
+              Tracks official DOST-PHIVOLCS bulletins within 300 km. This is an information dashboard, <strong>not an Earthquake Early Warning (EEW) alarm</strong>. Shaking felt at your home depends on local ground conditions and distance from the epicenter.
+            </div>
+          </div>
+
+          <!-- Weather & Evacuation Orders -->
+          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px;">
+            <div style="font-size: 0.82rem; font-weight: 700; color: #34D399; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+              <span>🌀 Weather & Disaster Orders</span>
+            </div>
+            <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.4;">
+              Weather forecasts (Open-Meteo) and storm signals (DOST-PAGASA) are aggregated for situational awareness. Watch Cebu does <strong>not issue official evacuation orders or class suspensions</strong>. Always follow directives from your local CDRRMO and the Provincial Disaster Office.
+            </div>
+          </div>
+
+          <!-- No Dispatch -->
+          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px;">
+            <div style="font-size: 0.82rem; font-weight: 700; color: #CBD5E1; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+              <span>🚨 No Emergency Dispatch or Ticketing</span>
+            </div>
+            <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.4;">
+              This website is an informational monitor. You cannot report downed lines, request medical rescue, or submit power tickets through this app. Use the direct emergency hotlines below for urgent assistance.
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Emergency Hotlines (Civic Lifeline & Offline Reference) -->
       <div class="legend-section">
         <h3 class="section-title">🚨 Emergency Hotlines (Cebu)</h3>

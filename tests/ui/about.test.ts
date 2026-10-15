@@ -120,6 +120,18 @@ describe("About Drawer Component", () => {
     renderAbout(container, false, () => {});
     expect(container.className).toBe("legend-drawer closed");
   });
+
+  it("renderAbout outputs Scope Limitations and Civic Disclaimers including MECO and CEBECO boundaries", () => {
+    const container = createMockElement();
+    renderAbout(container, true, () => {});
+
+    expect(container.innerHTML).toContain("Scope Limitations & Civic Disclaimers");
+    expect(container.innerHTML).toContain("MECO (Mactan Electric)");
+    expect(container.innerHTML).toContain("CEBECO I, II, & III");
+    expect(container.innerHTML).toContain("VECO Franchise Only");
+    expect(container.innerHTML).toContain("Approximate Geographic Centroids");
+    expect(container.innerHTML).toContain("Seismic Epicenters (Not Early Warning)");
+  });
 });
 
 describe("Header About Button Integration", () => {

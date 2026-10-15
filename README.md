@@ -263,6 +263,53 @@ Running `npm test` never writes to authentic `data/` snapshots:
 
 ---
 
+## ⚠️ Limitations & Disclaimers: What Watch Cebu Cannot Do (Cons & Boundaries)
+
+Watch Cebu is built with a bias toward honesty, verification, and calibrated claims. To prevent misinterpretation during civic disruptions or emergencies, the following technical and operational boundaries apply:
+
+### 1. Power Distribution Utility (DU) Boundaries
+- **VECO Franchise Only (674 km² Core)**:
+  - Watch Cebu tracks scheduled power maintenance exclusively within the **4 cities and 4 municipalities** served by the Visayan Electric Company: *Cebu City, Mandaue City, Talisay City, City of Naga, Consolacion, Liloan, Minglanilla, and San Fernando*.
+- **❌ MECO (Mactan Electric Company) is NOT Covered**:
+  - Outages in **Lapu-Lapu City and Cordova (Mactan Island)** are currently out of scope. Residents of Mactan Island will not see power advisories for their areas.
+- **❌ CEBECO I, II, & III (Cebu Electric Cooperatives) are NOT Covered**:
+  - Provincial towns and rural municipalities across northern, southern, and western Cebu are excluded:
+    - *CEBECO I*: Carcar City down to Santander, Barili, Moalboal, Dalaguete, etc.
+    - *CEBECO II*: Compostela, Danao City, Bogo City, Medellin, Daanbantayan, etc.
+    - *CEBECO III*: Toledo City, Balamban, Asturias, Pinamungajan, Aloguinsan.
+    - *BANELCO & CELCO*: Bantayan and Camotes Islands.
+  - *Why*: CEBECO cooperatives do not maintain public, machine-readable web data. Most notices are published as social media posters/infographics on Facebook or broadcast via municipal megaphones (*rekorida*).
+- **❌ No Real-Time Detection for Unscheduled / Emergency Blackouts**:
+  - The dashboard tracks **planned, scheduled maintenance**. It **cannot** detect spontaneous tripping, blown distribution transformers, fallen utility poles, lightning strikes, or emergency load shedding in real time, as distribution utilities do not expose live breaker telemetry APIs.
+
+### 2. Geographic Resolution & Centroid Approximation
+- **Approximate Centroids, Not Meter-Level Outages**:
+  - Pins indicate **approximate barangay and street center points** derived from OpenStreetMap nodes and verbatim advisory text.
+  - A pin in your barangay does **not** guarantee that your specific home or meter will lose power. Power feeders often isolate specific sub-pockets, transformer banks, or single sitios within a barangay.
+
+### 3. Seismic Hazard Boundaries (PHIVOLCS)
+- **Calculated Epicenters, NOT Earthquake Early Warning (EEW)**:
+  - Seismic pins display the calculated underground epicenter and estimated magnitude once published by DOST-PHIVOLCS.
+  - This is **not an early-warning alarm** (it does not alert users seconds prior to P-wave arrival).
+  - Ground shaking (PEIS Intensity) at your actual location depends on local soil mechanics, distance from the fault line, and focal depth.
+
+### 4. Severe Weather & Disaster Orders (PAGASA / Open-Meteo)
+- **Civic Situational Awareness, NOT Official Command**:
+  - DOST-PAGASA Tropical Cyclone Wind Signals (TCWS) and heavy rainfall alerts are aggregated for convenience.
+  - Watch Cebu does **not issue official evacuation orders or government class/work suspensions**. Citizens must always prioritize and follow official executive orders from the Cebu City DRRMO, Cebu Provincial Disaster Office, and respective LGUs.
+  - Atmospheric forecasts (Open-Meteo) are based on regional numerical prediction models (ECMWF/GFS) and may vary from localized microclimates (such as sudden mountain downpours in Busay).
+
+### 5. PWA Offline Cache Boundaries
+- **Serving Cached Snapshots**:
+  - When disconnected from the internet, the application serves previously cached data and displays an amber "Offline Mode" banner. It **cannot receive live updates or newly issued bulletins while offline**.
+  - Map tile storage is bounded to a 100-tile LRU cache. Panning far outside your cached area while offline will display empty map grids.
+
+### 6. Emergency Dispatch & Reporting
+- **No Incident Ticketing or Rescue Dispatch**:
+  - Watch Cebu provides direct tap-to-call links for emergency hotlines (DRRMO, VECO Emergency, Red Cross, BFP, 911), but **users cannot report downed lines, log power outages, or request emergency rescue through this web application**.
+
+---
+
 ## ⚖️ Data Privacy, Provenance & Disclaimer
 
 - **No Surveillance / No Trackers**: Watch Cebu does not use Google Analytics, cookies, fingerprinting, or user telemetry.
