@@ -8,7 +8,7 @@
 
 import type { ForecastResult, HourlyForecastEntry } from "../services/forecast.js";
 import type { PagasaBulletin } from "../../types/index.js";
-import { ICONS } from "./icons.js";
+import { ICONS, getWeatherIconSvg } from "./icons.js";
 
 function escapeHtml(str: string): string {
   return str
@@ -204,7 +204,7 @@ export function renderForecastDrawer(
             ${currentBadge}
             <span>${entry.hourLabel}</span>
           </div>
-          <div class="hour-card-icon" aria-hidden="true">${entry.icon}</div>
+          <div class="hour-card-icon" aria-hidden="true">${entry.weatherCode !== undefined ? getWeatherIconSvg(entry.weatherCode) : entry.icon}</div>
           <div class="hour-card-rain" title="Precipitation probability">
             <span class="hour-metric-icon" style="display: inline-flex; align-items: center; color: #60A5FA;">${ICONS.rain}</span>
             <span class="hour-metric-val">${entry.precipitationProbability}%</span>

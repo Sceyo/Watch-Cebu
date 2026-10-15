@@ -8,6 +8,7 @@ import {
   getWeatherCodeInfo,
   formatHourLabel,
 } from "../../src/ui/services/forecast.js";
+import { getWeatherIconSvg } from "../../src/ui/components/icons.js";
 
 describe("Weather Forecast Service — WMO Code Mapping", () => {
   it("maps WMO code 0 to Clear sky with sun icon", () => {
@@ -20,6 +21,16 @@ describe("Weather Forecast Service — WMO Code Mapping", () => {
     const res = getWeatherCodeInfo(2);
     expect(res.icon).toBe("⛅");
     expect(res.description).toBe("Partly cloudy");
+  });
+
+  it("maps WMO fog/mist codes (45, 48) to Fog / Mist without white square emoji glitch", () => {
+    const res45 = getWeatherCodeInfo(45);
+    expect(res45.description).toBe("Fog / Mist");
+    expect(res45.icon).toBe("☁️");
+
+    const res48 = getWeatherCodeInfo(48);
+    expect(res48.description).toBe("Fog / Mist");
+    expect(res48.icon).toBe("☁️");
   });
 
   it("maps WMO rain codes (61, 63, 65, 80) to rain icons", () => {
@@ -39,6 +50,26 @@ describe("Weather Forecast Service — WMO Code Mapping", () => {
     const res = getWeatherCodeInfo(999);
     expect(res.icon).toBe("🌤️");
     expect(res.description).toBe("Fair");
+  });
+});
+
+describe("Weather Forecast Service — getWeatherIconSvg", () => {
+  it("renders crisp SVG weather vectors without platform emoji square boxes", () => {
+    const sunSvg = getWeatherIconSvg(0);
+    expect(sunSvg).toContain("<svg");
+    expect(sunSvg).toContain("#F59E0B");
+
+    const fogSvg = getWeatherIconSvg(45);
+    expect(fogSvg).toContain("<svg");
+    expect(fogSvg).toContain("line x1=\"7\"");
+
+    const rainSvg = getWeatherIconSvg(63);
+    expect(rainSvg).toContain("<svg");
+    expect(rainSvg).toContain("#38BDF8");
+
+    const stormSvg = getWeatherIconSvg(95);
+    expect(stormSvg).toContain("<svg");
+    expect(stormSvg).toContain("#FACC15");
   });
 });
 

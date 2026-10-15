@@ -43,7 +43,7 @@ export function getWeatherCodeInfo(code: number): { icon: string; description: s
       return { icon: "☁️", description: "Overcast" };
     case 45:
     case 48:
-      return { icon: "🌫️", description: "Fog / Mist" };
+      return { icon: "☁️", description: "Fog / Mist" };
     case 51:
     case 53:
     case 55:

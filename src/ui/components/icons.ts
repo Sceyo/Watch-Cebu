@@ -36,3 +36,39 @@ export const ICONS = {
   
   calendar: `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>`,
 };
+
+/**
+ * Returns a resolution-independent SVG weather icon for a given WMO weather code.
+ * Ensures consistent rendering across all platforms (preventing emoji square box glitches).
+ */
+export function getWeatherIconSvg(weatherCode: number, size = 24): string {
+  switch (weatherCode) {
+    case 0: // Clear sky
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`;
+    case 1: // Mainly clear
+    case 2: // Partly cloudy
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M20 12h2"/><path d="m19.07 4.93-1.41 1.41"/><path d="M15.95 12.65a4 4 0 0 0-5.93-4.13"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/></svg>`;
+    case 3: // Overcast
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>`;
+    case 45: // Fog
+    case 48: // Depositing rime fog
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14.9A7 7 0 1 1 15.7 8h1.8a4.5 4.5 0 0 1 2.5 8.2"/><line x1="7" y1="17" x2="17" y2="17"/><line x1="9" y1="20" x2="15" y2="20"/></svg>`;
+    case 51: // Drizzle: light
+    case 53: // Drizzle: moderate
+    case 55: // Drizzle: dense
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14.9A7 7 0 1 1 15.7 8h1.8a4.5 4.5 0 0 1 2.5 8.2"/><line x1="8" y1="17" x2="8" y2="19"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="16" y1="17" x2="16" y2="19"/></svg>`;
+    case 61: // Rain: slight
+    case 63: // Rain: moderate
+    case 65: // Rain: heavy
+    case 80: // Rain showers: slight
+    case 81: // Rain showers: moderate
+    case 82: // Rain showers: violent
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14.9A7 7 0 1 1 15.7 8h1.8a4.5 4.5 0 0 1 2.5 8.2"/><line x1="16" y1="15" x2="16" y2="21"/><line x1="8" y1="15" x2="8" y2="21"/><line x1="12" y1="17" x2="12" y2="23"/></svg>`;
+    case 95: // Thunderstorm
+    case 96: // Thunderstorm with slight hail
+    case 99: // Thunderstorm with heavy hail
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#FACC15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16.3A7 7 0 1 1 15.7 8h1.8a4.5 4.5 0 0 1 .5 9"/><polyline points="13 11 9 17 15 17 11 23"/></svg>`;
+    default:
+      return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M20 12h2"/><path d="m19.07 4.93-1.41 1.41"/><path d="M15.95 12.65a4 4 0 0 0-5.93-4.13"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/></svg>`;
+  }
+}
