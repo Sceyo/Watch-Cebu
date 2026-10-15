@@ -8,7 +8,7 @@
  * 4. Graceful offline fallback.
  */
 
-const CACHE_VERSION = "watch-cebu-v1";
+const CACHE_VERSION = "watch-cebu-v2";
 const STATIC_CACHE = `static-${CACHE_VERSION}`;
 const API_CACHE = `api-${CACHE_VERSION}`;
 const TILE_CACHE = `tiles-${CACHE_VERSION}`;
@@ -146,7 +146,30 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Strategy 3: Static Assets & Bundles (HTML, CSS, JS, Fonts, Icons)
+  // Strategy 3: HTML Navigation Requests (Network-First with offline cache fallback)
+  // Guarantees all users on Desktop and Mobile immediately receive new application deployments!
+  if (request.mode === "navigate" || request.destination === "document" || url.pathname === "/" || url.pathname === "/index.html") {
+    event.respondWith(
+      fetch(request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseClone = networkResponse.clone();
+            caches.open(STATIC_CACHE).then((cache) => {
+              cache.put(request, responseClone);
+            });
+          }
+          return networkResponse;
+        })
+        .catch(async () => {
+          const cached = (await caches.match("/index.html")) || (await caches.match("/"));
+          if (cached) return cached;
+          return new Response("Offline", { status: 503, statusText: "Offline" });
+        })
+    );
+    return;
+  }
+
+  // Strategy 4: Static Assets & Bundles (CSS, JS, Fonts, Icons)
   // Cache-first with network fallback
   event.respondWith(
     caches.match(request).then((cachedResponse) => {
