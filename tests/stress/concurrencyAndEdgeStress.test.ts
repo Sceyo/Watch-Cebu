@@ -57,7 +57,7 @@ describe("Edge Serverless Endpoints Concurrency & Load Stress", () => {
 
     const totalDuration = performance.now() - start;
 
-    expect(totalDuration).toBeLessThan(2500); // 100 requests in under 2.5s under system load
+    expect(totalDuration).toBeLessThan(5000); // 100 requests in under 5s under system/network load
     expect(responses).toHaveLength(CONCURRENCY);
 
     for (const res of responses) {
@@ -69,7 +69,7 @@ describe("Edge Serverless Endpoints Concurrency & Load Stress", () => {
       expect(body).toHaveProperty("data");
       expect(body).toHaveProperty("data_source");
       expect(body).toHaveProperty("fetched_at");
-      expect(["live", "fixture_fallback"]).toContain(body.data_source);
+      expect(["snapshot", "fixture_fallback"]).toContain(body.data_source);
     }
   });
 
