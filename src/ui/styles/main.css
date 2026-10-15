@@ -374,9 +374,10 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   height: 100%;
 }
 
-/* High-Contrast Basemap Street & Barangay Labels */
+/* High-Contrast Basemap Street & Barangay Labels (Crisp, No Halo Bloom) */
 .map-labels-tiles {
-  filter: brightness(2.8) contrast(1.8);
+  filter: brightness(1.5) contrast(1.2);
+  image-rendering: -webkit-optimize-contrast;
 }
 
 /* --------------------------------------------------------------------------

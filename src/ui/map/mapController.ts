@@ -61,6 +61,7 @@ export class MapController {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       subdomains: "abcd",
       maxZoom: 19,
+      detectRetina: true,
     }).addTo(this.map);
 
     // Dedicated high-contrast label pane: sits above storm track / vector layers (z-index 450)
@@ -78,6 +79,7 @@ export class MapController {
       maxZoom: 19,
       pane: "labelsPane",
       className: "map-labels-tiles",
+      detectRetina: true,
     }).addTo(this.map);
 
     // Zoom control at bottom-right for thumb accessibility
