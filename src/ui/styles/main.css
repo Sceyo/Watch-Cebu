@@ -358,6 +358,33 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   border-radius: 9999px;
 }
 
+/* Reassuring Civic Advance Notice Pill (when schedule is for upcoming dates) */
+.advance-schedule-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #6EE7B7;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+  flex-shrink: 0;
+}
+
+.advance-schedule-pill .advance-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.7);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
 /* --------------------------------------------------------------------------
    Main Map Container
    -------------------------------------------------------------------------- */
@@ -2290,6 +2317,65 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
 .toast-message.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.toast-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+  line-height: 1.35;
+}
+
+.toast-inner .toast-icon {
+  font-size: 1rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.toast-message.toast-success {
+  border-color: rgba(16, 185, 129, 0.5);
+  background: rgba(15, 23, 42, 0.96);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6), 0 0 12px rgba(16, 185, 129, 0.15);
+}
+
+.toast-message.toast-warning {
+  border-color: rgba(245, 158, 11, 0.5);
+  background: rgba(15, 23, 42, 0.96);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6), 0 0 12px rgba(245, 158, 11, 0.15);
+}
+
+.toast-message.toast-info {
+  border-color: rgba(56, 189, 248, 0.5);
+  background: rgba(15, 23, 42, 0.96);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6), 0 0 12px rgba(56, 189, 248, 0.15);
+}
+
+/* ==========================================================================
+   Global WCAG 2.2 Focus Appearance (:focus-visible)
+   Ensures 2px high-contrast indicator with offset across all interactive elements
+   when navigating via keyboard Tab, without appearing on touch or mouse clicks.
+   ========================================================================== */
+:focus-visible {
+  outline: 2px solid #38BDF8 !important;
+  outline-offset: 2px !important;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.day-tab:focus-visible,
+.layer-btn:focus-visible,
+.bottom-action-btn:focus-visible,
+.map-ctrl-btn:focus-visible,
+.search-submit-btn:focus-visible,
+.search-clear-btn:focus-visible,
+.drawer-close-btn:focus-visible {
+  outline: 2px solid #38BDF8 !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.25) !important;
 }
 
 /* --------------------------------------------------------------------------

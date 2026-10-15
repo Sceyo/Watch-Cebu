@@ -356,7 +356,8 @@ export function renderMobileBottomSheet(
   }, { passive: true });
 }
 
-export function showToast(message: string, durationMs = 3200): void {
+export function showToast(message: string, durationMs = 3800): void {
+  if (typeof document === "undefined") return;
   let container = document.getElementById("toast-container");
   if (!container) {
     container = document.createElement("div");
@@ -365,9 +366,20 @@ export function showToast(message: string, durationMs = 3200): void {
     document.body.appendChild(container);
   }
 
+  let toastType = "toast-info";
+  let iconHtml = `<span class="toast-icon" aria-hidden="true" style="display:inline-flex;align-items:center;color:#38BDF8;">${ICONS.bolt}</span>`;
+
+  if (message.includes("No active advisories") || message.includes("Normal Grid Status") || message.includes("Reconnected") || message.includes("Online:")) {
+    toastType = "toast-success";
+    iconHtml = `<span class="toast-icon" aria-hidden="true" style="display:inline-flex;align-items:center;color:#10B981;">${ICONS.check}</span>`;
+  } else if (message.includes("No location found") || message.includes("Offline:") || message.includes("Please enter")) {
+    toastType = "toast-warning";
+    iconHtml = `<span class="toast-icon" aria-hidden="true" style="display:inline-flex;align-items:center;color:#F59E0B;">${ICONS.alertTriangle}</span>`;
+  }
+
   const toast = document.createElement("div");
-  toast.className = "toast-message";
-  toast.textContent = message;
+  toast.className = `toast-message ${toastType}`;
+  toast.innerHTML = `<div class="toast-inner">${iconHtml}<span>${message}</span></div>`;
   container.appendChild(toast);
 
   // Trigger animation

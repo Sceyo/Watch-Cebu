@@ -71,8 +71,17 @@ export function renderDayTabs(
     `;
   }
 
+  const isAdvanceSchedule = sortedDates.length > 0 && currentToday < sortedDates[0];
+  const advanceBadgeHtml = isAdvanceSchedule
+    ? `<div class="advance-schedule-pill" role="status" title="Visayan Electric advance notice — No interruptions scheduled for today">
+        <span class="advance-dot" aria-hidden="true"></span>
+        <span>Upcoming Week · No outages today (${formatTabDateLabel(currentToday)})</span>
+      </div>`
+    : "";
+
   container.innerHTML = `
     <div class="day-tabs-scroll">
+      ${advanceBadgeHtml}
       ${tabsHtml}
     </div>
   `;
