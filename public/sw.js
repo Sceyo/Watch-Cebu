@@ -13,7 +13,7 @@ const STATIC_CACHE = `static-${CACHE_VERSION}`;
 const API_CACHE = `api-${CACHE_VERSION}`;
 const TILE_CACHE = `tiles-${CACHE_VERSION}`;
 
-const MAX_CACHED_TILES = 100;
+const MAX_CACHED_TILES = 200;
 
 // Essential app shell files
 const PRECACHE_ASSETS = [

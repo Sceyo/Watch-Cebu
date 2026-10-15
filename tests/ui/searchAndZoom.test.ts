@@ -16,6 +16,8 @@ vi.mock("leaflet", () => {
     hasLayer: vi.fn().mockReturnValue(true),
     addLayer: vi.fn(),
     removeLayer: vi.fn(),
+    createPane: vi.fn().mockReturnValue({ style: {} }),
+    getPane: vi.fn().mockReturnValue({ style: {} }),
   };
 
   const dummyLayerGroup = {

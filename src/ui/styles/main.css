@@ -374,6 +374,11 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   height: 100%;
 }
 
+/* High-Contrast Basemap Street & Barangay Labels */
+.map-labels-tiles {
+  filter: brightness(2.8) contrast(1.8);
+}
+
 /* --------------------------------------------------------------------------
    Marker Provenance Treatments (Section 2.1 / 5.1)
    -------------------------------------------------------------------------- */
