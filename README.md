@@ -5,7 +5,9 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Leaflet](https://img.shields.io/badge/Leaflet-1.9.4-green?logo=leaflet&logoColor=white)](https://leafletjs.com/)
 [![Vite](https://img.shields.io/badge/Vite-7.x-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Vitest](https://img.shields.io/badge/Vitest-269%20Passed-FCC72B?logo=vitest&logoColor=black)](https://vitest.dev/)
+[![Vitest](https://img.shields.io/badge/Vitest-316%20Passed-FCC72B?logo=vitest&logoColor=black)](https://vitest.dev/)
+[![PWA](https://img.shields.io/badge/PWA-Installable-blueviolet?logo=pwa&logoColor=white)](public/manifest.webmanifest)
+[![VECO Coverage](https://img.shields.io/badge/VECO%20Coverage-100%25%20(674km²)-00C853?logo=openstreetmap&logoColor=white)](#-1-veco-scheduled-power-outage-tracking--franchise-territory)
 [![Accessibility](https://img.shields.io/badge/a11y-WCAG%202.1%20AAA-brightgreen)](https://www.w3.org/WAI/WCAG21/quickref/)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
@@ -15,18 +17,21 @@
 
 **Watch Cebu** is an open-source, zero-cost, high-reliability civic monitoring dashboard built specifically for residents, emergency responders, and businesses in Metro Cebu and surrounding Visayan provinces. 
 
-Unlike traditional platforms riddled with ads, analytics trackers, and heavy dependencies, Watch Cebu is engineered as an **offline-first, dark control-room interface** that synthesizes municipal power outages, seismic events, atmospheric air quality, and single-day weather forecasts into a unified, high-speed map experience.
+Unlike traditional platforms riddled with ads, analytics trackers, and heavy dependencies, Watch Cebu is engineered as an **offline-first, dark control-room interface** that synthesizes municipal power outages, seismic events, severe tropical weather, atmospheric air quality, and hourly weather forecasts into a unified, high-speed map experience.
 
 ```
        ┌─────────────────────────────────────────────────────────────┐
        │                   WATCH CEBU CONTROL ROOM                   │
        ├─────────────────┬──────────────────────┬────────────────────┤
        │ ⚡ POWER FEED    │ 🌋 SEISMIC ACTIVITY  │ 🍃 AIR & HAZE      │
-       │ VECO Scheduled  │ PHIVOLCS DOST        │ Open-Meteo AQI     │
-       │ Interruptions   │ 300km Watch Radius   │ Transboundary Haze │
-       ├─────────────────┴──────────────────────┴────────────────────┤
-       │ 🌦️ TODAY'S FORECAST: 24h Horizon • Rain % • Wind (Open-Meteo) │
-       ├─────────────────────────────────────────────────────────────┤
+       │ VECO Franchise  │ PHIVOLCS DOST        │ Open-Meteo AQI     │
+       │ 674 km² (8 LGUs)│ 300km Watch Radius   │ Transboundary Haze │
+       ├─────────────────┼──────────────────────┴────────────────────┤
+       │ 🌀 SEVERE WEATHER│ 🌦️ TODAY'S FORECAST                       │
+       │ DOST-PAGASA     │ 24h Hourly Horizon • Rain % • Wind Spd    │
+       │ TCWS #1-5 Track │ Open-Meteo High-Resolution Ensemble       │
+       ├─────────────────┴───────────────────────────────────────────┤
+       │ 📱 PWA & OFFLINE RESILIENCE: 3-Tier SW • 100-Tile LRU Cache │
        │ 🗺️ LEAFLET 1.9.4 CORE: CartoDB Dark Matter • Strict Bounds  │
        └─────────────────────────────────────────────────────────────┘
 ```
@@ -35,7 +40,9 @@ Unlike traditional platforms riddled with ads, analytics trackers, and heavy dep
 
 ## 🌟 Key Features
 
-### ⚡ 1. VECO Scheduled Power Outage Tracking
+### ⚡ 1. VECO Scheduled Power Outage Tracking & Franchise Territory
+- **Complete Franchise Territory Coverage (674 km²)**: Comprehensive tracking across all **4 cities** (*Cebu City, Mandaue City, Talisay City, City of Naga*) and **4 municipalities** (*Liloan, Consolacion, Minglanilla, San Fernando*) served by Visayan Electric.
+- **Enriched 367-Feature Boundary Dataset**: Fully resolves all 80 Cebu City barangays, including rural mountain barangays (*Lusaran, Tagbao, Sudlon, Babag, Sirao, Paril*) and specialized economic/industrial zones (*Cebu IT Park, CITP, MEZ*), reaching **100% geocoding resolution** for live advisories.
 - **Granular Street & Landmark Parsing**: Employs heuristic NLP (`extractStreets`) to parse scheduled maintenance bulletins from Visayan Electric Company (VECO). Retains abbreviations and initialisms (e.g. *A. Cortes Ave.*, *P. Cabantan St.*) without truncating on periods.
 - **Provenance-Aware Geocoding**: Visual pins distinguish between street-level verified coordinates and municipal/barangay centroid fallbacks.
 - **Day Tabs Filter Bar**: Horizontal interactive tabs filter interruptions by day across the current week.
@@ -46,13 +53,19 @@ Unlike traditional platforms riddled with ads, analytics trackers, and heavy dep
 - **Option C Compound Marker Design**: Raw SVG pin featuring an annular location-name wedge, magnitude core, and GPU-accelerated pulse for significant (<24h or M4.0+) quakes.
 - **Zero Third-Party Map Bloat**: Renders cleanly via native Leaflet `L.divIcon` without heavyweight animation libraries.
 
-### 🍃 3. Atmospheric Air Quality & Transboundary Haze Advisory
+### 🌀 3. DOST-PAGASA Multi-Hazard Severe Weather & Storm Track
+- **Tropical Cyclone Wind Signals (TCWS #1 to #5)**: Parses active severe weather bulletins directly from DOST-PAGASA, identifying storm classification (*Tropical Depression, Tropical Storm, Severe Tropical Storm, Typhoon, Super Typhoon*), storm name, international codename, central pressure (hPa), and maximum sustained winds (km/h).
+- **Heavy Rainfall Warning System**: Automatically alerts users to active color-coded rainfall advisories (Yellow, Orange, Red) indicating expected downpour rates (mm/hr) and localized flood/landslide hazards.
+- **Interactive Leaflet Storm Track Layer**: Visualizes historical storm fixes, current eye position, animated forecast track line, and 72-hour cone of uncertainty directly on the dark basemap.
+- **Edge Serverless Endpoint (`/api/pagasa`)**: Serves severe weather bulletins with a 10-minute CDN cache (`s-maxage=600, stale-while-revalidate=1800`) and automatic fallback to verified backup fixtures if upstream government portals hang.
+
+### 🍃 4. Atmospheric Air Quality & Transboundary Haze Advisory
 - **Live Open-Meteo AQI Feed**: Tracks US AQI, PM2.5, PM10, Carbon Monoxide (CO), and Aerosol Optical Depth (AOD) for Metro Cebu.
 - **WCAG 2.1 AAA Contrast**: Specially tuned color-contrast tokens (including `#0F172A` dark slate text on Moderate Yellow `#EAB308`) for maximum daylight and nighttime legibility.
 - **Continuous Spectrum Gauge**: 6-color segmented gradient track with dynamic needle positioning.
 - **Transboundary Smoke Haze Architecture**: Structured recurring-hazard advisory detailing the seasonal *habagat* (southwest monsoon) wind vector transporting wildfire particulates from Indonesia (Kalimantan/Sumatra) to Cebu.
 
-### 🌦️ 4. Today's Weather Forecast (Phase 6 Dropdown Drawer)
+### 🌦️ 5. Today's Weather Forecast (Phase 6 Dropdown Drawer)
 - **Top Slide-down Drawer**: A single click on the header's `🌦️ Forecast` button smoothly slides down a horizontal-scrolling 24-hour horizon drawer.
 - **Compact Scannable Hour Cards**:
   - Hour timestamp with a glowing `NOW` pill for the current hour.
@@ -61,13 +74,21 @@ Unlike traditional platforms riddled with ads, analytics trackers, and heavy dep
   - Wind speed in km/h (`💨 km/h`).
 - **Eliminates Flawed Tile Layers**: Replaced transparent Doppler radar tiles and low-resolution satellite overlays with structured, lightweight forecast metrics that load instantly.
 
-### 🛡️ 5. Control Room UX & Accessibility
+### 📱 6. PWA & Offline Resilience (3-Tier Service Worker Architecture)
+- **Installable Standalone Application**: Fully compliant with W3C Web App Manifest (`manifest.webmanifest`) specifications, allowing one-tap installation on Android, iOS, Windows, and macOS home screens with custom SVG/PNG app icons (`icon-192.png`, `icon-512.png`).
+- **Tier 1 (Static App Shell Cache)**: Pre-caches core HTML, JS, CSS, and SVG iconography (`watch-cebu-static-v1`). Serves the control room shell instantly with background revalidation.
+- **Tier 2 (Dynamic API Cache)**: Network-first caching strategy for `/api/power`, `/api/earthquakes`, `/api/pagasa`, and Open-Meteo endpoints (`watch-cebu-api-v1`). If offline or upstream is down, serves the freshest local snapshot seamlessly.
+- **Tier 3 (Bounded LRU Basemap Cache)**: Leaflet tile caching (`cartodb-tiles-v1`) with a strict **100-tile LRU ceiling**. Prevents runaway mobile cache expansion and respects Vercel and CartoDB free-tier storage boundaries.
+- **Offline Amber Banner & Emergency Hotlines**: Immediately detects network disconnection (`navigator.onLine` and `window.addEventListener('offline')`), presenting an amber status indicator and direct tap-to-call civic emergency links (`tel:`) for Cebu City DRRMO, VECO Emergency, Red Cross, BFP, and ERUF.
+
+### 🛡️ 7. Control Room UX, Mobile-First Ergonomics & Accessibility
+- **Elevated Mobile Z-Index Hierarchy**: Strict layering architecture (`z-index: 1500` for mobile bottom sheets and status popovers; `z-index: 1450` for backdrops) preventing background blur overlays from rendering over cards or action buttons.
 - **Decoupled Data Architecture**: All feeds fetch in parallel (`Promise.allSettled`). If one endpoint is offline, other layers continue functioning uninterrupted.
 - **Transparent Freshness Indicators**: Header freshness chips display `Live · Verified`, `Fetching...`, or `⚠️ Backup Fixture Data` with fallback warnings.
 - **Full Keyboard & Screen Reader Accessibility**: Complete `Tab` and `Shift+Tab` focus traps inside modal drawers, backdrop scrim click dismissal, and `Escape` key support.
 - **Strict Viewport Containment**: Leaflet viewport clamped (`minZoom: 7`, bounds `[7.4, 120.9]` to `[13.2, 126.9]`, `viscosity: 1.0`) preventing unnecessary world panning.
 
-### 🔍 6. Hybrid 3-Tier Search & Auto-Zoom (Cities, Barangays, Streets)
+### 🔍 8. Hybrid 3-Tier Search & Auto-Zoom (Cities, Barangays, Streets)
 - **Instant Camera Navigation**: Searching any barangay, municipality, street, or landmark and submitting (`Enter` or search button) automatically flies the map camera and zooms directly to that area.
 - **Tier 1 (Instant Active Pins)**: Matches in-memory power outage advisories and seismic events (0ms latency, offline). If a single pin matches, auto-pans, zooms to Level 16, and opens its details; if multiple pins match, fits the map bounds around all pins.
 - **Tier 2 (Offline Barangay & LGU Centroids)**: Built-in offline dictionary of 444 Metro Cebu LGUs, barangays, and landmarks extracted from `metro-cebu-barangays.geojson`. Cleans prefixes (*"Brgy."*, *"Barangay"*, *"City of"*) and zooms instantly without network calls.
@@ -79,12 +100,14 @@ Unlike traditional platforms riddled with ads, analytics trackers, and heavy dep
 
 | Layer | Technologies |
 | :--- | :--- |
-| **Frontend Runtime** | TypeScript 5, Vite 7, HTML5, Vanilla CSS3 (Dark Mode) |
-| **Mapping Engine** | Leaflet 1.9.4, CartoDB Dark Matter Basemap Tiles |
-| **Data Ingestion** | Cheerio, Node.js HTTP/HTTPS, Axios, Native Fetch |
-| **Testing** | Vitest (Unit & Component), Chrome DevTools Protocol (Headless CDP Integration) |
-| **External APIs** | Open-Meteo (Air Quality & Forecast), VECO Portal, DOST-PHIVOLCS |
-| **State & Storage** | Decoupled In-Memory State, `localStorage` Optimistic UI Cache |
+| **Frontend Runtime** | TypeScript 5.8, Vite 7, HTML5, Vanilla CSS3 (Dark Control-Room Design System) |
+| **Mapping Engine** | Leaflet 1.9.4, CartoDB Dark Matter Basemap Tiles, SVG Compound Pin Renderers |
+| **Spatial Boundaries** | 367-Feature GeoJSON (`metro-cebu-barangays.geojson`), 674 km² VECO Franchise (8 LGUs, 80 Cebu City Barangays) |
+| **PWA & Offline Engine**| W3C Web App Manifest, 3-Tier Service Worker (`sw.js`), 100-Tile Bounded LRU Cache, Tap-to-Call Emergency Hotlines |
+| **Data Ingestion** | Cheerio 1.0, Node.js HTTP/HTTPS, Axios, Native Fetch, RegEx NLP Street Extraction |
+| **Testing & Quality** | Vitest (316 tests, 28 suites: unit, component, fuzzing, concurrency, UI load), Chrome DevTools Protocol (CDP) |
+| **External APIs** | DOST-PAGASA (Severe Weather & Storm Track), Open-Meteo (AQI & Forecast), VECO Portal, DOST-PHIVOLCS |
+| **State & Cloud Edge** | Decoupled In-Memory State, `localStorage` Optimistic Cache, Vercel Edge Serverless Functions |
 
 ---
 
@@ -92,35 +115,56 @@ Unlike traditional platforms riddled with ads, analytics trackers, and heavy dep
 
 ```text
 Watch-Cebu/
-├── data/                         # GeoJSON polygons, barangay centroids, fixtures
-│   ├── barangays_geo.json        # Cebu City & Metro barangay boundary centroids
-│   └── fixtures/                 # Real historical VECO & PHIVOLCS HTML/JSON fixtures
+├── api/                          # Vercel Edge Serverless function handlers
+│   ├── earthquakes.ts            # PHIVOLCS seismic feed handler (edge CDN cached)
+│   ├── pagasa.ts                 # DOST-PAGASA severe weather & storm track endpoint
+│   └── power.ts                  # VECO scheduled power interruptions endpoint
+├── data/                         # GeoJSON polygons, barangay centroids, live snapshots
+│   ├── metro-cebu-barangays.geojson # 367-feature franchise boundary & mountain barangay dataset
+│   ├── live_power_outages.json   # Active VECO power maintenance snapshot
+│   ├── live_earthquakes.json     # Active PHIVOLCS seismic activity snapshot
+│   ├── live_pagasa_bulletin.json # Active DOST-PAGASA tropical cyclone bulletin
+│   └── fixtures/                 # Real historical VECO, PHIVOLCS & PAGASA fixtures
 ├── docs/                         # Technical documentation & architecture decisions
-│   ├── adr/                      # Architecture Decision Records (ADR-001 to ADR-003)
+│   ├── adr/                      # Architecture Decision Records (ADR-001 to ADR-005)
+│   ├── schemas/                  # JSON schema definitions (PagasaBulletin, etc.)
 │   └── Data-Standards.md         # Field definitions, schema contracts, confidence tiers
-├── scripts/                      # Automated ingestion & validation scripts
+├── public/                       # Static web assets & PWA files
+│   ├── icons/                    # Progressive Web App icons (icon-192, icon-512, SVG)
+│   ├── manifest.webmanifest      # W3C Web App Manifest (PWA standalone configuration)
+│   └── sw.js                     # 3-tier Service Worker (static shell, dynamic API, 100-tile LRU)
+├── scripts/                      # Automated ingestion, verification & utility scripts
+│   ├── generate_pwa_icons.ts     # PWA PNG icon rasterizer
 │   ├── run_scheduled_fetch.ts    # Headless scraping & atomic snapshot generator
 │   ├── verify_phase6_forecast.ts # Headless Chrome CDP verification for Forecast drawer
+│   ├── verify_responsive_overhaul.ts # Multi-device CDP responsive test runner
 │   └── verify_stage6b_containment.ts # Viewport bounds & zoom clamping validation
-├── server/                       # Node.js API handlers & snapshot serving layer
+├── server/                       # Node.js backend proxy & dev scraping middleware
+│   └── api.ts                    # Live feed scraping orchestrator with AbortSignal timeouts
 ├── src/                          # Application source code
-│   ├── parsers/                  # Cheerio scrapers for VECO HTML & PHIVOLCS bulletins
+│   ├── parsers/                  # Cheerio scrapers & heuristic regex engines
+│   │   ├── pagasa.ts             # DOST-PAGASA TCWS signals & storm track parser
+│   │   ├── phivolcs.ts           # Seismic bulletin scraper with Haversine filter
 │   │   ├── veco.ts               # Power interruption table & street parser
-│   │   ├── vecoRates.ts          # Electric tariff rate change detector
-│   │   └── phivolcs.ts           # Seismic bulletin scraper with Haversine filter
+│   │   └── vecoRates.ts          # Electric tariff rate change detector
 │   ├── resolvers/                # Geocoding & coordinate provenance resolvers
-│   ├── ui/                       # Control-room frontend components
-│   │   ├── components/           # Header, ForecastDrawer, AirQualityDrawer, Legend, About
-│   │   ├── map/                  # Leaflet MapController & Option C SVG pins
-│   │   ├── services/             # Client data services (AirQuality, Forecast, Feeds)
+│   ├── types/                    # Shared TypeScript domain models & schemas
+│   │   ├── index.ts              # Core feed, advisory & seismic types
+│   │   └── pagasa.ts             # PAGASA severe weather & storm track interfaces
+│   ├── ui/                       # Control-room frontend components & map controller
+│   │   ├── components/           # Header, ForecastDrawer, AirQualityDrawer, OfflineBanner, About
+│   │   ├── map/                  # Leaflet MapController & Option C SVG pins / storm track layer
+│   │   ├── services/             # Client data services (DataFeed, AirQuality, NetworkStatus)
 │   │   └── styles/main.css       # Complete dark control-room responsive stylesheet
 │   ├── utils/                    # Date formatters, Haversine math, constants
-│   ├── main.ts                   # Application bootstrap & lifecycle orchestrator
-│   └── types/                    # Shared TypeScript domain models & schemas
-├── tests/                        # Comprehensive test suite (Vitest)
+│   └── main.ts                   # Application bootstrap, PWA registration & lifecycle orchestrator
+├── tests/                        # Comprehensive test suite (316 tests across 28 files)
+│   ├── guards/                   # Data directory isolation & test integrity guards
 │   ├── parsers/                  # Parsing edge cases, malformed tables, multi-street tests
-│   ├── ui/                       # A11y, AQI contrast, forecast cards, focus trapping
-│   └── server/                   # Snapshot read safety & atomic file write tests
+│   ├── scripts/                  # Scheduled fetch script isolation & staleness tests
+│   ├── server/                   # Edge serverless route tests & CDN header assertions
+│   ├── stress/                   # ReDoS fuzzing, 300-req edge concurrency, UI DOM stress
+│   └── ui/                       # A11y, PWA caching, offline banner, forecast & PAGASA UI tests
 ├── implementation_plan.md        # Master phase status, deliverables, and roadmaps
 ├── vite.config.ts                # Vite build configuration & scrape-live dev middleware
 └── package.json                  # NPM scripts & dependencies
@@ -166,17 +210,23 @@ Navigate to `http://localhost:5173` in your browser.
 
 Watch Cebu maintains a strict 100% test pass requirement across all parsers, UI modules, and coordinate math.
 
-### Run Unit Tests
+### Run Unit & Integration Tests
 ```bash
 npm test
 ```
-*Current Suite: 22 test files, 269 tests passed (100% green).*
+*Current Suite: 28 test files, 316 tests passed (100% green).*
 
 ### Run TypeScript & Production Build
 ```bash
 npm run build
 ```
 Generates an optimized client bundle in `dist-client/` with zero TypeScript compiler errors.
+
+### 🔬 Stress Testing & Performance Benchmarks
+Watch Cebu is hardened against edge network chaos, adversarial payloads, and mobile hardware constraints:
+- **ReDoS & Malformed Bulletin Fuzzing** (`tests/stress/pagasaStress.test.ts`): Subjected severe weather and street regex engines to 50,000+ character pathological adversarial strings and malformed HTML payloads. Validated zero catastrophic backtracking with execution latencies < 15ms.
+- **High-Concurrency Edge Burst** (`tests/stress/concurrencyAndEdgeStress.test.ts`): Executed 300 simultaneous requests in parallel across `/api/power`, `/api/earthquakes`, and `/api/pagasa`. Validated zero race conditions, zero cross-talk, memory stability, and immediate (<15ms) recovery under upstream CDN 503 error simulation.
+- **High-Load UI & State Stress** (`tests/stress/uiAndStateStress.test.ts`): Rendered 1,500+ markers and feed items simultaneously into the DOM and state controllers. Validated that coordinate sorting, filtering, and tab transitions execute in <250ms with zero layout thrashing or memory leaks.
 
 ### Real Browser CDP Audit
 Run the automated Chrome DevTools Protocol verification script (launches headless Chrome, audits iPhone SE, Pixel 7, and Desktop viewports, exercises drawers/search auto-zoom, and captures inspectable screenshots in `verification-artifacts/responsive-overhaul/`):
@@ -194,7 +244,8 @@ Watch Cebu is deployed to production on Vercel at [`https://watch-cebu.vercel.ap
   ┌────────────────────────────────────────────────────────────────────────┐
   │                           GITHUB ACTIONS                               │
   │  • refresh-power.yml (every 4h)  ──┐                                   │
-  │  • refresh-earthquakes.yml (10m) ──┴──> git push data/*.json to main   │
+  │  • refresh-earthquakes.yml (10m) ──┼──> git push data/*.json to main   │
+  │  • refresh-pagasa.yml (hourly)   ──┘                                   │
   └───────────────────────────────────────────────────┬────────────────────┘
                                                       │ (144 commits/day)
                                                       ▼
@@ -209,9 +260,9 @@ Watch Cebu is deployed to production on Vercel at [`https://watch-cebu.vercel.ap
   ┌────────────────────────────────────────────────────────────────────────┐
   │                            EDGE RUNTIME                                │
   │  Client App: Served from dist-client/ (Vite outputDirectory)           │
-  │  API Routes: /api/power & /api/earthquakes (Serverless Functions)      │
+  │  API Routes: /api/power, /api/earthquakes, /api/pagasa (Serverless)    │
   │  Snapshot Source: Fetches raw.githubusercontent.com/.../data at runtime│
-  │  Edge Caching: Cache-Control: s-maxage=60, stale-while-revalidate=300  │
+  │  Edge Caching: Cache-Control: s-maxage=60-600, stale-while-revalidate  │
   └────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -219,8 +270,8 @@ Watch Cebu is deployed to production on Vercel at [`https://watch-cebu.vercel.ap
 Vite outputs the client SPA bundle to `dist-client/`, while `tsc` outputs backend server modules to `dist/`. `vercel.json` configures `"outputDirectory": "dist-client"` to ensure Vercel serves the root `index.html` rather than an empty server output folder (resolving 404s).
 
 ### 2. Runtime Snapshot Distribution (Decoupled from Deployments)
-Instead of embedding snapshot JSON files into the build bundle, production routes (`api/power.ts` and `api/earthquakes.ts`) use `GitHubSnapshotSource` to dynamically fetch snapshots from the public GitHub repository at runtime (`https://raw.githubusercontent.com/Sceyo/Watch-Cebu/main/data/`).
-- Responses are cached at Vercel's Edge CDN with `Cache-Control: s-maxage=60, stale-while-revalidate=300`.
+Instead of embedding snapshot JSON files into the build bundle, production routes (`api/power.ts`, `api/earthquakes.ts`, and `api/pagasa.ts`) dynamically fetch snapshots from the public GitHub repository at runtime (`https://raw.githubusercontent.com/Sceyo/Watch-Cebu/main/data/`).
+- Responses are cached at Vercel's Edge CDN with `Cache-Control: s-maxage=60, stale-while-revalidate=300` (or `s-maxage=600` for PAGASA bulletins).
 - Function executions are capped at ~1 invocation/minute under continuous load, well within the 100k/month Hobby limit.
 - If upstream GitHub raw requests ever experience an outage, functions fall back seamlessly to bundled verified backup fixtures (`data_source: "fixture_fallback"`).
 
@@ -249,8 +300,12 @@ Running `npm test` never writes to authentic `data/` snapshots:
 - [x] **Phase 5: Rate Parser & Attribution** — Historical VECO tariff rate parser, legal attribution, and About drawer.
 - [x] **Phase 6: Multi-Hazard Expansion** — Option C earthquake markers, Open-Meteo Air Quality & recurring haze advisory, Stage 6b viewport containment, and Today's Weather Forecast button & drawer.
 - [x] **Responsive Overhaul & Auto-Zoom** — Mobile bottom sheet, compact 52px chrome, WCAG AAA contrast, and Hybrid 3-Tier Search Auto-Zoom.
-- [x] **Production Deployment & Cloud Architecture (ADR-005)** — Vercel `dist-client` output, edge-cached serverless API routes (`/api/power`, `/api/earthquakes`), runtime GitHub raw snapshot distribution, 100/day Hobby deploy-limit bypass, and SHA-256 test data isolation.
-- [ ] **Phase 7: PWA Hardening & Standalone Mode (Upcoming)** — Manifest, offline service worker, and add-to-home-screen installability.
+- [x] **Production Deployment & Cloud Architecture (ADR-005)** — Vercel `dist-client` output, edge-cached serverless API routes (`/api/power`, `/api/earthquakes`, `/api/pagasa`), runtime GitHub raw snapshot distribution, 100/day Hobby deploy-limit bypass, and SHA-256 test data isolation.
+- [x] **Phase 7: PWA Hardening & Offline Resilience** — W3C Web App Manifest (`manifest.webmanifest`), 3-tier Service Worker caching (static shell, dynamic API, 100-tile LRU basemap cache), offline status banner, and tap-to-call emergency civic hotlines.
+- [x] **Phase 8: DOST-PAGASA Multi-Hazard Severe Weather** — Tropical cyclone bulletin ingestion, TCWS Signals #1–#5, color-coded heavy rainfall warnings, animated Leaflet storm track layer, and edge route `/api/pagasa`.
+- [x] **Phase 9: VECO Territory Boundary Enrichment** — Expanded GeoJSON dataset to 367 features covering all 80 Cebu City barangays (including rural mountain barangays like Lusaran and industrial zones like CITP), achieving 100% geocoding resolution across all active advisories.
+- [ ] **Phase 10: MECO Mactan Island Feed Integration (Exploratory)** — Investigate automated ingestion for Lapu-Lapu City and Cordova notices.
+- [ ] **Phase 11: Community Offline Mesh & SMS Fallback (Exploratory)** — Research peer-to-peer WebRTC / SMS-relay sync during prolonged regional grid collapse.
 
 ---
 
