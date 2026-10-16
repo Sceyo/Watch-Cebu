@@ -29,7 +29,7 @@ export function renderLegend(
     <div class="legend-content">
       <!-- Section 1: Pin Accuracy (Neutral Slate Swatches) -->
       <div class="legend-section">
-        <h3 class="section-title">📍 Pin Accuracy</h3>
+        <h3 class="section-title"><span style="display: inline-flex; align-items: center; margin-right: 6px; color: #60A5FA;" aria-hidden="true">${ICONS.mapPin}</span>Pin Accuracy</h3>
         <p class="section-desc">Map pins indicate approximate neighborhood centers from verified records:</p>
         
         <div class="legend-item">
@@ -51,7 +51,7 @@ export function renderLegend(
 
       <!-- Section 2: Power Interruption Status (Color + Glyph + Opacity) -->
       <div class="legend-section">
-        <h3 class="section-title"><span style="display: inline-flex; align-items: center; margin-right: 6px; color: #EF4444;">${ICONS.bolt}</span>Power Advisories (VECO)</h3>
+        <h3 class="section-title"><span style="display: inline-flex; align-items: center; margin-right: 6px; color: #EF4444;" aria-hidden="true">${ICONS.bolt}</span>Power Advisories (VECO)</h3>
         <p class="section-desc">Distinguishable via color, interior glyph, and opacity (colorblind accessible):</p>
         
         <div class="legend-item">
@@ -59,7 +59,7 @@ export function renderLegend(
             ${ICONS.bolt}
           </div>
           <div class="item-text">
-            <span class="item-name">⚡ Active Outage Now</span>
+            <span class="item-name"><span style="display: inline-flex; align-items: center; gap: 5px;"><span style="color: #EF4444; display: inline-flex; align-items: center;" aria-hidden="true">${ICONS.bolt}</span><span>Active Outage Now</span></span></span>
             <span class="item-sub">Interruption currently underway within scheduled window.</span>
           </div>
         </div>
@@ -69,7 +69,7 @@ export function renderLegend(
             ${ICONS.clock}
           </div>
           <div class="item-text">
-            <span class="item-name">⏱ Upcoming (&lt; 2h)</span>
+            <span class="item-name"><span style="display: inline-flex; align-items: center; gap: 5px;"><span style="color: #F59E0B; display: inline-flex; align-items: center;" aria-hidden="true">${ICONS.clock}</span><span>Upcoming (&lt; 2h)</span></span></span>
             <span class="item-sub">Power interruption scheduled to begin in less than 2 hours.</span>
           </div>
         </div>
@@ -79,7 +79,7 @@ export function renderLegend(
             ${ICONS.calendar}
           </div>
           <div class="item-text">
-            <span class="item-name">📅 Later / Scheduled</span>
+            <span class="item-name"><span style="display: inline-flex; align-items: center; gap: 5px;"><span style="color: #3B82F6; display: inline-flex; align-items: center;" aria-hidden="true">${ICONS.calendar}</span><span>Later / Scheduled</span></span></span>
             <span class="item-sub">Scheduled for later today or upcoming day in the advisory week.</span>
           </div>
         </div>
@@ -89,7 +89,7 @@ export function renderLegend(
             ${ICONS.check}
           </div>
           <div class="item-text">
-            <span class="item-name">✓ Concluded (Dimmed)</span>
+            <span class="item-name"><span style="display: inline-flex; align-items: center; gap: 5px;"><span style="color: #22C55E; display: inline-flex; align-items: center;" aria-hidden="true">${ICONS.check}</span><span>Concluded (Dimmed)</span></span></span>
             <span class="item-sub">Scheduled window has passed; pin opacity reduced on map.</span>
           </div>
         </div>

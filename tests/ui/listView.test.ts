@@ -146,8 +146,7 @@ describe("List View Alternative Component", () => {
     expect(container.innerHTML).toContain("Subangdaku");
     expect(container.innerHTML).toContain("Tabunok");
     expect(container.innerHTML).toContain("Line maintenance &amp; pole relocation");
-    expect(container.innerHTML).toContain("View on Map");
-    expect(container.innerHTML).toContain("⭐ Pin Barangay");
+    expect(container.innerHTML).toContain("Pin Barangay");
   });
 
   it("shows pinned state when myBarangay matches advisory", () => {
@@ -159,7 +158,7 @@ describe("List View Alternative Component", () => {
       myBarangay: "Talamban",
     });
 
-    expect(container.innerHTML).toContain("⭐ Pinned Area");
+    expect(container.innerHTML).toContain("Pinned Area");
     expect(container.innerHTML).toContain("is-pinned");
   });
 

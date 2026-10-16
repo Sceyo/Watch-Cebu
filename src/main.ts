@@ -48,6 +48,11 @@ import {
   renderMobileBottomSheet,
   showToast,
 } from "./ui/components/mobileNav.js";
+import {
+  renderWelcomeModal,
+  hasSeenWelcomeGuide,
+  markWelcomeGuideSeen,
+} from "./ui/components/welcomeModal.js";
 
 // Global App State
 let currentLayer: LayerSelection = "both";
@@ -66,6 +71,7 @@ let isAboutOpen = false;
 let isAirQualityOpen = false;
 let isForecastOpen = false;
 let isStatusPopoverOpen = false;
+let isWelcomeOpen = !hasSeenWelcomeGuide();
 let selectedLocation: SelectedLocationDetails | null = null;
 let lastFocusedTrigger: HTMLElement | null = null;
 
@@ -97,7 +103,8 @@ function closeAllDrawers() {
     isAirQualityOpen ||
     isForecastOpen ||
     isStatusPopoverOpen ||
-    selectedLocation !== null
+    selectedLocation !== null ||
+    isWelcomeOpen
   ) {
     isLegendOpen = false;
     isAboutOpen = false;
@@ -105,6 +112,10 @@ function closeAllDrawers() {
     isForecastOpen = false;
     isStatusPopoverOpen = false;
     selectedLocation = null;
+    if (isWelcomeOpen) {
+      isWelcomeOpen = false;
+      markWelcomeGuideSeen();
+    }
     document.body.classList.remove("modal-open");
     updateUI();
     if (lastFocusedTrigger) {
@@ -115,6 +126,7 @@ function closeAllDrawers() {
 }
 
 function getActiveDrawerElement(): HTMLElement | null {
+  if (isWelcomeOpen) return document.getElementById("welcome-modal-container");
   if (isForecastOpen) return document.getElementById("forecast-drawer");
   if (isAirQualityOpen) return document.getElementById("air-drawer");
   if (isLegendOpen) return document.getElementById("legend-drawer");
@@ -129,7 +141,7 @@ function focusActiveDrawer() {
     const activeEl = getActiveDrawerElement();
     if (activeEl) {
       const closeBtn = activeEl.querySelector<HTMLButtonElement>(
-        "button.legend-close-btn, button.drawer-close-btn, button.sheet-close-btn"
+        "button.legend-close-btn, button.drawer-close-btn, button.sheet-close-btn, button.welcome-close-btn"
       );
       closeBtn?.focus();
     }
@@ -156,7 +168,8 @@ function updateUI() {
     isAirQualityOpen ||
     isForecastOpen ||
     isStatusPopoverOpen ||
-    selectedLocation !== null;
+    selectedLocation !== null ||
+    isWelcomeOpen;
 
   if (backdropEl) {
     backdropEl.classList.toggle("active", isAnyDrawerOpen);
@@ -529,9 +542,40 @@ function updateUI() {
   }
 
   if (aboutEl) {
-    renderAbout(aboutEl, isAboutOpen, () => {
-      closeAllDrawers();
-    });
+    renderAbout(
+      aboutEl,
+      isAboutOpen,
+      () => {
+        closeAllDrawers();
+      },
+      () => {
+        isAboutOpen = false;
+        isWelcomeOpen = true;
+        updateUI();
+        focusActiveDrawer();
+      }
+    );
+  }
+
+  const welcomeModalEl = document.getElementById("welcome-modal-container");
+  if (welcomeModalEl) {
+    renderWelcomeModal(
+      welcomeModalEl,
+      isWelcomeOpen,
+      () => {
+        isWelcomeOpen = false;
+        markWelcomeGuideSeen();
+        document.body.classList.remove("modal-open");
+        updateUI();
+      },
+      () => {
+        isWelcomeOpen = false;
+        markWelcomeGuideSeen();
+        isAboutOpen = true;
+        updateUI();
+        focusActiveDrawer();
+      }
+    );
   }
 
   if (airDrawerEl) {

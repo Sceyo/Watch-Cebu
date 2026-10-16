@@ -82,9 +82,11 @@ export function renderDayTabs(
     : "";
 
   container.innerHTML = `
-    <div class="day-tabs-scroll">
+    <div class="day-tabs-wrapper">
       ${advanceBadgeHtml}
-      ${tabsHtml}
+      <div class="day-tabs-scroll" role="tablist" aria-label="Filter power advisories by date">
+        ${tabsHtml}
+      </div>
     </div>
   `;
 

@@ -62,7 +62,9 @@ export function renderListView(
   if (sorted.length === 0) {
     container.innerHTML = `
       <div class="list-empty-state">
-        <span style="font-size: 2rem; line-height: 1;" aria-hidden="true">📋</span>
+        <div class="empty-icon-circle" style="display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: rgba(56, 189, 248, 0.1); color: #38BDF8; margin-bottom: 8px;" aria-hidden="true">
+          ${ICONS.list}
+        </div>
         <h3>No Scheduled Outages Found</h3>
         <p>${query ? `No advisories match "${escapeHtml(filter.searchQuery || '')}".` : 'No scheduled interruptions for the selected date.'}</p>
         <span style="font-size: 0.8rem; color: var(--text-muted);">Try selecting "All Week" or searching for a different barangay or street.</span>
@@ -86,7 +88,7 @@ export function renderListView(
     html += `
       <div class="list-date-group">
         <div class="list-date-header">
-          <span class="list-date-label">📅 ${readableDate}</span>
+          <span class="list-date-label"><span style="display: inline-flex; align-items: center; color: var(--accent-blue); margin-right: 6px;" aria-hidden="true">${ICONS.calendar}</span>${readableDate}</span>
           <span class="list-date-count">${group.length} advisory${group.length > 1 ? 's' : ''}</span>
         </div>
         <div class="list-cards-grid">
@@ -118,24 +120,27 @@ export function renderListView(
           </div>
 
           <div class="card-detail-row">
-            <span class="card-detail-label">Streets:</span>
+            <span class="card-detail-label" style="display: inline-flex; align-items: center; gap: 4px;"><span style="display: inline-flex; align-items: center; color: var(--text-muted);">${ICONS.mapPin}</span> Streets:</span>
             <span class="card-detail-val">${escapeHtml(streetsText)}</span>
           </div>
 
           <div class="card-detail-row">
-            <span class="card-detail-label">Purpose:</span>
+            <span class="card-detail-label" style="display: inline-flex; align-items: center; gap: 4px;"><span style="display: inline-flex; align-items: center; color: var(--text-muted);">${ICONS.wrench}</span> Purpose:</span>
             <span class="card-detail-val">${escapeHtml(a.purpose)}</span>
           </div>
 
           <div class="card-actions-row">
             ${a.lat !== null && a.lon !== null ? `
               <button class="card-action-btn btn-locate-advisory" data-id="${escapeHtml(a.id)}">
-                <span aria-hidden="true">🗺️</span>
+                <span aria-hidden="true" style="display: inline-flex; align-items: center; color: var(--accent-blue);">${ICONS.map}</span>
                 <span>View on Map</span>
               </button>
             ` : ''}
             <button class="card-action-btn btn-pin-barangay ${isPinned ? 'is-pinned' : ''}" data-barangay="${escapeHtml(primaryBarangay)}">
-              <span>${isPinned ? '⭐ Pinned Area' : '⭐ Pin Barangay'}</span>
+              <span style="display: inline-flex; align-items: center; gap: 5px;">
+                <span style="display: inline-flex; align-items: center; color: ${isPinned ? '#FCD34D' : 'var(--text-muted)'};" aria-hidden="true">${isPinned ? ICONS.starFilled : ICONS.star}</span>
+                <span>${isPinned ? 'Pinned Area' : 'Pin Barangay'}</span>
+              </span>
             </button>
           </div>
         </article>

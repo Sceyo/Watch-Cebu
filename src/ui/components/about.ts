@@ -9,6 +9,7 @@
  */
 
 import { CEBU_EMERGENCY_HOTLINES } from "../services/networkStatus.js";
+import { ICONS } from "./icons.js";
 
 export const ABOUT_METADATA = {
   appName: "WATCH CEBU",
@@ -25,7 +26,8 @@ export const ABOUT_METADATA = {
 export function renderAbout(
   container: HTMLElement,
   isOpen: boolean,
-  onClose: () => void
+  onClose: () => void,
+  onOpenWelcome?: () => void
 ): void {
   container.className = `legend-drawer ${isOpen ? "open" : "closed"}`;
   container.setAttribute("role", "dialog");
@@ -37,7 +39,7 @@ export function renderAbout(
       <a href="${ABOUT_METADATA.githubUrl}" target="_blank" rel="noopener noreferrer" class="source-link" style="display: flex; flex-direction: column; padding: 10px 12px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none;">
         <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
           <span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #FFFFFF;">
-            <span style="font-size: 1.15rem; line-height: 1;">🐙</span>
+            <span style="display: inline-flex; align-items: center;">${ICONS.github}</span>
             <span>GitHub</span>
           </span>
           <span style="color: #60A5FA; font-size: 0.85rem;">↗</span>
@@ -51,7 +53,7 @@ export function renderAbout(
       <div class="source-link pending-link" style="display: flex; flex-direction: column; padding: 10px 12px; background: rgba(239, 68, 68, 0.06); border: 1px dashed rgba(239, 68, 68, 0.4); border-radius: 8px;">
         <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
           <span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #FFFFFF;">
-            <span style="font-size: 1.15rem; line-height: 1;">🐙</span>
+            <span style="display: inline-flex; align-items: center;">${ICONS.github}</span>
             <span>GitHub</span>
           </span>
           <span style="color: #F87171; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; background: rgba(239, 68, 68, 0.15); padding: 2px 6px; border-radius: 4px;">Pending Configuration</span>
@@ -67,7 +69,7 @@ export function renderAbout(
       <a href="${ABOUT_METADATA.linkedinUrl}" target="_blank" rel="noopener noreferrer" class="source-link" style="display: flex; flex-direction: column; padding: 10px 12px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none;">
         <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
           <span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #FFFFFF;">
-            <span style="font-size: 1.15rem; line-height: 1;">💼</span>
+            <span style="display: inline-flex; align-items: center;">${ICONS.linkedin}</span>
             <span>LinkedIn</span>
           </span>
           <span style="color: #60A5FA; font-size: 0.85rem;">↗</span>
@@ -81,7 +83,7 @@ export function renderAbout(
       <div class="source-link pending-link" style="display: flex; flex-direction: column; padding: 10px 12px; background: rgba(239, 68, 68, 0.06); border: 1px dashed rgba(239, 68, 68, 0.4); border-radius: 8px;">
         <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
           <span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #FFFFFF;">
-            <span style="font-size: 1.15rem; line-height: 1;">💼</span>
+            <span style="display: inline-flex; align-items: center;">${ICONS.linkedin}</span>
             <span>LinkedIn</span>
           </span>
           <span style="color: #F87171; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; background: rgba(239, 68, 68, 0.15); padding: 2px 6px; border-radius: 4px;">Pending Configuration</span>
@@ -113,6 +115,14 @@ export function renderAbout(
     </div>
 
     <div class="legend-content">
+      <!-- Quick Onboarding Guide Trigger -->
+      <div class="legend-section" style="padding-bottom: 12px; margin-bottom: 8px;">
+        <button id="btn-about-open-guide" class="welcome-guide-reopen-btn" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 14px; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 8px; color: #38BDF8; font-weight: 600; font-size: 0.85rem; cursor: pointer;">
+          <span style="display: inline-flex; align-items: center;">${ICONS.help}</span>
+          <span>View Welcome Guide &amp; Tips</span>
+        </button>
+      </div>
+
       <!-- Project Mission / Description -->
       <div class="legend-section">
         <h3 class="section-title">${ABOUT_METADATA.appName}</h3>
@@ -126,11 +136,14 @@ export function renderAbout(
 
       <!-- Real Data Attribution Section (MANDATORY & UNCOMPROMISED) -->
       <div class="legend-section">
-        <h3 class="section-title">🏛️ Authoritative Data Sources</h3>
+        <h3 class="section-title" style="display: flex; align-items: center; gap: 6px;">
+          <span style="display: inline-flex; align-items: center; color: var(--accent-blue);">${ICONS.institution}</span>
+          <span>Authoritative Data Sources</span>
+        </h3>
         <p class="section-desc">Watch Cebu presents only verified public records. Coordinates and bulletins originate directly from authoritative channels:</p>
 
         <div class="legend-item" style="align-items: flex-start;">
-          <span style="font-size: 1.2rem; line-height: 1;">⚡</span>
+          <span style="display: inline-flex; align-items: center; color: #F59E0B; margin-top: 2px;">${ICONS.bolt}</span>
           <div class="item-text">
             <span class="item-name">Visayan Electric (VECO)</span>
             <span class="item-sub">Scheduled power interruption advisories published for franchise areas in Metro Cebu.</span>
@@ -138,7 +151,7 @@ export function renderAbout(
         </div>
 
         <div class="legend-item" style="align-items: flex-start;">
-          <span style="font-size: 1.2rem; line-height: 1;">🌐</span>
+          <span style="display: inline-flex; align-items: center; color: #A78BFA; margin-top: 2px;">${ICONS.earthquake}</span>
           <div class="item-text">
             <span class="item-name">DOST-PHIVOLCS</span>
             <span class="item-sub">Philippine Institute of Volcanology and Seismology official earthquake bulletins and PEIS intensity data.</span>
@@ -146,7 +159,7 @@ export function renderAbout(
         </div>
 
         <div class="legend-item" style="align-items: flex-start;">
-          <span style="font-size: 1.2rem; line-height: 1;">🌀</span>
+          <span style="display: inline-flex; align-items: center; color: #38BDF8; margin-top: 2px;">${ICONS.cyclone}</span>
           <div class="item-text">
             <span class="item-name">DOST-PAGASA</span>
             <span class="item-sub">Philippine Atmospheric, Geophysical and Astronomical Services Administration official severe weather bulletins, Tropical Cyclone Wind Signals (TCWS), and Heavy Rainfall Warnings.</span>
@@ -154,7 +167,7 @@ export function renderAbout(
         </div>
 
         <div class="legend-item" style="align-items: flex-start;">
-          <span style="font-size: 1.2rem; line-height: 1;">🍃</span>
+          <span style="display: inline-flex; align-items: center; color: #34D399; margin-top: 2px;">${ICONS.air}</span>
           <div class="item-text">
             <span class="item-name">Open-Meteo</span>
             <span class="item-sub">Real-time air quality index (AQI) and 24-hour hourly weather forecast metrics for Metro Cebu.</span>
@@ -162,7 +175,7 @@ export function renderAbout(
         </div>
 
         <div class="legend-item" style="align-items: flex-start;">
-          <span style="font-size: 1.2rem; line-height: 1;">🗺️</span>
+          <span style="display: inline-flex; align-items: center; color: #60A5FA; margin-top: 2px;">${ICONS.mapPin}</span>
           <div class="item-text">
             <span class="item-name">OpenStreetMap Contributors</span>
             <span class="item-sub">Approximate barangay locations from OpenStreetMap community mapping (ODbL). Points, not official boundaries.</span>
@@ -170,7 +183,7 @@ export function renderAbout(
         </div>
 
         <div class="legend-item" style="align-items: flex-start;">
-          <span style="font-size: 1.2rem; line-height: 1;">🎨</span>
+          <span style="display: inline-flex; align-items: center; color: #CBD5E1; margin-top: 2px;">${ICONS.map}</span>
           <div class="item-text">
             <span class="item-name">CARTO Basemaps</span>
             <span class="item-sub">Dark Matter high-contrast map tiles for control-room civic clarity.</span>
@@ -180,14 +193,18 @@ export function renderAbout(
 
       <!-- Scope Boundaries, Limitations & Disclaimers -->
       <div class="legend-section">
-        <h3 class="section-title">⚠️ Scope Limitations & Civic Disclaimers</h3>
+        <h3 class="section-title" style="display: flex; align-items: center; gap: 6px;">
+          <span style="display: inline-flex; align-items: center; color: #F59E0B;">${ICONS.alertTriangle}</span>
+          <span>Scope Limitations & Civic Disclaimers</span>
+        </h3>
         <p class="section-desc">What Watch Cebu covers, what is currently out of scope, and essential civic boundaries:</p>
 
         <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
           <!-- Power Coverage Boundaries -->
           <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px;">
             <div style="font-size: 0.82rem; font-weight: 700; color: #F59E0B; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-              <span>⚡ Power Coverage: VECO Franchise Only</span>
+              <span style="display: inline-flex; align-items: center;">${ICONS.bolt}</span>
+              <span>Power Coverage: VECO Franchise Only</span>
             </div>
             <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.4;">
               Covers scheduled maintenance for <strong>4 cities & 4 municipalities</strong> (Cebu City, Mandaue, Talisay, Naga, Consolacion, Liloan, Minglanilla, San Fernando).<br>
@@ -203,7 +220,8 @@ export function renderAbout(
           <!-- Geocoding Approximate Coordinates -->
           <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px;">
             <div style="font-size: 0.82rem; font-weight: 700; color: #60A5FA; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-              <span>📍 Approximate Barangay Coordinates</span>
+              <span style="display: inline-flex; align-items: center;">${ICONS.mapPin}</span>
+              <span>Approximate Barangay Coordinates</span>
             </div>
             <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.4;">
               Map pins indicate approximate neighborhood center points derived from OpenStreetMap and VECO text descriptions. An advisory pin in your barangay does <em>not</em> guarantee your specific household or meter will lose power, as outages often isolate specific transformer feeders.
@@ -213,7 +231,8 @@ export function renderAbout(
           <!-- Seismic Disclaimer -->
           <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px;">
             <div style="font-size: 0.82rem; font-weight: 700; color: #A78BFA; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-              <span>🌋 Seismic Epicenters (Not Early Warning)</span>
+              <span style="display: inline-flex; align-items: center;">${ICONS.earthquake}</span>
+              <span>Seismic Epicenters (Not Early Warning)</span>
             </div>
             <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.4;">
               Tracks official DOST-PHIVOLCS bulletins within 300 km. This is an information dashboard, <strong>not an Earthquake Early Warning (EEW) alarm</strong>. Shaking felt at your home depends on local ground conditions and distance from the epicenter.
@@ -223,7 +242,8 @@ export function renderAbout(
           <!-- Weather & Evacuation Orders -->
           <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px;">
             <div style="font-size: 0.82rem; font-weight: 700; color: #34D399; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-              <span>🌀 Weather & Disaster Orders</span>
+              <span style="display: inline-flex; align-items: center;">${ICONS.cyclone}</span>
+              <span>Weather & Disaster Orders</span>
             </div>
             <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.4;">
               Weather forecasts (Open-Meteo) and storm signals (DOST-PAGASA) are aggregated for situational awareness. Watch Cebu does <strong>not issue official evacuation orders or class suspensions</strong>. Always follow directives from your local CDRRMO and the Provincial Disaster Office.
@@ -233,7 +253,8 @@ export function renderAbout(
           <!-- No Dispatch -->
           <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px;">
             <div style="font-size: 0.82rem; font-weight: 700; color: #CBD5E1; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-              <span>🚨 No Emergency Dispatch or Ticketing</span>
+              <span style="display: inline-flex; align-items: center;">${ICONS.shield}</span>
+              <span>No Emergency Dispatch or Ticketing</span>
             </div>
             <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.4;">
               This website is an informational monitor. You cannot report downed lines, request medical rescue, or submit power tickets through this app. Use the direct emergency hotlines below for urgent assistance.
@@ -244,7 +265,10 @@ export function renderAbout(
 
       <!-- Emergency Hotlines (Civic Lifeline & Offline Reference) -->
       <div class="legend-section">
-        <h3 class="section-title">🚨 Emergency Hotlines (Cebu)</h3>
+        <h3 class="section-title" style="display: flex; align-items: center; gap: 6px;">
+          <span style="display: inline-flex; align-items: center; color: #F87171;">${ICONS.phone}</span>
+          <span>Emergency Hotlines (Cebu)</span>
+        </h3>
         <p class="section-desc">Tap-to-call emergency responders for disasters, grid hazards, and medical aid:</p>
         <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
           ${CEBU_EMERGENCY_HOTLINES.map(
@@ -266,7 +290,10 @@ export function renderAbout(
 
       <!-- Developer & Maintainer Links -->
       <div class="legend-section">
-        <h3 class="section-title">👤 Developer & Connect</h3>
+        <h3 class="section-title" style="display: flex; align-items: center; gap: 6px;">
+          <span style="display: inline-flex; align-items: center; color: #38BDF8;">${ICONS.user}</span>
+          <span>Developer & Connect</span>
+        </h3>
         <p class="section-desc">Connect with the project maintainer or inspect the source code:</p>
         <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
           ${githubHtml}
@@ -276,7 +303,10 @@ export function renderAbout(
 
       <!-- Contact & Feedback Link -->
       <div class="legend-section">
-        <h3 class="section-title">💬 Issues & Feedback</h3>
+        <h3 class="section-title" style="display: flex; align-items: center; gap: 6px;">
+          <span style="display: inline-flex; align-items: center; color: #38BDF8;">${ICONS.chat}</span>
+          <span>Issues & Feedback</span>
+        </h3>
         <p class="section-desc">Have suggestions or found a data discrepancy?</p>
         ${feedbackHtml}
       </div>
@@ -292,5 +322,10 @@ export function renderAbout(
   const closeBtn = container.querySelector("#btn-close-about");
   closeBtn?.addEventListener("click", () => {
     onClose();
+  });
+
+  const guideBtn = container.querySelector("#btn-about-open-guide");
+  guideBtn?.addEventListener("click", () => {
+    onOpenWelcome?.();
   });
 }

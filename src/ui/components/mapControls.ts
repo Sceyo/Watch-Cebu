@@ -50,23 +50,20 @@ export function renderMapControls(
 
   let pinnedBannerHtml = "";
   if (myBarangay) {
-    const datesSummary = myBarangay.dates.length > 0
-      ? myBarangay.dates.map((d) => formatReadableDate(d)).join(", ")
-      : "";
-    const outageNote = myBarangay.count > 0
-      ? `${myBarangay.count} scheduled (${datesSummary})`
-      : "No scheduled outages";
+    const outageBadge = myBarangay.count > 0
+      ? `<span class="pinned-tag outage-active">${myBarangay.count} Scheduled</span>`
+      : `<span class="pinned-tag outage-clear">No Outages</span>`;
 
     pinnedBannerHtml = `
-      <div class="my-barangay-status-banner" role="status">
+      <div class="my-barangay-status-banner" role="status" aria-label="Pinned Area: ${escapeHtml(myBarangay.barangay)}">
         <div class="my-barangay-info">
-          <span class="star-badge" aria-hidden="true">⭐</span>
+          <span class="pinned-icon" aria-hidden="true" style="display: inline-flex; align-items: center; color: #F59E0B;">${ICONS.mapPin}</span>
           <span class="my-barangay-name">${escapeHtml(myBarangay.barangay)}</span>
-          <span class="my-barangay-count">— ${outageNote}</span>
+          ${outageBadge}
         </div>
         <div class="my-barangay-btns">
-          ${myBarangay.count > 0 ? `<button class="btn-filter-my-area" id="btn-filter-my-area" title="Filter to my barangay">Filter</button>` : ''}
-          <button class="btn-unpin-barangay" id="btn-unpin-area" title="Unpin barangay" aria-label="Unpin barangay">✕</button>
+          ${myBarangay.count > 0 ? `<button class="btn-filter-my-area" id="btn-filter-my-area" title="Filter map to ${escapeHtml(myBarangay.barangay)}">Filter</button>` : ''}
+          <button class="btn-unpin-barangay" id="btn-unpin-area" title="Unpin ${escapeHtml(myBarangay.barangay)}" aria-label="Unpin barangay">${ICONS.close}</button>
         </div>
       </div>
     `;
@@ -98,14 +95,12 @@ export function renderMapControls(
         </form>
 
         <button id="btn-toggle-view-mode" class="map-ctrl-btn btn-view-mode" aria-label="Switch to ${viewMode === 'map' ? 'List View' : 'Map View'}" title="Toggle Map vs List View">
-          <span class="ctrl-icon" aria-hidden="true">${viewMode === 'map' ? '📋' : '🗺️'}</span>
+          <span class="ctrl-icon" aria-hidden="true" style="display: inline-flex; align-items: center;">${viewMode === 'map' ? ICONS.list : ICONS.map}</span>
           <span class="view-mode-label">${viewMode === 'map' ? 'List' : 'Map'}</span>
         </button>
 
         <button id="btn-locate-me" class="map-ctrl-btn btn-locate-me" aria-label="Locate me on map" title="Center on my location">
-          <span class="ctrl-icon" aria-hidden="true" style="display: inline-flex; align-items: center;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
-          </span>
+          <span class="ctrl-icon" aria-hidden="true" style="display: inline-flex; align-items: center;">${ICONS.crosshair}</span>
         </button>
       </div>
 

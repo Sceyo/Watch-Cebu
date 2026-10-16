@@ -110,7 +110,7 @@ export function renderStatusPopover(
       statusBadge = `<span class="popover-badge error">Offline</span>`;
       detail = `Direct feed unreachable. Network or upstream issue.`;
     } else if (state.dataSource === "fixture_fallback") {
-      statusBadge = `<span class="popover-badge fallback">⚠️ Backup Fixture</span>`;
+      statusBadge = `<span class="popover-badge fallback"><span style="display:inline-flex; align-items:center; margin-right:4px;">${ICONS.alertTriangle}</span>Backup Fixture</span>`;
       detail = customDetail || `Displaying verified offline fixture dataset.`;
     } else if (state.fetchedAt) {
       detail = `${detail} (Last sync: ${formatHumanTimestamp(state.fetchedAt)})`;
@@ -130,9 +130,9 @@ export function renderStatusPopover(
 
   const airBadge = airQuality
     ? (airQuality.isFallback
-        ? '<span class="popover-badge fallback">⚠️ Backup</span>'
+        ? `<span class="popover-badge fallback"><span style="display:inline-flex; align-items:center; margin-right:4px;">${ICONS.alertTriangle}</span>Backup</span>`
         : (airQuality.isStale
-            ? `<span class="popover-badge delayed" style="background: rgba(245, 158, 11, 0.2); color: #FCD34D;">⚠️ Delayed (${airQuality.observationTimePst})</span>`
+            ? `<span class="popover-badge delayed" style="background: rgba(245, 158, 11, 0.2); color: #FCD34D;"><span style="display:inline-flex; align-items:center; margin-right:4px;">${ICONS.clock}</span>Delayed (${airQuality.observationTimePst})</span>`
             : '<span class="popover-badge live">● Model Live</span>'))
     : '<span class="popover-badge loading">Fetching...</span>';
 
@@ -171,7 +171,7 @@ export function renderStatusPopover(
       pagasaDetail = `${pagasaDetail} Issued: ${formatHumanTimestamp(b.issued_at_pst)}.`;
     }
     if (isStale) {
-      pagasaBadgeOverride = `<span class="popover-badge delayed" style="background: rgba(245, 158, 11, 0.2); color: #FCD34D;">⚠️ Advisory Delayed</span>`;
+      pagasaBadgeOverride = `<span class="popover-badge delayed" style="background: rgba(245, 158, 11, 0.2); color: #FCD34D;"><span style="display:inline-flex; align-items:center; margin-right:4px;">${ICONS.clock}</span>Advisory Delayed</span>`;
     }
   }
 
@@ -296,7 +296,7 @@ export function renderMobileBottomSheet(
           </div>
           <div class="sheet-header-actions" style="display: flex; align-items: center; gap: 8px;">
             <button class="sheet-pin-btn ${isPinned ? 'is-pinned' : ''}" id="btn-sheet-pin" title="Pin ${primaryBarangay} as home area" aria-label="Pin as home area">
-              <span aria-hidden="true">⭐</span>
+              <span aria-hidden="true" style="display: inline-flex; align-items: center;">${isPinned ? ICONS.starFilled : ICONS.star}</span>
               <span class="pin-btn-text">${isPinned ? 'Pinned Area' : 'Pin Area'}</span>
             </button>
             <button class="sheet-close-btn" id="btn-close-sheet" aria-label="Close details" title="Close">${ICONS.close}</button>

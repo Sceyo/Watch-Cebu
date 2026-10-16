@@ -48,7 +48,7 @@ function renderPagasaSection(bulletin: PagasaBulletin | null | undefined): strin
       <div class="pagasa-status-banner normal" style="${isBulletinStale ? 'border-color: rgba(245, 158, 11, 0.4);' : ''}">
         <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
           <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="font-size: 1.1rem; line-height: 1;">🛡️</span>
+            <span style="display: inline-flex; align-items: center; color: ${statusColor};" aria-hidden="true">${ICONS.shield}</span>
             <div>
               <strong style="color: ${statusColor}; font-size: 0.85rem;">${statusTitle}</strong>
               <div style="font-size: 0.74rem; color: var(--text-secondary);">No active Tropical Cyclone Wind Signals (TCWS) or Flood Warnings in Cebu Province as of last advisory.</div>
@@ -93,7 +93,7 @@ function renderPagasaSection(bulletin: PagasaBulletin | null | undefined): strin
           </div>
           ${centerInfo}
           <div class="pagasa-precaution">
-            ⚠️ <em>Civic Advisory:</em> Sea travel is hazardous for small seacrafts. Secure loose roofing materials and stay alert for localized flash floods.
+            <span style="display: inline-flex; align-items: center; color: #EF4444; margin-right: 4px;" aria-hidden="true">${ICONS.alertTriangle}</span> <em>Civic Advisory:</em> Sea travel is hazardous for small seacrafts. Secure loose roofing materials and stay alert for localized flash floods.
           </div>
         </div>
       </div>
@@ -126,7 +126,7 @@ function renderPagasaSection(bulletin: PagasaBulletin | null | undefined): strin
             <strong>Advisory Coverage:</strong> ${areas}
           </div>
           <div class="pagasa-precaution">
-            🌧️ <em>Civic Advisory:</em> Residents in low-lying and mountainous areas must monitor for flash floods and landslide hazards.
+            <span style="display: inline-flex; align-items: center; color: #60A5FA; margin-right: 4px;" aria-hidden="true">${ICONS.rain}</span> <em>Civic Advisory:</em> Residents in low-lying and mountainous areas must monitor for flash floods and landslide hazards.
           </div>
         </div>
       </div>
