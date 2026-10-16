@@ -163,8 +163,17 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
 }
 
 .brand-icon {
-  font-size: 1.3rem;
-  color: #F59E0B;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #38BDF8;
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.4));
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.brand-icon:hover {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.7));
 }
 
 .brand-title {

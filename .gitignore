@@ -24,6 +24,10 @@ npm-debug.log*
 .zip
 *.zip
 
+# Python
+__pycache__/
+*.pyc
+
 # Vite
 .vite/
 

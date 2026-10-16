@@ -108,7 +108,7 @@ export function renderHeader(
   container.innerHTML = `
     <div class="header-left">
       <div class="brand">
-        <span class="brand-icon" style="display: inline-flex; align-items: center; color: #EF4444;">${ICONS.bolt}</span>
+        <span class="brand-icon" style="display: inline-flex; align-items: center; color: #38BDF8;" title="Watch Cebu — Civic Situational Awareness Map">${ICONS.cebu}</span>
         <h1 class="brand-title">WATCH CEBU</h1>
       </div>
       <div class="freshness-chips desktop-only">

@@ -4,39 +4,36 @@
       <stop offset="0%" stop-color="#0F172A" />
       <stop offset="100%" stop-color="#020617" />
     </linearGradient>
-    <linearGradient id="bolt" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FACC15" />
-      <stop offset="100%" stop-color="#EAB308" />
-    </linearGradient>
-    <linearGradient id="wave" x1="0%" y1="0%" x2="100%" y2="0%">
+    <linearGradient id="cebuGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#38BDF8" />
-      <stop offset="50%" stop-color="#818CF8" />
-      <stop offset="100%" stop-color="#F43F5E" />
+      <stop offset="100%" stop-color="#0284C7" />
     </linearGradient>
     <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feGaussianBlur stdDeviation="6" result="blur" />
       <feComposite in="SourceGraphic" in2="blur" operator="over" />
     </filter>
   </defs>
 
   <!-- Background rounded rectangle (maskable safe area compliant) -->
-  <rect width="512" height="512" rx="96" fill="url(#bg)" />
-  <rect width="496" height="496" x="8" y="8" rx="88" fill="none" stroke="#1E293B" stroke-width="4" />
+  <rect width="512" height="512" rx="112" fill="url(#bg)" />
+  <rect width="496" height="496" x="8" y="8" rx="104" fill="none" stroke="#1E293B" stroke-width="4" />
 
-  <!-- Radar / Circular rings indicating civic watch -->
-  <circle cx="256" cy="256" r="160" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="6 6" opacity="0.6" />
-  <circle cx="256" cy="256" r="110" fill="none" stroke="#334155" stroke-width="2" opacity="0.4" />
+  <!-- Radar / Coordinate circular rings -->
+  <circle cx="318" cy="297" r="144" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="6 6" opacity="0.5" />
+  <circle cx="318" cy="297" r="82" fill="none" stroke="#334155" stroke-width="2" opacity="0.4" />
 
-  <!-- Seismic / Pulse wave -->
-  <path d="M 120 280 L 190 280 L 215 220 L 245 330 L 275 240 L 295 290 L 320 280 L 392 280" 
-        fill="none" stroke="url(#wave)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity="0.85" filter="url(#glow)" />
+  <!-- Cebu Island Silhouette -->
+  <g transform="scale(5.12)">
+    <path d="M 83.48 14.47 L 84.84 14.99 L 86.38 14.82 L 86.55 15.5 L 85.87 17.2 L 83.31 19.08 L 82.63 21.63 L 80.24 22.48 L 79.22 23.51 L 79.39 24.02 L 78.88 25.04 L 79.73 25.89 L 81.44 26.06 L 80.41 27.59 L 79.73 30.15 L 78.2 30.83 L 78.2 32.37 L 78.88 33.73 L 77.86 35.43 L 76.15 36.28 L 75.47 38.84 L 73.43 39.35 L 73.43 41.57 L 72.92 42.25 L 71.89 46.0 L 71.72 48.38 L 70.7 48.72 L 70.53 49.91 L 71.21 50.43 L 70.02 51.62 L 69.34 53.32 L 67.81 55.37 L 66.44 56.22 L 66.27 57.07 L 66.95 57.75 L 66.27 58.95 L 64.4 59.29 L 64.23 58.95 L 64.74 58.43 L 64.4 58.09 L 63.2 58.77 L 63.03 59.97 L 62.01 59.29 L 61.16 59.97 L 60.14 59.97 L 59.46 60.48 L 57.75 60.31 L 55.88 62.35 L 51.45 61.16 L 49.57 62.69 L 48.21 62.35 L 44.29 66.27 L 43.78 66.27 L 43.78 65.25 L 42.93 65.25 L 40.37 67.98 L 39.69 71.21 L 37.14 74.96 L 35.26 74.96 L 33.73 76.84 L 32.37 76.49 L 31.17 78.37 L 31.17 79.22 L 30.66 79.73 L 29.47 79.73 L 28.45 81.95 L 25.38 84.33 L 24.02 87.23 L 20.44 89.61 L 19.42 89.44 L 16.01 92.0 L 13.79 91.83 L 13.45 90.64 L 14.65 88.59 L 14.82 87.57 L 16.52 84.5 L 18.05 82.8 L 19.25 79.9 L 20.78 78.2 L 21.8 74.96 L 24.02 73.43 L 25.38 71.72 L 25.55 70.7 L 27.08 70.87 L 27.42 70.53 L 28.11 68.15 L 26.91 67.29 L 27.76 65.59 L 28.45 64.91 L 28.45 66.27 L 28.96 66.44 L 29.98 65.59 L 30.83 63.03 L 32.02 63.38 L 33.9 62.52 L 34.92 61.33 L 35.94 61.5 L 36.62 60.48 L 37.99 59.97 L 38.84 58.6 L 40.71 56.9 L 42.93 56.22 L 44.12 54.69 L 44.12 54.0 L 44.97 53.32 L 44.8 52.3 L 46.34 52.13 L 49.06 50.09 L 50.6 49.91 L 51.96 48.04 L 52.64 48.21 L 53.15 47.36 L 54.52 46.68 L 54.52 45.14 L 55.71 43.78 L 57.24 43.1 L 58.43 41.91 L 58.6 40.88 L 62.69 38.5 L 63.2 37.65 L 64.4 37.82 L 66.1 35.94 L 68.15 34.58 L 69.85 31.68 L 73.94 28.11 L 75.3 25.55 L 74.45 25.04 L 74.96 23.85 L 76.84 22.99 L 77.01 21.63 L 77.52 21.8 L 77.52 22.82 L 78.03 23.33 L 78.54 23.16 L 78.54 22.14 L 79.22 20.78 L 78.88 20.1 L 79.22 17.88 L 79.73 17.37 L 81.78 17.54 L 83.14 16.01 L 83.14 14.82 Z M 71.04 8.0 L 71.72 8.68 L 71.72 10.9 L 71.21 11.92 L 71.04 14.3 L 71.89 15.33 L 71.89 16.18 L 71.21 16.69 L 70.02 15.84 L 67.81 15.5 L 67.81 15.16 L 68.66 14.82 L 68.66 14.3 L 68.15 13.79 L 67.63 11.75 L 68.49 9.7 L 70.19 9.02 Z M 63.03 60.48 L 64.4 60.48 L 65.08 61.84 L 67.46 61.5 L 63.72 62.69 L 62.52 63.72 L 62.01 63.2 L 60.65 63.55 L 60.48 63.03 L 60.99 62.52 L 60.14 61.84 L 61.16 60.82 Z M 79.9 8.51 L 80.58 8.85 L 79.05 11.24 L 78.54 11.24 L 78.88 9.87 Z M 66.44 64.23 L 67.12 64.4 L 65.76 66.1 L 65.76 64.91 Z M 73.43 13.96 L 74.28 14.13 L 73.43 14.82 L 73.09 14.65 Z M 63.38 16.52 L 62.86 17.37 L 62.18 17.54 L 62.18 17.03 Z" fill="url(#cebuGrad)" filter="url(#glow)" />
+  </g>
 
-  <!-- Central Civic Shield & Power Lightning Bolt -->
-  <path d="M 270 130 L 195 250 L 250 250 L 230 370 L 325 235 L 265 235 Z" 
-        fill="url(#bolt)" filter="url(#glow)" />
+  <!-- Metro Cebu Focal Pulse Core -->
+  <circle cx="318" cy="297" r="16" fill="#EF4444" opacity="0.4" filter="url(#glow)" />
+  <circle cx="318" cy="297" r="7" fill="#EF4444" />
+  <circle cx="318" cy="297" r="3" fill="#FFFFFF" />
 
   <!-- Brand text badge -->
-  <rect x="156" y="400" width="200" height="34" rx="17" fill="#1E293B" stroke="#475569" stroke-width="1.5" />
-  <text x="256" y="422" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" 
-        font-size="16" font-weight="700" fill="#F8FAFC" letter-spacing="3" text-anchor="middle">WATCH CEBU</text>
+  <rect x="146" y="430" width="220" height="36" rx="18" fill="#1E293B" stroke="#475569" stroke-width="1.5" />
+  <text x="256" y="454" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" 
+        font-size="16" font-weight="800" fill="#F8FAFC" letter-spacing="3" text-anchor="middle">WATCH CEBU</text>
 </svg>
