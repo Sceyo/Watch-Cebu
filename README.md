@@ -1,15 +1,23 @@
-# ⚡ WATCH CEBU
+<p align="center">
+  <img src="public/icons/icon.svg" alt="Watch Cebu Logo" width="128" height="128" />
+</p>
 
-> **Real-Time Civic Awareness & Multi-Hazard Dashboard for Metro Cebu and the Visayas Region**
+<h1 align="center">WATCH CEBU</h1>
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Leaflet](https://img.shields.io/badge/Leaflet-1.9.4-green?logo=leaflet&logoColor=white)](https://leafletjs.com/)
-[![Vite](https://img.shields.io/badge/Vite-7.x-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
-[![Vitest](https://img.shields.io/badge/Vitest-316%20Passed-FCC72B?logo=vitest&logoColor=black)](https://vitest.dev/)
-[![PWA](https://img.shields.io/badge/PWA-Installable-blueviolet?logo=pwa&logoColor=white)](public/manifest.webmanifest)
-[![VECO Coverage](https://img.shields.io/badge/VECO%20Coverage-100%25%20(674km²)-00C853?logo=openstreetmap&logoColor=white)](#-1-veco-scheduled-power-outage-tracking--franchise-territory)
-[![Accessibility](https://img.shields.io/badge/a11y-WCAG%202.1%20AAA-brightgreen)](https://www.w3.org/WAI/WCAG21/quickref/)
-[![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
+<p align="center">
+  <strong>Civic Situational Awareness & Multi-Hazard Platform for Metro Cebu and the Visayas</strong>
+</p>
+
+<p align="center">
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript&logoColor=white" alt="TypeScript" /></a>
+  <a href="https://leafletjs.com/"><img src="https://img.shields.io/badge/Leaflet-1.9.4-green?logo=leaflet&logoColor=white" alt="Leaflet" /></a>
+  <a href="https://vitejs.dev/"><img src="https://img.shields.io/badge/Vite-7.x-646CFF?logo=vite&logoColor=white" alt="Vite" /></a>
+  <a href="https://vitest.dev/"><img src="https://img.shields.io/badge/Vitest-324%20Passed-FCC72B?logo=vitest&logoColor=black" alt="Vitest" /></a>
+  <a href="public/manifest.webmanifest"><img src="https://img.shields.io/badge/PWA-Installable-blueviolet?logo=pwa&logoColor=white" alt="PWA" /></a>
+  <a href="#-1-veco-scheduled-power-outage-tracking--franchise-territory"><img src="https://img.shields.io/badge/VECO%20Coverage-100%25%20(674km²)-00C853?logo=openstreetmap&logoColor=white" alt="VECO Coverage" /></a>
+  <a href="https://www.w3.org/WAI/WCAG22/quickref/"><img src="https://img.shields.io/badge/a11y-WCAG%202.2%20AA-brightgreen" alt="Accessibility" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-lightgrey.svg" alt="License" /></a>
+</p>
 
 ---
 
@@ -22,6 +30,7 @@ Unlike traditional platforms riddled with ads, analytics trackers, and heavy dep
 ```
        ┌─────────────────────────────────────────────────────────────┐
        │                   WATCH CEBU CONTROL ROOM                   │
+       │       [ Cebu Island Silhouette • Civic Radar Watch ]        │
        ├─────────────────┬──────────────────────┬────────────────────┤
        │ ⚡ POWER FEED    │ 🌋 SEISMIC ACTIVITY  │ 🍃 AIR & HAZE      │
        │ VECO Franchise  │ PHIVOLCS DOST        │ Open-Meteo AQI     │
@@ -31,7 +40,7 @@ Unlike traditional platforms riddled with ads, analytics trackers, and heavy dep
        │ DOST-PAGASA     │ 24h Hourly Horizon • Rain % • Wind Spd    │
        │ TCWS #1-5 Track │ Open-Meteo High-Resolution Ensemble       │
        ├─────────────────┴───────────────────────────────────────────┤
-       │ 📱 PWA & OFFLINE RESILIENCE: 3-Tier SW • 100-Tile LRU Cache │
+       │ 📱 PWA & OFFLINE RESILIENCE: 3-Tier SW • 200-Tile LRU Cache │
        │ 🗺️ LEAFLET 1.9.4 CORE: CartoDB Dark Matter • Strict Bounds  │
        └─────────────────────────────────────────────────────────────┘
 ```
@@ -78,14 +87,14 @@ Unlike traditional platforms riddled with ads, analytics trackers, and heavy dep
 - **Installable Standalone Application**: Fully compliant with W3C Web App Manifest (`manifest.webmanifest`) specifications, allowing one-tap installation on Android, iOS, Windows, and macOS home screens with custom SVG/PNG app icons (`icon-192.png`, `icon-512.png`).
 - **Tier 1 (Static App Shell Cache)**: Pre-caches core HTML, JS, CSS, and SVG iconography (`watch-cebu-static-v1`). Serves the control room shell instantly with background revalidation.
 - **Tier 2 (Dynamic API Cache)**: Network-first caching strategy for `/api/power`, `/api/earthquakes`, `/api/pagasa`, and Open-Meteo endpoints (`watch-cebu-api-v1`). If offline or upstream is down, serves the freshest local snapshot seamlessly.
-- **Tier 3 (Bounded LRU Basemap Cache)**: Leaflet tile caching (`cartodb-tiles-v1`) with a strict **100-tile LRU ceiling**. Prevents runaway mobile cache expansion and respects Vercel and CartoDB free-tier storage boundaries.
+- **Tier 3 (Bounded LRU Basemap Cache)**: Leaflet tile caching (`cartodb-tiles-v1`) with a strict **200-tile LRU ceiling**. Prevents runaway mobile cache expansion and respects free-tier storage boundaries while allowing smooth offline exploration.
 - **Offline Amber Banner & Emergency Hotlines**: Immediately detects network disconnection (`navigator.onLine` and `window.addEventListener('offline')`), presenting an amber status indicator and direct tap-to-call civic emergency links (`tel:`) for Cebu City DRRMO, VECO Emergency, Red Cross, BFP, and ERUF.
 
 ### 🛡️ 7. Control Room UX, Mobile-First Ergonomics & Accessibility
 - **Elevated Mobile Z-Index Hierarchy**: Strict layering architecture (`z-index: 1500` for mobile bottom sheets and status popovers; `z-index: 1450` for backdrops) preventing background blur overlays from rendering over cards or action buttons.
 - **Decoupled Data Architecture**: All feeds fetch in parallel (`Promise.allSettled`). If one endpoint is offline, other layers continue functioning uninterrupted.
 - **Transparent Freshness Indicators**: Header freshness chips display `Live · Verified`, `Fetching...`, or `⚠️ Backup Fixture Data` with fallback warnings.
-- **Full Keyboard & Screen Reader Accessibility**: Complete `Tab` and `Shift+Tab` focus traps inside modal drawers, backdrop scrim click dismissal, and `Escape` key support.
+- **Full Keyboard & Screen Reader Accessibility**: Meets **WCAG 2.2 AA** criteria with high-contrast `:focus-visible` 2px cyan outlines across all interactive elements, complete `Tab` and `Shift+Tab` focus traps inside modal drawers, backdrop scrim click dismissal, and `Escape` key support.
 - **Strict Viewport Containment**: Leaflet viewport clamped (`minZoom: 7`, bounds `[7.4, 120.9]` to `[13.2, 126.9]`, `viscosity: 1.0`) preventing unnecessary world panning.
 
 ### 🔍 8. Hybrid 3-Tier Search & Auto-Zoom (Cities, Barangays, Streets)
@@ -93,6 +102,11 @@ Unlike traditional platforms riddled with ads, analytics trackers, and heavy dep
 - **Tier 1 (Instant Active Pins)**: Matches in-memory power outage advisories and seismic events (0ms latency, offline). If a single pin matches, auto-pans, zooms to Level 16, and opens its details; if multiple pins match, fits the map bounds around all pins.
 - **Tier 2 (Offline Barangay & LGU Centroids)**: Built-in offline dictionary of 444 Metro Cebu LGUs, barangays, and landmarks extracted from `metro-cebu-barangays.geojson`. Cleans prefixes (*"Brgy."*, *"Barangay"*, *"City of"*) and zooms instantly without network calls.
 - **Tier 3 (Cebu-Bounded Public Geocoding)**: OpenStreetMap Nominatim fallback strictly geo-fenced to Cebu Province (`[9.3°N, 123.1°E]` to `[11.4°N, 124.4°E]`) for specific streets (*e.g. Gorordo Ave, Colon St*). Only executes on explicit form submission to strictly adhere to free-tier fair-use limits.
+
+### 🏝️ 9. Custom Geographic Visual Identity (Civic Radar Watch)
+- **Authentic Island Silhouette**: Replaced generic utility lightning bolt iconography with a resolution-independent vector silhouette of Cebu Island and surrounding islets (*Bantayan, Mactan, Olango, and Malapascua*).
+- **Control-Room Color Palette**: Styled in Electric Cyan (`#38BDF8`) on deep Slate 900 (`#0F172A`) with dual concentric geospatial radar range rings and a dual-core red pulse pin (`#EF4444`) centered directly on Metro Cebu (`10.3157°N, 123.8854°E`).
+- **Unified Brand Surface**: Consistently integrated into the desktop and mobile header brand mark, browser SVG/PNG favicon, and PWA manifest app icons (`icon-192.png`, `icon-512.png`), ensuring social shares on Facebook and LinkedIn present a distinct, professional visual identity.
 
 ---
 
@@ -103,9 +117,9 @@ Unlike traditional platforms riddled with ads, analytics trackers, and heavy dep
 | **Frontend Runtime** | TypeScript 5.8, Vite 7, HTML5, Vanilla CSS3 (Dark Control-Room Design System) |
 | **Mapping Engine** | Leaflet 1.9.4, CartoDB Dark Matter Basemap Tiles, SVG Compound Pin Renderers |
 | **Spatial Boundaries** | 367-Feature GeoJSON (`metro-cebu-barangays.geojson`), 674 km² VECO Franchise (8 LGUs, 80 Cebu City Barangays) |
-| **PWA & Offline Engine**| W3C Web App Manifest, 3-Tier Service Worker (`sw.js`), 100-Tile Bounded LRU Cache, Tap-to-Call Emergency Hotlines |
+| **PWA & Offline Engine**| W3C Web App Manifest, 3-Tier Service Worker (`sw.js`), 200-Tile Bounded LRU Cache, Tap-to-Call Emergency Hotlines |
 | **Data Ingestion** | Cheerio 1.0, Node.js HTTP/HTTPS, Axios, Native Fetch, RegEx NLP Street Extraction |
-| **Testing & Quality** | Vitest (316 tests, 28 suites: unit, component, fuzzing, concurrency, UI load), Chrome DevTools Protocol (CDP) |
+| **Testing & Quality** | Vitest (324 tests, 29 suites: unit, component, fuzzing, concurrency, UI load), Chrome DevTools Protocol (CDP) |
 | **External APIs** | DOST-PAGASA (Severe Weather & Storm Track), Open-Meteo (AQI & Forecast), VECO Portal, DOST-PHIVOLCS |
 | **State & Cloud Edge** | Decoupled In-Memory State, `localStorage` Optimistic Cache, Vercel Edge Serverless Functions |
 
@@ -214,7 +228,7 @@ Watch Cebu maintains a strict 100% test pass requirement across all parsers, UI 
 ```bash
 npm test
 ```
-*Current Suite: 28 test files, 316 tests passed (100% green).*
+*Current Suite: 29 test files, 324 tests passed (100% green).*
 
 ### Run TypeScript & Production Build
 ```bash
@@ -301,11 +315,12 @@ Running `npm test` never writes to authentic `data/` snapshots:
 - [x] **Phase 6: Multi-Hazard Expansion** — Option C earthquake markers, Open-Meteo Air Quality & recurring haze advisory, Stage 6b viewport containment, and Today's Weather Forecast button & drawer.
 - [x] **Responsive Overhaul & Auto-Zoom** — Mobile bottom sheet, compact 52px chrome, WCAG AAA contrast, and Hybrid 3-Tier Search Auto-Zoom.
 - [x] **Production Deployment & Cloud Architecture (ADR-005)** — Vercel `dist-client` output, edge-cached serverless API routes (`/api/power`, `/api/earthquakes`, `/api/pagasa`), runtime GitHub raw snapshot distribution, 100/day Hobby deploy-limit bypass, and SHA-256 test data isolation.
-- [x] **Phase 7: PWA Hardening & Offline Resilience** — W3C Web App Manifest (`manifest.webmanifest`), 3-tier Service Worker caching (static shell, dynamic API, 100-tile LRU basemap cache), offline status banner, and tap-to-call emergency civic hotlines.
+- [x] **Phase 7: PWA Hardening & Offline Resilience** — W3C Web App Manifest (`manifest.webmanifest`), 3-tier Service Worker caching (static shell, dynamic API, 200-tile LRU basemap cache), offline status banner, and tap-to-call emergency civic hotlines.
 - [x] **Phase 8: DOST-PAGASA Multi-Hazard Severe Weather** — Tropical cyclone bulletin ingestion, TCWS Signals #1–#5, color-coded heavy rainfall warnings, animated Leaflet storm track layer, and edge route `/api/pagasa`.
 - [x] **Phase 9: VECO Territory Boundary Enrichment** — Expanded GeoJSON dataset to 367 features covering all 80 Cebu City barangays (including rural mountain barangays like Lusaran and industrial zones like CITP), achieving 100% geocoding resolution across all active advisories.
-- [ ] **Phase 10: MECO Mactan Island Feed Integration (Exploratory)** — Investigate automated ingestion for Lapu-Lapu City and Cordova notices.
-- [ ] **Phase 11: Community Offline Mesh & SMS Fallback (Exploratory)** — Research peer-to-peer WebRTC / SMS-relay sync during prolonged regional grid collapse.
+- [x] **Phase 10: Geographic Identity & Civic Branding** — Vector-extracted Cebu Island silhouette with dual-ring civic radar monitoring graticule and Metro Cebu pulse core (Option 1). Replaces generic lightning bolt iconography across the app header, SVG favicon, and PWA manifest icons.
+- [ ] **Phase 11: MECO Mactan Island Feed Integration (Exploratory)** — Investigate automated ingestion for Lapu-Lapu City and Cordova notices.
+- [ ] **Phase 12: Community Offline Mesh & SMS Fallback (Exploratory)** — Research peer-to-peer WebRTC / SMS-relay sync during prolonged regional grid collapse.
 
 ---
 
