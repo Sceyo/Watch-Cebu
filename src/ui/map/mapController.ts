@@ -111,6 +111,10 @@ export class MapController {
     this.map.setView([coords.lat, coords.lon], 14, { animate: true });
   }
 
+  invalidateSize(): void {
+    this.map.invalidateSize();
+  }
+
   setLayerVisibility(selection: LayerSelection): void {
     if (selection === "power") {
       if (!this.map.hasLayer(this.powerLayerGroup)) this.map.addLayer(this.powerLayerGroup);
@@ -228,8 +232,8 @@ export class MapController {
         if (isManual) {
           verificationNoteHtml = `
             <div class="popup-provenance-note">
-              <span class="note-tag">Provenance Note:</span>
-              <span>South Reclamation Area is a 300-hectare special economic zone not designated as a separate PSA administrative barangay. Point anchored to the Cebu South Road Properties administrative spine (OSM Way 597926764).</span>
+              <span class="note-tag">Location Note:</span>
+              <span>South Reclamation Area is a 300-hectare special economic zone anchored to the Cebu South Road Properties administrative spine (OSM Way 597926764).</span>
             </div>
           `;
         }
@@ -346,6 +350,10 @@ export class MapController {
 
     const filtered = events.filter((e) => {
       if (filter.minMagnitude > 0 && e.magnitude < filter.minMagnitude) {
+        return false;
+      }
+      // Civilians want actionability: hide distant micro-tremors (< M3.0, > 100km) by default
+      if (!filter.showMicroQuakes && e.magnitude < 3.0 && e.distance_from_cebu_km > 100) {
         return false;
       }
       if (query) {

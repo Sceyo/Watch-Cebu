@@ -19,6 +19,7 @@ import {
   formatReadableDate,
   formatPhilippineTimeRange,
   normalizeStreetList,
+  formatHumanTimestamp,
 } from "../../utils/index.js";
 import { ICONS } from "./icons.js";
 
@@ -111,6 +112,8 @@ export function renderStatusPopover(
     } else if (state.dataSource === "fixture_fallback") {
       statusBadge = `<span class="popover-badge fallback">⚠️ Backup Fixture</span>`;
       detail = customDetail || `Displaying verified offline fixture dataset.`;
+    } else if (state.fetchedAt) {
+      detail = `${detail} (Last sync: ${formatHumanTimestamp(state.fetchedAt)})`;
     }
 
     return `
@@ -125,20 +128,37 @@ export function renderStatusPopover(
     `;
   };
 
+  const airBadge = airQuality
+    ? (airQuality.isFallback
+        ? '<span class="popover-badge fallback">⚠️ Backup</span>'
+        : (airQuality.isStale
+            ? `<span class="popover-badge delayed" style="background: rgba(245, 158, 11, 0.2); color: #FCD34D;">⚠️ Delayed (${airQuality.observationTimePst})</span>`
+            : '<span class="popover-badge live">● Model Live</span>'))
+    : '<span class="popover-badge loading">Fetching...</span>';
+
+  const airDetail = airQuality?.isStale
+    ? `Atmospheric dispersion model update delayed (~${airQuality.observationTimePst}).`
+    : `Atmospheric dispersion & particulate model.`;
+
   const airRow = `
     <div class="popover-feed-row">
       <div class="popover-feed-header">
         <strong>Air Quality &amp; Haze</strong>
-        ${airQuality ? (airQuality.isFallback ? '<span class="popover-badge fallback">⚠️ Backup</span>' : '<span class="popover-badge live">● Model Live</span>') : '<span class="popover-badge loading">Fetching...</span>'}
+        ${airBadge}
       </div>
-      <p class="popover-feed-desc">Atmospheric dispersion &amp; particulate model.</p>
+      <p class="popover-feed-desc">${airDetail}</p>
       <span class="popover-feed-source">Provider: European CAMS via Open-Meteo</span>
     </div>
   `;
 
   let pagasaDetail = "TCWS Signals, storm tracks, and heavy rainfall alerts.";
+  let pagasaBadgeOverride: string | null = null;
   if (pagasaState?.data) {
     const b = pagasaState.data;
+    const isStale = b.issued_at_pst
+      ? (Date.now() - new Date(b.issued_at_pst).getTime() > 24 * 3600000)
+      : false;
+
     if (b.tcws_cebu?.active) {
       pagasaDetail = `TCWS Signal #${b.tcws_cebu.signal_level} in effect for Cebu (${b.cyclone_name || 'Active Cyclone'}).`;
     } else if (b.heavy_rainfall_alert && b.heavy_rainfall_alert.level !== "none") {
@@ -146,11 +166,32 @@ export function renderStatusPopover(
     } else {
       pagasaDetail = "No active storm signals or heavy rainfall alerts in Cebu.";
     }
+
+    if (b.issued_at_pst) {
+      pagasaDetail = `${pagasaDetail} Issued: ${formatHumanTimestamp(b.issued_at_pst)}.`;
+    }
+    if (isStale) {
+      pagasaBadgeOverride = `<span class="popover-badge delayed" style="background: rgba(245, 158, 11, 0.2); color: #FCD34D;">⚠️ Advisory Delayed</span>`;
+    }
   }
 
-  const pagasaRow = pagasaState
-    ? formatFeedRow("PAGASA Severe Weather", pagasaState, "DOST-PAGASA", pagasaDetail)
-    : "";
+  let pagasaRow = "";
+  if (pagasaState) {
+    if (pagasaBadgeOverride && pagasaState.status === "success" && pagasaState.dataSource !== "fixture_fallback") {
+      pagasaRow = `
+        <div class="popover-feed-row">
+          <div class="popover-feed-header">
+            <strong>PAGASA Severe Weather</strong>
+            ${pagasaBadgeOverride}
+          </div>
+          <p class="popover-feed-desc">${pagasaDetail}</p>
+          <span class="popover-feed-source">Provider: DOST-PAGASA</span>
+        </div>
+      `;
+    } else {
+      pagasaRow = formatFeedRow("PAGASA Severe Weather", pagasaState, "DOST-PAGASA", pagasaDetail);
+    }
+  }
 
   container.innerHTML = `
     <div class="status-popover-card">
@@ -176,7 +217,9 @@ export function renderStatusPopover(
 export function renderMobileBottomSheet(
   container: HTMLElement,
   details: SelectedLocationDetails | null,
-  onClose: () => void
+  onClose: () => void,
+  onPinBarangay?: (barangay: string) => void,
+  myBarangay?: string | null
 ): void {
   if (!details) {
     container.classList.remove("open");
@@ -201,7 +244,9 @@ export function renderMobileBottomSheet(
     const barangayName = advisories[0]?.barangay.join(", ") || "Unspecified area";
     const cityName = advisories[0]?.city || "Metro Cebu";
     const isManual = advisories[0]?.coordinate_source === "manual_verified";
-    const sourceLabel = isManual ? "Manually verified (SRP Spine)" : "OpenStreetMap node";
+    const sourceLabel = isManual ? "Verified Landmark (SRP Spine)" : "Approximate Barangay Center (OpenStreetMap)";
+    const primaryBarangay = advisories[0]?.barangay[0] || cityName;
+    const isPinned = Boolean(myBarangay && primaryBarangay.toLowerCase() === myBarangay.toLowerCase());
 
     let advisoryCardsHtml = "";
     for (let i = 0; i < advisories.length; i++) {
@@ -249,19 +294,25 @@ export function renderMobileBottomSheet(
             <span class="sheet-city-tag">${cityName}</span>
             <h3 class="sheet-title">${barangayName} ${isMulti ? `<span class="sheet-multi-count">(${advisories.length} Advisories)</span>` : ""}</h3>
           </div>
-          <button class="sheet-close-btn" id="btn-close-sheet" aria-label="Close details" title="Close">${ICONS.close}</button>
+          <div class="sheet-header-actions" style="display: flex; align-items: center; gap: 8px;">
+            <button class="sheet-pin-btn ${isPinned ? 'is-pinned' : ''}" id="btn-sheet-pin" title="Pin ${primaryBarangay} as home area" aria-label="Pin as home area">
+              <span aria-hidden="true">⭐</span>
+              <span class="pin-btn-text">${isPinned ? 'Pinned Area' : 'Pin Area'}</span>
+            </button>
+            <button class="sheet-close-btn" id="btn-close-sheet" aria-label="Close details" title="Close">${ICONS.close}</button>
+          </div>
         </div>
       </div>
 
       <div class="sheet-body">
-        ${isMulti ? `<div class="sheet-multi-notice">Multiple scheduled outages exist for this barangay coordinates. Listed below:</div>` : ""}
+        ${isMulti ? `<div class="sheet-multi-notice">Multiple scheduled outages exist for this barangay. Listed below:</div>` : ""}
         <div class="sheet-advisories-list">
           ${advisoryCardsHtml}
         </div>
 
         <div class="popup-provenance-box" style="margin-top: 12px;">
           <div class="popup-field-row">
-            <span class="field-label">Location source:</span>
+            <span class="field-label">Location accuracy:</span>
             <span class="field-value source-highlight ${isManual ? 'manual' : 'osm'}">${sourceLabel}</span>
           </div>
         </div>
@@ -340,6 +391,17 @@ export function renderMobileBottomSheet(
 
   // Close button listener
   container.querySelector("#btn-close-sheet")?.addEventListener("click", onClose);
+
+  // Pin Barangay listener
+  const pinBtn = container.querySelector<HTMLButtonElement>("#btn-sheet-pin");
+  pinBtn?.addEventListener("click", () => {
+    if (details.type === "power") {
+      const primaryBarangay = details.advisories[0]?.barangay[0] || details.advisories[0]?.city;
+      if (primaryBarangay && onPinBarangay) {
+        onPinBarangay(primaryBarangay);
+      }
+    }
+  });
 
   // Swipe-down touch listener on sheet header
   let touchStartY = 0;

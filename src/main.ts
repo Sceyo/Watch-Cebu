@@ -39,6 +39,9 @@ import {
 } from "./ui/services/forecast.js";
 import { renderForecastDrawer } from "./ui/components/forecastDrawer.js";
 import { renderMapControls } from "./ui/components/mapControls.js";
+import { renderUrgentAlertBanner } from "./ui/components/urgentAlertBanner.js";
+import { renderListView } from "./ui/components/listView.js";
+import { getMyBarangay, setMyBarangay, getMyBarangayStatus } from "./ui/services/myBarangay.js";
 import {
   renderMobileBottomBar,
   renderStatusPopover,
@@ -48,10 +51,14 @@ import {
 
 // Global App State
 let currentLayer: LayerSelection = "both";
+let currentViewMode: "map" | "list" = "map";
+let myBarangay: string | null = getMyBarangay();
+
 let filterState: FilterState = {
   selectedDate: "all",
   minMagnitude: 0,
   searchQuery: "",
+  showMicroQuakes: false,
 };
 
 let isLegendOpen = false;
@@ -249,33 +256,117 @@ function updateUI() {
     );
   }
 
-  // Floating Map Controls (Search, Locate Me, Mobile Layer Toggle)
-  if (mapControlsEl) {
-    renderMapControls(mapControlsEl, currentLayer, {
-      onSearchChange: (query) => {
-        filterState.searchQuery = query;
-        mapController?.renderPowerAdvisories(powerFeedState.data, filterState);
-        mapController?.renderEarthquakeEvents(eqFeedState.data, filterState);
-      },
-      onSearchSubmit: async (query) => {
-        if (!mapController) return;
-        const res = await mapController.searchAndZoom(query, powerFeedState.data, eqFeedState.data);
-        if (res.message) {
-          showToast(res.message);
-        }
-      },
-      onLocateUser: (coords) => {
-        mapController?.centerOnUser(coords);
-      },
-      onLayerChange: (layer) => {
-        currentLayer = layer;
-        mapController?.setLayerVisibility(currentLayer);
-        updateUI();
-      },
-      onToast: (msg) => {
-        showToast(msg);
-      },
+  // Urgent Severe Weather Alert Banner (TCWS & Rainfall)
+  const urgentAlertEl = document.getElementById("urgent-alert-container");
+  if (urgentAlertEl) {
+    renderUrgentAlertBanner(urgentAlertEl, pagasaFeedState.data, () => {
+      isForecastOpen = true;
+      isLegendOpen = false;
+      isAboutOpen = false;
+      isAirQualityOpen = false;
+      isStatusPopoverOpen = false;
+      selectedLocation = null;
+      updateUI();
+      focusActiveDrawer();
     });
+  }
+
+  // Floating Map Controls (Search, Locate Me, View Mode Toggle, Mobile Layer Toggle)
+  const myBarangayStatus = myBarangay ? getMyBarangayStatus(myBarangay, powerFeedState.data) : null;
+  if (mapControlsEl) {
+    renderMapControls(
+      mapControlsEl,
+      currentLayer,
+      {
+        onSearchChange: (query) => {
+          filterState.searchQuery = query;
+          mapController?.renderPowerAdvisories(powerFeedState.data, filterState);
+          mapController?.renderEarthquakeEvents(eqFeedState.data, filterState);
+          if (currentViewMode === "list") updateUI();
+        },
+        onSearchSubmit: async (query) => {
+          if (currentViewMode === "list") {
+            filterState.searchQuery = query;
+            updateUI();
+            return;
+          }
+          if (!mapController) return;
+          const res = await mapController.searchAndZoom(query, powerFeedState.data, eqFeedState.data);
+          if (res.message) {
+            showToast(res.message);
+          }
+        },
+        onLocateUser: (coords) => {
+          mapController?.centerOnUser(coords);
+        },
+        onLayerChange: (layer) => {
+          currentLayer = layer;
+          mapController?.setLayerVisibility(currentLayer);
+          updateUI();
+        },
+        onToast: (msg) => {
+          showToast(msg);
+        },
+        onViewModeToggle: () => {
+          currentViewMode = currentViewMode === "map" ? "list" : "map";
+          updateUI();
+          if (currentViewMode === "map") {
+            setTimeout(() => mapController?.invalidateSize(), 50);
+          }
+        },
+        onClearMyBarangay: () => {
+          setMyBarangay(null);
+          myBarangay = null;
+          showToast("Unpinned home barangay.");
+          updateUI();
+        },
+        onSelectMyBarangay: (barangay) => {
+          filterState.searchQuery = barangay;
+          mapController?.renderPowerAdvisories(powerFeedState.data, filterState);
+          if (currentViewMode === "map") {
+            mapController?.searchAndZoom(barangay, powerFeedState.data, eqFeedState.data);
+          }
+          updateUI();
+        },
+      },
+      {
+        viewMode: currentViewMode,
+        myBarangayStatus,
+      }
+    );
+  }
+
+  // Map vs List View container visibility and rendering
+  const mapEl = document.getElementById("map");
+  const listViewEl = document.getElementById("list-view-container");
+  if (mapEl && listViewEl) {
+    if (currentViewMode === "list") {
+      mapEl.style.display = "none";
+      listViewEl.style.display = "block";
+      renderListView(listViewEl, powerFeedState.data, filterState, {
+        onSelectAdvisory: (advisory) => {
+          currentViewMode = "map";
+          updateUI();
+          if (advisory.lat !== null && advisory.lon !== null) {
+            mapController?.centerOnUser({ lat: advisory.lat, lon: advisory.lon });
+            selectedLocation = { type: "power", advisories: [advisory] };
+            updateUI();
+            focusActiveDrawer();
+          }
+        },
+        onPinBarangay: (brgy) => {
+          const newPinned = myBarangay === brgy ? null : brgy;
+          setMyBarangay(newPinned);
+          myBarangay = newPinned;
+          showToast(newPinned ? `⭐ Pinned ${newPinned} as your home area.` : "Unpinned home area.");
+          updateUI();
+        },
+        myBarangay,
+      });
+    } else {
+      mapEl.style.display = "block";
+      listViewEl.style.display = "none";
+    }
   }
 
   // Mobile Fixed Bottom Action Bar (56px + safe area)
@@ -348,11 +439,23 @@ function updateUI() {
 
   // Mobile Touch Bottom Sheet
   if (mobileBottomSheetEl) {
-    renderMobileBottomSheet(mobileBottomSheetEl, selectedLocation, () => {
-      selectedLocation = null;
-      document.body.classList.remove("modal-open");
-      updateUI();
-    });
+    renderMobileBottomSheet(
+      mobileBottomSheetEl,
+      selectedLocation,
+      () => {
+        selectedLocation = null;
+        document.body.classList.remove("modal-open");
+        updateUI();
+      },
+      (brgy) => {
+        const newPinned = myBarangay === brgy ? null : brgy;
+        setMyBarangay(newPinned);
+        myBarangay = newPinned;
+        showToast(newPinned ? `⭐ Pinned ${newPinned} as your home area.` : "Unpinned home area.");
+        updateUI();
+      },
+      myBarangay
+    );
   }
 
   // Mobile Consolidated Status Popover
@@ -394,18 +497,35 @@ function updateUI() {
       dayTabsEl.style.display = "none";
     } else {
       dayTabsEl.style.display = "block";
-      renderDayTabs(dayTabsEl, powerFeedState.data, filterState.selectedDate, (date) => {
-        filterState.selectedDate = date;
-        mapController?.renderPowerAdvisories(powerFeedState.data, filterState);
-        updateUI();
-      });
+      renderDayTabs(
+        dayTabsEl,
+        powerFeedState.data,
+        filterState.selectedDate,
+        (date) => {
+          filterState.selectedDate = date;
+          mapController?.renderPowerAdvisories(powerFeedState.data, filterState);
+          if (currentViewMode === "list") updateUI();
+        },
+        undefined,
+        powerFeedState.dataSource === "fixture_fallback"
+      );
     }
   }
 
   if (legendEl) {
-    renderLegend(legendEl, isLegendOpen, () => {
-      closeAllDrawers();
-    });
+    renderLegend(
+      legendEl,
+      isLegendOpen,
+      () => {
+        closeAllDrawers();
+      },
+      Boolean(filterState.showMicroQuakes),
+      (show) => {
+        filterState.showMicroQuakes = show;
+        mapController?.renderEarthquakeEvents(eqFeedState.data, filterState);
+        updateUI();
+      }
+    );
   }
 
   if (aboutEl) {

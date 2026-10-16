@@ -21,7 +21,9 @@ export interface FilterState {
   selectedDate: string; // "all" or specific ISO date like "2026-09-09"
   minMagnitude: number; // 0 for all
   searchQuery?: string;
+  showMicroQuakes?: boolean; // false by default: filters quakes < M3.0 unless <= 100km
 }
+
 
 export type SelectedLocationDetails =
   | { type: "power"; advisories: PowerAdvisory[] }

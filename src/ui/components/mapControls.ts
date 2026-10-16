@@ -1,14 +1,27 @@
 /**
- * Floating Map Controls Component (Search, Locate Me, Mobile Layer Toggle).
+ * Floating Map Controls Component (Search, Locate Me, View Mode Toggle, Mobile Layer Toggle).
  *
  * Implements:
  * - Search bar with font-size >= 16px to prevent iOS auto-zoom on focus (H5).
  * - "Locate me" button centering map within Cebu watch bounds (H5).
+ * - Map vs. List View toggle for fast low-bandwidth mobile LTE scanning.
+ * - Pinned Home Barangay quick status banner (pure localStorage, zero account).
  * - Floating segmented layer toggle on mobile (C2).
  */
 
 import type { LayerSelection } from "../types.js";
+import type { MyBarangayStatus } from "../services/myBarangay.js";
+import { formatReadableDate } from "../../utils/index.js";
 import { ICONS } from "./icons.js";
+
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 
 export interface MapControlsCallbacks {
   onSearchChange: (query: string) => void;
@@ -16,16 +29,52 @@ export interface MapControlsCallbacks {
   onLocateUser: (coords: { lat: number; lon: number }) => void;
   onLayerChange: (layer: LayerSelection) => void;
   onToast: (msg: string) => void;
+  onViewModeToggle?: () => void;
+  onClearMyBarangay?: () => void;
+  onSelectMyBarangay?: (barangay: string) => void;
+}
+
+export interface MapControlsExtraState {
+  viewMode?: "map" | "list";
+  myBarangayStatus?: MyBarangayStatus | null;
 }
 
 export function renderMapControls(
   container: HTMLElement,
   currentLayer: LayerSelection,
-  callbacks: MapControlsCallbacks
+  callbacks: MapControlsCallbacks,
+  extra?: MapControlsExtraState
 ): void {
+  const viewMode = extra?.viewMode || "map";
+  const myBarangay = extra?.myBarangayStatus;
+
+  let pinnedBannerHtml = "";
+  if (myBarangay) {
+    const datesSummary = myBarangay.dates.length > 0
+      ? myBarangay.dates.map((d) => formatReadableDate(d)).join(", ")
+      : "";
+    const outageNote = myBarangay.count > 0
+      ? `${myBarangay.count} scheduled (${datesSummary})`
+      : "No scheduled outages";
+
+    pinnedBannerHtml = `
+      <div class="my-barangay-status-banner" role="status">
+        <div class="my-barangay-info">
+          <span class="star-badge" aria-hidden="true">⭐</span>
+          <span class="my-barangay-name">${escapeHtml(myBarangay.barangay)}</span>
+          <span class="my-barangay-count">— ${outageNote}</span>
+        </div>
+        <div class="my-barangay-btns">
+          ${myBarangay.count > 0 ? `<button class="btn-filter-my-area" id="btn-filter-my-area" title="Filter to my barangay">Filter</button>` : ''}
+          <button class="btn-unpin-barangay" id="btn-unpin-area" title="Unpin barangay" aria-label="Unpin barangay">✕</button>
+        </div>
+      </div>
+    `;
+  }
+
   container.innerHTML = `
     <div class="map-floating-overlay">
-      <!-- Search and Locate Row -->
+      <!-- Search, Locate & View Mode Row -->
       <div class="map-search-row">
         <form class="search-form" id="map-search-form" action="javascript:void(0);">
           <div class="search-input-wrapper">
@@ -47,12 +96,21 @@ export function renderMapControls(
             <button type="button" id="btn-clear-search" class="search-clear-btn" aria-label="Clear search" title="Clear search" style="display: none;">${ICONS.close}</button>
           </div>
         </form>
+
+        <button id="btn-toggle-view-mode" class="map-ctrl-btn btn-view-mode" aria-label="Switch to ${viewMode === 'map' ? 'List View' : 'Map View'}" title="Toggle Map vs List View">
+          <span class="ctrl-icon" aria-hidden="true">${viewMode === 'map' ? '📋' : '🗺️'}</span>
+          <span class="view-mode-label">${viewMode === 'map' ? 'List' : 'Map'}</span>
+        </button>
+
         <button id="btn-locate-me" class="map-ctrl-btn btn-locate-me" aria-label="Locate me on map" title="Center on my location">
           <span class="ctrl-icon" aria-hidden="true" style="display: inline-flex; align-items: center;">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
           </span>
         </button>
       </div>
+
+      <!-- Pinned Barangay Banner -->
+      ${pinnedBannerHtml}
 
       <!-- Mobile Floating Layer Segmented Toggle (Visible only on mobile) -->
       <div class="mobile-layer-segmented-bar mobile-only">
@@ -110,6 +168,12 @@ export function renderMapControls(
     });
   }
 
+  // View Mode Toggle listener
+  const viewModeBtn = container.querySelector<HTMLButtonElement>("#btn-toggle-view-mode");
+  viewModeBtn?.addEventListener("click", () => {
+    callbacks.onViewModeToggle?.();
+  });
+
   // Locate Me listener
   const locateBtn = container.querySelector<HTMLButtonElement>("#btn-locate-me");
   locateBtn?.addEventListener("click", () => {
@@ -146,6 +210,22 @@ export function renderMapControls(
       },
       { timeout: 10000, maximumAge: 60000 }
     );
+  });
+
+  // Pinned barangay actions
+  const filterMyAreaBtn = container.querySelector<HTMLButtonElement>("#btn-filter-my-area");
+  filterMyAreaBtn?.addEventListener("click", () => {
+    if (myBarangay && searchInput) {
+      searchInput.value = myBarangay.barangay;
+      if (clearBtn) clearBtn.style.display = "flex";
+      callbacks.onSearchChange(myBarangay.barangay);
+      callbacks.onSelectMyBarangay?.(myBarangay.barangay);
+    }
+  });
+
+  const unpinBtn = container.querySelector<HTMLButtonElement>("#btn-unpin-area");
+  unpinBtn?.addEventListener("click", () => {
+    callbacks.onClearMyBarangay?.();
   });
 
   // Mobile layer buttons

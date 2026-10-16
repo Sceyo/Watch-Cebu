@@ -92,17 +92,26 @@ export function renderHeader(
     eqState.status === "loading" ||
     extra?.pagasaState?.status === "loading";
 
+  const nowMs = Date.now();
+  const isPagasaStale = extra?.pagasaState?.data?.issued_at_pst
+    ? (nowMs - new Date(extra.pagasaState.data.issued_at_pst).getTime() > 24 * 3600000)
+    : false;
+  const isAirStale = Boolean(extra?.airQuality?.isStale);
+  const isAnyStale = isPagasaStale || isAirStale;
+
   let liveCount = 0;
   if (powerState.status === "success" && powerState.dataSource !== "fixture_fallback") liveCount++;
   if (eqState.status === "success" && eqState.dataSource !== "fixture_fallback") liveCount++;
-  if (extra?.airQuality && !extra.airQuality.isFallback) liveCount++;
-  if (extra?.pagasaState?.status === "success" && extra?.pagasaState?.dataSource !== "fixture_fallback") liveCount++;
+  if (extra?.airQuality && !extra.airQuality.isFallback && !isAirStale) liveCount++;
+  if (extra?.pagasaState?.status === "success" && extra?.pagasaState?.dataSource !== "fixture_fallback" && !isPagasaStale) liveCount++;
 
-  let mobileStatusHtml = `<button class="freshness-chip mobile-status-btn live" id="btn-mobile-status" aria-label="System status: ${liveCount || 4} feeds live"><span class="live-dot"></span><span>${liveCount || 4} Feeds Live</span></button>`;
+  let mobileStatusHtml = `<button class="freshness-chip mobile-status-btn live" id="btn-mobile-status" aria-label="System status: ${liveCount} of 4 feeds live"><span class="live-dot"></span><span>${liveCount === 4 ? '4 Feeds Live' : `${liveCount}/4 Feeds Live`}</span></button>`;
   if (isAnyLoading) {
     mobileStatusHtml = `<button class="freshness-chip mobile-status-btn loading" id="btn-mobile-status" aria-label="System status: Fetching data"><span class="pulse-dot"></span><span>Connecting...</span></button>`;
   } else if (isAnyFallback) {
     mobileStatusHtml = `<button class="freshness-chip mobile-status-btn fallback" id="btn-mobile-status" aria-label="System status: Backup data active"><span class="pulse-dot"></span><span>⚠️ Backup Data</span></button>`;
+  } else if (isAnyStale) {
+    mobileStatusHtml = `<button class="freshness-chip mobile-status-btn delayed" id="btn-mobile-status" style="border-color: rgba(245, 158, 11, 0.45); color: #FCD34D; background: rgba(245, 158, 11, 0.15);" aria-label="System status: ${liveCount} of 4 feeds live, some delayed"><span class="pulse-dot" style="background: #F59E0B;"></span><span>⚠️ Data Delayed</span></button>`;
   }
 
   container.innerHTML = `

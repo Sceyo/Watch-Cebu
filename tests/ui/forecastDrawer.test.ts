@@ -155,7 +155,7 @@ describe("Forecast Drawer Component — Accessibility and Rendering", () => {
 
     expect(container.innerHTML).toContain("PAGASA Civic Status: Normal");
     expect(container.innerHTML).toContain("No active Tropical Cyclone Wind Signals");
-    expect(container.innerHTML).toContain("12:00 PM, 14 October 2026");
+    expect(container.innerHTML).toContain("Oct 14, 2026 · 12:00 PM PHT");
   });
 
   it("renders PAGASA TCWS Signal card with storm details when active for Cebu", () => {

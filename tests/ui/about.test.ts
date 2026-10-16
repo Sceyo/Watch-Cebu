@@ -129,7 +129,7 @@ describe("About Drawer Component", () => {
     expect(container.innerHTML).toContain("MECO (Mactan Electric)");
     expect(container.innerHTML).toContain("CEBECO I, II, & III");
     expect(container.innerHTML).toContain("VECO Franchise Only");
-    expect(container.innerHTML).toContain("Approximate Geographic Centroids");
+    expect(container.innerHTML).toContain("Approximate Barangay Coordinates");
     expect(container.innerHTML).toContain("Seismic Epicenters (Not Early Warning)");
   });
 });

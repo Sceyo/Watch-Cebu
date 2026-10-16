@@ -44,12 +44,16 @@
       <!-- App Header & Controls -->
       <header id="app-header" class="app-header"></header>
 
+      <!-- Urgent Severe Weather & TCWS Alert Banner (PAGASA) -->
+      <aside id="urgent-alert-container" class="urgent-alert-container" aria-live="assertive" style="display: none;"></aside>
+
       <!-- Day Tabs Filter Bar (for VECO power advisories) -->
       <nav id="day-tabs-bar" class="day-tabs-bar"></nav>
 
-      <!-- Main Map Container -->
+      <!-- Main Map & List Container -->
       <main id="map-container" class="map-container">
         <div id="map"></div>
+        <div id="list-view-container" class="list-view-container" style="display: none;"></div>
         <!-- Floating search, locate me, and mobile layer toggle -->
         <div id="map-controls-container" class="map-controls-container"></div>
       </main>

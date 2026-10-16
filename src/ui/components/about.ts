@@ -191,7 +191,7 @@ export function renderAbout(
             </div>
             <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.4;">
               Covers scheduled maintenance for <strong>4 cities & 4 municipalities</strong> (Cebu City, Mandaue, Talisay, Naga, Consolacion, Liloan, Minglanilla, San Fernando).<br>
-              <strong style="color: #F87171;">Currently Out of Scope (Cons):</strong>
+              <strong style="color: #F87171;">Currently Out of Scope (Known Limitations):</strong>
               <ul style="margin: 4px 0 0 16px; padding: 0;">
                 <li><strong>MECO (Mactan Electric):</strong> Lapu-Lapu City & Cordova (Mactan Island) are not covered.</li>
                 <li><strong>CEBECO I, II, & III:</strong> Provincial towns in Northern, Southern, and Western Cebu are not covered due to a lack of machine-readable data feeds.</li>
@@ -200,13 +200,13 @@ export function renderAbout(
             </div>
           </div>
 
-          <!-- Geocoding Centroid Accuracy -->
+          <!-- Geocoding Approximate Coordinates -->
           <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px;">
             <div style="font-size: 0.82rem; font-weight: 700; color: #60A5FA; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-              <span>📍 Approximate Geographic Centroids</span>
+              <span>📍 Approximate Barangay Coordinates</span>
             </div>
             <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.4;">
-              Map pins indicate approximate barangay and street center points derived from OpenStreetMap and VECO text descriptions. An advisory pin in your barangay does <em>not</em> guarantee your specific household or meter will lose power, as outages often isolate specific transformer feeders.
+              Map pins indicate approximate neighborhood center points derived from OpenStreetMap and VECO text descriptions. An advisory pin in your barangay does <em>not</em> guarantee your specific household or meter will lose power, as outages often isolate specific transformer feeders.
             </div>
           </div>
 

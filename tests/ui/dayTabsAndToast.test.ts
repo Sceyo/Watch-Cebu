@@ -126,6 +126,14 @@ describe("Day Tabs Advance Notice Pill", () => {
     expect(container.innerHTML).toContain("today-tab");
     expect(container.innerHTML).toContain("Today");
   });
+
+  it("does not render advance-schedule-pill when using fallback fixture data (prevents false reassurance)", () => {
+    const container = createMockElement();
+    renderDayTabs(container, mockFutureAdvisories, "all", () => {}, "2026-10-15", true);
+
+    expect(container.innerHTML).not.toContain("advance-schedule-pill");
+    expect(container.innerHTML).toContain("Oct 18");
+  });
 });
 
 describe("Civic Search Feedback Toast Notifications", () => {

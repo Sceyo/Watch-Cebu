@@ -14,26 +14,28 @@ import { ICONS } from "./icons.js";
 export function renderLegend(
   container: HTMLElement,
   isOpen: boolean,
-  onClose: () => void
+  onClose: () => void,
+  showMicroQuakes = false,
+  onToggleMicroQuakes?: (show: boolean) => void
 ): void {
   container.className = `legend-drawer ${isOpen ? 'open' : 'closed'}`;
 
   container.innerHTML = `
     <div class="legend-header">
-      <h2 class="legend-title">Map Guide &amp; Provenance</h2>
+      <h2 class="legend-title">Map Guide &amp; Pin Types</h2>
       <button class="legend-close-btn" id="btn-close-legend" aria-label="Close Legend" title="Close Legend">${ICONS.close}</button>
     </div>
 
     <div class="legend-content">
-      <!-- Section 1: Provenance Encoding (Neutral Slate Swatches) -->
+      <!-- Section 1: Pin Accuracy (Neutral Slate Swatches) -->
       <div class="legend-section">
-        <h3 class="section-title">📍 Marker Provenance</h3>
-        <p class="section-desc">Coordinate certainty is clearly indicated before opening any popup:</p>
+        <h3 class="section-title">📍 Pin Accuracy</h3>
+        <p class="section-desc">Map pins indicate approximate neighborhood centers from verified records:</p>
         
         <div class="legend-item">
           <div class="marker-sample solid-sample"></div>
           <div class="item-text">
-            <span class="item-name">Solid Pins (OpenStreetMap)</span>
+            <span class="item-name">Solid Pins (Barangay Center)</span>
             <span class="item-sub">Approximate community locations from OpenStreetMap. Points, not official boundaries.</span>
           </div>
         </div>
@@ -41,8 +43,8 @@ export function renderLegend(
         <div class="legend-item">
           <div class="marker-sample ring-sample"></div>
           <div class="item-text">
-            <span class="item-name">Ringed Pins (Manually Verified)</span>
-            <span class="item-sub">Manually verified locations for special economic zones (e.g. South Reclamation Area) without standard PSA barangay boundaries.</span>
+            <span class="item-name">Ringed Pins (Specific Landmarks)</span>
+            <span class="item-sub">Manually verified coordinates for special economic zones (e.g. South Reclamation Area SRP spine).</span>
           </div>
         </div>
       </div>
@@ -102,7 +104,7 @@ export function renderLegend(
           <div class="eq-sample" style="width: 14px; height: 14px; background: #A78BFA;"></div>
           <div class="item-text">
             <span class="item-name">Magnitude &lt; 3.0</span>
-            <span class="item-sub">Minor micro-earthquake, rarely felt.</span>
+            <span class="item-sub">Minor micro-earthquake, rarely felt (hidden by default if &gt;100km away).</span>
           </div>
         </div>
 
@@ -129,6 +131,13 @@ export function renderLegend(
             <span class="item-sub">Strong earthquake requiring active damage &amp; aftershock monitoring.</span>
           </div>
         </div>
+
+        <div class="legend-filter-box" style="margin-top: 12px; padding: 10px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); border-radius: 6px;">
+          <label style="display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: #FFFFFF; cursor: pointer;">
+            <input type="checkbox" id="chk-show-microquakes" ${showMicroQuakes ? 'checked' : ''} style="accent-color: #8B5CF6; width: 16px; height: 16px; cursor: pointer;" />
+            <span>Show distant micro-tremors (&lt; M3.0, &gt; 100km away)</span>
+          </label>
+        </div>
       </div>
 
       <div class="legend-footer">
@@ -140,5 +149,10 @@ export function renderLegend(
   const closeBtn = container.querySelector("#btn-close-legend");
   closeBtn?.addEventListener("click", () => {
     onClose();
+  });
+
+  const microCheck = container.querySelector<HTMLInputElement>("#chk-show-microquakes");
+  microCheck?.addEventListener("change", () => {
+    onToggleMicroQuakes?.(microCheck.checked);
   });
 }

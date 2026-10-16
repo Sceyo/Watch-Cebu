@@ -420,6 +420,43 @@ export function formatReadableDate(dateStr: string): string {
 }
 
 /**
+ * Format an ISO timestamp into a human-friendly string with date, time, and relative freshness.
+ * e.g. "Oct 14, 11:00 AM PHT (2 days ago)"
+ */
+export function formatHumanTimestamp(isoString: string, now = new Date()): string {
+  if (!isoString) return "Recently";
+  const d = new Date(isoString);
+  if (isNaN(d.getTime())) return isoString;
+
+  const dateStr = d.toLocaleDateString("en-US", {
+    timeZone: "Asia/Manila",
+    month: "short",
+    day: "numeric",
+  });
+
+  const timeStr = d.toLocaleTimeString("en-US", {
+    timeZone: "Asia/Manila",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  }) + " PHT";
+
+  const diffSec = Math.floor((now.getTime() - d.getTime()) / 1000);
+  let relative = "";
+  if (diffSec < 60) relative = "Just now";
+  else if (diffSec < 3600) relative = `${Math.floor(diffSec / 60)}m ago`;
+  else if (diffSec < 86400) relative = `${Math.floor(diffSec / 3600)}h ago`;
+  else if (diffSec < 172800) relative = "Yesterday";
+  else {
+    const days = Math.floor(diffSec / 86400);
+    relative = `${days} day${days > 1 ? 's' : ''} ago`;
+  }
+
+  return `${dateStr}, ${timeStr} (${relative})`;
+}
+
+
+/**
  * Convert 24-hour "HH:MM" string to 12-hour "H:MM AM/PM" format.
  */
 export function to12Hour(t: string): string {

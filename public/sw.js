@@ -4,7 +4,7 @@
  * Implements:
  * 1. Cache-first for core application shell and static assets.
  * 2. Stale-while-revalidate / Network-first fallback for civic API snapshots (/api/power, /api/earthquakes).
- * 3. Bounded LRU tile cache for Leaflet map tiles (max 100 tiles to protect device storage).
+ * 3. Bounded LRU tile cache for Leaflet map tiles (max 200 tiles to protect device storage).
  * 4. Graceful offline fallback.
  */
 

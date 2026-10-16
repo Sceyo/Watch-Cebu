@@ -39,7 +39,8 @@ export function renderDayTabs(
   advisories: PowerAdvisory[],
   selectedDate: string,
   onSelectDate: (date: string) => void,
-  todayPht?: string
+  todayPht?: string,
+  isFallback = false
 ): void {
   const currentToday = todayPht || getTodayPhtString();
   const distribution = calculateDayDistribution(advisories);
@@ -71,7 +72,8 @@ export function renderDayTabs(
     `;
   }
 
-  const isAdvanceSchedule = sortedDates.length > 0 && currentToday < sortedDates[0];
+  // Never show "No outages today" on fixture fallback or unverified data
+  const isAdvanceSchedule = !isFallback && sortedDates.length > 0 && currentToday < sortedDates[0];
   const advanceBadgeHtml = isAdvanceSchedule
     ? `<div class="advance-schedule-pill" role="status" title="Visayan Electric advance notice — No interruptions scheduled for today">
         <span class="advance-dot" aria-hidden="true"></span>

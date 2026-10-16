@@ -12,7 +12,7 @@
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript&logoColor=white" alt="TypeScript" /></a>
   <a href="https://leafletjs.com/"><img src="https://img.shields.io/badge/Leaflet-1.9.4-green?logo=leaflet&logoColor=white" alt="Leaflet" /></a>
   <a href="https://vitejs.dev/"><img src="https://img.shields.io/badge/Vite-7.x-646CFF?logo=vite&logoColor=white" alt="Vite" /></a>
-  <a href="https://vitest.dev/"><img src="https://img.shields.io/badge/Vitest-324%20Passed-FCC72B?logo=vitest&logoColor=black" alt="Vitest" /></a>
+  <a href="https://vitest.dev/"><img src="https://img.shields.io/badge/Vitest-336%20Passed-FCC72B?logo=vitest&logoColor=black" alt="Vitest" /></a>
   <a href="public/manifest.webmanifest"><img src="https://img.shields.io/badge/PWA-Installable-blueviolet?logo=pwa&logoColor=white" alt="PWA" /></a>
   <a href="#-1-veco-scheduled-power-outage-tracking--franchise-territory"><img src="https://img.shields.io/badge/VECO%20Coverage-100%25%20(674km²)-00C853?logo=openstreetmap&logoColor=white" alt="VECO Coverage" /></a>
   <a href="https://www.w3.org/WAI/WCAG22/quickref/"><img src="https://img.shields.io/badge/a11y-WCAG%202.2%20AA-brightgreen" alt="Accessibility" /></a>
@@ -70,7 +70,7 @@ Unlike traditional platforms riddled with ads, analytics trackers, and heavy dep
 
 ### 🍃 4. Atmospheric Air Quality & Transboundary Haze Advisory
 - **Live Open-Meteo AQI Feed**: Tracks US AQI, PM2.5, PM10, Carbon Monoxide (CO), and Aerosol Optical Depth (AOD) for Metro Cebu.
-- **WCAG 2.1 AAA Contrast**: Specially tuned color-contrast tokens (including `#0F172A` dark slate text on Moderate Yellow `#EAB308`) for maximum daylight and nighttime legibility.
+- **High-Contrast Text Tokens (7:1+ AAA Ratio)**: Specially tuned color-contrast tokens (including `#0F172A` dark slate text on Moderate Yellow `#EAB308`) for maximum daylight and nighttime legibility in bright tropical sunlight.
 - **Continuous Spectrum Gauge**: 6-color segmented gradient track with dynamic needle positioning.
 - **Transboundary Smoke Haze Architecture**: Structured recurring-hazard advisory detailing the seasonal *habagat* (southwest monsoon) wind vector transporting wildfire particulates from Indonesia (Kalimantan/Sumatra) to Cebu.
 
@@ -108,6 +108,14 @@ Unlike traditional platforms riddled with ads, analytics trackers, and heavy dep
 - **Control-Room Color Palette**: Styled in Electric Cyan (`#38BDF8`) on deep Slate 900 (`#0F172A`) with dual concentric geospatial radar range rings and a dual-core red pulse pin (`#EF4444`) centered directly on Metro Cebu (`10.3157°N, 123.8854°E`).
 - **Unified Brand Surface**: Consistently integrated into the desktop and mobile header brand mark, browser SVG/PNG favicon, and PWA manifest app icons (`icon-192.png`, `icon-512.png`), ensuring social shares on Facebook and LinkedIn present a distinct, professional visual identity.
 
+### 📋 10. "Pin My Barangay" & Zero-Tile List View (Resident Usability & Low-Bandwidth Mode)
+- **"⭐ Pin My Barangay"**: Direct 1-tap local area bookmarking stored safely in the resident's browser (`localStorage`). Computes upcoming scheduled interruptions for their specific neighborhood without accounts, logins, or server tracking.
+- **Zero-Tile List View Alternative (`[ 🗺️ Map | 📋 List ]`)**: Fast, text-first scannable view grouped by date. Allows users on metered LTE data or weak mobile connections to inspect outages without downloading hundreds of map tiles.
+- **🚨 Urgent Severe Weather & TCWS Alert Banner**: Prominently surfaces active DOST-PAGASA Tropical Cyclone Wind Signals (TCWS #1–#5) and Heavy Rainfall Warnings (Yellow, Orange, Red) directly on the main control-room view with 1-tap storm track navigation.
+- **Honest Freshness & Delay Warnings**: Freshness badge dynamically switches to amber `⚠️ Data Delayed` when weather or environmental feeds exceed 24 hours, preventing stale data from masquerading as current.
+- **Guard Against False "No Outages"**: The green "No outages today" confirmation is strictly suppressed when using fallback fixture data or when the power feed is degraded.
+- **Distant Micro-Quake Filtering**: Filters seismic events under M3.0 farther than 100 km away by default to minimize visual clutter on mobile screens, with an opt-in toggle in the map legend.
+
 ---
 
 ## 🛠️ Tech Stack & Architecture
@@ -141,12 +149,13 @@ Watch-Cebu/
 │   └── fixtures/                 # Real historical VECO, PHIVOLCS & PAGASA fixtures
 ├── docs/                         # Technical documentation & architecture decisions
 │   ├── adr/                      # Architecture Decision Records (ADR-001 to ADR-005)
+│   ├── internal/                 # Internal roadmaps, agent logs & planning docs
 │   ├── schemas/                  # JSON schema definitions (PagasaBulletin, etc.)
 │   └── Data-Standards.md         # Field definitions, schema contracts, confidence tiers
 ├── public/                       # Static web assets & PWA files
 │   ├── icons/                    # Progressive Web App icons (icon-192, icon-512, SVG)
 │   ├── manifest.webmanifest      # W3C Web App Manifest (PWA standalone configuration)
-│   └── sw.js                     # 3-tier Service Worker (static shell, dynamic API, 100-tile LRU)
+│   └── sw.js                     # 3-tier Service Worker (static shell, dynamic API, 200-tile LRU)
 ├── scripts/                      # Automated ingestion, verification & utility scripts
 │   ├── generate_pwa_icons.ts     # PWA PNG icon rasterizer
 │   ├── run_scheduled_fetch.ts    # Headless scraping & atomic snapshot generator
@@ -166,20 +175,19 @@ Watch-Cebu/
 │   │   ├── index.ts              # Core feed, advisory & seismic types
 │   │   └── pagasa.ts             # PAGASA severe weather & storm track interfaces
 │   ├── ui/                       # Control-room frontend components & map controller
-│   │   ├── components/           # Header, ForecastDrawer, AirQualityDrawer, OfflineBanner, About
+│   │   ├── components/           # Header, ForecastDrawer, AirQualityDrawer, OfflineBanner, About, ListView, UrgentAlertBanner
 │   │   ├── map/                  # Leaflet MapController & Option C SVG pins / storm track layer
-│   │   ├── services/             # Client data services (DataFeed, AirQuality, NetworkStatus)
+│   │   ├── services/             # Client data services (DataFeed, AirQuality, NetworkStatus, MyBarangay)
 │   │   └── styles/main.css       # Complete dark control-room responsive stylesheet
 │   ├── utils/                    # Date formatters, Haversine math, constants
 │   └── main.ts                   # Application bootstrap, PWA registration & lifecycle orchestrator
-├── tests/                        # Comprehensive test suite (316 tests across 28 files)
+├── tests/                        # Comprehensive test suite (336 tests across 32 files)
 │   ├── guards/                   # Data directory isolation & test integrity guards
 │   ├── parsers/                  # Parsing edge cases, malformed tables, multi-street tests
 │   ├── scripts/                  # Scheduled fetch script isolation & staleness tests
 │   ├── server/                   # Edge serverless route tests & CDN header assertions
 │   ├── stress/                   # ReDoS fuzzing, 300-req edge concurrency, UI DOM stress
-│   └── ui/                       # A11y, PWA caching, offline banner, forecast & PAGASA UI tests
-├── implementation_plan.md        # Master phase status, deliverables, and roadmaps
+│   └── ui/                       # A11y, PWA caching, offline banner, forecast, PAGASA UI, list view & myBarangay tests
 ├── vite.config.ts                # Vite build configuration & scrape-live dev middleware
 └── package.json                  # NPM scripts & dependencies
 ```
@@ -228,7 +236,7 @@ Watch Cebu maintains a strict 100% test pass requirement across all parsers, UI 
 ```bash
 npm test
 ```
-*Current Suite: 29 test files, 324 tests passed (100% green).*
+*Current Suite: 32 test files, 336 tests passed (100% green).*
 
 ### Run TypeScript & Production Build
 ```bash
@@ -313,14 +321,15 @@ Running `npm test` never writes to authentic `data/` snapshots:
 - [x] **Phase 4: Street Extraction & Filter Ergonomics** — Heuristic street/landmark parser (`extractStreets`), day tabs filter bar.
 - [x] **Phase 5: Rate Parser & Attribution** — Historical VECO tariff rate parser, legal attribution, and About drawer.
 - [x] **Phase 6: Multi-Hazard Expansion** — Option C earthquake markers, Open-Meteo Air Quality & recurring haze advisory, Stage 6b viewport containment, and Today's Weather Forecast button & drawer.
-- [x] **Responsive Overhaul & Auto-Zoom** — Mobile bottom sheet, compact 52px chrome, WCAG AAA contrast, and Hybrid 3-Tier Search Auto-Zoom.
+- [x] **Responsive Overhaul & Auto-Zoom** — Mobile bottom sheet, compact 52px chrome, WCAG 2.2 AA compliance with 7:1+ high-contrast badges, and Hybrid 3-Tier Search Auto-Zoom.
 - [x] **Production Deployment & Cloud Architecture (ADR-005)** — Vercel `dist-client` output, edge-cached serverless API routes (`/api/power`, `/api/earthquakes`, `/api/pagasa`), runtime GitHub raw snapshot distribution, 100/day Hobby deploy-limit bypass, and SHA-256 test data isolation.
 - [x] **Phase 7: PWA Hardening & Offline Resilience** — W3C Web App Manifest (`manifest.webmanifest`), 3-tier Service Worker caching (static shell, dynamic API, 200-tile LRU basemap cache), offline status banner, and tap-to-call emergency civic hotlines.
 - [x] **Phase 8: DOST-PAGASA Multi-Hazard Severe Weather** — Tropical cyclone bulletin ingestion, TCWS Signals #1–#5, color-coded heavy rainfall warnings, animated Leaflet storm track layer, and edge route `/api/pagasa`.
 - [x] **Phase 9: VECO Territory Boundary Enrichment** — Expanded GeoJSON dataset to 367 features covering all 80 Cebu City barangays (including rural mountain barangays like Lusaran and industrial zones like CITP), achieving 100% geocoding resolution across all active advisories.
 - [x] **Phase 10: Geographic Identity & Civic Branding** — Vector-extracted Cebu Island silhouette with dual-ring civic radar monitoring graticule and Metro Cebu pulse core (Option 1). Replaces generic lightning bolt iconography across the app header, SVG favicon, and PWA manifest icons.
-- [ ] **Phase 11: MECO Mactan Island Feed Integration (Exploratory)** — Investigate automated ingestion for Lapu-Lapu City and Cordova notices.
-- [ ] **Phase 12: Community Offline Mesh & SMS Fallback (Exploratory)** — Research peer-to-peer WebRTC / SMS-relay sync during prolonged regional grid collapse.
+- [x] **Phase 11: Resident Usability & Low-Bandwidth Resilience (Synthesis of Code & Civic Audits)** — "Pin My Barangay" local bookmarking (pure client `localStorage`), zero-tile List View toggle for metered mobile LTE, main-screen urgent TCWS/rainfall banner, honest feed freshness tracking, distant micro-quake filtering, and humanized bulletin timestamps.
+- [ ] **Phase 12: MECO Mactan Island Feed Integration (Exploratory)** — Investigate automated ingestion for Lapu-Lapu City and Cordova notices.
+- [ ] **Phase 13: Community Offline Mesh & SMS Fallback (Exploratory)** — Research peer-to-peer WebRTC / SMS-relay sync during prolonged regional grid collapse.
 
 ---
 
@@ -372,7 +381,7 @@ Watch Cebu is built with a bias toward honesty, verification, and calibrated cla
 ### 5. PWA Offline Cache Boundaries
 - **Serving Cached Snapshots**:
   - When disconnected from the internet, the application serves previously cached data and displays an amber "Offline Mode" banner. It **cannot receive live updates or newly issued bulletins while offline**.
-  - Map tile storage is bounded to a 100-tile LRU cache. Panning far outside your cached area while offline will display empty map grids.
+  - Map tile storage is bounded to a 200-tile LRU cache. Panning far outside your cached area while offline will display empty map grids.
 
 ### 6. Emergency Dispatch & Reporting
 - **No Incident Ticketing or Rescue Dispatch**:

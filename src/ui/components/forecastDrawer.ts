@@ -9,6 +9,7 @@
 import type { ForecastResult, HourlyForecastEntry } from "../services/forecast.js";
 import type { PagasaBulletin } from "../../types/index.js";
 import { ICONS, getWeatherIconSvg } from "./icons.js";
+import { formatPhilippineDateTime } from "../../utils/index.js";
 
 function escapeHtml(str: string): string {
   return str
@@ -27,18 +28,33 @@ function renderPagasaSection(bulletin: PagasaBulletin | null | undefined): strin
   const isTcwsActive = bulletin.tcws_cebu?.active;
   const isRainActive = bulletin.heavy_rainfall_alert && bulletin.heavy_rainfall_alert.level !== "none";
 
+  const issuedFormatted = bulletin.issued_at_pst ? formatPhilippineDateTime(bulletin.issued_at_pst) : null;
+  const issuedText = issuedFormatted ? issuedFormatted.full : (bulletin.issued_at_pst || "");
+
+  const isBulletinStale = bulletin.issued_at_pst
+    ? (Date.now() - new Date(bulletin.issued_at_pst).getTime() > 24 * 3600000)
+    : false;
+
   if (!isTcwsActive && !isRainActive) {
+    const statusColor = isBulletinStale ? "#FBBF24" : "#34D399";
+    const statusTitle = isBulletinStale
+      ? `PAGASA Civic Status: Normal (${issuedFormatted?.relative ? 'Issued ' + issuedFormatted.relative : 'Previous Bulletin'})`
+      : "PAGASA Civic Status: Normal";
+    const noticeTag = isBulletinStale
+      ? `<span class="bulletin-stale-tag" style="background: rgba(245, 158, 11, 0.15); color: #FCD34D; border: 1px solid rgba(245, 158, 11, 0.35); padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 600;">⚠️ Advisory: ${escapeHtml(issuedText)}</span>`
+      : `<span style="font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono);">Issued: ${escapeHtml(issuedText)}</span>`;
+
     return `
-      <div class="pagasa-status-banner normal">
+      <div class="pagasa-status-banner normal" style="${isBulletinStale ? 'border-color: rgba(245, 158, 11, 0.4);' : ''}">
         <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
           <div style="display: flex; align-items: center; gap: 8px;">
             <span style="font-size: 1.1rem; line-height: 1;">🛡️</span>
             <div>
-              <strong style="color: #34D399; font-size: 0.85rem;">PAGASA Civic Status: Normal</strong>
-              <div style="font-size: 0.74rem; color: var(--text-secondary);">No active Tropical Cyclone Wind Signals (TCWS) or Flood Warnings in Cebu Province.</div>
+              <strong style="color: ${statusColor}; font-size: 0.85rem;">${statusTitle}</strong>
+              <div style="font-size: 0.74rem; color: var(--text-secondary);">No active Tropical Cyclone Wind Signals (TCWS) or Flood Warnings in Cebu Province as of last advisory.</div>
             </div>
           </div>
-          ${bulletin.issued_at_pst ? `<span style="font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono);">Issued: ${escapeHtml(bulletin.issued_at_pst)}</span>` : ""}
+          ${noticeTag}
         </div>
       </div>
     `;
@@ -231,8 +247,8 @@ export function renderForecastDrawer(
       ${pagasaHtml}
 
       <div class="forecast-meta-row" style="margin-top: 6px;">
-        <span>● Metro Cebu (10.32°N, 123.89°E)</span>
-        <span>Open-Meteo Hourly Model • Today (PHT)</span>
+        <span>● Metro Cebu (Cebu City Area)</span>
+        <span>Open-Meteo 24-Hour Model • Today (PHT)</span>
       </div>
 
       <!-- Single Horizontal Scrolling Row of Today's Hours -->
@@ -247,4 +263,15 @@ export function renderForecastDrawer(
   `;
 
   container.querySelector("#btn-close-forecast-drawer")?.addEventListener("click", onClose);
+
+  // Auto-scroll to current hour card so users don't have to scroll past expired hours
+  if (typeof window !== "undefined" && typeof window.requestAnimationFrame === "function") {
+    window.requestAnimationFrame(() => {
+      const currentCard = container.querySelector<HTMLElement>(".forecast-hour-card.current-hour");
+      if (currentCard && typeof currentCard.scrollIntoView === "function") {
+        currentCard.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      }
+    });
+  }
 }
+

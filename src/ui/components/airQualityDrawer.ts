@@ -60,9 +60,9 @@ export function renderAirQualityDrawer(
     <div class="drawer-content">
       <!-- Freshness Timestamp Row -->
       <div class="drawer-timestamp-row">
-        <span>Metro Cebu Centroid (Model Estimate · CAMS)</span>
+        <span>Metro Cebu Area (Atmospheric Estimate · CAMS)</span>
         <span class="${data.isFallback ? 'drawer-stale-tag' : (data.isStale ? 'drawer-stale-tag' : 'drawer-live-tag')}">
-          ${data.isFallback ? '⚠️ Offline Fixture' : (data.isStale ? '⚠️ Delayed Data' : '● Live · ' + data.observationTimePst)}
+          ${data.isFallback ? '⚠️ Offline Fixture' : (data.isStale ? `⚠️ Delayed (${data.observationTimePst})` : '● Live · ' + data.observationTimePst)}
         </span>
       </div>
 
@@ -81,8 +81,8 @@ export function renderAirQualityDrawer(
           </div>
         </div>
 
-        <p class="aqi-headline" style="font-weight: 700; color: #FFFFFF; margin: 8px 0 4px 0;">${data.healthAdvisory.actionableGuidance}</p>
-        <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0 0 10px 0;">${data.healthAdvisory.headline}</p>
+        <p class="aqi-headline" style="font-weight: 700; color: #FFFFFF; margin: 8px 0 4px 0;">${data.healthAdvisory.headline}</p>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0 0 10px 0;">${data.isWildfireHazeDetected ? "Smoke haze detected from regional wildfires. Keep windows closed." : "Normal atmospheric circulation across Metro Cebu."}</p>
 
         <!-- Primary Supporting Metric: PM2.5 in Hero -->
         <div class="hero-supporting-metric" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 6px 10px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem;">
@@ -123,7 +123,7 @@ export function renderAirQualityDrawer(
             </div>
           </div>
           <div class="guidance-row">
-            <span class="guidance-icon" aria-hidden="true" style="display: inline-flex; align-items: center; color: #F59E0B;">${ICONS.alertTriangle}</span>
+            <span class="guidance-icon" aria-hidden="true" style="display: inline-flex; align-items: center; color: ${data.category === 'good' ? '#34D399' : '#F59E0B'};">${data.category === 'good' ? ICONS.check : ICONS.alertTriangle}</span>
             <div>
               <strong>Vulnerable Groups</strong>
               <p>${data.healthAdvisory.vulnerableGroupWarning}</p>
@@ -134,7 +134,7 @@ export function renderAirQualityDrawer(
 
       <!-- Secondary Pollutant Metrics (Behind "More details" toggle) -->
       <details class="more-pollutants-details" style="margin-bottom: 16px;">
-        <summary class="more-pollutants-summary" style="cursor: pointer; font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); padding: 8px 12px; background: var(--bg-elevated); border: 1px solid var(--border-color); border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+        <summary class="more-pollutants-summary" style="cursor: pointer; font-size: 0.82rem; font-weight: 600; color: #FFFFFF; padding: 10px 14px; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border-color); border-radius: 8px; display: flex; justify-content: space-between; align-items: center; transition: background 0.15s ease;">
           <span>More Pollutant Metrics (PM10, CO, AOD)</span>
           <span class="summary-caret">▾</span>
         </summary>
