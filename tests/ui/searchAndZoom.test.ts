@@ -45,7 +45,7 @@ vi.mock("leaflet", () => {
         getCenter: () => ({ lat: 10.33, lng: 123.90 }),
       })),
       point: vi.fn((x, y) => ({ x, y })),
-      divIcon: vi.fn().mockReturnValue({}),
+      divIcon: vi.fn((opts) => opts || {}),
       marker: vi.fn().mockReturnValue({
         on: vi.fn(),
         bindPopup: vi.fn(),
@@ -185,5 +185,89 @@ describe("MapController — searchAndZoom (Hybrid 3-Tier Strategy)", () => {
     expect(res.message).toContain('No location found for "NonExistentPlaceXYZ" in Cebu.');
 
     spy.mockRestore();
+  });
+});
+
+describe("MapController — Favorite Barangay & Earthquake Enhancements", () => {
+  let controller: MapController;
+
+  const mockAdvisory: PowerAdvisory = {
+    id: "pow-lahug",
+    city: "Cebu City",
+    barangay: ["Lahug"],
+    date: "2026-10-20",
+    start_time: "09:00",
+    end_time: "17:00",
+    duration_hours: 8,
+    overnight_span: false,
+    streets: ["Gorordo Ave"],
+    areas_affected_raw: "Gorordo Ave",
+    purpose: "Upgrading feeder lines",
+    source_url: "https://example.com/advisory",
+    fetched_at: "2026-10-18T00:00:00Z",
+    parse_confidence: "high",
+    business_confidence: "scheduled",
+    lat: 10.3300,
+    lon: 123.9000,
+    coordinate_source: "boundary_centroid",
+    feed_type: "power",
+  };
+
+  const mockMicroQuake: EarthquakeEvent = {
+    event_id: "eq-micro-1",
+    datetime_pst: "2026-10-16T10:00:00+08:00",
+    lat: 10.85,
+    lon: 124.95,
+    depth_km: 15,
+    magnitude: 2.1,
+    magnitude_type: "ML",
+    origin_type: "Tectonic",
+    location_description: "025 km N 10° E of Hinunangan (Southern Leyte)",
+    nearest_town: "Hinunangan",
+    nearest_province: "Southern Leyte",
+    distance_from_cebu_km: 143,
+    within_watch_radius: true,
+    reported_intensities: null,
+    instrumental_intensities: null,
+    expecting_damage: false,
+    expecting_aftershocks: false,
+    source_url: "https://example.com/phivolcs",
+    fetched_at: "2026-10-16T10:05:00Z",
+    feed_type: "earthquake",
+  };
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    controller = new MapController("map");
+  });
+
+  it("highlights favorite barangay in yellow (#F59E0B) with is-favorite class and star icon", async () => {
+    const L = (await import("leaflet")).default;
+    controller.renderPowerAdvisories([mockAdvisory], { selectedDate: "all" }, "Lahug");
+
+    const calls = (L.divIcon as any).mock.calls;
+    expect(calls.length).toBeGreaterThan(0);
+    const lastCall = calls[calls.length - 1][0];
+    expect(lastCall.html).toContain("--pin-color: #F59E0B");
+    expect(lastCall.html).toContain("is-favorite");
+  });
+
+  it("renders distant microquakes when showMicroQuakes is true", async () => {
+    const L = (await import("leaflet")).default;
+    controller.renderEarthquakeEvents([mockMicroQuake], { showMicroQuakes: true, minMagnitude: 0 });
+
+    const calls = (L.divIcon as any).mock.calls;
+    expect(calls.length).toBeGreaterThan(0);
+    const lastCall = calls[calls.length - 1][0];
+    expect(lastCall.html).toContain("2.1");
+  });
+
+  it("hides distant microquakes when showMicroQuakes is explicitly false", async () => {
+    const L = (await import("leaflet")).default;
+    (L.divIcon as any).mockClear();
+    controller.renderEarthquakeEvents([mockMicroQuake], { showMicroQuakes: false, minMagnitude: 0 });
+
+    const calls = (L.divIcon as any).mock.calls;
+    expect(calls.length).toBe(0);
   });
 });

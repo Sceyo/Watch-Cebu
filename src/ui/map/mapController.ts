@@ -122,13 +122,14 @@ export class MapController {
     } else if (selection === "earthquakes") {
       if (this.map.hasLayer(this.powerLayerGroup)) this.map.removeLayer(this.powerLayerGroup);
       if (!this.map.hasLayer(this.earthquakeLayerGroup)) this.map.addLayer(this.earthquakeLayerGroup);
+      this.fitBoundsIfNotEmpty();
     } else {
       if (!this.map.hasLayer(this.powerLayerGroup)) this.map.addLayer(this.powerLayerGroup);
       if (!this.map.hasLayer(this.earthquakeLayerGroup)) this.map.addLayer(this.earthquakeLayerGroup);
     }
   }
 
-  renderPowerAdvisories(advisories: PowerAdvisory[], filter: FilterState): void {
+  renderPowerAdvisories(advisories: PowerAdvisory[], filter: FilterState, myBarangay?: string | null): void {
     this.powerLayerGroup.clearLayers();
 
     const query = filter.searchQuery ? filter.searchQuery.toLowerCase() : "";
@@ -186,10 +187,24 @@ export class MapController {
       const isManual = first.coordinate_source === "manual_verified";
       const ringClass = isManual ? "marker-ring-manual" : "marker-ring-osm";
       const multiCountBadge = group.length > 1 ? `<span class="pin-count-badge">${group.length}</span>` : "";
-      const statusIcon = bestStatus.iconName ? ICONS[bestStatus.iconName] : "";
+
+      // Check if this coordinate represents the user's favorite/pinned barangay
+      const isFavorite = Boolean(
+        myBarangay &&
+        group.some((a) => {
+          const mBrgy = a.barangay.some((b) => b.toLowerCase() === myBarangay.toLowerCase());
+          const mCity = a.city.toLowerCase() === myBarangay.toLowerCase();
+          return mBrgy || mCity;
+        })
+      );
+
+      // User requested: "highlight favorite barangays in yellow instead of default blue"
+      const pinColor = isFavorite ? "#F59E0B" : bestStatus.hex;
+      const favoriteClass = isFavorite ? "is-favorite" : "";
+      const statusIcon = isFavorite ? ICONS.starFilled : (bestStatus.iconName ? ICONS[bestStatus.iconName] : "");
 
       const html = `
-        <div class="power-pin ${ringClass} status-${bestStatus.category} ${group.length > 1 ? 'has-multi' : ''}" style="--pin-color: ${bestStatus.hex}; opacity: ${bestStatus.opacity ?? 1.0};">
+        <div class="power-pin ${ringClass} status-${bestStatus.category} ${favoriteClass} ${group.length > 1 ? 'has-multi' : ''}" style="--pin-color: ${pinColor}; opacity: ${bestStatus.opacity ?? 1.0};">
           <div class="pin-inner">${statusIcon}</div>
           ${multiCountBadge}
         </div>
@@ -238,12 +253,21 @@ export class MapController {
           `;
         }
 
+        const favoriteBadge = isFavorite ? `
+          <span class="popup-badge" style="background: rgba(245, 158, 11, 0.2); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.5);">
+            <span aria-hidden="true" style="color: #FCD34D;">${ICONS.starFilled}</span> Favorite Area
+          </span>
+        ` : "";
+
         popupBodyHtml = `
-          <div class="popup-card power-popup">
+          <div class="popup-card power-popup ${isFavorite ? 'is-favorite-popup' : ''}">
             <div class="popup-header">
-              <span class="popup-badge" style="background: ${status.hex}22; color: ${status.hex}; border: 1px solid ${status.hex}55;">
-                ${status.glyph ? status.glyph + ' ' : ''}${status.label}
-              </span>
+              <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                <span class="popup-badge" style="background: ${status.hex}22; color: ${status.hex}; border: 1px solid ${status.hex}55;">
+                  ${status.glyph ? status.glyph + ' ' : ''}${status.label}
+                </span>
+                ${favoriteBadge}
+              </div>
               <span class="popup-city">${a.city}</span>
             </div>
             <h3 class="popup-title">${barangayName}</h3>
@@ -314,12 +338,21 @@ export class MapController {
           `;
         }
 
+        const favoriteBadge = isFavorite ? `
+          <span class="popup-badge" style="background: rgba(245, 158, 11, 0.2); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.5);">
+            <span aria-hidden="true" style="color: #FCD34D;">${ICONS.starFilled}</span> Favorite Area
+          </span>
+        ` : "";
+
         popupBodyHtml = `
-          <div class="popup-card power-popup multi-advisory-popup">
+          <div class="popup-card power-popup multi-advisory-popup ${isFavorite ? 'is-favorite-popup' : ''}">
             <div class="popup-header">
-              <span class="popup-badge" style="background: ${bestStatus.hex}22; color: ${bestStatus.hex}; border: 1px solid ${bestStatus.hex}55;">
-                ${group.length} Advisories
-              </span>
+              <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                <span class="popup-badge" style="background: ${bestStatus.hex}22; color: ${bestStatus.hex}; border: 1px solid ${bestStatus.hex}55;">
+                  ${group.length} Advisories
+                </span>
+                ${favoriteBadge}
+              </div>
               <span class="popup-city">${first.city}</span>
             </div>
             <h3 class="popup-title">${barangayName}</h3>
@@ -352,8 +385,8 @@ export class MapController {
       if (filter.minMagnitude > 0 && e.magnitude < filter.minMagnitude) {
         return false;
       }
-      // Civilians want actionability: hide distant micro-tremors (< M3.0, > 100km) by default
-      if (!filter.showMicroQuakes && e.magnitude < 3.0 && e.distance_from_cebu_km > 100) {
+      // Civilians want actionability: hide distant micro-tremors (< M3.0, > 100km) only when explicitly turned off
+      if (filter.showMicroQuakes === false && e.magnitude < 3.0 && e.distance_from_cebu_km > 100) {
         return false;
       }
       if (query) {

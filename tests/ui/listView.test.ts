@@ -142,6 +142,9 @@ describe("List View Alternative Component", () => {
       onSelectAdvisory: vi.fn(),
     });
 
+    expect(container.innerHTML).toContain("2 advisories");
+    expect(container.innerHTML).toContain("1 advisory");
+    expect(container.innerHTML).not.toContain("advisorys");
     expect(container.innerHTML).toContain("Talamban");
     expect(container.innerHTML).toContain("Subangdaku");
     expect(container.innerHTML).toContain("Tabunok");
@@ -160,6 +163,8 @@ describe("List View Alternative Component", () => {
 
     expect(container.innerHTML).toContain("Pinned Area");
     expect(container.innerHTML).toContain("is-pinned");
+    expect(container.innerHTML).toContain("is-favorite-card");
+    expect(container.innerHTML).toContain("Favorite Area");
   });
 
   it("filters advisories when search query is entered", () => {

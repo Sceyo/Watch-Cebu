@@ -63,7 +63,7 @@ let filterState: FilterState = {
   selectedDate: "all",
   minMagnitude: 0,
   searchQuery: "",
-  showMicroQuakes: false,
+  showMicroQuakes: true,
 };
 
 let isLegendOpen = false;
@@ -293,7 +293,7 @@ function updateUI() {
       {
         onSearchChange: (query) => {
           filterState.searchQuery = query;
-          mapController?.renderPowerAdvisories(powerFeedState.data, filterState);
+          mapController?.renderPowerAdvisories(powerFeedState.data, filterState, myBarangay);
           mapController?.renderEarthquakeEvents(eqFeedState.data, filterState);
           if (currentViewMode === "list") updateUI();
         },
@@ -330,12 +330,13 @@ function updateUI() {
         onClearMyBarangay: () => {
           setMyBarangay(null);
           myBarangay = null;
+          mapController?.renderPowerAdvisories(powerFeedState.data, filterState, null);
           showToast("Unpinned home barangay.");
           updateUI();
         },
         onSelectMyBarangay: (barangay) => {
           filterState.searchQuery = barangay;
-          mapController?.renderPowerAdvisories(powerFeedState.data, filterState);
+          mapController?.renderPowerAdvisories(powerFeedState.data, filterState, myBarangay);
           if (currentViewMode === "map") {
             mapController?.searchAndZoom(barangay, powerFeedState.data, eqFeedState.data);
           }
@@ -356,6 +357,7 @@ function updateUI() {
     if (currentViewMode === "list") {
       mapEl.style.display = "none";
       listViewEl.style.display = "block";
+      document.getElementById("map-container")?.classList.add("list-mode");
       renderListView(listViewEl, powerFeedState.data, filterState, {
         onSelectAdvisory: (advisory) => {
           currentViewMode = "map";
@@ -371,6 +373,7 @@ function updateUI() {
           const newPinned = myBarangay === brgy ? null : brgy;
           setMyBarangay(newPinned);
           myBarangay = newPinned;
+          mapController?.renderPowerAdvisories(powerFeedState.data, filterState, newPinned);
           showToast(newPinned ? `⭐ Pinned ${newPinned} as your home area.` : "Unpinned home area.");
           updateUI();
         },
@@ -379,6 +382,7 @@ function updateUI() {
     } else {
       mapEl.style.display = "block";
       listViewEl.style.display = "none";
+      document.getElementById("map-container")?.classList.remove("list-mode");
     }
   }
 
@@ -464,6 +468,7 @@ function updateUI() {
         const newPinned = myBarangay === brgy ? null : brgy;
         setMyBarangay(newPinned);
         myBarangay = newPinned;
+        mapController?.renderPowerAdvisories(powerFeedState.data, filterState, newPinned);
         showToast(newPinned ? `⭐ Pinned ${newPinned} as your home area.` : "Unpinned home area.");
         updateUI();
       },
@@ -516,7 +521,7 @@ function updateUI() {
         filterState.selectedDate,
         (date) => {
           filterState.selectedDate = date;
-          mapController?.renderPowerAdvisories(powerFeedState.data, filterState);
+          mapController?.renderPowerAdvisories(powerFeedState.data, filterState, myBarangay);
           if (currentViewMode === "list") updateUI();
         },
         undefined,
@@ -587,7 +592,7 @@ function updateUI() {
   // Update map layer rendering
   if (mapController) {
     mapController.setLayerVisibility(currentLayer);
-    mapController.renderPowerAdvisories(powerFeedState.data, filterState);
+    mapController.renderPowerAdvisories(powerFeedState.data, filterState, myBarangay);
     mapController.renderEarthquakeEvents(eqFeedState.data, filterState);
     mapController.renderPagasaBulletin(pagasaFeedState.data);
   }

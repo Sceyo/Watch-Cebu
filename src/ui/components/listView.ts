@@ -89,7 +89,7 @@ export function renderListView(
       <div class="list-date-group">
         <div class="list-date-header">
           <span class="list-date-label"><span style="display: inline-flex; align-items: center; color: var(--accent-blue); margin-right: 6px;" aria-hidden="true">${ICONS.calendar}</span>${readableDate}</span>
-          <span class="list-date-count">${group.length} advisory${group.length > 1 ? 's' : ''}</span>
+          <span class="list-date-count">${group.length} ${group.length === 1 ? 'advisory' : 'advisories'}</span>
         </div>
         <div class="list-cards-grid">
     `;
@@ -101,14 +101,25 @@ export function renderListView(
       const streetsText = cleanStreets.length > 0 ? cleanStreets.join(", ") : (a.areas_affected_raw || "All connected feeders");
       const timeRangePht = formatPhilippineTimeRange(a.start_time, a.end_time, a.overnight_span);
       const primaryBarangay = a.barangay[0] || a.city;
-      const isPinned = callbacks.myBarangay && primaryBarangay.toLowerCase() === callbacks.myBarangay.toLowerCase();
+      const isPinned = Boolean(
+        callbacks.myBarangay &&
+        (a.barangay.some((b) => b.toLowerCase() === callbacks.myBarangay!.toLowerCase()) ||
+          a.city.toLowerCase() === callbacks.myBarangay!.toLowerCase())
+      );
 
       html += `
-        <article class="list-advisory-card status-${status.category}" data-id="${escapeHtml(a.id)}">
+        <article class="list-advisory-card status-${status.category} ${isPinned ? 'is-favorite-card' : ''}" data-id="${escapeHtml(a.id)}">
           <div class="card-top-row">
-            <span class="card-status-pill" style="background: ${status.hex}22; color: ${status.hex}; border: 1px solid ${status.hex}55;">
-              ${status.glyph ? status.glyph + ' ' : ''}${status.label}
-            </span>
+            <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+              <span class="card-status-pill" style="background: ${status.hex}22; color: ${status.hex}; border: 1px solid ${status.hex}55;">
+                ${status.glyph ? status.glyph + ' ' : ''}${status.label}
+              </span>
+              ${isPinned ? `
+                <span class="card-status-pill" style="background: rgba(245, 158, 11, 0.2); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.5); font-weight: 700;">
+                  <span aria-hidden="true" style="color: #FCD34D;">${ICONS.starFilled}</span> Favorite Area
+                </span>
+              ` : ''}
+            </div>
             <span class="card-city-tag">${escapeHtml(a.city)}</span>
           </div>
 
@@ -136,9 +147,9 @@ export function renderListView(
                 <span>View on Map</span>
               </button>
             ` : ''}
-            <button class="card-action-btn btn-pin-barangay ${isPinned ? 'is-pinned' : ''}" data-barangay="${escapeHtml(primaryBarangay)}">
+            <button class="card-action-btn btn-pin-barangay ${isPinned ? 'is-pinned' : ''}" style="${isPinned ? 'background: rgba(245, 158, 11, 0.18); border-color: #F59E0B; color: #FEF08A;' : ''}" data-barangay="${escapeHtml(primaryBarangay)}">
               <span style="display: inline-flex; align-items: center; gap: 5px;">
-                <span style="display: inline-flex; align-items: center; color: ${isPinned ? '#FCD34D' : 'var(--text-muted)'};" aria-hidden="true">${isPinned ? ICONS.starFilled : ICONS.star}</span>
+                <span style="display: inline-flex; align-items: center; color: ${isPinned ? '#F59E0B' : 'var(--text-muted)'};" aria-hidden="true">${isPinned ? ICONS.starFilled : ICONS.star}</span>
                 <span>${isPinned ? 'Pinned Area' : 'Pin Barangay'}</span>
               </span>
             </button>

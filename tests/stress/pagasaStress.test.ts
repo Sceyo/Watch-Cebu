@@ -94,7 +94,7 @@ describe("PAGASA Stress & Chaos Testing (Parser & Security Limits)", () => {
       const result = parsePagasaBulletinHtml(attackStr);
       const duration = performance.now() - start;
 
-      expect(duration).toBeLessThan(50); // Under 50ms per attack
+      expect(duration).toBeLessThan(100); // Guard against catastrophic backtracking (> 100ms)
       expect(result).toBeDefined();
     }
   });

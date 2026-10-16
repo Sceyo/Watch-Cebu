@@ -531,6 +531,46 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   fill: currentColor;
 }
 
+/* Pinned / Favorite Barangay Pin (Highlight Yellow/Amber with Pulsing Halo) */
+.power-pin.is-favorite {
+  --pin-color: #F59E0B !important;
+  z-index: 500 !important;
+}
+
+.power-pin.is-favorite.marker-ring-osm {
+  background-color: #F59E0B !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.45), 0 0 16px rgba(245, 158, 11, 0.8), 0 2px 6px rgba(0, 0, 0, 0.8) !important;
+  animation: favoritePinPulse 2.4s infinite ease-in-out;
+}
+
+.power-pin.is-favorite.marker-ring-osm .pin-inner {
+  color: #0F172A !important;
+}
+
+.power-pin.is-favorite.marker-ring-manual {
+  border-color: #F59E0B !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.45), 0 0 16px rgba(245, 158, 11, 0.8), 0 2px 6px rgba(0, 0, 0, 0.8) !important;
+  animation: favoritePinPulse 2.4s infinite ease-in-out;
+}
+
+.power-pin.is-favorite.marker-ring-manual .pin-inner {
+  color: #F59E0B !important;
+}
+
+@keyframes favoritePinPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.45), 0 0 14px rgba(245, 158, 11, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgba(245, 158, 11, 0.7), 0 0 24px rgba(245, 158, 11, 1);
+  }
+}
+
+.popup-card.is-favorite-popup {
+  border-color: rgba(245, 158, 11, 0.6) !important;
+  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.25), 0 4px 12px rgba(0, 0, 0, 0.8) !important;
+}
+
 /* Compound Earthquake Pins (Option C — Wedge + Circle) */
 .earthquake-compound-pin {
   display: inline-block;
@@ -1729,7 +1769,7 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  max-width: 440px;
+  max-width: 680px;
   margin: 0 auto;
 }
 
@@ -1838,12 +1878,10 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   color: #FFFFFF;
 }
 
-.btn-locate-me {
-  width: 44px;
+.map-ctrl-btn {
   height: 44px;
-  min-width: 44px;
   min-height: 44px;
-  background: rgba(15, 23, 42, 0.94);
+  background: rgba(15, 23, 42, 0.94) !important;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-color);
@@ -1853,10 +1891,23 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.15rem;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
   pointer-events: auto;
   transition: all 0.15s ease;
+}
+
+.map-ctrl-btn:hover {
+  background: rgba(30, 41, 59, 0.98) !important;
+  border-color: #38BDF8 !important;
+}
+
+.btn-locate-me {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  font-size: 1.15rem;
 }
 
 .btn-locate-me:hover {
@@ -2580,12 +2631,29 @@ textarea:focus-visible,
    Map vs List View & Pinned Barangay Banner
    -------------------------------------------------------------------------- */
 .btn-view-mode {
-  min-width: 68px;
-  gap: 4px;
+  min-width: 82px;
+  padding: 0 12px;
+  gap: 6px;
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
+  background: rgba(15, 23, 42, 0.94) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: #38BDF8 !important;
-  border-color: rgba(56, 189, 248, 0.4) !important;
+  border: 1px solid rgba(56, 189, 248, 0.4) !important;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.btn-view-mode:hover {
+  background: rgba(56, 189, 248, 0.15) !important;
+  border-color: #38BDF8 !important;
+  color: #FFFFFF !important;
 }
 
 .view-mode-label {
@@ -2693,9 +2761,22 @@ textarea:focus-visible,
   height: 100%;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  background: var(--bg-primary);
-  padding: 120px 16px 80px 16px;
+  background: #090D16;
+  padding: 110px 16px 80px 16px;
   box-sizing: border-box;
+}
+
+/* Subtle top scrim when in list mode so cards scroll under controls gracefully */
+.list-mode .map-controls-container::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  height: 120px;
+  background: linear-gradient(180deg, #090D16 70%, rgba(9, 13, 22, 0) 100%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .list-cards-container {
@@ -2716,8 +2797,9 @@ textarea:focus-visible,
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 4px;
-  border-bottom: 1px solid var(--border-color);
+  padding: 8px 6px;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+  margin-bottom: 2px;
 }
 
 .list-date-label {
@@ -2735,22 +2817,35 @@ textarea:focus-visible,
 .list-cards-grid {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .list-advisory-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  padding: 14px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  transition: transform 0.15s ease, border-color 0.15s ease;
+  gap: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .list-advisory-card:hover {
-  border-color: #38BDF8;
+  border-color: rgba(56, 189, 248, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.6);
+}
+
+/* Favorite Pinned Area Card in List View (Highlighted Yellow) */
+.list-advisory-card.is-favorite-card {
+  border: 1px solid rgba(245, 158, 11, 0.6);
+  border-left: 5px solid #F59E0B;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(15, 23, 42, 0.9) 60%);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.2);
 }
 
 .card-top-row {

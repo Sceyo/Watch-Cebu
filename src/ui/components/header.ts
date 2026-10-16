@@ -134,10 +134,16 @@ export function renderHeader(
     <div class="header-center desktop-only">
       <div class="layer-toggle-group">
         <button class="layer-btn ${currentLayer === 'power' ? 'active' : ''}" data-layer="power">
-          Power (${powerState.data.length})
+          <span style="display: inline-flex; align-items: center; gap: 5px;">
+            <span style="display: inline-flex; align-items: center;" aria-hidden="true">${ICONS.bolt}</span>
+            <span>Power (${powerState.data.length})</span>
+          </span>
         </button>
         <button class="layer-btn ${currentLayer === 'earthquakes' ? 'active' : ''}" data-layer="earthquakes">
-          Quakes (${eqState.data.length})
+          <span style="display: inline-flex; align-items: center; gap: 5px;">
+            <span style="display: inline-flex; align-items: center;" aria-hidden="true">${ICONS.earthquake}</span>
+            <span>Quakes (${eqState.data.length})</span>
+          </span>
         </button>
         <button class="layer-btn ${currentLayer === 'both' ? 'active' : ''}" data-layer="both">
           Both
