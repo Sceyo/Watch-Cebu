@@ -422,9 +422,9 @@ export class MapController {
       const customIcon = L.divIcon({
         className: "custom-div-icon",
         html,
-        iconSize: [64, 68],
-        iconAnchor: [32, 48],
-        popupAnchor: [0, -42],
+        iconSize: [32, 40],
+        iconAnchor: [16, 38],
+        popupAnchor: [0, -38],
       });
 
       const marker = L.marker([e.lat, e.lon], { icon: customIcon });

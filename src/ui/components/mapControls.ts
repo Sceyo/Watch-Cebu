@@ -110,10 +110,10 @@ export function renderMapControls(
       <!-- Mobile Floating Layer Segmented Toggle (Visible only on mobile) -->
       <div class="mobile-layer-segmented-bar mobile-only">
         <button class="mobile-layer-btn ${currentLayer === 'power' ? 'active' : ''}" data-layer="power">
-          <span style="display: inline-flex; align-items: center; margin-right: 4px;">${ICONS.bolt}</span>Power
+          Power
         </button>
         <button class="mobile-layer-btn ${currentLayer === 'earthquakes' ? 'active' : ''}" data-layer="earthquakes">
-          <span style="display: inline-flex; align-items: center; margin-right: 4px;">${ICONS.earthquake}</span>Quakes
+          Quakes
         </button>
         <button class="mobile-layer-btn ${currentLayer === 'both' ? 'active' : ''}" data-layer="both">
           Both

@@ -223,8 +223,8 @@ describe("Air Quality Service — Wildfire Haze Detection & Advisories", () => {
   });
 });
 
-describe("Option C Compound Earthquake Marker SVG", () => {
-  it("renders SVG with bottom magnitude circle and top curved wedge", () => {
+describe("Standard Earthquake Pin Marker SVG", () => {
+  it("renders SVG with standard earthquake cracked fault icon and magnitude pill", () => {
     const svg = renderEarthquakeMarkerSvg({
       magnitude: 3.3,
       locationLabel: "San Fernando",
@@ -233,10 +233,9 @@ describe("Option C Compound Earthquake Marker SVG", () => {
     });
 
     expect(svg).toContain('class="earthquake-compound-pin "');
-    expect(svg).toContain('class="eq-circle"');
-    expect(svg).toContain('class="eq-wedge"');
+    expect(svg).toContain('class="eq-pin-body"');
+    expect(svg).toContain('class="eq-mag-text"');
     expect(svg).toContain("3.3");
-    expect(svg).toContain("San Fern…");
   });
 
   it("applies has-pulse class when isRecentOrSignificant is true", () => {
@@ -248,7 +247,6 @@ describe("Option C Compound Earthquake Marker SVG", () => {
     });
 
     expect(svg).toContain('class="earthquake-compound-pin has-pulse"');
-    expect(svg).toContain("Catmon");
     expect(svg).toContain("6.2");
   });
 });

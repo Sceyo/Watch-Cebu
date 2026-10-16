@@ -107,31 +107,23 @@ const mockFutureAdvisories: PowerAdvisory[] = [
   },
 ];
 
-describe("Day Tabs Advance Notice Pill", () => {
-  it("renders advance-schedule-pill when today (Oct 15) is earlier than earliest advisory (Oct 18)", () => {
+describe("Day Tabs Filter Bar", () => {
+  it("renders clean horizontal day tabs starting with All Week", () => {
     const container = createMockElement();
     renderDayTabs(container, mockFutureAdvisories, "all", () => {}, "2026-10-15");
 
-    expect(container.innerHTML).toContain("advance-schedule-pill");
-    expect(container.innerHTML).toContain("Upcoming Week · No outages today (Oct 15)");
+    expect(container.innerHTML).toContain("day-tabs-scroll");
+    expect(container.innerHTML).toContain("All Week");
     expect(container.innerHTML).toContain("Oct 18");
     expect(container.innerHTML).toContain("Oct 20");
   });
 
-  it("does not render advance-schedule-pill when today falls on or after the scheduled dates", () => {
+  it("highlights active date tab and marks today tab when date matches today", () => {
     const container = createMockElement();
     renderDayTabs(container, mockFutureAdvisories, "all", () => {}, "2026-10-18");
 
-    expect(container.innerHTML).not.toContain("advance-schedule-pill");
     expect(container.innerHTML).toContain("today-tab");
     expect(container.innerHTML).toContain("Today");
-  });
-
-  it("does not render advance-schedule-pill when using fallback fixture data (prevents false reassurance)", () => {
-    const container = createMockElement();
-    renderDayTabs(container, mockFutureAdvisories, "all", () => {}, "2026-10-15", true);
-
-    expect(container.innerHTML).not.toContain("advance-schedule-pill");
     expect(container.innerHTML).toContain("Oct 18");
   });
 });

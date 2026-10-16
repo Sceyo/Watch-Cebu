@@ -177,26 +177,29 @@ export function cleanTownName(name: string): string {
 }
 
 /**
- * Renders the Option C compound earthquake marker:
- * - Bottom circle with bold magnitude number
- * - Top curved annular wedge with location name
- * - Selective GPU-accelerated pulse for recent (<24h) or significant (M4.0+) quakes
+ * Renders the Standard Earthquake Marker:
+ * - Map pin teardrop with international cracked fault line earthquake icon
+ * - Magnitude pill badge
+ * - Selective GPU-accelerated seismic shockwave pulse for recent (<24h) or significant (M4.0+) quakes
  */
 export function renderEarthquakeMarkerSvg(opts: EarthquakeMarkerOptions): string {
   const magStr = opts.magnitude.toFixed(1);
-  const shortTown = cleanTownName(opts.locationLabel);
   const pulseClass = opts.isRecentOrSignificant ? "has-pulse" : "";
 
   return `
     <div class="earthquake-compound-pin ${pulseClass}" style="--eq-color: ${opts.hex};">
-      <svg class="eq-svg" viewBox="0 0 64 68" width="64" height="68" xmlns="http://www.w3.org/2000/svg">
-        <!-- Top Annular Wedge / Callout -->
-        <path class="eq-wedge" d="M 7.91 13.59 A 42 42 0 0 1 56.09 13.59 L 43.47 31.62 A 20 20 0 0 0 20.53 31.62 Z" fill="${opts.hex}28" stroke="${opts.hex}" stroke-width="1.5" />
-        <text class="eq-wedge-text" x="32" y="23" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF">${shortTown}</text>
+      <svg class="eq-svg" viewBox="0 0 32 40" width="32" height="40" xmlns="http://www.w3.org/2000/svg">
+        <!-- Map Pin Teardrop Body -->
+        <path class="eq-pin-body" d="M16 2 C8.27 2 2 8.27 2 16 C2 24.5 14.2 36.8 15.3 37.9 C15.7 38.3 16.3 38.3 16.7 37.9 C17.8 36.8 30 24.5 30 16 C30 8.27 23.73 2 16 2 Z" fill="#0F172A" stroke="${opts.hex}" stroke-width="2" />
+        
+        <!-- Standard Earthquake Cracked Ground / Fault Line Icon -->
+        <path d="M8 12h4l1.5 3-1.5 3 2 2.5H8" fill="none" stroke="${opts.hex}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M24 12h-4l-1.5 3 1.5 3-2 2.5h4" fill="none" stroke="${opts.hex}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M15 6.5l-2 5.5 3 3-1.5 5" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
 
-        <!-- Bottom Magnitude Circle -->
-        <circle class="eq-circle" cx="32" cy="48" r="15" fill="${opts.hex}" stroke="#FFFFFF" stroke-width="1.8" />
-        <text class="eq-mag-text" x="32" y="49" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF">${magStr}</text>
+        <!-- Magnitude Pill Badge -->
+        <rect x="5" y="24" width="22" height="12" rx="6" fill="${opts.hex}" stroke="#FFFFFF" stroke-width="1" />
+        <text class="eq-mag-text" x="16" y="31" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="8.5px">${magStr}</text>
       </svg>
     </div>
   `;

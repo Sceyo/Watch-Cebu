@@ -117,7 +117,7 @@ export function renderHeader(
   container.innerHTML = `
     <div class="header-left">
       <div class="brand">
-        <span class="brand-icon" style="display: inline-flex; align-items: center; color: #38BDF8;" title="Watch Cebu — Civic Situational Awareness Map">${ICONS.cebu}</span>
+        <span class="brand-icon" style="display: inline-flex; align-items: center; color: #EF4444;" title="Watch Cebu — Civic Situational Awareness Map">${ICONS.bolt}</span>
         <h1 class="brand-title">WATCH CEBU</h1>
       </div>
       <div class="freshness-chips desktop-only">
@@ -134,16 +134,10 @@ export function renderHeader(
     <div class="header-center desktop-only">
       <div class="layer-toggle-group">
         <button class="layer-btn ${currentLayer === 'power' ? 'active' : ''}" data-layer="power">
-          <span style="display: inline-flex; align-items: center; gap: 5px;">
-            <span style="display: inline-flex; align-items: center;" aria-hidden="true">${ICONS.bolt}</span>
-            <span>Power (${powerState.data.length})</span>
-          </span>
+          Power (${powerState.data.length})
         </button>
         <button class="layer-btn ${currentLayer === 'earthquakes' ? 'active' : ''}" data-layer="earthquakes">
-          <span style="display: inline-flex; align-items: center; gap: 5px;">
-            <span style="display: inline-flex; align-items: center;" aria-hidden="true">${ICONS.earthquake}</span>
-            <span>Quakes (${eqState.data.length})</span>
-          </span>
+          Quakes (${eqState.data.length})
         </button>
         <button class="layer-btn ${currentLayer === 'both' ? 'active' : ''}" data-layer="both">
           Both
