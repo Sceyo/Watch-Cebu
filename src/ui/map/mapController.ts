@@ -573,6 +573,33 @@ export class MapController {
     this.pagasaLayerGroup.addLayer(marker);
   }
 
+  /**
+   * Computes asymmetric safe-zone padding to prevent UI chrome occlusion.
+   * On mobile viewports, accounts for the floating search input + layer toggles at the top (~108px)
+   * and the bottom action bar + toast feedback at the bottom (~115px).
+   */
+  private getSafeZonePadding(): {
+    paddingTopLeft: [number, number];
+    paddingBottomRight: [number, number];
+  } {
+    const isMobile =
+      typeof window !== "undefined" &&
+      (window.innerWidth < 768 ||
+        (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
+
+    if (isMobile) {
+      return {
+        paddingTopLeft: [24, 135],
+        paddingBottomRight: [24, 130],
+      };
+    }
+
+    return {
+      paddingTopLeft: [60, 60],
+      paddingBottomRight: [60, 60],
+    };
+  }
+
   fitBoundsIfNotEmpty(): void {
     const activeLayers: L.Layer[] = [];
     if (this.map.hasLayer(this.powerLayerGroup)) {
@@ -585,7 +612,10 @@ export class MapController {
     const featureGroup = L.featureGroup(activeLayers);
     const bounds = featureGroup.getBounds();
     if (bounds.isValid()) {
-      this.map.fitBounds(bounds, { padding: [50, 50], maxZoom: 14 });
+      this.map.fitBounds(bounds, {
+        ...this.getSafeZonePadding(),
+        maxZoom: 14,
+      });
     }
   }
 
@@ -697,7 +727,10 @@ export class MapController {
 
         const bounds = L.latLngBounds(latLngs);
         if (bounds.isValid()) {
-          this.map.fitBounds(bounds, { padding: [60, 60], maxZoom: 16 });
+          this.map.fitBounds(bounds, {
+            ...this.getSafeZonePadding(),
+            maxZoom: 15,
+          });
         }
 
         const breakdown =

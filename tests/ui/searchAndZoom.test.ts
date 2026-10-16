@@ -128,6 +128,14 @@ describe("MapController — searchAndZoom (Hybrid 3-Tier Strategy)", () => {
     expect(res.found).toBe(true);
     expect(res.tier).toBe(1);
     expect(res.message).toContain("Found 2 active pins");
+    expect((controller as any).map.fitBounds).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({
+        paddingTopLeft: expect.any(Array),
+        paddingBottomRight: expect.any(Array),
+        maxZoom: 15,
+      })
+    );
   });
 
   it("resolves via Tier 1 when an active earthquake matches", async () => {
