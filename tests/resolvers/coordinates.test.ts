@@ -81,6 +81,14 @@ describe("BarangayCentroidLookup", () => {
     expect(coords!.lon).toBeCloseTo(123.916, 2);
   });
 
+  it("resolves Cabancalan even if parent LGU was misattributed to Cebu City (cross-LGU fallback)", () => {
+    const coords = centroidLookup.lookup("Cabancalan", "Cebu City");
+    expect(coords).not.toBeNull();
+    expect(coords!.canonicalCity).toBe("Mandaue City");
+    expect(coords!.lat).toBeCloseTo(10.354, 2);
+    expect(coords!.lon).toBeCloseTo(123.927, 2);
+  });
+
   it("resolves Guba as genuine osm_point", () => {
     const coords = centroidLookup.lookup("Guba", "Cebu City");
     expect(coords).not.toBeNull();

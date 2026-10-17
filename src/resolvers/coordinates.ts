@@ -44,6 +44,7 @@ export interface CoordinateResolution {
   source: CoordinateSourceVECO;
   geocode_query: string | null;
   geocode_provider: string | null;
+  canonicalCity?: string;
 }
 
 export type GeocodeFetcher = (query: string) => Promise<{ lat: number; lon: number } | null>;
@@ -57,6 +58,7 @@ export interface CentroidResult {
   lon: number;
   source: CoordinateSourceVECO;
   canonicalName: string;
+  city: string;
 }
 
 /**
@@ -85,7 +87,7 @@ export class BarangayCentroidLookup {
       const [lon, lat] = f.properties.centroid;
       const source: CoordinateSourceVECO = (f.properties.source as CoordinateSourceVECO) || "osm_point";
 
-      const record: CentroidResult = { lat, lon, source, canonicalName: b };
+      const record: CentroidResult = { lat, lon, source, canonicalName: b, city };
       this.lookupMap.set(`${city}::${normalizeStr(b)}`, record);
 
       if (f.properties.alt_names) {
@@ -98,13 +100,18 @@ export class BarangayCentroidLookup {
 
   /**
    * Look up coordinates and honest source for a given barangay within an LGU.
+   * If not found under the specified city (e.g. VECO lumped multiple LGUs like Cebu City & Mandaue City),
+   * falls back to searching across any other Metro Cebu LGU for that barangay.
    */
-  public lookup(barangayName: string, city: VECOCity): { lat: number; lon: number; source: CoordinateSourceVECO } | null {
+  public lookup(
+    barangayName: string,
+    city: VECOCity
+  ): { lat: number; lon: number; source: CoordinateSourceVECO; canonicalCity: string } | null {
     const norm = normalizeStr(barangayName);
     const directKey = `${city}::${norm}`;
     if (this.lookupMap.has(directKey)) {
       const res = this.lookupMap.get(directKey)!;
-      return { lat: res.lat, lon: res.lon, source: res.source };
+      return { lat: res.lat, lon: res.lon, source: res.source, canonicalCity: res.city };
     }
 
     // Substring / prefix search within the same city
@@ -113,7 +120,19 @@ export class BarangayCentroidLookup {
       if (key.startsWith(cityPrefix)) {
         const kName = key.slice(cityPrefix.length);
         if (kName.includes(norm) || norm.includes(kName)) {
-          return { lat: val.lat, lon: val.lon, source: val.source };
+          return { lat: val.lat, lon: val.lon, source: val.source, canonicalCity: val.city };
+        }
+      }
+    }
+
+    // Cross-LGU fallback: When VECO combines multiple cities in one row (e.g. "Cebu City & Mandaue City"),
+    // check if this barangay exists uniquely in another VECO city.
+    for (const [key, val] of this.lookupMap.entries()) {
+      const parts = key.split("::");
+      if (parts.length === 2) {
+        const kName = parts[1];
+        if (kName === norm || kName.includes(norm) || norm.includes(kName)) {
+          return { lat: val.lat, lon: val.lon, source: val.source, canonicalCity: val.city };
         }
       }
     }
@@ -171,7 +190,8 @@ export async function resolveBarangayCoordinates(
       lon: match.lon,
       source: match.source,
       geocode_query: null,
-      geocode_provider: null
+      geocode_provider: null,
+      canonicalCity: match.canonicalCity
     };
   }
 
@@ -223,6 +243,7 @@ export async function fanOutAndResolveAdvisories(
       let geocodeQuery = parent.geocode_query;
       let geocodeProvider = parent.geocode_provider;
       let parseNotes = parent.parse_notes;
+      let resolvedCity = parent.city;
 
       if (b) {
         const coords = await resolveBarangayCoordinates(b, parent.city, parent.areas_affected_raw, options);
@@ -232,6 +253,9 @@ export async function fanOutAndResolveAdvisories(
           coordSource = coords.source;
           geocodeQuery = coords.geocode_query;
           geocodeProvider = coords.geocode_provider;
+          if (coords.canonicalCity) {
+            resolvedCity = coords.canonicalCity as VECOCity;
+          }
         } else {
           // Log failure
           const note = `Coordinates unresolved for barangay: "${b}" in ${parent.city}`;
@@ -245,6 +269,7 @@ export async function fanOutAndResolveAdvisories(
       resolvedList.push({
         ...parent,
         id: recordId,
+        city: resolvedCity,
         barangay: b ? [b] : [],
         lat,
         lon,

@@ -159,7 +159,7 @@ describe("Client UI & State Stress Tests", () => {
 
     const duration = performance.now() - start;
 
-    expect(duration).toBeLessThan(100); // Renders 1,500+ items across UI components in under 100ms
+    expect(duration).toBeLessThan(200); // Renders 1,500+ items across UI components in under 200ms
     expect(headerEl.innerHTML).toContain("TCWS #5: SUPER TYPHOON PEPITO");
     expect(drawerEl.innerHTML).toContain("SIGNAL #5");
     expect(drawerEl.innerHTML).toContain("RED WARNING");

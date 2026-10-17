@@ -96,7 +96,7 @@
     "overnight_span": false,
     "duration_hours": 9,
     "purpose": "To improve the reliability of the distribution system serving Brgy. Banilad , Talamban & Cabancalan by facilitating 69kV pole installation and dressing.",
-    "city": "Cebu City",
+    "city": "Mandaue City",
     "barangay": [
       "Cabancalan"
     ],
@@ -105,14 +105,14 @@
       "M.L Quezon"
     ],
     "areas_affected_raw": "Portion of Banilad , Talamban & Cabancalan, Cebu City & Mandaue City, along portions of Limonia Street and M.L Quezon.",
-    "lat": null,
-    "lon": null,
-    "coordinate_source": null,
+    "lat": 10.3541164,
+    "lon": 123.9272365,
+    "coordinate_source": "osm_point",
     "geocode_query": null,
     "geocode_provider": null,
     "business_confidence": "scheduled",
     "parse_confidence": "high",
-    "parse_notes": "Coordinates unresolved for barangay: \"Cabancalan\" in Cebu City"
+    "parse_notes": null
   },
   {
     "id": "4c8f0f3dda3ba6249a5e4d206c17e03a9bb4da1749bdf2e9f2775ec5dec14436",

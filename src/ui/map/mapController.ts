@@ -367,7 +367,7 @@ export class MapController {
       marker.bindPopup(popupBodyHtml, {
         maxWidth: 340,
         autoPan: true,
-        autoPanPaddingTopLeft: L.point(20, 110),
+        autoPanPaddingTopLeft: L.point(20, 165),
         autoPanPaddingBottomRight: L.point(20, 40),
         keepInView: true,
       });
@@ -499,7 +499,7 @@ export class MapController {
       marker.bindPopup(popupHtml, {
         maxWidth: 340,
         autoPan: true,
-        autoPanPaddingTopLeft: L.point(20, 110),
+        autoPanPaddingTopLeft: L.point(20, 165),
         autoPanPaddingBottomRight: L.point(20, 40),
         keepInView: true,
       });
@@ -607,7 +607,7 @@ export class MapController {
     marker.bindPopup(popupHtml, {
       maxWidth: 320,
       autoPan: true,
-      autoPanPaddingTopLeft: L.point(20, 110),
+      autoPanPaddingTopLeft: L.point(20, 165),
       autoPanPaddingBottomRight: L.point(20, 40),
     });
 
@@ -630,7 +630,7 @@ export class MapController {
 
     if (isMobile) {
       return {
-        paddingTopLeft: [24, 135],
+        paddingTopLeft: [24, 165],
         paddingBottomRight: [24, 130],
       };
     }

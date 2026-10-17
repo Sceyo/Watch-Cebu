@@ -8,7 +8,7 @@
  * 4. Graceful offline fallback.
  */
 
-const CACHE_VERSION = "watch-cebu-v2";
+const CACHE_VERSION = "watch-cebu-v3";
 const STATIC_CACHE = `static-${CACHE_VERSION}`;
 const API_CACHE = `api-${CACHE_VERSION}`;
 const TILE_CACHE = `tiles-${CACHE_VERSION}`;
