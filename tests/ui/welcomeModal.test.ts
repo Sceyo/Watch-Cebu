@@ -88,16 +88,18 @@ describe("Welcome Modal & Onboarding Guide Component", () => {
     expect(container.classList.contains("open")).toBe(false);
   });
 
-  it("renderWelcomeModal renders 3 core civic features and action buttons when open", () => {
+  it("renderWelcomeModal renders 3 core civic features, coverage limits, and action buttons when open", () => {
     const container = createMockElement();
-    renderWelcomeModal(container, true, () => {}, () => {});
+    renderWelcomeModal(container, true, () => {}, () => {}, () => {});
 
     expect(container.style.display).toBe("flex");
     expect(container.classList.contains("open")).toBe(true);
     expect(container.innerHTML).toContain("WATCH CEBU");
-    expect(container.innerHTML).toContain("Scheduled Power Interruptions");
-    expect(container.innerHTML).toContain("Seismic &amp; Severe Weather Alerts");
-    expect(container.innerHTML).toContain("Offline-Ready &amp; Zero Trackers");
+    expect(container.innerHTML).toContain("Brownout Schedules");
+    expect(container.innerHTML).toContain("Earthquakes, Storms &amp; Air Quality");
+    expect(container.innerHTML).toContain("Works on Weak Signal");
+    expect(container.innerHTML).toContain("Covers VECO areas only");
+    expect(container.innerHTML).toContain('id="btn-welcome-pin"');
     expect(container.innerHTML).toContain('id="btn-welcome-explore"');
     expect(container.innerHTML).toContain('id="btn-welcome-about"');
     expect(container.innerHTML).toContain('id="btn-welcome-close"');

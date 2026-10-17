@@ -579,6 +579,18 @@ function updateUI() {
         isAboutOpen = true;
         updateUI();
         focusActiveDrawer();
+      },
+      () => {
+        isWelcomeOpen = false;
+        markWelcomeGuideSeen();
+        document.body.classList.remove("modal-open");
+        updateUI();
+        const searchInput = document.getElementById("civic-search-input") as HTMLInputElement | null;
+        if (searchInput) {
+          searchInput.focus();
+          searchInput.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+        showToast("Type your barangay to check outages or pin it.");
       }
     );
   }

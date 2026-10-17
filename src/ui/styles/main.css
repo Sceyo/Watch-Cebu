@@ -2963,18 +2963,18 @@ textarea:focus-visible,
 }
 
 .welcome-modal-card {
-  max-width: 520px;
+  max-width: 490px;
   width: 100%;
-  max-height: 88dvh;
+  max-height: 90dvh;
   overflow-y: auto;
   background: #0F172A;
   border: 1px solid rgba(56, 189, 248, 0.3);
   border-radius: 16px;
-  padding: 24px;
+  padding: 18px 20px;
   box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   color: var(--text-primary);
   animation: popScale 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -2994,7 +2994,7 @@ textarea:focus-visible,
 .welcome-brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .welcome-brand-icon {
@@ -3013,15 +3013,16 @@ textarea:focus-visible,
 }
 
 .welcome-subtitle {
-  font-size: 0.76rem;
-  color: var(--accent-blue);
+  font-size: 0.74rem;
+  color: #38BDF8;
   font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
 .welcome-close-btn {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--border-color);
-  color: var(--text-secondary);
+  color: #CBD5E1;
   border-radius: 8px;
   width: 36px;
   height: 36px;
@@ -3039,34 +3040,35 @@ textarea:focus-visible,
 }
 
 .welcome-tagline {
-  font-size: 0.84rem;
-  line-height: 1.45;
-  color: var(--text-secondary);
-  padding: 10px 14px;
-  background: rgba(255, 255, 255, 0.03);
+  font-size: 0.86rem;
+  line-height: 1.4;
+  color: #F1F5F9;
+  font-weight: 500;
+  padding: 8px 12px;
+  background: rgba(56, 189, 248, 0.08);
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(56, 189, 248, 0.2);
 }
 
 .welcome-features-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .welcome-feature-item {
   display: flex;
   align-items: flex-start;
-  gap: 14px;
-  padding: 12px;
-  border-radius: 10px;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .welcome-feature-icon {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -3077,7 +3079,7 @@ textarea:focus-visible,
 .welcome-feature-content {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
 .welcome-feature-title {
@@ -3087,18 +3089,53 @@ textarea:focus-visible,
 }
 
 .welcome-feature-desc {
-  font-size: 0.78rem;
-  line-height: 1.45;
-  color: var(--text-muted);
+  font-size: 0.80rem;
+  line-height: 1.4;
+  color: #CBD5E1;
+}
+
+.welcome-coverage-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  color: #FDE68A;
+  font-size: 0.74rem;
+  line-height: 1.35;
+}
+
+.coverage-notice-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #F59E0B;
+  flex-shrink: 0;
+  margin-top: 1px;
 }
 
 .welcome-modal-footer {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-top: 8px;
-  padding-top: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.welcome-action-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+@media (max-width: 400px) {
+  .welcome-action-buttons {
+    grid-template-columns: 1fr;
+  }
 }
 
 .welcome-btn-primary {
@@ -3107,40 +3144,62 @@ textarea:focus-visible,
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 18px;
-  background: var(--accent-blue);
-  color: #0F172A;
+  padding: 10px 16px;
+  background: #0284C7;
+  color: #FFFFFF;
   border: none;
   border-radius: 10px;
   font-weight: 700;
-  font-size: 0.92rem;
+  font-size: 0.90rem;
   cursor: pointer;
   transition: all 0.15s ease;
-  min-height: 44px;
+  min-height: 42px;
 }
 
 .welcome-btn-primary:hover {
-  filter: brightness(1.1);
+  background: #0369A1;
   transform: translateY(-1px);
 }
 
 .welcome-btn-secondary {
   width: 100%;
   padding: 10px 16px;
-  background: transparent;
-  color: var(--text-secondary);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
+  color: #F8FAFC;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
-  font-size: 0.82rem;
+  font-size: 0.86rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
-  min-height: 40px;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .welcome-btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.35);
   color: #FFFFFF;
+}
+
+.welcome-link-btn {
+  background: transparent;
+  border: none;
+  color: #94A3B8;
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  padding: 6px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+
+.welcome-link-btn:hover {
+  color: #38BDF8;
 }
 
 /* Pinned Area Tag Styles */

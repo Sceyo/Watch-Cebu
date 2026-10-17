@@ -30,7 +30,8 @@ export function renderWelcomeModal(
   container: HTMLElement,
   isOpen: boolean,
   onDismiss: () => void,
-  onOpenAbout: () => void
+  onOpenAbout: () => void,
+  onPinBarangay?: () => void
 ): void {
   if (!isOpen) {
     container.style.display = "none";
@@ -46,67 +47,78 @@ export function renderWelcomeModal(
     <div class="welcome-modal-card" role="dialog" aria-modal="true" aria-labelledby="welcome-modal-title">
       <div class="welcome-modal-header">
         <div class="welcome-brand">
-          <span class="welcome-brand-icon" style="color: #38BDF8;" aria-hidden="true">${ICONS.cebu}</span>
+          <span class="welcome-brand-icon" style="color: #EF4444;" aria-hidden="true">${ICONS.bolt}</span>
           <div>
             <h2 id="welcome-modal-title" class="welcome-title">WATCH CEBU</h2>
-            <div class="welcome-subtitle">Civic Situational Awareness &amp; Multi-Hazard Monitor</div>
+            <div class="welcome-subtitle">Alerto sa brownout, linog, bagyo, ug hangin</div>
           </div>
         </div>
         <button class="welcome-close-btn" id="btn-welcome-close" aria-label="Dismiss guide" title="Dismiss guide">${ICONS.close}</button>
       </div>
 
       <div class="welcome-tagline">
-        Independent public transparency platform for Metro Cebu residents, responders, and businesses.
+        Check brownouts, earthquakes, storms, and air quality in Metro Cebu. Free, no sign-up.
       </div>
 
       <div class="welcome-features-list">
-        <!-- Feature 1: Power Outages -->
+        <!-- Feature 1: Brownout schedules -->
         <div class="welcome-feature-item">
           <div class="welcome-feature-icon" style="background: rgba(245, 158, 11, 0.15); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.3);">
             ${ICONS.bolt}
           </div>
           <div class="welcome-feature-content">
-            <div class="welcome-feature-title">Scheduled Power Interruptions (VECO)</div>
+            <div class="welcome-feature-title">Brownout Schedules</div>
             <div class="welcome-feature-desc">
-              Tracks planned maintenance across 8 LGUs. Tap <strong>Pin My Barangay</strong> to monitor your neighborhood with zero logins, or switch to <strong>List View</strong> for fast text reading on LTE.
+              Planned outages from Visayan Electric (VECO). Search or pin your barangay to see if you're affected.
             </div>
           </div>
         </div>
 
-        <!-- Feature 2: Quakes & Severe Weather -->
+        <!-- Feature 2: Earthquakes & storms -->
         <div class="welcome-feature-item">
           <div class="welcome-feature-icon" style="background: rgba(139, 92, 246, 0.15); color: #A78BFA; border: 1px solid rgba(139, 92, 246, 0.3);">
             ${ICONS.earthquake}
           </div>
           <div class="welcome-feature-content">
-            <div class="welcome-feature-title">Seismic &amp; Severe Weather Alerts</div>
+            <div class="welcome-feature-title">Earthquakes, Storms &amp; Air Quality</div>
             <div class="welcome-feature-desc">
-              Real-time DOST-PHIVOLCS earthquake epicenters within 300 km (filtering distant micro-quakes by default) and active DOST-PAGASA Tropical Cyclone Wind Signals (TCWS #1–5).
+              Recent quakes near Cebu, official PAGASA storm warnings, and live air quality updates.
             </div>
           </div>
         </div>
 
-        <!-- Feature 3: Offline-Ready & Non-Commercial -->
+        <!-- Feature 3: Works on weak signal -->
         <div class="welcome-feature-item">
           <div class="welcome-feature-icon" style="background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3);">
             ${ICONS.shield}
           </div>
           <div class="welcome-feature-content">
-            <div class="welcome-feature-title">Offline-Ready &amp; Zero Trackers</div>
+            <div class="welcome-feature-title">Works on Weak Signal</div>
             <div class="welcome-feature-desc">
-              Non-commercial public service. Zero advertisements, zero accounts, and zero cookies. Engineered to preserve battery and work during network brownouts.
+              Opens even when your connection is slow. Zero ads, zero accounts, and zero tracking.
             </div>
           </div>
         </div>
       </div>
 
+      <!-- One-line coverage notice -->
+      <div class="welcome-coverage-notice">
+        <span class="coverage-notice-icon" aria-hidden="true">${ICONS.info}</span>
+        <span><strong>Unofficial.</strong> Covers VECO areas only (Cebu City, Mandaue, Talisay, Minglanilla, Naga, San Fernando, Consolacion, Liloan). Does not cover Lapu-Lapu or provincial towns.</span>
+      </div>
+
       <div class="welcome-modal-footer">
-        <button id="btn-welcome-explore" class="welcome-btn-primary">
-          <span>Explore Dashboard</span>
-          <span aria-hidden="true">→</span>
-        </button>
-        <button id="btn-welcome-about" class="welcome-btn-secondary">
-          <span>Read Known Limitations &amp; Hotlines</span>
+        <div class="welcome-action-buttons">
+          <button id="btn-welcome-pin" class="welcome-btn-primary">
+            <span class="btn-icon" aria-hidden="true">${ICONS.mapPin}</span>
+            <span>Pin My Barangay</span>
+          </button>
+          <button id="btn-welcome-explore" class="welcome-btn-secondary">
+            <span>Explore the Map</span>
+          </button>
+        </div>
+        <button id="btn-welcome-about" class="welcome-link-btn">
+          About, Limitations &amp; 24/7 Hotlines →
         </button>
       </div>
     </div>
@@ -117,6 +129,16 @@ export function renderWelcomeModal(
   closeBtn?.addEventListener("click", () => {
     markWelcomeGuideSeen();
     onDismiss();
+  });
+
+  const pinBtn = container.querySelector<HTMLButtonElement>("#btn-welcome-pin");
+  pinBtn?.addEventListener("click", () => {
+    markWelcomeGuideSeen();
+    if (onPinBarangay) {
+      onPinBarangay();
+    } else {
+      onDismiss();
+    }
   });
 
   const exploreBtn = container.querySelector<HTMLButtonElement>("#btn-welcome-explore");
