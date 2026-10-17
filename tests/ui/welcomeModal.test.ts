@@ -94,7 +94,9 @@ describe("Welcome Modal & Onboarding Guide Component", () => {
 
     expect(container.style.display).toBe("flex");
     expect(container.classList.contains("open")).toBe(true);
-    expect(container.innerHTML).toContain("WATCH CEBU");
+    expect(container.innerHTML).toContain('class="welcome-brand-logo"');
+    expect(container.innerHTML).toContain('src="/icons/icon.svg"');
+    expect(container.innerHTML).not.toContain("welcome-subtitle");
     expect(container.innerHTML).toContain("Brownout Schedules");
     expect(container.innerHTML).toContain("Earthquakes, Storms &amp; Air Quality");
     expect(container.innerHTML).toContain("Works on Weak Signal");

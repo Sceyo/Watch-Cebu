@@ -47,11 +47,8 @@ export function renderWelcomeModal(
     <div class="welcome-modal-card" role="dialog" aria-modal="true" aria-labelledby="welcome-modal-title">
       <div class="welcome-modal-header">
         <div class="welcome-brand">
-          <span class="welcome-brand-icon" style="color: #EF4444;" aria-hidden="true">${ICONS.bolt}</span>
-          <div>
-            <h2 id="welcome-modal-title" class="welcome-title">WATCH CEBU</h2>
-            <div class="welcome-subtitle">Alerto sa brownout, linog, bagyo, ug hangin</div>
-          </div>
+          <img src="/icons/icon.svg" alt="Watch Cebu" class="welcome-brand-logo" width="34" height="34" />
+          <h2 id="welcome-modal-title" class="welcome-title">WATCH CEBU</h2>
         </div>
         <button class="welcome-close-btn" id="btn-welcome-close" aria-label="Dismiss guide" title="Dismiss guide">${ICONS.close}</button>
       </div>
