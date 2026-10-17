@@ -109,8 +109,11 @@ export function renderAbout(
     `;
 
   container.innerHTML = `
-    <div class="legend-header">
-      <h2 class="legend-title">About Watch Cebu</h2>
+    <div class="legend-header" style="display: flex; align-items: center; justify-content: space-between;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <img src="/icons/icon.svg" alt="Watch Cebu" width="28" height="28" style="border-radius: 7px; box-shadow: 0 0 10px rgba(56, 189, 248, 0.35); flex-shrink: 0; display: block;" />
+        <h2 class="legend-title" style="margin: 0;">About Watch Cebu</h2>
+      </div>
       <button class="legend-close-btn" id="btn-close-about" title="Close About Drawer" aria-label="Close About Drawer">✕</button>
     </div>
 

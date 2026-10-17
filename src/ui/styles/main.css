@@ -160,7 +160,25 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
 .brand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  text-decoration: none;
+  user-select: none;
+}
+
+.brand-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  display: block;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.brand-logo:hover,
+.brand:hover .brand-logo {
+  transform: scale(1.08);
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.65);
 }
 
 .brand-icon {
@@ -2457,6 +2475,12 @@ textarea:focus-visible,
 
   .brand-title {
     font-size: 1rem;
+  }
+
+  .brand-logo {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
   }
 
   .brand-icon {

@@ -31,9 +31,4 @@
   <circle cx="318" cy="297" r="16" fill="#EF4444" opacity="0.4" filter="url(#glow)" />
   <circle cx="318" cy="297" r="7" fill="#EF4444" />
   <circle cx="318" cy="297" r="3" fill="#FFFFFF" />
-
-  <!-- Brand text badge -->
-  <rect x="146" y="430" width="220" height="36" rx="18" fill="#1E293B" stroke="#475569" stroke-width="1.5" />
-  <text x="256" y="454" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" 
-        font-size="16" font-weight="800" fill="#F8FAFC" letter-spacing="3" text-anchor="middle">WATCH CEBU</text>
 </svg>

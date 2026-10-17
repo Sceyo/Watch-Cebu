@@ -116,8 +116,8 @@ export function renderHeader(
 
   container.innerHTML = `
     <div class="header-left">
-      <div class="brand">
-        <span class="brand-icon" style="display: inline-flex; align-items: center; color: #EF4444;" title="Watch Cebu — Civic Situational Awareness Map">${ICONS.bolt}</span>
+      <div class="brand" role="button" tabindex="0" title="Watch Cebu — Civic Situational Awareness Map" style="cursor: pointer;">
+        <img src="/icons/icon.svg" alt="Watch Cebu Logo" class="brand-logo" width="28" height="28" />
         <h1 class="brand-title">WATCH CEBU</h1>
       </div>
       <div class="freshness-chips desktop-only">
@@ -198,5 +198,16 @@ export function renderHeader(
   const stormBtn = container.querySelector<HTMLButtonElement>("#btn-header-storm");
   stormBtn?.addEventListener("click", () => {
     callbacks.onForecastToggle?.();
+  });
+
+  const brandBtn = container.querySelector<HTMLElement>(".brand");
+  brandBtn?.addEventListener("click", () => {
+    callbacks.onAboutToggle();
+  });
+  brandBtn?.addEventListener("keydown", (e: KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      callbacks.onAboutToggle();
+    }
   });
 }
