@@ -111,6 +111,10 @@ export class MapController {
     this.map.setView([coords.lat, coords.lon], 14, { animate: true });
   }
 
+  panToLocation(coords: { lat: number; lon: number }, zoom = 15): void {
+    this.map.setView([coords.lat, coords.lon], zoom, { animate: true });
+  }
+
   invalidateSize(): void {
     this.map.invalidateSize();
   }

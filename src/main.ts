@@ -363,7 +363,7 @@ function updateUI() {
           currentViewMode = "map";
           updateUI();
           if (advisory.lat !== null && advisory.lon !== null) {
-            mapController?.centerOnUser({ lat: advisory.lat, lon: advisory.lon });
+            mapController?.panToLocation({ lat: advisory.lat, lon: advisory.lon });
             selectedLocation = { type: "power", advisories: [advisory] };
             updateUI();
             focusActiveDrawer();
