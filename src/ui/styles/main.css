@@ -1767,20 +1767,29 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
 
 .map-search-row {
   display: flex;
+  align-items: center;
   gap: 8px;
+  width: 100%;
   pointer-events: auto;
+  box-sizing: border-box;
 }
 
 .search-form {
-  flex: 1;
+  flex: 1 1 auto;
+  min-width: 0;
   display: flex;
+  align-items: center;
   margin: 0;
   padding: 0;
-  min-width: 0;
+  height: 42px;
+  box-sizing: border-box;
 }
 
 .search-input-wrapper {
-  flex: 1;
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  height: 42px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1789,8 +1798,9 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-color);
   border-radius: 10px;
-  padding: 0 12px;
+  padding: 0 10px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  box-sizing: border-box;
 }
 
 .search-submit-btn {
@@ -1804,6 +1814,7 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   cursor: pointer;
   color: var(--text-muted);
   transition: color 0.15s ease, transform 0.15s ease;
+  flex-shrink: 0;
 }
 
 .search-submit-btn:hover {
@@ -1817,14 +1828,19 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
 }
 
 .map-search-input {
-  flex: 1;
-  height: 44px;
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
   background: transparent;
   border: none;
   color: #FFFFFF;
   font-size: 16px !important; /* Critical: Prevent iOS Safari auto-zoom */
   outline: none;
   font-family: var(--font-sans);
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .map-search-input::placeholder {
@@ -1854,15 +1870,16 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   border: none;
   color: var(--text-muted);
   cursor: pointer;
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  min-height: 32px;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   font-size: 0.85rem;
+  flex-shrink: 0;
 }
 
 .search-clear-btn:hover {
@@ -1871,8 +1888,9 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
 }
 
 .map-ctrl-btn {
-  height: 44px;
-  min-height: 44px;
+  height: 42px;
+  min-height: 42px;
+  max-height: 42px;
   background: rgba(15, 23, 42, 0.94) !important;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -1886,6 +1904,9 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
   pointer-events: auto;
   transition: all 0.15s ease;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  margin: 0;
 }
 
 .map-ctrl-btn:hover {
@@ -1894,12 +1915,14 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
 }
 
 .btn-locate-me {
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  min-height: 44px;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  min-height: 42px;
+  max-height: 42px;
   padding: 0;
   font-size: 1.15rem;
+  box-sizing: border-box;
 }
 
 .btn-locate-me:hover {
@@ -2509,6 +2532,51 @@ textarea:focus-visible,
     bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
   }
 
+  /* Mobile Map Search & View Mode Controls */
+  .map-search-row {
+    gap: 6px;
+    align-items: center;
+  }
+
+  .search-form {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .search-input-wrapper {
+    height: 40px;
+    padding: 0 8px;
+    gap: 6px;
+  }
+
+  .map-search-input {
+    font-size: 16px !important;
+  }
+
+  .map-ctrl-btn {
+    height: 40px;
+    min-height: 40px;
+    max-height: 40px;
+  }
+
+  .btn-view-mode {
+    min-width: 66px;
+    height: 40px;
+    min-height: 40px;
+    max-height: 40px;
+    padding: 0 8px;
+    gap: 4px;
+    font-size: 0.78rem;
+  }
+
+  .btn-locate-me {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    max-height: 40px;
+  }
+
   .legend-drawer {
     width: 100vw;
   }
@@ -2629,8 +2697,11 @@ textarea:focus-visible,
    Map vs List View & Pinned Barangay Banner
    -------------------------------------------------------------------------- */
 .btn-view-mode {
-  min-width: 82px;
-  padding: 0 12px;
+  min-width: 76px;
+  height: 42px;
+  min-height: 42px;
+  max-height: 42px;
+  padding: 0 10px;
   gap: 6px;
   font-weight: 700;
   font-size: 0.82rem;
@@ -2642,10 +2713,13 @@ textarea:focus-visible,
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.15s ease;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  margin: 0;
 }
 
 .btn-view-mode:hover {

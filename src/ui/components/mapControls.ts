@@ -84,7 +84,7 @@ export function renderMapControls(
               type="search"
               id="map-search-input"
               class="map-search-input"
-              placeholder="Search barangay, street, or city..."
+              placeholder="Search barangay..."
               aria-label="Search barangay, street, or city"
               autocomplete="off"
               spellcheck="false"
