@@ -11,83 +11,74 @@
 import type { PowerAdvisory, EarthquakeEvent, PagasaBulletin } from "../../types/index.js";
 import type { FeedState } from "../types.js";
 
-export async function fetchPowerAdvisories(
+const timeoutSignal = (ms = 8000) =>
+  typeof AbortSignal !== "undefined" && typeof AbortSignal.timeout === "function"
+    ? AbortSignal.timeout(ms)
+    : undefined;
+
+async function fetchCivicEndpoint<T>(
+  endpoint: string,
+  fetchImpl: typeof fetch,
+  fallbackData: T,
+  isEmpty: (data: T) => boolean,
+  transform: (json: any) => T
+): Promise<FeedState<T>> {
+  try {
+    const res = await fetchImpl(endpoint, { signal: timeoutSignal() });
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status} ${res.statusText}`);
+    }
+    const json = await res.json();
+    const data = transform(json);
+
+    return {
+      status: isEmpty(data) ? "empty" : "success",
+      dataSource: json.data_source,
+      fetchedAt: json.fetched_at,
+      data,
+      parseNotes: json.parse_notes,
+    };
+  } catch (err: any) {
+    return {
+      status: "error",
+      error: err?.message || String(err),
+      data: fallbackData,
+    };
+  }
+}
+
+export function fetchPowerAdvisories(
   fetchImpl: typeof fetch = fetch
 ): Promise<FeedState<PowerAdvisory[]>> {
-  try {
-    const res = await fetchImpl("/api/power");
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status} ${res.statusText}`);
-    }
-    const json = await res.json();
-    const data: PowerAdvisory[] = Array.isArray(json.data) ? json.data : [];
-
-    return {
-      status: data.length === 0 ? "empty" : "success",
-      dataSource: json.data_source,
-      fetchedAt: json.fetched_at,
-      data,
-      parseNotes: json.parse_notes,
-    };
-  } catch (err: any) {
-    return {
-      status: "error",
-      error: err?.message || String(err),
-      data: [],
-    };
-  }
+  return fetchCivicEndpoint(
+    "/api/power",
+    fetchImpl,
+    [],
+    (d) => d.length === 0,
+    (j) => (Array.isArray(j?.data) ? j.data : [])
+  );
 }
 
-export async function fetchEarthquakeEvents(
+export function fetchEarthquakeEvents(
   fetchImpl: typeof fetch = fetch
 ): Promise<FeedState<EarthquakeEvent[]>> {
-  try {
-    const res = await fetchImpl("/api/earthquakes");
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status} ${res.statusText}`);
-    }
-    const json = await res.json();
-    const data: EarthquakeEvent[] = Array.isArray(json.data) ? json.data : [];
-
-    return {
-      status: data.length === 0 ? "empty" : "success",
-      dataSource: json.data_source,
-      fetchedAt: json.fetched_at,
-      data,
-      parseNotes: json.parse_notes,
-    };
-  } catch (err: any) {
-    return {
-      status: "error",
-      error: err?.message || String(err),
-      data: [],
-    };
-  }
+  return fetchCivicEndpoint(
+    "/api/earthquakes",
+    fetchImpl,
+    [],
+    (d) => d.length === 0,
+    (j) => (Array.isArray(j?.data) ? j.data : [])
+  );
 }
 
-export async function fetchPagasaBulletin(
+export function fetchPagasaBulletin(
   fetchImpl: typeof fetch = fetch
 ): Promise<FeedState<PagasaBulletin | null>> {
-  try {
-    const res = await fetchImpl("/api/pagasa");
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status} ${res.statusText}`);
-    }
-    const json = await res.json();
-    const data: PagasaBulletin | null = json.data || null;
-
-    return {
-      status: data ? "success" : "empty",
-      dataSource: json.data_source,
-      fetchedAt: json.fetched_at,
-      data,
-      parseNotes: json.parse_notes,
-    };
-  } catch (err: any) {
-    return {
-      status: "error",
-      error: err?.message || String(err),
-      data: null,
-    };
-  }
+  return fetchCivicEndpoint(
+    "/api/pagasa",
+    fetchImpl,
+    null,
+    (d) => !d,
+    (j) => j?.data || null
+  );
 }

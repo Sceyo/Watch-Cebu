@@ -1,0 +1,95 @@
+# Watch Cebu — PAGASA Weather & Severe Weather Data Refresh
+#
+# Runs every 3 hours to fetch the latest DOST-PAGASA severe weather bulletin
+# and write it to data/live_pagasa_bulletin.json.
+#
+# PAGASA updates Tropical Cyclone Bulletins (TCWS #1-#5) every 3 hours when
+# storms affect the Philippine Area of Responsibility (PAR), and Heavy Rainfall
+# Warnings as conditions evolve.
+#
+# NO SECRETS REQUIRED:
+#   PAGASA's weather page is public and unauthenticated. This is intentional
+#   and must not be "fixed" by adding credentials. If PAGASA ever requires auth,
+#   update this comment and use GitHub Secrets.
+#
+# File ownership (ADR 2 — race condition prevention):
+#   This workflow owns ONLY:
+#     data/live_pagasa_bulletin.json
+#     data/status_pagasa.json
+#   It never touches power or earthquake data files.
+#   Workflows can run concurrently without any git or application-level conflict.
+#
+# Heartbeat (ADR 1 §4.1):
+#   The "Commit snapshot" step runs with if: always() so it fires even when
+#   the fetch step exits non-zero (e.g. staleness breach). status_pagasa.json
+#   is committed on every run, guaranteeing repository activity and preventing
+#   GitHub's 60-day auto-disable from compounding an upstream outage.
+
+name: Refresh PAGASA Weather Data
+
+on:
+  schedule:
+    - cron: '0 */3 * * *'   # every 3 hours (matches PAGASA storm bulletin cycle)
+  workflow_dispatch:          # allow manual trigger for testing
+
+permissions:
+  contents: write             # required for bot commit/push via default GITHUB_TOKEN
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    env:
+      WATCH_CEBU_FEED: pagasa  # script reads this and processes ONLY the pagasa feed
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch PAGASA data snapshot
+        id: fetch
+        continue-on-error: true
+        run: npx tsx scripts/run_scheduled_fetch.ts
+
+      - name: Commit snapshot
+        if: always()
+        run: |
+          git config user.name  "WatchCebu Bot"
+          git config user.email "actions@github.com"
+          git pull --rebase origin ${{ github.ref_name }} || true
+          git add data/live_pagasa_bulletin.json data/status_pagasa.json
+          git diff --staged --quiet || git commit -m "chore: pagasa snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push
+
+      - name: Notify on staleness breach
+        if: steps.fetch.outcome == 'failure' && env.DISCORD_WEBHOOK_URL != ''
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          RUN_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          curl -s -X POST "$DISCORD_WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"embeds\": [{
+                \"title\": \"⚠️ Watch Cebu — PAGASA Weather Feed Stale\",
+                \"description\": \"The PAGASA severe weather snapshot has not updated within the 6-hour threshold. Residents may be seeing outdated weather or typhoon data.\",
+                \"color\": 16744272,
+                \"fields\": [
+                  {\"name\": \"Workflow Run\", \"value\": \"[View Run]($RUN_URL)\", \"inline\": true},
+                  {\"name\": \"Feed\", \"value\": \"pagasa\", \"inline\": true},
+                  {\"name\": \"Threshold\", \"value\": \"6 hours\", \"inline\": true}
+                ],
+                \"footer\": {\"text\": \"Watch Cebu Civic Monitor • Automated Alert\"},
+                \"timestamp\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"
+              }]
+            }"

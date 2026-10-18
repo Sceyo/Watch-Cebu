@@ -34,65 +34,39 @@ export function renderAbout(
   container.setAttribute("aria-modal", "true");
   container.setAttribute("aria-label", "About Watch Cebu");
 
-  const githubHtml = ABOUT_METADATA.githubUrl
-    ? `
-      <a href="${ABOUT_METADATA.githubUrl}" target="_blank" rel="noopener noreferrer" class="source-link about-social-link">
-        <div class="about-social-row">
-          <span class="about-social-title">
-            <span style="display: inline-flex; align-items: center;">${ICONS.github}</span>
-            <span>GitHub</span>
-          </span>
-          <span style="color: #60A5FA; font-size: 0.85rem;">↗</span>
+  const renderSocialLink = (url: string, name: string, icon: string) =>
+    url
+      ? `
+        <a href="${url}" target="_blank" rel="noopener noreferrer" class="source-link about-social-link">
+          <div class="about-social-row">
+            <span class="about-social-title">
+              <span style="display: inline-flex; align-items: center;">${icon}</span>
+              <span>${name}</span>
+            </span>
+            <span style="color: #60A5FA; font-size: 0.85rem;">↗</span>
+          </div>
+          <div class="about-social-url">
+            ${url}
+          </div>
+        </a>
+      `
+      : `
+        <div class="source-link pending-link about-social-link" style="background: rgba(239, 68, 68, 0.06); border: 1px dashed rgba(239, 68, 68, 0.4);">
+          <div class="about-social-row">
+            <span class="about-social-title">
+              <span style="display: inline-flex; align-items: center;">${icon}</span>
+              <span>${name}</span>
+            </span>
+            <span style="color: #F87171; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; background: rgba(239, 68, 68, 0.15); padding: 2px 6px; border-radius: 4px;">Pending Configuration</span>
+          </div>
+          <div style="font-size: 0.72rem; color: #FCA5A5; font-family: var(--font-mono); margin-top: 4px;">
+            Not yet set — configure maintainer ${name} profile before public launch
+          </div>
         </div>
-        <div class="about-social-url">
-          ${ABOUT_METADATA.githubUrl}
-        </div>
-      </a>
-    `
-    : `
-      <div class="source-link pending-link about-social-link" style="background: rgba(239, 68, 68, 0.06); border: 1px dashed rgba(239, 68, 68, 0.4);">
-        <div class="about-social-row">
-          <span class="about-social-title">
-            <span style="display: inline-flex; align-items: center;">${ICONS.github}</span>
-            <span>GitHub</span>
-          </span>
-          <span style="color: #F87171; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; background: rgba(239, 68, 68, 0.15); padding: 2px 6px; border-radius: 4px;">Pending Configuration</span>
-        </div>
-        <div style="font-size: 0.72rem; color: #FCA5A5; font-family: var(--font-mono); margin-top: 4px;">
-          Not yet set — configure maintainer GitHub profile before public launch
-        </div>
-      </div>
-    `;
+      `;
 
-  const linkedinHtml = ABOUT_METADATA.linkedinUrl
-    ? `
-      <a href="${ABOUT_METADATA.linkedinUrl}" target="_blank" rel="noopener noreferrer" class="source-link about-social-link">
-        <div class="about-social-row">
-          <span class="about-social-title">
-            <span style="display: inline-flex; align-items: center;">${ICONS.linkedin}</span>
-            <span>LinkedIn</span>
-          </span>
-          <span style="color: #60A5FA; font-size: 0.85rem;">↗</span>
-        </div>
-        <div class="about-social-url">
-          ${ABOUT_METADATA.linkedinUrl}
-        </div>
-      </a>
-    `
-    : `
-      <div class="source-link pending-link about-social-link" style="background: rgba(239, 68, 68, 0.06); border: 1px dashed rgba(239, 68, 68, 0.4);">
-        <div class="about-social-row">
-          <span class="about-social-title">
-            <span style="display: inline-flex; align-items: center;">${ICONS.linkedin}</span>
-            <span>LinkedIn</span>
-          </span>
-          <span style="color: #F87171; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; background: rgba(239, 68, 68, 0.15); padding: 2px 6px; border-radius: 4px;">Pending Configuration</span>
-        </div>
-        <div style="font-size: 0.72rem; color: #FCA5A5; font-family: var(--font-mono); margin-top: 4px;">
-          Not yet set — configure maintainer LinkedIn profile before public launch
-        </div>
-      </div>
-    `;
+  const githubHtml = renderSocialLink(ABOUT_METADATA.githubUrl, "GitHub", ICONS.github);
+  const linkedinHtml = renderSocialLink(ABOUT_METADATA.linkedinUrl, "LinkedIn", ICONS.linkedin);
 
   const feedbackHtml = ABOUT_METADATA.feedbackUrl
     ? `
