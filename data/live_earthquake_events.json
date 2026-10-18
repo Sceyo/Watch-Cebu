@@ -2,7 +2,7 @@
   {
     "id": "c24b9db5b996cd9018bc11a8f3d13ed8d8766f4d4ae625d2547a2662f861c752",
     "source_url": "https://earthquake.phivolcs.dost.gov.ph/2026_Earthquake_Information/October/2026_1018_1802_B1.html",
-    "fetched_at": "2026-10-18T21:15:02.153Z",
+    "fetched_at": "2026-10-18T23:19:31.742Z",
     "datetime_pst": "2026-10-19T02:02:55+08:00",
     "datetime_utc": "2026-10-18T18:02:55.000Z",
     "lat": 9.64,
@@ -27,7 +27,7 @@
   {
     "id": "8019a5ace0c9768af51c3916b68a001b86a9cc93cea4f4f3374771b2c0fcd4e2",
     "source_url": "https://earthquake.phivolcs.dost.gov.ph/2026_Earthquake_Information/October/2026_1018_1727_B1.html",
-    "fetched_at": "2026-10-18T21:15:02.153Z",
+    "fetched_at": "2026-10-18T23:19:31.742Z",
     "datetime_pst": "2026-10-19T01:27:23+08:00",
     "datetime_utc": "2026-10-18T17:27:23.000Z",
     "lat": 9.67,
@@ -52,7 +52,7 @@
   {
     "id": "c2058c9604ff2c0f5489c99d68f41aa7213fb468a97259dc31e1e8cd97275b94",
     "source_url": "https://earthquake.phivolcs.dost.gov.ph/2026_Earthquake_Information/October/2026_1018_1543_B1F.html",
-    "fetched_at": "2026-10-18T21:15:02.153Z",
+    "fetched_at": "2026-10-18T23:19:31.742Z",
     "datetime_pst": "2026-10-18T23:43:10+08:00",
     "datetime_utc": "2026-10-18T15:43:10.000Z",
     "lat": 11.12,
@@ -77,7 +77,7 @@
   {
     "id": "48d7eef13d1a0cdffe456f4abe051aa23d51025ab475255809b6e591cad3f149",
     "source_url": "https://earthquake.phivolcs.dost.gov.ph/2026_Earthquake_Information/October/2026_1018_140330_B1.html",
-    "fetched_at": "2026-10-18T21:15:02.153Z",
+    "fetched_at": "2026-10-18T23:19:31.742Z",
     "datetime_pst": "2026-10-18T22:03:30+08:00",
     "datetime_utc": "2026-10-18T14:03:30.000Z",
     "lat": 9.41,
