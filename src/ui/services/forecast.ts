@@ -91,7 +91,11 @@ export async function fetchForecast(
     "https://api.open-meteo.com/v1/forecast?latitude=10.3157&longitude=123.8854&hourly=precipitation_probability,precipitation,cloud_cover,wind_speed_10m,weather_code&timezone=Asia%2FManila&forecast_days=1";
 
   try {
-    const res = await fetcher(url);
+    const signal =
+      typeof AbortSignal !== "undefined" && typeof AbortSignal.timeout === "function"
+        ? AbortSignal.timeout(8000)
+        : undefined;
+    const res = await fetcher(url, { signal });
     if (!res.ok) {
       return {
         status: "error",

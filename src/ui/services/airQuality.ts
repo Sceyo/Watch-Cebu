@@ -220,6 +220,14 @@ export function setCachedAirQuality(reading: AirQualityReading): void {
   } catch {}
 }
 
+function getFallbackOrCachedReading(): AirQualityReading {
+  const cached = getCachedAirQuality();
+  if (cached) {
+    return { ...cached, isStale: true, isFallback: true };
+  }
+  return FALLBACK_READING;
+}
+
 export async function fetchAirQuality(
   fetcher: typeof fetch = fetch
 ): Promise<AirQualityReading> {
@@ -227,10 +235,14 @@ export async function fetchAirQuality(
     "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=10.3157&longitude=123.8854&current=pm10,pm2_5,carbon_monoxide,aerosol_optical_depth,us_aqi,european_aqi";
 
   try {
-    const res = await fetcher(url);
+    const signal =
+      typeof AbortSignal !== "undefined" && typeof AbortSignal.timeout === "function"
+        ? AbortSignal.timeout(8000)
+        : undefined;
+    const res = await fetcher(url, { signal });
     if (!res.ok) {
       console.warn(`[WatchCebu] Air Quality API returned HTTP ${res.status}`);
-      return FALLBACK_READING;
+      return getFallbackOrCachedReading();
     }
     const json = await res.json();
     const reading = parseAirQualityData(json);
@@ -238,6 +250,6 @@ export async function fetchAirQuality(
     return reading;
   } catch (err) {
     console.warn("[WatchCebu] Air Quality fetch failed, using fallback:", err);
-    return FALLBACK_READING;
+    return getFallbackOrCachedReading();
   }
 }

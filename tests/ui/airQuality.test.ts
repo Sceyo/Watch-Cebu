@@ -215,11 +215,24 @@ describe("Air Quality Service — Wildfire Haze Detection & Advisories", () => {
   });
 
   it("gracefully falls back when fetch fails without throwing", async () => {
+    if (typeof localStorage !== "undefined" && typeof localStorage.clear === "function") {
+      localStorage.clear();
+    }
     const mockFetch = vi.fn().mockRejectedValue(new Error("Network offline"));
     const res = await fetchAirQuality(mockFetch as any);
     expect(res.isFallback).toBe(true);
     expect(res.category).toBe("good");
     expect(res.aqi).toBeGreaterThan(0);
+  });
+
+  it("gracefully falls back to cached reading when available and marks it stale", async () => {
+    const cachedSample = parseAirQualityData({ current: { us_aqi: 85 } });
+    setCachedAirQuality(cachedSample);
+    const mockFetch = vi.fn().mockRejectedValue(new Error("Network offline"));
+    const res = await fetchAirQuality(mockFetch as any);
+    expect(res.isFallback).toBe(true);
+    expect(res.isStale).toBe(true);
+    expect(res.aqi).toBe(85);
   });
 });
 
