@@ -3236,41 +3236,92 @@ textarea:focus-visible,
   color: #CBD5E1;
 }
 
-.welcome-quick-chips {
+/* Search Suggestions Dropdown */
+.search-input-wrapper {
+  position: relative;
+}
+
+.search-suggestions-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: rgba(15, 23, 42, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.15));
+  border-radius: 10px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.6);
+  z-index: 1050;
+  max-height: 280px;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-top: 2px;
+  padding: 4px;
 }
 
-.welcome-chips-label {
-  font-size: 0.74rem;
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-.welcome-chips-row {
+.suggestion-item {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.welcome-chip-btn {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--border-color);
-  color: #E2E8F0;
-  border-radius: 9999px;
-  padding: 4px 10px;
-  font-size: 0.76rem;
-  font-weight: 500;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  color: #F8FAFC;
+  font-size: 0.85rem;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  transition: background 0.12s ease;
+  min-height: 38px;
 }
 
-.welcome-chip-btn:hover {
-  background: rgba(56, 189, 248, 0.18);
-  border-color: #38BDF8;
-  color: #FFFFFF;
+.suggestion-item:hover,
+.suggestion-item:focus,
+.suggestion-item.selected {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38BDF8;
+  outline: none;
+}
+
+.suggestion-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.suggestion-pin {
+  display: inline-flex;
+  align-items: center;
+  color: var(--accent-blue, #38BDF8);
+  flex-shrink: 0;
+}
+
+.suggestion-name {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.suggestion-city {
+  font-size: 0.72rem;
+  color: var(--text-muted, #94A3B8);
+  white-space: nowrap;
+}
+
+.suggestion-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(239, 68, 68, 0.2);
+  color: #FCA5A5;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  white-space: nowrap;
+  margin-left: 8px;
 }
 
 .welcome-coverage-notice {

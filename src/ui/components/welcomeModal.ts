@@ -26,23 +26,12 @@ export function markWelcomeGuideSeen(): void {
   }
 }
 
-export const POPULAR_BARANGAYS = [
-  "Lahug",
-  "Banilad",
-  "Mabolo",
-  "Guadalupe",
-  "Talamban",
-  "Subangdaku",
-  "Basak",
-  "Pardo",
-];
-
 export function renderWelcomeModal(
   container: HTMLElement,
   isOpen: boolean,
   onDismiss: () => void,
   onOpenAbout: () => void,
-  onPinBarangay?: (selectedBarangay?: string) => void
+  onPinBarangay?: () => void
 ): void {
   if (!isOpen) {
     container.style.display = "none";
@@ -53,10 +42,6 @@ export function renderWelcomeModal(
 
   container.style.display = "flex";
   container.classList.add("open");
-
-  const chipsHtml = POPULAR_BARANGAYS.map(
-    (b) => `<button type="button" class="welcome-chip-btn" data-barangay="${b}">${b}</button>`
-  ).join("");
 
   container.innerHTML = `
     <div class="welcome-modal-card" role="dialog" aria-modal="true" aria-labelledby="welcome-modal-title">
@@ -73,52 +58,19 @@ export function renderWelcomeModal(
       </div>
 
       <div class="welcome-features-list">
-        <!-- Feature 1: Brownout schedules -->
-        <div class="welcome-feature-item">
-          <div class="welcome-feature-icon welcome-feat-bolt">
-            ${ICONS.bolt}
-          </div>
-          <div class="welcome-feature-content">
-            <div class="welcome-feature-title">Brownout Schedules</div>
-            <div class="welcome-feature-desc">
-              Planned outages from Visayan Electric (VECO). Search or pin your barangay to see if you're affected.
+        ${[
+          { c: "welcome-feat-bolt", i: ICONS.bolt, t: "Brownout Schedules", d: "Planned outages from Visayan Electric (VECO). Search or pin your barangay to see if you're affected." },
+          { c: "welcome-feat-quake", i: ICONS.earthquake, t: "Earthquakes, Storms &amp; Air Quality", d: "Recent quakes near Cebu, official PAGASA storm warnings, and live air quality updates." },
+          { c: "welcome-feat-shield", i: ICONS.shield, t: "Works on Weak Signal (Offline PWA)", d: "Opens even when connection is slow. Add to Home Screen for offline access. Zero ads, zero accounts." },
+        ].map(f => `
+          <div class="welcome-feature-item">
+            <div class="welcome-feature-icon ${f.c}">${f.i}</div>
+            <div class="welcome-feature-content">
+              <div class="welcome-feature-title">${f.t}</div>
+              <div class="welcome-feature-desc">${f.d}</div>
             </div>
           </div>
-        </div>
-
-        <!-- Feature 2: Earthquakes & storms -->
-        <div class="welcome-feature-item">
-          <div class="welcome-feature-icon welcome-feat-quake">
-            ${ICONS.earthquake}
-          </div>
-          <div class="welcome-feature-content">
-            <div class="welcome-feature-title">Earthquakes, Storms &amp; Air Quality</div>
-            <div class="welcome-feature-desc">
-              Recent quakes near Cebu, official PAGASA storm warnings, and live air quality updates.
-            </div>
-          </div>
-        </div>
-
-        <!-- Feature 3: Works on weak signal (PWA) -->
-        <div class="welcome-feature-item">
-          <div class="welcome-feature-icon welcome-feat-shield">
-            ${ICONS.shield}
-          </div>
-          <div class="welcome-feature-content">
-            <div class="welcome-feature-title">Works on Weak Signal (Offline PWA)</div>
-            <div class="welcome-feature-desc">
-              Opens even when connection is slow. Add to Home Screen for offline access. Zero ads, zero accounts.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Quick Suggested Barangay Chips -->
-      <div class="welcome-quick-chips">
-        <div class="welcome-chips-label">Quick pin your home area:</div>
-        <div class="welcome-chips-row">
-          ${chipsHtml}
-        </div>
+        `).join("")}
       </div>
 
       <!-- One-line coverage notice -->
@@ -149,20 +101,6 @@ export function renderWelcomeModal(
   closeBtn?.addEventListener("click", () => {
     markWelcomeGuideSeen();
     onDismiss();
-  });
-
-  // Attach chip listeners
-  const chipBtns = container.querySelectorAll<HTMLButtonElement>(".welcome-chip-btn");
-  chipBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const brgy = btn.getAttribute("data-barangay");
-      markWelcomeGuideSeen();
-      if (brgy && onPinBarangay) {
-        onPinBarangay(brgy);
-      } else {
-        onDismiss();
-      }
-    });
   });
 
   const pinBtn = container.querySelector<HTMLButtonElement>("#btn-welcome-pin");

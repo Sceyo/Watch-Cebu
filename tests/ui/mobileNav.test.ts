@@ -221,7 +221,7 @@ describe("Map Controls Component (H5 & C2)", () => {
     expect(container.innerHTML).toContain('style="display: flex;"');
   });
 
-  it("toggles Filter vs Unfilter label on pinned banner based on current search query (UAT Fix)", () => {
+  it("consistently provides Filter button on pinned banner without unfilter (User Request)", () => {
     const container = createMockElement();
     const callbacks = {
       onSearchChange: vi.fn(),
@@ -238,20 +238,14 @@ describe("Map Controls Component (H5 & C2)", () => {
       advisories: [],
     };
 
-    // When search is not Banilad, button should say "Filter"
-    renderMapControls(container, "power", callbacks, {
-      myBarangayStatus: mockMyBarangayStatus,
-      searchQuery: "",
-    });
-    expect(container.innerHTML).toContain(">Filter</button>");
-
-    // When search IS Banilad, button should toggle to "Unfilter" with active class
+    // When rendered with search, button should strictly say "Filter", never "Unfilter"
     renderMapControls(container, "power", callbacks, {
       myBarangayStatus: mockMyBarangayStatus,
       searchQuery: "Banilad",
     });
-    expect(container.innerHTML).toContain(">Unfilter</button>");
-    expect(container.innerHTML).toContain("btn-filter-my-area active");
+    expect(container.innerHTML).toContain(">Filter</button>");
+    expect(container.innerHTML).not.toContain(">Unfilter</button>");
+    expect(container.innerHTML).toContain('id="search-suggestions-dropdown"');
   });
 
   it("safely escapes HTML tags in showToast to prevent disappearing or injected markup (UAT Fix)", () => {

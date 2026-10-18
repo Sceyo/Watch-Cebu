@@ -3837,6 +3837,68 @@ export function lookupCebuLocation(query: string): CebuLocation | null {
   return null;
 }
 
+export interface SearchSuggestion {
+  name: string;
+  city: string;
+  type: string;
+  hasOutage?: boolean;
+}
+
+/**
+ * Returns location suggestions from the curated Cebu database based on user search input.
+ * Deduplicates by canonical name and city, prioritizing prefix matches and active outages.
+ */
+export function getCebuSearchSuggestions(
+  query: string,
+  advisoryBarangays?: Set<string> | string[],
+  maxResults = 6
+): SearchSuggestion[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+
+  const qClean = cleanQuery(q);
+  const qCleanNorm = normalizeText(qClean);
+  const outageSet = advisoryBarangays
+    ? (advisoryBarangays instanceof Set ? advisoryBarangays : new Set(advisoryBarangays.map((b) => b.toLowerCase().trim())))
+    : null;
+
+  const results: SearchSuggestion[] = [];
+  const seen = new Set<string>();
+
+  const checkAndAdd = (loc: CebuLocation): boolean => {
+    const key = `${loc.name}__${loc.city}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    results.push({
+      name: loc.name,
+      city: loc.city,
+      type: loc.type,
+      hasOutage: Boolean(outageSet && outageSet.has(loc.name.toLowerCase())),
+    });
+    return results.length >= maxResults;
+  };
+
+  // 1. Prefix matches on name
+  for (const loc of CEBU_LOCATIONS) {
+    if (loc.name.toLowerCase().startsWith(q) || normalizeText(loc.name).startsWith(qCleanNorm)) {
+      if (checkAndAdd(loc)) return results;
+    }
+  }
+
+  // 2. Substring & alternate name matches
+  for (const loc of CEBU_LOCATIONS) {
+    if (
+      loc.name.toLowerCase().includes(q) ||
+      normalizeText(loc.name).includes(qCleanNorm) ||
+      (loc.alt && loc.alt.some((a) => a.toLowerCase().includes(q)))
+    ) {
+      if (checkAndAdd(loc)) return results;
+    }
+  }
+
+  return results;
+}
+
 export interface GeocodeResult {
   displayName: string;
   lat: number;

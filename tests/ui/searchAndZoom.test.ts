@@ -300,4 +300,32 @@ describe("MapController — Favorite Barangay & Earthquake Enhancements", () => 
     const calls = (L.divIcon as any).mock.calls;
     expect(calls.length).toBe(0);
   });
+
+  describe("Search Suggestions from Database (User Request)", () => {
+    it("returns prefix matches for barangays like Banilad and Cabancalan", () => {
+      const suggestions = cebuLocations.getCebuSearchSuggestions("Ban");
+      expect(suggestions.length).toBeGreaterThan(0);
+      expect(suggestions.some((s) => s.name === "Banilad")).toBe(true);
+
+      const cabSuggestions = cebuLocations.getCebuSearchSuggestions("Cabancalan");
+      expect(cabSuggestions.length).toBeGreaterThan(0);
+      expect(cabSuggestions[0].name).toBe("Cabancalan");
+      expect(cabSuggestions[0].city).toBe("Mandaue City");
+    });
+
+    it("flags locations with active outages when advisoryBarangays are provided", () => {
+      const suggestions = cebuLocations.getCebuSearchSuggestions("Ban", ["Banilad"]);
+      const banilad = suggestions.find((s) => s.name === "Banilad");
+      expect(banilad?.hasOutage).toBe(true);
+    });
+
+    it("returns empty array for empty query and respects maxResults limit", () => {
+      expect(cebuLocations.getCebuSearchSuggestions("")).toEqual([]);
+      expect(cebuLocations.getCebuSearchSuggestions("   ")).toEqual([]);
+
+      const limited = cebuLocations.getCebuSearchSuggestions("Cebu", undefined, 3);
+      expect(limited.length).toBeLessThanOrEqual(3);
+    });
+  });
 });
+

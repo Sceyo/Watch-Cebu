@@ -286,6 +286,14 @@ function updateUI() {
 
   // Floating Map Controls (Search, Locate Me, View Mode Toggle, Mobile Layer Toggle)
   const myBarangayStatus = myBarangay ? getMyBarangayStatus(myBarangay, powerFeedState.data) : null;
+  const advisoryBarangays = new Set<string>();
+  for (const adv of powerFeedState.data) {
+    if (Array.isArray(adv.barangay)) {
+      for (const b of adv.barangay) {
+        if (b) advisoryBarangays.add(b.toLowerCase().trim());
+      }
+    }
+  }
   if (mapControlsEl) {
     renderMapControls(
       mapControlsEl,
@@ -351,6 +359,7 @@ function updateUI() {
         viewMode: currentViewMode,
         myBarangayStatus,
         searchQuery: filterState.searchQuery,
+        advisoryBarangays,
       }
     );
   }

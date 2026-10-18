@@ -138,60 +138,29 @@ export function renderAbout(
       </div>
 
       <!-- Real Data Attribution Section (MANDATORY & UNCOMPROMISED) -->
-      <div class="legend-section">
+        <div class="legend-section">
         <h3 class="section-title" style="display: flex; align-items: center; gap: 6px;">
           <span style="display: inline-flex; align-items: center; color: var(--accent-blue);">${ICONS.institution}</span>
           <span>Authoritative Data Sources</span>
         </h3>
         <p class="section-desc">Watch Cebu presents only verified public records. Coordinates and bulletins originate directly from authoritative channels:</p>
 
-        <div class="legend-item" style="align-items: flex-start;">
-          <span style="display: inline-flex; align-items: center; color: #F59E0B; margin-top: 2px;">${ICONS.bolt}</span>
-          <div class="item-text">
-            <span class="item-name">Visayan Electric (VECO)</span>
-            <span class="item-sub">Scheduled power interruption advisories published for franchise areas in Metro Cebu.</span>
+        ${[
+          { i: ICONS.bolt, c: "#F59E0B", n: "Visayan Electric (VECO)", d: "Scheduled power interruption advisories published for franchise areas in Metro Cebu." },
+          { i: ICONS.earthquake, c: "#A78BFA", n: "DOST-PHIVOLCS", d: "Philippine Institute of Volcanology and Seismology official earthquake bulletins and PEIS intensity data." },
+          { i: ICONS.cyclone, c: "#38BDF8", n: "DOST-PAGASA", d: "Philippine Atmospheric, Geophysical and Astronomical Services Administration official severe weather bulletins, Tropical Cyclone Wind Signals (TCWS), and Heavy Rainfall Warnings." },
+          { i: ICONS.air, c: "#34D399", n: "Open-Meteo", d: "Real-time air quality index (AQI) and 24-hour hourly weather forecast metrics for Metro Cebu." },
+          { i: ICONS.mapPin, c: "#60A5FA", n: "OpenStreetMap Contributors", d: "Approximate barangay locations from OpenStreetMap community mapping (ODbL). Points, not official boundaries." },
+          { i: ICONS.map, c: "#CBD5E1", n: "CARTO Basemaps", d: "Dark Matter high-contrast map tiles for control-room civic clarity." },
+        ].map(s => `
+          <div class="legend-item" style="align-items: flex-start;">
+            <span style="display: inline-flex; align-items: center; color: ${s.c}; margin-top: 2px;">${s.i}</span>
+            <div class="item-text">
+              <span class="item-name">${s.n}</span>
+              <span class="item-sub">${s.d}</span>
+            </div>
           </div>
-        </div>
-
-        <div class="legend-item" style="align-items: flex-start;">
-          <span style="display: inline-flex; align-items: center; color: #A78BFA; margin-top: 2px;">${ICONS.earthquake}</span>
-          <div class="item-text">
-            <span class="item-name">DOST-PHIVOLCS</span>
-            <span class="item-sub">Philippine Institute of Volcanology and Seismology official earthquake bulletins and PEIS intensity data.</span>
-          </div>
-        </div>
-
-        <div class="legend-item" style="align-items: flex-start;">
-          <span style="display: inline-flex; align-items: center; color: #38BDF8; margin-top: 2px;">${ICONS.cyclone}</span>
-          <div class="item-text">
-            <span class="item-name">DOST-PAGASA</span>
-            <span class="item-sub">Philippine Atmospheric, Geophysical and Astronomical Services Administration official severe weather bulletins, Tropical Cyclone Wind Signals (TCWS), and Heavy Rainfall Warnings.</span>
-          </div>
-        </div>
-
-        <div class="legend-item" style="align-items: flex-start;">
-          <span style="display: inline-flex; align-items: center; color: #34D399; margin-top: 2px;">${ICONS.air}</span>
-          <div class="item-text">
-            <span class="item-name">Open-Meteo</span>
-            <span class="item-sub">Real-time air quality index (AQI) and 24-hour hourly weather forecast metrics for Metro Cebu.</span>
-          </div>
-        </div>
-
-        <div class="legend-item" style="align-items: flex-start;">
-          <span style="display: inline-flex; align-items: center; color: #60A5FA; margin-top: 2px;">${ICONS.mapPin}</span>
-          <div class="item-text">
-            <span class="item-name">OpenStreetMap Contributors</span>
-            <span class="item-sub">Approximate barangay locations from OpenStreetMap community mapping (ODbL). Points, not official boundaries.</span>
-          </div>
-        </div>
-
-        <div class="legend-item" style="align-items: flex-start;">
-          <span style="display: inline-flex; align-items: center; color: #CBD5E1; margin-top: 2px;">${ICONS.map}</span>
-          <div class="item-text">
-            <span class="item-name">CARTO Basemaps</span>
-            <span class="item-sub">Dark Matter high-contrast map tiles for control-room civic clarity.</span>
-          </div>
-        </div>
+        `).join("")}
       </div>
 
       <!-- Scope Boundaries, Limitations & Disclaimers -->
@@ -203,66 +172,48 @@ export function renderAbout(
         <p class="section-desc">What Watch Cebu covers, what is currently out of scope, and essential civic boundaries:</p>
 
         <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
-          <!-- Power Coverage Boundaries -->
-          <div class="about-box">
-            <div style="font-size: 0.82rem; font-weight: 700; color: #F59E0B; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-              <span style="display: inline-flex; align-items: center;">${ICONS.bolt}</span>
-              <span>Power Coverage: VECO Franchise Only</span>
+          ${[
+            {
+              i: ICONS.bolt,
+              c: "#F59E0B",
+              t: "Power Coverage: VECO Franchise Only",
+              b: `Covers scheduled maintenance for <strong>4 cities & 4 municipalities</strong> (Cebu City, Mandaue, Talisay, Naga, Consolacion, Liloan, Minglanilla, San Fernando).<br><strong style="color: #F87171;">Currently Out of Scope (Known Limitations):</strong><ul style="margin: 4px 0 0 16px; padding: 0;"><li><strong>MECO (Mactan Electric):</strong> Lapu-Lapu &amp; Cordova not covered.</li><li><strong>CEBECO I, II, & III:</strong> Provincial towns not covered.</li><li><strong>Emergency Outages:</strong> Spontaneous blackouts cannot be detected in real time.</li></ul>`,
+            },
+            {
+              i: ICONS.mapPin,
+              c: "#60A5FA",
+              t: "Approximate Barangay Coordinates",
+              b: "Map pins indicate approximate neighborhood center points derived from OpenStreetMap and VECO text descriptions. An advisory pin does not guarantee every household on a feeder loses power.",
+            },
+            {
+              i: ICONS.earthquake,
+              c: "#A78BFA",
+              t: "Seismic Epicenters (Not Early Warning)",
+              b: "Tracks official DOST-PHIVOLCS bulletins within 300 km. Informational dashboard, not an Earthquake Early Warning (EEW) alarm.",
+            },
+            {
+              i: ICONS.cyclone,
+              c: "#34D399",
+              t: "Weather & Disaster Orders",
+              b: "Weather forecasts (Open-Meteo) and storm signals (DOST-PAGASA) for situational awareness. Watch Cebu does not issue official evacuation orders or class suspensions.",
+            },
+            {
+              i: ICONS.shield,
+              c: "#CBD5E1",
+              t: "No Emergency Dispatch or Ticketing",
+              b: "Informational monitor. You cannot report downed lines or request medical rescue here. Use the direct emergency hotlines below for urgent assistance.",
+            },
+          ].map(d => `
+            <div class="about-box">
+              <div style="font-size: 0.82rem; font-weight: 700; color: ${d.c}; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+                <span style="display: inline-flex; align-items: center;">${d.i}</span>
+                <span>${d.t}</span>
+              </div>
+              <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.4;">
+                ${d.b}
+              </div>
             </div>
-            <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.4;">
-              Covers scheduled maintenance for <strong>4 cities & 4 municipalities</strong> (Cebu City, Mandaue, Talisay, Naga, Consolacion, Liloan, Minglanilla, San Fernando).<br>
-              <strong style="color: #F87171;">Currently Out of Scope (Known Limitations):</strong>
-              <ul style="margin: 4px 0 0 16px; padding: 0;">
-                <li><strong>MECO (Mactan Electric):</strong> Lapu-Lapu City & Cordova (Mactan Island) are not covered.</li>
-                <li><strong>CEBECO I, II, & III:</strong> Provincial towns in Northern, Southern, and Western Cebu are not covered due to a lack of machine-readable data feeds.</li>
-                <li><strong>Unscheduled / Emergency Outages:</strong> Spontaneous breaker tripping, blown transformers, and emergency blackouts cannot be detected in real time.</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Geocoding Approximate Coordinates -->
-          <div class="about-box">
-            <div style="font-size: 0.82rem; font-weight: 700; color: #60A5FA; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-              <span style="display: inline-flex; align-items: center;">${ICONS.mapPin}</span>
-              <span>Approximate Barangay Coordinates</span>
-            </div>
-            <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.4;">
-              Map pins indicate approximate neighborhood center points derived from OpenStreetMap and VECO text descriptions. An advisory pin in your barangay does <em>not</em> guarantee your specific household or meter will lose power, as outages often isolate specific transformer feeders.
-            </div>
-          </div>
-
-          <!-- Seismic Disclaimer -->
-          <div class="about-box">
-            <div style="font-size: 0.82rem; font-weight: 700; color: #A78BFA; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-              <span style="display: inline-flex; align-items: center;">${ICONS.earthquake}</span>
-              <span>Seismic Epicenters (Not Early Warning)</span>
-            </div>
-            <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.4;">
-              Tracks official DOST-PHIVOLCS bulletins within 300 km. This is an information dashboard, <strong>not an Earthquake Early Warning (EEW) alarm</strong>. Shaking felt at your home depends on local ground conditions and distance from the epicenter.
-            </div>
-          </div>
-
-          <!-- Weather & Evacuation Orders -->
-          <div class="about-box">
-            <div style="font-size: 0.82rem; font-weight: 700; color: #34D399; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-              <span style="display: inline-flex; align-items: center;">${ICONS.cyclone}</span>
-              <span>Weather & Disaster Orders</span>
-            </div>
-            <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.4;">
-              Weather forecasts (Open-Meteo) and storm signals (DOST-PAGASA) are aggregated for situational awareness. Watch Cebu does <strong>not issue official evacuation orders or class suspensions</strong>. Always follow directives from your local CDRRMO and the Provincial Disaster Office.
-            </div>
-          </div>
-
-          <!-- No Dispatch -->
-          <div class="about-box">
-            <div style="font-size: 0.82rem; font-weight: 700; color: #CBD5E1; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-              <span style="display: inline-flex; align-items: center;">${ICONS.shield}</span>
-              <span>No Emergency Dispatch or Ticketing</span>
-            </div>
-            <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.4;">
-              This website is an informational monitor. You cannot report downed lines, request medical rescue, or submit power tickets through this app. Use the direct emergency hotlines below for urgent assistance.
-            </div>
-          </div>
+          `).join("")}
         </div>
       </div>
 
@@ -299,18 +250,15 @@ export function renderAbout(
         </h3>
         <p class="section-desc">Installs directly to home screen for offline access:</p>
         <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
-          <div class="about-box-sm">
-            <div style="font-size: 0.8rem; font-weight: 700; color: #38BDF8; margin-bottom: 2px;">iPhone &amp; iPad (Safari)</div>
-            <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.35;">
-              Tap Share (box with arrow) → <strong>Add to Home Screen</strong> → Add.
+          ${[
+            { t: "iPhone &amp; iPad (Safari)", c: "#38BDF8", d: "Tap Share (box with arrow) → <strong>Add to Home Screen</strong> → Add." },
+            { t: "Android (Chrome &amp; Edge)", c: "#34D399", d: "Tap menu (<strong>⋮</strong>) → <strong>Install app</strong> or Add to Home screen." },
+          ].map(p => `
+            <div class="about-box-sm">
+              <div style="font-size: 0.8rem; font-weight: 700; color: ${p.c}; margin-bottom: 2px;">${p.t}</div>
+              <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.35;">${p.d}</div>
             </div>
-          </div>
-          <div class="about-box-sm">
-            <div style="font-size: 0.8rem; font-weight: 700; color: #34D399; margin-bottom: 2px;">Android (Chrome &amp; Edge)</div>
-            <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.35;">
-              Tap menu (<strong>⋮</strong>) → <strong>Install app</strong> or Add to Home screen.
-            </div>
-          </div>
+          `).join("")}
         </div>
       </div>
 
