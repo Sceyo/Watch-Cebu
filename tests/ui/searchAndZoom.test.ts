@@ -138,6 +138,36 @@ describe("MapController — searchAndZoom (Hybrid 3-Tier Strategy)", () => {
     );
   });
 
+  it("prioritizes physical location matches over purpose descriptions (Banilad UAT Fix)", async () => {
+    const baniladPhysical: PowerAdvisory = {
+      ...mockPowerAdvisory,
+      id: "pow-banilad",
+      barangay: ["Banilad"],
+      streets: ["Gov. Cuenco"],
+      lat: 10.3400,
+      lon: 123.9100,
+      purpose: "Maintenance work",
+    };
+
+    const cabancalanPurposeOnly: PowerAdvisory = {
+      ...mockPowerAdvisory,
+      id: "pow-cabancalan",
+      city: "Mandaue City",
+      barangay: ["Cabancalan"],
+      streets: ["M.L. Quezon"],
+      lat: 10.3550,
+      lon: 123.9250,
+      purpose: "Feeder load transfer serving customers in Banilad, Talamban & Cabancalan",
+    };
+
+    const res = await controller.searchAndZoom("Banilad", [baniladPhysical, cabancalanPurposeOnly], []);
+    expect(res.found).toBe(true);
+    expect(res.tier).toBe(1);
+    // Should match ONLY the 1 physical advisory in Banilad, ignoring Cabancalan
+    expect(res.message).toContain("Found 1 active outage advisory in Banilad");
+    expect(res.coords).toEqual([10.34, 123.91]);
+  });
+
   it("resolves via Tier 1 when an active earthquake matches", async () => {
     const res = await controller.searchAndZoom("San Fernando", [], [mockEarthquake]);
     expect(res.found).toBe(true);

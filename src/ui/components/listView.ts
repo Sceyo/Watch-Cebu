@@ -8,20 +8,22 @@
 import type { PowerAdvisory } from "../../types/index.js";
 import type { FilterState } from "../types.js";
 import { computePowerStatus } from "../map/markerStyles.js";
+import { isFavorite } from "../services/myBarangay.js";
 import {
   formatReadableDate,
   formatPhilippineTimeRange,
   normalizeStreetList,
+  escapeHtml,
 } from "../../utils/index.js";
 import { ICONS } from "./icons.js";
 
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+function matchesPhysicalLocation(a: PowerAdvisory, q: string): boolean {
+  return (
+    a.barangay.some((b) => b.toLowerCase().includes(q)) ||
+    a.city.toLowerCase().includes(q) ||
+    a.streets.some((s) => s.toLowerCase().includes(q)) ||
+    Boolean(a.areas_affected_raw && a.areas_affected_raw.toLowerCase().includes(q))
+  );
 }
 
 export function renderListView(
@@ -35,17 +37,13 @@ export function renderListView(
   }
 ): void {
   const query = filter.searchQuery ? filter.searchQuery.toLowerCase().trim() : "";
+  const hasPhysicalMatches = query ? advisories.some((a) => matchesPhysicalLocation(a, query)) : false;
 
   const filtered = advisories.filter((a) => {
-    if (!query && filter.selectedDate !== "all" && a.date !== filter.selectedDate) {
-      return false;
-    }
+    if (!query && filter.selectedDate !== "all" && a.date !== filter.selectedDate) return false;
     if (query) {
-      const matchesBarangay = a.barangay.some((b) => b.toLowerCase().includes(query));
-      const matchesCity = a.city.toLowerCase().includes(query);
-      const matchesStreet = a.streets.some((s) => s.toLowerCase().includes(query));
-      const matchesPurpose = a.purpose.toLowerCase().includes(query);
-      if (!matchesBarangay && !matchesCity && !matchesStreet && !matchesPurpose) {
+      const match = matchesPhysicalLocation(a, query);
+      if (hasPhysicalMatches ? !match : !match && !a.purpose.toLowerCase().includes(query)) {
         return false;
       }
     }
@@ -102,9 +100,11 @@ export function renderListView(
       const timeRangePht = formatPhilippineTimeRange(a.start_time, a.end_time, a.overnight_span);
       const primaryBarangay = a.barangay[0] || a.city;
       const isPinned = Boolean(
-        callbacks.myBarangay &&
-        (a.barangay.some((b) => b.toLowerCase() === callbacks.myBarangay!.toLowerCase()) ||
-          a.city.toLowerCase() === callbacks.myBarangay!.toLowerCase())
+        (callbacks.myBarangay &&
+          (a.barangay.some((b) => b.toLowerCase() === callbacks.myBarangay!.toLowerCase()) ||
+            a.city.toLowerCase() === callbacks.myBarangay!.toLowerCase())) ||
+        a.barangay.some((b) => isFavorite(b)) ||
+        isFavorite(a.city)
       );
 
       html += `

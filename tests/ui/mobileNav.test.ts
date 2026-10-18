@@ -202,6 +202,70 @@ describe("Map Controls Component (H5 & C2)", () => {
     expect(container.innerHTML).toContain('id="btn-locate-me"');
     expect(container.innerHTML).toContain("mobile-layer-segmented-bar");
   });
+
+  it("syncs search query to input value and displays clear button when query is present (UAT Fix)", () => {
+    const container = createMockElement();
+    const callbacks = {
+      onSearchChange: vi.fn(),
+      onLocateUser: vi.fn(),
+      onLayerChange: vi.fn(),
+      onToast: vi.fn(),
+    };
+
+    renderMapControls(container, "power", callbacks, {
+      searchQuery: "Tipolo",
+    });
+
+    expect(container.innerHTML).toContain('value="Tipolo"');
+    expect(container.innerHTML).toContain('id="btn-clear-search"');
+    expect(container.innerHTML).toContain('style="display: flex;"');
+  });
+
+  it("toggles Filter vs Unfilter label on pinned banner based on current search query (UAT Fix)", () => {
+    const container = createMockElement();
+    const callbacks = {
+      onSearchChange: vi.fn(),
+      onLocateUser: vi.fn(),
+      onLayerChange: vi.fn(),
+      onToast: vi.fn(),
+    };
+
+    const mockMyBarangayStatus = {
+      barangay: "Banilad",
+      hasAdvisories: true,
+      count: 2,
+      dates: ["2026-10-19"],
+      advisories: [],
+    };
+
+    // When search is not Banilad, button should say "Filter"
+    renderMapControls(container, "power", callbacks, {
+      myBarangayStatus: mockMyBarangayStatus,
+      searchQuery: "",
+    });
+    expect(container.innerHTML).toContain(">Filter</button>");
+
+    // When search IS Banilad, button should toggle to "Unfilter" with active class
+    renderMapControls(container, "power", callbacks, {
+      myBarangayStatus: mockMyBarangayStatus,
+      searchQuery: "Banilad",
+    });
+    expect(container.innerHTML).toContain(">Unfilter</button>");
+    expect(container.innerHTML).toContain("btn-filter-my-area active");
+  });
+
+  it("safely escapes HTML tags in showToast to prevent disappearing or injected markup (UAT Fix)", () => {
+    // Ensure document and body exist in test environment
+    if (typeof document !== "undefined") {
+      showToast('<script>alert("xss")</script>');
+      const toastEl = document.querySelector(".toast-message");
+      expect(toastEl).not.toBeNull();
+      // Should contain literal escaped entities or textContent containing the tag
+      expect(toastEl?.innerHTML).toContain("&lt;script&gt;");
+      expect(toastEl?.textContent).toContain('<script>alert("xss")</script>');
+      toastEl?.remove();
+    }
+  });
 });
 
 describe("Status Popover Component (C2)", () => {

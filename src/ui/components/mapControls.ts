@@ -11,17 +11,8 @@
 
 import type { LayerSelection } from "../types.js";
 import type { MyBarangayStatus } from "../services/myBarangay.js";
-import { formatReadableDate } from "../../utils/index.js";
+import { formatReadableDate, escapeHtml } from "../../utils/index.js";
 import { ICONS } from "./icons.js";
-
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
 
 export interface MapControlsCallbacks {
   onSearchChange: (query: string) => void;
@@ -37,6 +28,7 @@ export interface MapControlsCallbacks {
 export interface MapControlsExtraState {
   viewMode?: "map" | "list";
   myBarangayStatus?: MyBarangayStatus | null;
+  searchQuery?: string;
 }
 
 export function renderMapControls(
@@ -47,6 +39,13 @@ export function renderMapControls(
 ): void {
   const viewMode = extra?.viewMode || "map";
   const myBarangay = extra?.myBarangayStatus;
+  const currentSearch = extra?.searchQuery || "";
+
+  const isCurrentlyFiltered = Boolean(
+    myBarangay &&
+    currentSearch &&
+    currentSearch.toLowerCase().trim() === myBarangay.barangay.toLowerCase().trim()
+  );
 
   let pinnedBannerHtml = "";
   if (myBarangay) {
@@ -62,7 +61,7 @@ export function renderMapControls(
           ${outageBadge}
         </div>
         <div class="my-barangay-btns">
-          ${myBarangay.count > 0 ? `<button class="btn-filter-my-area" id="btn-filter-my-area" title="Filter map to ${escapeHtml(myBarangay.barangay)}">Filter</button>` : ''}
+          ${myBarangay.count > 0 ? `<button class="btn-filter-my-area ${isCurrentlyFiltered ? 'active' : ''}" id="btn-filter-my-area" title="${isCurrentlyFiltered ? 'Clear filter to show all areas' : `Filter map to ${escapeHtml(myBarangay.barangay)}`}">${isCurrentlyFiltered ? 'Unfilter' : 'Filter'}</button>` : ''}
           <button class="btn-unpin-barangay" id="btn-unpin-area" title="Unpin ${escapeHtml(myBarangay.barangay)}" aria-label="Unpin barangay">${ICONS.close}</button>
         </div>
       </div>
@@ -76,9 +75,7 @@ export function renderMapControls(
         <form class="search-form" id="map-search-form" action="javascript:void(0);">
           <div class="search-input-wrapper">
             <button type="submit" class="search-submit-btn" aria-label="Search and zoom to area" title="Search and zoom to area">
-              <span class="search-icon" aria-hidden="true" style="display: inline-flex; align-items: center;">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-              </span>
+              <span class="search-icon" aria-hidden="true" style="display: inline-flex; align-items: center;">${ICONS.search}</span>
             </button>
             <input
               type="search"
@@ -89,8 +86,9 @@ export function renderMapControls(
               autocomplete="off"
               spellcheck="false"
               enterkeyhint="search"
+              value="${escapeHtml(currentSearch)}"
             />
-            <button type="button" id="btn-clear-search" class="search-clear-btn" aria-label="Clear search" title="Clear search" style="display: none;">${ICONS.close}</button>
+            <button type="button" id="btn-clear-search" class="search-clear-btn" aria-label="Clear search" title="Clear search" style="display: ${currentSearch ? 'flex' : 'none'};">${ICONS.close}</button>
           </div>
         </form>
 
@@ -211,10 +209,16 @@ export function renderMapControls(
   const filterMyAreaBtn = container.querySelector<HTMLButtonElement>("#btn-filter-my-area");
   filterMyAreaBtn?.addEventListener("click", () => {
     if (myBarangay && searchInput) {
-      searchInput.value = myBarangay.barangay;
-      if (clearBtn) clearBtn.style.display = "flex";
-      callbacks.onSearchChange(myBarangay.barangay);
-      callbacks.onSelectMyBarangay?.(myBarangay.barangay);
+      if (isCurrentlyFiltered) {
+        searchInput.value = "";
+        if (clearBtn) clearBtn.style.display = "none";
+        callbacks.onSearchChange("");
+      } else {
+        searchInput.value = myBarangay.barangay;
+        if (clearBtn) clearBtn.style.display = "flex";
+        callbacks.onSearchChange(myBarangay.barangay);
+        callbacks.onSelectMyBarangay?.(myBarangay.barangay);
+      }
     }
   });
 

@@ -573,4 +573,131 @@ describe("Front-End Comprehensive Stress Suite", () => {
       unsubscribe();
     });
   });
+
+  // =========================================================================
+  // Scenario 7: UAT Remediation Stress Suite (Search Sync, Layer Switching, Multi-Favorites & Relevance)
+  // =========================================================================
+  describe("Scenario 7: UAT Remediation Stress Suite", () => {
+    it("handles 200 rapid search sync cycles between Map and List View with zero state loss", () => {
+      const controlsEl = createMockElement("map-controls");
+      const listEl = createMockElement("list-view");
+      const queries = ["Banilad", "Tipolo", "Lahug", "Mabolo", "Guadalupe", "Talamban", "Subangdaku", ""];
+
+      const start = performance.now();
+      for (let i = 0; i < 200; i++) {
+        const query = queries[i % queries.length];
+        const viewMode = i % 2 === 0 ? "map" : "list";
+
+        renderMapControls(
+          controlsEl,
+          "power",
+          {
+            onSearchChange: vi.fn(),
+            onLocateUser: vi.fn(),
+            onLayerChange: vi.fn(),
+            onToast: vi.fn(),
+          },
+          {
+            viewMode,
+            searchQuery: query,
+          }
+        );
+
+        if (query) {
+          expect(controlsEl.innerHTML).toContain(`value="${query}"`);
+          expect(controlsEl.innerHTML).toContain('style="display: flex;"');
+        } else {
+          expect(controlsEl.innerHTML).toContain('value=""');
+          expect(controlsEl.innerHTML).toContain('style="display: none;"');
+        }
+
+        const advisories = generateMockPowerAdvisories(20);
+        renderListView(listEl, advisories, { selectedDate: "all", searchQuery: query }, {
+          onSelectAdvisory: vi.fn(),
+        });
+      }
+
+      const duration = performance.now() - start;
+      expect(duration).toBeLessThan(500); // 200 full renders in < 500ms
+    });
+
+    it("handles 500 rapid Multi-Favorite insertions, deletions, and status calculations", async () => {
+      const { getFavorites, addFavorite, removeFavorite, isFavorite, MAX_FAVORITES } = await import(
+        "../../src/ui/services/myBarangay.js"
+      );
+
+      const barangays = ["Talamban", "Lahug", "Banilad", "Mabolo", "Guadalupe", "Subangdaku", "Basak"];
+
+      const start = performance.now();
+      for (let i = 0; i < 500; i++) {
+        const brgy = barangays[i % barangays.length];
+        if (i % 3 === 0) {
+          addFavorite(brgy);
+          expect(getFavorites().length).toBeLessThanOrEqual(MAX_FAVORITES);
+        } else if (i % 3 === 1) {
+          isFavorite(brgy);
+        } else {
+          removeFavorite(brgy);
+        }
+      }
+
+      const duration = performance.now() - start;
+      expect(duration).toBeLessThan(300); // 500 ops in < 300ms
+    });
+
+    it("verifies Banilad relevance filtering under 1,000 synthetic power advisories", () => {
+      const largeAdvisorySet: PowerAdvisory[] = [];
+
+      for (let i = 0; i < 1000; i++) {
+        const isBaniladPhysical = i % 100 === 0; // 10 physical Banilad advisories
+        const isCabancalanWithBaniladInPurpose = i % 10 === 0 && !isBaniladPhysical; // 90 feeder purpose mentions
+
+        largeAdvisorySet.push({
+          id: `adv-stress-${i}`,
+          date: "2026-10-20",
+          start_time: "08:00",
+          end_time: "16:00",
+          duration_hours: 8,
+          overnight_span: false,
+          city: isBaniladPhysical ? "Cebu City" : "Mandaue City",
+          barangay: isBaniladPhysical ? ["Banilad"] : ["Cabancalan"],
+          streets: isBaniladPhysical ? ["A.S. Fortuna"] : ["M.L. Quezon"],
+          areas_affected_raw: isBaniladPhysical ? "Banilad Proper" : "Cabancalan Feeder",
+          purpose: isCabancalanWithBaniladInPurpose
+            ? "Feeder line servicing customers in Banilad, Talamban & Cabancalan"
+            : "Routine substation maintenance",
+          lat: 10.34 + (i * 0.0001),
+          lon: 123.91 + (i * 0.0001),
+          feed_type: "power",
+        });
+      }
+
+      const listEl = createMockElement("list-view");
+      const filter: FilterState = { selectedDate: "all", searchQuery: "Banilad" };
+
+      const start = performance.now();
+      renderListView(listEl, largeAdvisorySet, filter, {
+        onSelectAdvisory: vi.fn(),
+      });
+      const duration = performance.now() - start;
+
+      // Must have matched ONLY the 10 physical Banilad advisories
+      expect(listEl.innerHTML).toContain("10 advisories");
+      expect(listEl.innerHTML).not.toContain("Cabancalan");
+      expect(duration).toBeLessThan(150); // Processed and rendered 1000 items in < 150ms
+    });
+
+    it("sustains 100 rapid layer visibility switches to power without unhandled rejection or bounds error", () => {
+      const controller = new MapController("stress-map");
+      const start = performance.now();
+
+      for (let i = 0; i < 100; i++) {
+        const layer: LayerSelection = i % 3 === 0 ? "power" : i % 3 === 1 ? "earthquakes" : "both";
+        controller.setLayerVisibility(layer);
+      }
+
+      const duration = performance.now() - start;
+      expect(duration).toBeLessThan(150);
+    });
+  });
 });

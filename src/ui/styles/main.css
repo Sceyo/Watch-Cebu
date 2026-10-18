@@ -357,8 +357,15 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
 }
 
 .day-tab.active {
-  background: #1E3A8A;
-  border-color: #3B82F6;
+  background: #0284C7;
+  border-color: #38BDF8;
+  color: #FFFFFF;
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
+}
+
+.day-tab.active .tab-badge {
+  background: rgba(255, 255, 255, 0.28);
   color: #FFFFFF;
 }
 
@@ -370,8 +377,20 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   opacity: 1;
 }
 
-.day-tab.today-tab {
-  border-color: #3B82F6;
+.day-tab.today-tab:not(.active) {
+  border-color: rgba(56, 189, 248, 0.45);
+}
+
+.day-tab.today-tab:not(.active) .today-tag {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38BDF8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.day-tab.today-tab.active .today-tag {
+  background: rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .day-tab .today-tag {
@@ -2789,6 +2808,13 @@ textarea:focus-visible,
   padding: 2px 8px;
   border-radius: 4px;
   cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-filter-my-area.active {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38BDF8;
+  color: #38BDF8;
 }
 
 .btn-unpin-barangay {
@@ -3210,6 +3236,43 @@ textarea:focus-visible,
   color: #CBD5E1;
 }
 
+.welcome-quick-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.welcome-chips-label {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.welcome-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.welcome-chip-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-color);
+  color: #E2E8F0;
+  border-radius: 9999px;
+  padding: 4px 10px;
+  font-size: 0.76rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.welcome-chip-btn:hover {
+  background: rgba(56, 189, 248, 0.18);
+  border-color: #38BDF8;
+  color: #FFFFFF;
+}
+
 .welcome-coverage-notice {
   display: flex;
   align-items: flex-start;
@@ -3353,5 +3416,106 @@ textarea:focus-visible,
     align-items: center;
     gap: 12px;
   }
+}
+
+/* About & Welcome Modal shared card styling */
+.about-box {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.about-box-sm {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.about-social-link {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.about-social-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.about-social-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.about-social-url {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  margin-top: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.welcome-feat-bolt {
+  background: rgba(245, 158, 11, 0.15);
+  color: #F59E0B;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.welcome-feat-quake {
+  background: rgba(139, 92, 246, 0.15);
+  color: #A78BFA;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.welcome-feat-shield {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.welcome-guide-reopen-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 8px;
+  color: #38BDF8;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.welcome-guide-reopen-btn:hover {
+  background: rgba(56, 189, 248, 0.18);
+  border-color: rgba(56, 189, 248, 0.5);
+}
+
+.hotline-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 8px;
+  text-decoration: none;
 }
 

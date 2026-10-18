@@ -29,6 +29,15 @@ export interface SearchAndZoomResult {
   coords?: [number, number];
 }
 
+function matchesPhysicalLocation(a: PowerAdvisory, q: string): boolean {
+  return (
+    a.barangay.some((b) => b.toLowerCase().includes(q) || q.includes(b.toLowerCase())) ||
+    a.city.toLowerCase().includes(q) ||
+    a.streets.some((s) => s.toLowerCase().includes(q) || q.includes(s.toLowerCase())) ||
+    Boolean(a.areas_affected_raw && a.areas_affected_raw.toLowerCase().includes(q))
+  );
+}
+
 export class MapController {
   private map: L.Map;
   private powerLayerGroup: L.LayerGroup;
@@ -123,6 +132,7 @@ export class MapController {
     if (selection === "power") {
       if (!this.map.hasLayer(this.powerLayerGroup)) this.map.addLayer(this.powerLayerGroup);
       if (this.map.hasLayer(this.earthquakeLayerGroup)) this.map.removeLayer(this.earthquakeLayerGroup);
+      this.fitBoundsIfNotEmpty();
     } else if (selection === "earthquakes") {
       if (this.map.hasLayer(this.powerLayerGroup)) this.map.removeLayer(this.powerLayerGroup);
       if (!this.map.hasLayer(this.earthquakeLayerGroup)) this.map.addLayer(this.earthquakeLayerGroup);
@@ -136,22 +146,17 @@ export class MapController {
   renderPowerAdvisories(advisories: PowerAdvisory[], filter: FilterState, myBarangay?: string | null): void {
     this.powerLayerGroup.clearLayers();
 
-    const query = filter.searchQuery ? filter.searchQuery.toLowerCase() : "";
+    const query = filter.searchQuery ? filter.searchQuery.toLowerCase().trim() : "";
+    const hasPhysicalMatches = query
+      ? advisories.some((a) => a.lat !== null && a.lon !== null && matchesPhysicalLocation(a, query))
+      : false;
 
     const filtered = advisories.filter((a) => {
-      if (!query && filter.selectedDate !== "all" && a.date !== filter.selectedDate) {
-        return false;
-      }
-      if (a.lat === null || a.lon === null) {
-        return false;
-      }
+      if (!query && filter.selectedDate !== "all" && a.date !== filter.selectedDate) return false;
+      if (a.lat === null || a.lon === null) return false;
       if (query) {
-        const matchesBarangay = a.barangay.some((b) => b.toLowerCase().includes(query));
-        const matchesCity = a.city.toLowerCase().includes(query);
-        const matchesStreets = a.streets.some((s) => s.toLowerCase().includes(query));
-        const matchesRaw = a.areas_affected_raw ? a.areas_affected_raw.toLowerCase().includes(query) : false;
-        const matchesPurpose = a.purpose.toLowerCase().includes(query);
-        if (!matchesBarangay && !matchesCity && !matchesStreets && !matchesRaw && !matchesPurpose) {
+        const physicalMatch = matchesPhysicalLocation(a, query);
+        if (hasPhysicalMatches ? !physicalMatch : !physicalMatch && !a.purpose.toLowerCase().includes(query)) {
           return false;
         }
       }
@@ -653,7 +658,10 @@ export class MapController {
     if (this.map.hasLayer(this.earthquakeLayerGroup)) {
       activeLayers.push(...this.earthquakeLayerGroup.getLayers());
     }
-    if (activeLayers.length === 0) return;
+    if (activeLayers.length === 0) {
+      this.map.setView([10.3157, 123.8854], 12, { animate: true });
+      return;
+    }
     const featureGroup = L.featureGroup(activeLayers);
     const bounds = featureGroup.getBounds();
     if (bounds.isValid()) {
@@ -691,15 +699,13 @@ export class MapController {
     // -------------------------------------------------------------------------
     // Tier 1: Active Advisory / Earthquake Pins in Memory (0ms, 100% offline)
     // -------------------------------------------------------------------------
-    const matchedPower = powerAdvisories.filter((a) => {
-      if (a.lat === null || a.lon === null) return false;
-      const bMatch = a.barangay.some((b) => b.toLowerCase().includes(q) || q.includes(b.toLowerCase()));
-      const cMatch = a.city.toLowerCase().includes(q) || q.includes(a.city.toLowerCase());
-      const sMatch = a.streets.some((s) => s.toLowerCase().includes(q) || q.includes(s.toLowerCase()));
-      const rMatch = a.areas_affected_raw ? a.areas_affected_raw.toLowerCase().includes(q) : false;
-      const pMatch = a.purpose.toLowerCase().includes(q);
-      return bMatch || cMatch || sMatch || rMatch || pMatch;
-    });
+    const physicalPower = powerAdvisories.filter(
+      (a) => a.lat !== null && a.lon !== null && matchesPhysicalLocation(a, q)
+    );
+    const purposePower = powerAdvisories.filter(
+      (a) => a.lat !== null && a.lon !== null && a.purpose.toLowerCase().includes(q)
+    );
+    const matchedPower = physicalPower.length > 0 ? physicalPower : purposePower;
 
     const matchedEq = eqEvents.filter((e) => {
       if (e.lat === null || e.lon === null) return false;
@@ -827,10 +833,11 @@ export class MapController {
       };
     }
 
+    const displayRaw = raw.length > 50 ? raw.slice(0, 47) + "..." : raw;
     return {
       found: false,
       tier: null,
-      message: `No location found for "${raw}" in Cebu.`,
+      message: `No location found for "${displayRaw}" in Cebu.`,
     };
   }
 }

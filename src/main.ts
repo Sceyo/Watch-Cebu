@@ -328,8 +328,12 @@ function updateUI() {
           }
         },
         onClearMyBarangay: () => {
+          const prev = myBarangay;
           setMyBarangay(null);
           myBarangay = null;
+          if (prev && filterState.searchQuery && filterState.searchQuery.toLowerCase().trim() === prev.toLowerCase().trim()) {
+            filterState.searchQuery = "";
+          }
           mapController?.renderPowerAdvisories(powerFeedState.data, filterState, null);
           showToast("Unpinned home barangay.");
           updateUI();
@@ -346,6 +350,7 @@ function updateUI() {
       {
         viewMode: currentViewMode,
         myBarangayStatus,
+        searchQuery: filterState.searchQuery,
       }
     );
   }
@@ -580,12 +585,22 @@ function updateUI() {
         updateUI();
         focusActiveDrawer();
       },
-      () => {
+      (selectedBrgy?: string) => {
         isWelcomeOpen = false;
         markWelcomeGuideSeen();
         document.body.classList.remove("modal-open");
+        if (selectedBrgy) {
+          setMyBarangay(selectedBrgy);
+          myBarangay = selectedBrgy;
+          filterState.searchQuery = selectedBrgy;
+          mapController?.renderPowerAdvisories(powerFeedState.data, filterState, selectedBrgy);
+          mapController?.searchAndZoom(selectedBrgy, powerFeedState.data, eqFeedState.data);
+          showToast(`⭐ Pinned ${selectedBrgy} as your home area.`);
+          updateUI();
+          return;
+        }
         updateUI();
-        const searchInput = document.getElementById("civic-search-input") as HTMLInputElement | null;
+        const searchInput = (document.getElementById("map-search-input") || document.getElementById("civic-search-input")) as HTMLInputElement | null;
         if (searchInput) {
           searchInput.focus();
           searchInput.scrollIntoView({ behavior: "smooth", block: "nearest" });

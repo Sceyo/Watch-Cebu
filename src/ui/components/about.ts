@@ -36,23 +36,23 @@ export function renderAbout(
 
   const githubHtml = ABOUT_METADATA.githubUrl
     ? `
-      <a href="${ABOUT_METADATA.githubUrl}" target="_blank" rel="noopener noreferrer" class="source-link" style="display: flex; flex-direction: column; padding: 10px 12px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none;">
-        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-          <span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #FFFFFF;">
+      <a href="${ABOUT_METADATA.githubUrl}" target="_blank" rel="noopener noreferrer" class="source-link about-social-link">
+        <div class="about-social-row">
+          <span class="about-social-title">
             <span style="display: inline-flex; align-items: center;">${ICONS.github}</span>
             <span>GitHub</span>
           </span>
           <span style="color: #60A5FA; font-size: 0.85rem;">↗</span>
         </div>
-        <div style="font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+        <div class="about-social-url">
           ${ABOUT_METADATA.githubUrl}
         </div>
       </a>
     `
     : `
-      <div class="source-link pending-link" style="display: flex; flex-direction: column; padding: 10px 12px; background: rgba(239, 68, 68, 0.06); border: 1px dashed rgba(239, 68, 68, 0.4); border-radius: 8px;">
-        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-          <span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #FFFFFF;">
+      <div class="source-link pending-link about-social-link" style="background: rgba(239, 68, 68, 0.06); border: 1px dashed rgba(239, 68, 68, 0.4);">
+        <div class="about-social-row">
+          <span class="about-social-title">
             <span style="display: inline-flex; align-items: center;">${ICONS.github}</span>
             <span>GitHub</span>
           </span>
@@ -66,23 +66,23 @@ export function renderAbout(
 
   const linkedinHtml = ABOUT_METADATA.linkedinUrl
     ? `
-      <a href="${ABOUT_METADATA.linkedinUrl}" target="_blank" rel="noopener noreferrer" class="source-link" style="display: flex; flex-direction: column; padding: 10px 12px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none;">
-        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-          <span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #FFFFFF;">
+      <a href="${ABOUT_METADATA.linkedinUrl}" target="_blank" rel="noopener noreferrer" class="source-link about-social-link">
+        <div class="about-social-row">
+          <span class="about-social-title">
             <span style="display: inline-flex; align-items: center;">${ICONS.linkedin}</span>
             <span>LinkedIn</span>
           </span>
           <span style="color: #60A5FA; font-size: 0.85rem;">↗</span>
         </div>
-        <div style="font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-mono); margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+        <div class="about-social-url">
           ${ABOUT_METADATA.linkedinUrl}
         </div>
       </a>
     `
     : `
-      <div class="source-link pending-link" style="display: flex; flex-direction: column; padding: 10px 12px; background: rgba(239, 68, 68, 0.06); border: 1px dashed rgba(239, 68, 68, 0.4); border-radius: 8px;">
-        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-          <span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #FFFFFF;">
+      <div class="source-link pending-link about-social-link" style="background: rgba(239, 68, 68, 0.06); border: 1px dashed rgba(239, 68, 68, 0.4);">
+        <div class="about-social-row">
+          <span class="about-social-title">
             <span style="display: inline-flex; align-items: center;">${ICONS.linkedin}</span>
             <span>LinkedIn</span>
           </span>
@@ -120,7 +120,7 @@ export function renderAbout(
     <div class="legend-content">
       <!-- Quick Onboarding Guide Trigger -->
       <div class="legend-section" style="padding-bottom: 12px; margin-bottom: 8px;">
-        <button id="btn-about-open-guide" class="welcome-guide-reopen-btn" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 14px; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 8px; color: #38BDF8; font-weight: 600; font-size: 0.85rem; cursor: pointer;">
+        <button id="btn-about-open-guide" class="welcome-guide-reopen-btn">
           <span style="display: inline-flex; align-items: center;">${ICONS.help}</span>
           <span>View Welcome Guide &amp; Tips</span>
         </button>
@@ -204,7 +204,7 @@ export function renderAbout(
 
         <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
           <!-- Power Coverage Boundaries -->
-          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px;">
+          <div class="about-box">
             <div style="font-size: 0.82rem; font-weight: 700; color: #F59E0B; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
               <span style="display: inline-flex; align-items: center;">${ICONS.bolt}</span>
               <span>Power Coverage: VECO Franchise Only</span>
@@ -221,7 +221,7 @@ export function renderAbout(
           </div>
 
           <!-- Geocoding Approximate Coordinates -->
-          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px;">
+          <div class="about-box">
             <div style="font-size: 0.82rem; font-weight: 700; color: #60A5FA; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
               <span style="display: inline-flex; align-items: center;">${ICONS.mapPin}</span>
               <span>Approximate Barangay Coordinates</span>
@@ -232,7 +232,7 @@ export function renderAbout(
           </div>
 
           <!-- Seismic Disclaimer -->
-          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px;">
+          <div class="about-box">
             <div style="font-size: 0.82rem; font-weight: 700; color: #A78BFA; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
               <span style="display: inline-flex; align-items: center;">${ICONS.earthquake}</span>
               <span>Seismic Epicenters (Not Early Warning)</span>
@@ -243,7 +243,7 @@ export function renderAbout(
           </div>
 
           <!-- Weather & Evacuation Orders -->
-          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px;">
+          <div class="about-box">
             <div style="font-size: 0.82rem; font-weight: 700; color: #34D399; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
               <span style="display: inline-flex; align-items: center;">${ICONS.cyclone}</span>
               <span>Weather & Disaster Orders</span>
@@ -254,7 +254,7 @@ export function renderAbout(
           </div>
 
           <!-- No Dispatch -->
-          <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px;">
+          <div class="about-box">
             <div style="font-size: 0.82rem; font-weight: 700; color: #CBD5E1; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
               <span style="display: inline-flex; align-items: center;">${ICONS.shield}</span>
               <span>No Emergency Dispatch or Ticketing</span>
@@ -276,7 +276,7 @@ export function renderAbout(
         <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
           ${CEBU_EMERGENCY_HOTLINES.map(
             (h) => `
-            <a href="${h.phone}" class="source-link" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 8px; text-decoration: none;">
+            <a href="${h.phone}" class="source-link hotline-link">
               <div>
                 <div style="font-weight: 600; color: #FFFFFF; font-size: 0.85rem;">${h.name}</div>
                 <div style="font-size: 0.72rem; color: var(--text-muted);">${h.description}</div>
@@ -288,6 +288,29 @@ export function renderAbout(
             </a>
           `
           ).join("")}
+        </div>
+      </div>
+
+      <!-- Progressive Web App (PWA) Offline Install Guide -->
+      <div class="legend-section">
+        <h3 class="section-title" style="display: flex; align-items: center; gap: 6px;">
+          <span style="display: inline-flex; align-items: center; color: #10B981;">${ICONS.shield}</span>
+          <span>Install App for Offline Use</span>
+        </h3>
+        <p class="section-desc">Installs directly to home screen for offline access:</p>
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+          <div class="about-box-sm">
+            <div style="font-size: 0.8rem; font-weight: 700; color: #38BDF8; margin-bottom: 2px;">iPhone &amp; iPad (Safari)</div>
+            <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.35;">
+              Tap Share (box with arrow) → <strong>Add to Home Screen</strong> → Add.
+            </div>
+          </div>
+          <div class="about-box-sm">
+            <div style="font-size: 0.8rem; font-weight: 700; color: #34D399; margin-bottom: 2px;">Android (Chrome &amp; Edge)</div>
+            <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.35;">
+              Tap menu (<strong>⋮</strong>) → <strong>Install app</strong> or Add to Home screen.
+            </div>
+          </div>
         </div>
       </div>
 

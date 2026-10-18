@@ -26,12 +26,23 @@ export function markWelcomeGuideSeen(): void {
   }
 }
 
+export const POPULAR_BARANGAYS = [
+  "Lahug",
+  "Banilad",
+  "Mabolo",
+  "Guadalupe",
+  "Talamban",
+  "Subangdaku",
+  "Basak",
+  "Pardo",
+];
+
 export function renderWelcomeModal(
   container: HTMLElement,
   isOpen: boolean,
   onDismiss: () => void,
   onOpenAbout: () => void,
-  onPinBarangay?: () => void
+  onPinBarangay?: (selectedBarangay?: string) => void
 ): void {
   if (!isOpen) {
     container.style.display = "none";
@@ -42,6 +53,10 @@ export function renderWelcomeModal(
 
   container.style.display = "flex";
   container.classList.add("open");
+
+  const chipsHtml = POPULAR_BARANGAYS.map(
+    (b) => `<button type="button" class="welcome-chip-btn" data-barangay="${b}">${b}</button>`
+  ).join("");
 
   container.innerHTML = `
     <div class="welcome-modal-card" role="dialog" aria-modal="true" aria-labelledby="welcome-modal-title">
@@ -60,7 +75,7 @@ export function renderWelcomeModal(
       <div class="welcome-features-list">
         <!-- Feature 1: Brownout schedules -->
         <div class="welcome-feature-item">
-          <div class="welcome-feature-icon" style="background: rgba(245, 158, 11, 0.15); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.3);">
+          <div class="welcome-feature-icon welcome-feat-bolt">
             ${ICONS.bolt}
           </div>
           <div class="welcome-feature-content">
@@ -73,7 +88,7 @@ export function renderWelcomeModal(
 
         <!-- Feature 2: Earthquakes & storms -->
         <div class="welcome-feature-item">
-          <div class="welcome-feature-icon" style="background: rgba(139, 92, 246, 0.15); color: #A78BFA; border: 1px solid rgba(139, 92, 246, 0.3);">
+          <div class="welcome-feature-icon welcome-feat-quake">
             ${ICONS.earthquake}
           </div>
           <div class="welcome-feature-content">
@@ -84,17 +99,25 @@ export function renderWelcomeModal(
           </div>
         </div>
 
-        <!-- Feature 3: Works on weak signal -->
+        <!-- Feature 3: Works on weak signal (PWA) -->
         <div class="welcome-feature-item">
-          <div class="welcome-feature-icon" style="background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3);">
+          <div class="welcome-feature-icon welcome-feat-shield">
             ${ICONS.shield}
           </div>
           <div class="welcome-feature-content">
-            <div class="welcome-feature-title">Works on Weak Signal</div>
+            <div class="welcome-feature-title">Works on Weak Signal (Offline PWA)</div>
             <div class="welcome-feature-desc">
-              Opens even when your connection is slow. Zero ads, zero accounts, and zero tracking.
+              Opens even when connection is slow. Add to Home Screen for offline access. Zero ads, zero accounts.
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- Quick Suggested Barangay Chips -->
+      <div class="welcome-quick-chips">
+        <div class="welcome-chips-label">Quick pin your home area:</div>
+        <div class="welcome-chips-row">
+          ${chipsHtml}
         </div>
       </div>
 
@@ -108,7 +131,7 @@ export function renderWelcomeModal(
         <div class="welcome-action-buttons">
           <button id="btn-welcome-pin" class="welcome-btn-primary">
             <span class="btn-icon" aria-hidden="true">${ICONS.mapPin}</span>
-            <span>Pin My Barangay</span>
+            <span>Search &amp; Pin Barangay</span>
           </button>
           <button id="btn-welcome-explore" class="welcome-btn-secondary">
             <span>Explore the Map</span>
@@ -126,6 +149,20 @@ export function renderWelcomeModal(
   closeBtn?.addEventListener("click", () => {
     markWelcomeGuideSeen();
     onDismiss();
+  });
+
+  // Attach chip listeners
+  const chipBtns = container.querySelectorAll<HTMLButtonElement>(".welcome-chip-btn");
+  chipBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const brgy = btn.getAttribute("data-barangay");
+      markWelcomeGuideSeen();
+      if (brgy && onPinBarangay) {
+        onPinBarangay(brgy);
+      } else {
+        onDismiss();
+      }
+    });
   });
 
   const pinBtn = container.querySelector<HTMLButtonElement>("#btn-welcome-pin");

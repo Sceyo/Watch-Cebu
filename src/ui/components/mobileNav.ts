@@ -20,6 +20,7 @@ import {
   formatPhilippineTimeRange,
   normalizeStreetList,
   formatHumanTimestamp,
+  escapeHtml,
 } from "../../utils/index.js";
 import { ICONS } from "./icons.js";
 
@@ -441,7 +442,7 @@ export function showToast(message: string, durationMs = 3800): void {
 
   const toast = document.createElement("div");
   toast.className = `toast-message ${toastType}`;
-  toast.innerHTML = `<div class="toast-inner">${iconHtml}<span>${message}</span></div>`;
+  toast.innerHTML = `<div class="toast-inner">${iconHtml}<span>${escapeHtml(message)}</span></div>`;
   container.appendChild(toast);
 
   // Trigger animation

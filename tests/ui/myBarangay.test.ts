@@ -126,4 +126,42 @@ describe("My Barangay Service", () => {
     expect(status.dates).toEqual([]);
     expect(status.advisories).toEqual([]);
   });
+
+  it("supports multi-favorite barangays (up to 3) with add, remove, and isFavorite", async () => {
+    const { getFavorites, addFavorite, removeFavorite, isFavorite } = await import(
+      "../../src/ui/services/myBarangay.js"
+    );
+
+    expect(getFavorites()).toEqual([]);
+    expect(isFavorite("Talamban")).toBe(false);
+
+    expect(addFavorite("Talamban")).toBe(true);
+    expect(addFavorite("Lahug")).toBe(true);
+    expect(addFavorite("Banilad")).toBe(true);
+
+    // 4th favorite should be rejected due to MAX_FAVORITES limit (3)
+    expect(addFavorite("Guadalupe")).toBe(false);
+
+    expect(getFavorites()).toEqual(["Talamban", "Lahug", "Banilad"]);
+    expect(isFavorite("talamban")).toBe(true);
+    expect(isFavorite("LAHUG")).toBe(true);
+    expect(isFavorite("Banilad")).toBe(true);
+    expect(isFavorite("Guadalupe")).toBe(false);
+
+    // Primary favorite returns first item
+    expect(getMyBarangay()).toBe("Talamban");
+
+    // Remove one favorite
+    removeFavorite("Lahug");
+    expect(getFavorites()).toEqual(["Talamban", "Banilad"]);
+    expect(isFavorite("Lahug")).toBe(false);
+  });
+
+  it("handles legacy plain string in localStorage transparently", async () => {
+    const { getFavorites } = await import("../../src/ui/services/myBarangay.js");
+    mockStorage["watch_cebu_my_barangay"] = "Mabolo";
+
+    expect(getFavorites()).toEqual(["Mabolo"]);
+    expect(getMyBarangay()).toBe("Mabolo");
+  });
 });

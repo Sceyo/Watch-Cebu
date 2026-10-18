@@ -132,6 +132,17 @@ describe("About Drawer Component", () => {
     expect(container.innerHTML).toContain("Approximate Barangay Coordinates");
     expect(container.innerHTML).toContain("Seismic Epicenters (Not Early Warning)");
   });
+
+  it("renderAbout outputs Progressive Web App (PWA) installation steps for iOS and Android (UAT Fix)", () => {
+    const container = createMockElement();
+    renderAbout(container, true, () => {});
+
+    expect(container.innerHTML).toContain("Install App for Offline Use");
+    expect(container.innerHTML).toContain("iPhone &amp; iPad (Safari)");
+    expect(container.innerHTML).toContain("Add to Home Screen");
+    expect(container.innerHTML).toContain("Android (Chrome &amp; Edge)");
+    expect(container.innerHTML).toContain("Install app");
+  });
 });
 
 describe("Header About Button Integration", () => {

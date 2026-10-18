@@ -179,4 +179,36 @@ describe("List View Alternative Component", () => {
     expect(container.innerHTML).not.toContain("Talamban");
     expect(container.innerHTML).not.toContain("Tabunok");
   });
+
+  it("prioritizes physical location matches over purpose text in search (UAT Fix)", () => {
+    const container = createMockElement();
+    const testAdvisories: PowerAdvisory[] = [
+      {
+        ...sampleAdvisories[0],
+        id: "adv-banilad",
+        barangay: ["Banilad"],
+        streets: ["A.S. Fortuna Ave"],
+        areas_affected_raw: "Along A.S. Fortuna",
+        purpose: "Standard line overhaul",
+      },
+      {
+        ...sampleAdvisories[1],
+        id: "adv-cabancalan",
+        barangay: ["Cabancalan"],
+        streets: ["M.L. Quezon"],
+        areas_affected_raw: "M.L. Quezon",
+        purpose: "Feeder maintenance serving Banilad, Talamban & Cabancalan",
+      },
+    ];
+
+    const filter: FilterState = { selectedDate: "all", searchQuery: "Banilad" };
+
+    renderListView(container, testAdvisories, filter, {
+      onSelectAdvisory: vi.fn(),
+    });
+
+    // Should include Banilad and NOT include Cabancalan because Banilad is a physical location match
+    expect(container.innerHTML).toContain("Banilad");
+    expect(container.innerHTML).not.toContain("Cabancalan");
+  });
 });
