@@ -1,8 +1,8 @@
 {
-  "id": "0ea390d914f1dde07cd77efc2f804e6bafb321e08b4c2bbe60810d964ca10de6",
+  "id": "6122a762692643f6a9070991f9992ba5572c8bbd50c933cd3e9ace15b6a1f977",
   "source_url": "https://bagong.pagasa.dost.gov.ph/weather",
-  "fetched_at": "2026-10-18T22:44:12.601Z",
-  "issued_at_pst": "2026-10-18T22:44:12.601Z",
+  "fetched_at": "2026-10-19T03:07:05.696Z",
+  "issued_at_pst": "2026-10-19T03:07:05.696Z",
   "cyclone_name": "CHAMPI",
   "has_active_cyclone": true,
   "tcws_cebu": {
