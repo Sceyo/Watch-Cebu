@@ -3587,56 +3587,44 @@ textarea:focus-visible,
   border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
-.welcome-emergency-bar {
-  margin-top: 10px;
-  padding: 8px 12px;
+.welcome-feature-interactive {
+  cursor: pointer;
   background: rgba(239, 68, 68, 0.08);
   border: 1px solid rgba(239, 68, 68, 0.25);
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  transition: all 0.18s ease;
+  user-select: none;
 }
 
-.emergency-bar-header {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.welcome-feature-interactive:hover,
+.welcome-feature-interactive:focus-visible {
+  background: rgba(239, 68, 68, 0.16);
+  border-color: rgba(239, 68, 68, 0.5);
+  transform: translateY(-1px);
+  outline: none;
+  box-shadow: 0 3px 10px rgba(239, 68, 68, 0.18);
 }
 
-.emergency-bar-label {
-  font-size: 0.72rem;
+.welcome-feature-interactive:active {
+  transform: translateY(0);
+}
+
+.welcome-hotlines-badge {
+  font-size: 0.68rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
+  background: rgba(239, 68, 68, 0.22);
   color: #FCA5A5;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  padding: 2px 7px;
+  border-radius: 4px;
+  white-space: nowrap;
+  transition: all 0.18s ease;
 }
 
-.emergency-bar-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.welcome-emergency-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: rgba(239, 68, 68, 0.2);
-  border: 1px solid rgba(239, 68, 68, 0.4);
+.welcome-feature-interactive:hover .welcome-hotlines-badge,
+.welcome-feature-interactive:focus-visible .welcome-hotlines-badge {
+  background: #EF4444;
   color: #FFFFFF;
-  text-decoration: none;
-  font-size: 0.74rem;
-  font-weight: 600;
-  padding: 4px 8px;
-  border-radius: 6px;
-  transition: all 0.15s ease;
-  min-height: 28px;
-}
-
-.welcome-emergency-chip:hover,
-.welcome-emergency-chip:focus-visible {
-  background: rgba(239, 68, 68, 0.35);
   border-color: #EF4444;
-  color: #FFFFFF;
 }

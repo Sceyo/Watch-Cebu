@@ -192,7 +192,7 @@ export function renderAbout(
       </div>
 
       <!-- Emergency Hotlines (Civic Lifeline & Offline Reference) -->
-      <div class="legend-section">
+      <div class="legend-section" id="about-emergency-hotlines">
         <h3 class="section-title" style="display: flex; align-items: center; gap: 6px;">
           <span style="display: inline-flex; align-items: center; color: #F87171;">${ICONS.phone}</span>
           <span>Emergency Hotlines (Cebu)</span>
