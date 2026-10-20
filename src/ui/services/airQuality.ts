@@ -66,14 +66,30 @@ export function computeAqiCategory(aqi: number): {
 
 export function formatObservationTime(isoString?: string): string {
   try {
-    const d = isoString ? new Date(isoString) : new Date();
+    if (!isoString) {
+      return (
+        new Date().toLocaleTimeString("en-US", {
+          timeZone: "Asia/Manila",
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        }) + " PST"
+      );
+    }
+    const safeIso =
+      typeof isoString === "string" && !isoString.endsWith("Z") && !isoString.includes("+")
+        ? `${isoString}Z`
+        : isoString;
+    const d = new Date(safeIso);
     if (isNaN(d.getTime())) return "Recently";
-    return d.toLocaleTimeString("en-US", {
-      timeZone: "Asia/Manila",
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-    }) + " PST";
+    return (
+      d.toLocaleTimeString("en-US", {
+        timeZone: "Asia/Manila",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      }) + " PST"
+    );
   } catch {
     return "Recently";
   }
@@ -140,7 +156,13 @@ export function parseAirQualityData(rawJson: any, now: Date = new Date()): AirQu
     vulnerableGroupWarning = "High risk of acute respiratory distress. Keep windows tightly shut; use air purification.";
   }
 
-  const fetchedAt = current.time ?? now.toISOString();
+  const rawTime = current.time ?? now.toISOString();
+  // Open-Meteo returns UTC timestamps without trailing 'Z' (e.g. '2026-10-20T08:00').
+  // Ensure 'Z' is appended so it parses as UTC instead of local PHT, avoiding an 8-hour artificial delay.
+  const fetchedAt =
+    typeof rawTime === "string" && !rawTime.endsWith("Z") && !rawTime.includes("+")
+      ? `${rawTime}Z`
+      : rawTime;
   const obsDate = new Date(fetchedAt);
   const diffMs = Math.abs(now.getTime() - obsDate.getTime());
   const isStale = !isNaN(diffMs) && diffMs > 2 * 3600000;

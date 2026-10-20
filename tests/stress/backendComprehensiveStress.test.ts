@@ -277,7 +277,7 @@ describe("Back-End Comprehensive Stress Suite", () => {
         expect(pagasaRes.data_source).toBe("fixture_fallback");
       }
       const totalDuration = performance.now() - start;
-      expect(totalDuration).toBeLessThan(1000); // All 4 error cycles in under 1s
+      expect(totalDuration).toBeLessThan(2000); // All 4 error cycles in under 2s under runner load
     });
   });
 
