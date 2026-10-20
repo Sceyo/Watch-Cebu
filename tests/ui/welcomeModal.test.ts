@@ -14,6 +14,7 @@ function createMockElement(): any {
   const listeners: Record<string, ((...args: any[]) => void)[]> = {};
   const attrs: Record<string, string> = {};
   const classListSet = new Set<string>();
+  const childMap: Record<string, any> = {};
   let innerHTMLValue = "";
 
   const elem: any = {
@@ -40,7 +41,10 @@ function createMockElement(): any {
     }),
     querySelector: vi.fn((sel: string) => {
       if (innerHTMLValue.includes(sel.replace(/^[#.]/, ""))) {
-        return createMockElement();
+        if (!childMap[sel]) {
+          childMap[sel] = createMockElement();
+        }
+        return childMap[sel];
       }
       return null;
     }),
@@ -88,7 +92,7 @@ describe("Welcome Modal & Onboarding Guide Component", () => {
     expect(container.classList.contains("open")).toBe(false);
   });
 
-  it("renderWelcomeModal renders 3 core civic features, coverage limits, and action buttons when open", () => {
+  it("renderWelcomeModal renders 4 civic features including tappable emergency hotlines card", () => {
     const container = createMockElement();
     renderWelcomeModal(container, true, () => {}, () => {}, () => {});
 
@@ -101,13 +105,37 @@ describe("Welcome Modal & Onboarding Guide Component", () => {
     expect(container.innerHTML).toContain("Earthquakes, Storms &amp; Air Quality");
     expect(container.innerHTML).toContain("Works on Weak Signal");
     expect(container.innerHTML).toContain("24/7 Emergency Hotlines");
-    expect(container.innerHTML).toContain("welcome-emergency-bar");
-    expect(container.innerHTML).toContain('href="tel:0322557371"');
-    expect(container.innerHTML).toContain('href="tel:911"');
+    expect(container.innerHTML).toContain('id="welcome-card-hotlines"');
+    expect(container.innerHTML).toContain("welcome-feature-interactive");
+    expect(container.innerHTML).toContain("Tap to View →");
+
+    // Redundant standalone chips box must be removed
+    expect(container.innerHTML).not.toContain("welcome-emergency-bar");
+    expect(container.innerHTML).not.toContain('href="tel:0322557371"');
+    expect(container.innerHTML).not.toContain('href="tel:911"');
+
     expect(container.innerHTML).toContain("Covers VECO areas only");
     expect(container.innerHTML).toContain('id="btn-welcome-pin"');
     expect(container.innerHTML).toContain('id="btn-welcome-explore"');
     expect(container.innerHTML).toContain('id="btn-welcome-about"');
     expect(container.innerHTML).toContain('id="btn-welcome-close"');
+  });
+
+  it("tapping the 24/7 Emergency Hotlines card invokes onOpenAbout with 'hotlines'", () => {
+    const container = createMockElement();
+    const onDismiss = vi.fn();
+    const onOpenAbout = vi.fn();
+    renderWelcomeModal(container, true, onDismiss, onOpenAbout);
+
+    const hotlinesCard = container.querySelector("#welcome-card-hotlines");
+    expect(hotlinesCard).not.toBeNull();
+
+    const clickCall = hotlinesCard.addEventListener.mock.calls.find((c: any[]) => c[0] === "click");
+    expect(clickCall).toBeDefined();
+    clickCall[1]();
+
+    expect(hasSeenWelcomeGuide()).toBe(true);
+    expect(onDismiss).toHaveBeenCalledTimes(1);
+    expect(onOpenAbout).toHaveBeenCalledWith("hotlines");
   });
 });

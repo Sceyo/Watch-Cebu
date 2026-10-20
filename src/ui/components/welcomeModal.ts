@@ -30,8 +30,8 @@ export function renderWelcomeModal(
   container: HTMLElement,
   isOpen: boolean,
   onDismiss: () => void,
-  onOpenAbout: () => void,
-  onPinBarangay?: () => void
+  onOpenAbout: (section?: string) => void,
+  onPinBarangay?: (selectedBrgy?: string) => void
 ): void {
   if (!isOpen) {
     container.style.display = "none";
@@ -62,7 +62,6 @@ export function renderWelcomeModal(
           { c: "welcome-feat-bolt", i: ICONS.bolt, t: "Brownout Schedules", d: "Planned outages from Visayan Electric (VECO). Search or pin your barangay to see if you're affected." },
           { c: "welcome-feat-quake", i: ICONS.earthquake, t: "Earthquakes, Storms &amp; Air Quality", d: "Recent quakes near Cebu, official PAGASA storm warnings, and live air quality updates." },
           { c: "welcome-feat-shield", i: ICONS.shield, t: "Works on Weak Signal (Offline PWA)", d: "Opens even when connection is slow. Add to Home Screen for offline access. Zero ads, zero accounts." },
-          { c: "welcome-feat-phone", i: ICONS.phone, t: "24/7 Emergency Hotlines", d: "Direct one-tap call buttons for Cebu City DRRMO (166), VECO Emergency ((032) 230-8326), Red Cross, and 911." },
         ].map(f => `
           <div class="welcome-feature-item">
             <div class="welcome-feature-icon ${f.c}">${f.i}</div>
@@ -72,34 +71,24 @@ export function renderWelcomeModal(
             </div>
           </div>
         `).join("")}
+
+        <!-- Interactive 24/7 Emergency Hotlines Card -->
+        <div class="welcome-feature-item welcome-feature-interactive" id="welcome-card-hotlines" role="button" tabindex="0" aria-label="Open 24/7 Emergency Hotlines directory">
+          <div class="welcome-feature-icon welcome-feat-phone">${ICONS.phone}</div>
+          <div class="welcome-feature-content" style="flex: 1;">
+            <div class="welcome-feature-title" style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+              <span>24/7 Emergency Hotlines</span>
+              <span class="welcome-hotlines-badge">Tap to View →</span>
+            </div>
+            <div class="welcome-feature-desc">Tap to view direct emergency numbers for Cebu City DRRMO (166), VECO, Red Cross, and 911.</div>
+          </div>
+        </div>
       </div>
 
       <!-- One-line coverage notice -->
       <div class="welcome-coverage-notice">
         <span class="coverage-notice-icon" aria-hidden="true">${ICONS.info}</span>
         <span><strong>Unofficial.</strong> Covers VECO areas only (Cebu City, Mandaue, Talisay, Minglanilla, Naga, San Fernando, Consolacion, Liloan). Does not cover Lapu-Lapu or provincial towns.</span>
-      </div>
-
-      <!-- Quick One-Tap Emergency Hotlines for Mobile -->
-      <div class="welcome-emergency-bar">
-        <div class="emergency-bar-header">
-          <span style="display: inline-flex; align-items: center; color: #EF4444;" aria-hidden="true">${ICONS.phone}</span>
-          <span class="emergency-bar-label">Emergency Hotlines (Tap to Call)</span>
-        </div>
-        <div class="emergency-bar-chips">
-          <a href="tel:0322557371" class="welcome-emergency-chip" aria-label="Call Cebu City DRRMO at 032 255 7371 or 166">
-            <span>🚨 DRRMO (166)</span>
-          </a>
-          <a href="tel:0322308326" class="welcome-emergency-chip" aria-label="Call VECO Emergency Hotline">
-            <span>⚡ VECO (230-8326)</span>
-          </a>
-          <a href="tel:0322555554" class="welcome-emergency-chip" aria-label="Call Philippine Red Cross Cebu">
-            <span>🏥 Red Cross</span>
-          </a>
-          <a href="tel:911" class="welcome-emergency-chip" aria-label="Call National Emergency 911">
-            <span>📞 911</span>
-          </a>
-        </div>
       </div>
 
       <div class="welcome-modal-footer">
@@ -113,7 +102,7 @@ export function renderWelcomeModal(
           </button>
         </div>
         <button id="btn-welcome-about" class="welcome-link-btn">
-          About, Limitations &amp; All 24/7 Hotlines →
+          About, Limitations &amp; 24/7 Hotlines →
         </button>
       </div>
     </div>
@@ -147,5 +136,19 @@ export function renderWelcomeModal(
     markWelcomeGuideSeen();
     onDismiss();
     onOpenAbout();
+  });
+
+  const hotlinesCard = container.querySelector<HTMLElement>("#welcome-card-hotlines");
+  const handleHotlinesClick = () => {
+    markWelcomeGuideSeen();
+    onDismiss();
+    onOpenAbout("hotlines");
+  };
+  hotlinesCard?.addEventListener("click", handleHotlinesClick);
+  hotlinesCard?.addEventListener("keydown", (e: KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleHotlinesClick();
+    }
   });
 }

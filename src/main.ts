@@ -587,12 +587,20 @@ function updateUI() {
         document.body.classList.remove("modal-open");
         updateUI();
       },
-      () => {
+      (targetSection?: string) => {
         isWelcomeOpen = false;
         markWelcomeGuideSeen();
         isAboutOpen = true;
         updateUI();
         focusActiveDrawer();
+        if (targetSection === "hotlines") {
+          setTimeout(() => {
+            const hotlinesEl = document.getElementById("about-emergency-hotlines");
+            if (hotlinesEl) {
+              hotlinesEl.scrollIntoView({ behavior: "smooth" });
+            }
+          }, 100);
+        }
       },
       (selectedBrgy?: string) => {
         isWelcomeOpen = false;
