@@ -113,6 +113,19 @@ describe("Air Quality Service — Humanized Status Descriptors & Timestamps", ()
     expect(res.observationTimePst).toContain("PST");
   });
 
+  it("treats Open-Meteo UTC timestamps without trailing Z as UTC and marks current reading not stale", () => {
+    const fixedNow = new Date("2026-10-20T16:15:00+08:00");
+    const payload = {
+      current: {
+        us_aqi: 30,
+        time: "2026-10-20T08:00",
+      },
+    };
+    const res = parseAirQualityData(payload, fixedNow);
+    expect(res.isStale).toBe(false);
+    expect(res.observationTimePst).toBe("4:00 PM PST");
+  });
+
   it("detects elevated combustion for CO >= 4000", () => {
     const payload = {
       current: {
@@ -178,6 +191,9 @@ describe("Air Quality Drawer — UI Component Rendering", () => {
     expect(container.innerHTML).toContain('data-category="moderate"');
     expect(container.innerHTML).toContain("Normal baseline");
     expect(container.innerHTML).toContain("Clear atmosphere");
+    expect(container.innerHTML).toContain("margin-top: 14px");
+    expect(container.innerHTML).toContain("Automatic suspension at AQI 200+");
+    expect(container.innerHTML).toContain("Mid-October 2026");
   });
 });
 

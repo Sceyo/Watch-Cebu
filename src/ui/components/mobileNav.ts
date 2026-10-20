@@ -134,7 +134,7 @@ export function renderStatusPopover(
         ? `<span class="popover-badge fallback"><span style="display:inline-flex; align-items:center; margin-right:4px;">${ICONS.alertTriangle}</span>Backup</span>`
         : (airQuality.isStale
             ? `<span class="popover-badge delayed" style="background: rgba(245, 158, 11, 0.2); color: #FCD34D;"><span style="display:inline-flex; align-items:center; margin-right:4px;">${ICONS.clock}</span>Delayed (${airQuality.observationTimePst})</span>`
-            : '<span class="popover-badge live">● Model Live</span>'))
+            : '<span class="popover-badge live">● Live Feed</span>'))
     : '<span class="popover-badge loading">Fetching...</span>';
 
   const airDetail = airQuality?.isStale

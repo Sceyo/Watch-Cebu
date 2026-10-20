@@ -133,7 +133,7 @@ export function renderAirQualityDrawer(
       </div>
 
       <!-- Secondary Pollutant Metrics (Behind "More details" toggle) -->
-      <details class="more-pollutants-details" style="margin-bottom: 16px;">
+      <details class="more-pollutants-details" style="margin-top: 14px; margin-bottom: 16px;">
         <summary class="more-pollutants-summary" style="cursor: pointer; font-size: 0.82rem; font-weight: 600; color: #FFFFFF; padding: 10px 14px; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border-color); border-radius: 8px; display: flex; justify-content: space-between; align-items: center; transition: background 0.15s ease;">
           <span>More Pollutant Metrics (PM10, CO, AOD)</span>
           <span class="summary-caret">▾</span>
@@ -176,15 +176,15 @@ export function renderAirQualityDrawer(
           </div>
           <div class="haze-fact-item">
             <span class="haze-fact-label">Wind Vector</span>
-            <span class="haze-fact-val">Southwest Monsoon (Habagat)</span>
+            <span class="haze-fact-val">Habagat (SW) / Low-Level Inversions</span>
           </div>
           <div class="haze-fact-item">
             <span class="haze-fact-label">Class Suspensions</span>
-            <span class="haze-fact-val">Determined by individual LGUs / DepEd upon advisory from EMB-7</span>
+            <span class="haze-fact-val">School discretion at AQI 150–199; Automatic suspension at AQI 200+ (per EMB-7 / DepEd policy)</span>
           </div>
         </div>
         <p class="haze-historical-note">
-          <strong>Documented Precedents:</strong> September 2026 experienced two distinct haze waves: First on Sept 2–3, prompting precautionary class suspensions across Cebu City, Lapu-Lapu, Talisay, Carcar, and Minglanilla; then on Sept 20–22, when EMB-7 recorded AQI 248 on Sept 20, leading Mandaue and 9 other LGUs to suspend in-person classes on Sept 21.
+          <strong>Documented Precedents:</strong> In Sept 2026, two major transboundary haze waves struck Metro Cebu (Sept 2–3 and Sept 20–22, peaking at AQI 248–296), prompting widespread class suspensions. Mid-October 2026 saw a third wave (AQI 156–190) from trapped PM2.5 and temperature inversions across Cebu City, Mandaue, and Lapu-Lapu, before easing back to Good/Fair levels by late October.
         </p>
       </details>
 
