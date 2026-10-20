@@ -158,6 +158,37 @@ describe("Forecast Drawer Component — Accessibility and Rendering", () => {
     expect(container.innerHTML).toContain("Oct 14, 2026 · 12:00 PM PHT");
   });
 
+  it("renders PAGASA active cyclone monitored card when storm is in PAR but no signal is hoisted for Cebu", () => {
+    const container = createMockElement();
+    const mockBulletin: PagasaBulletin = {
+      id: "pagasa-rosal",
+      source_url: "https://pagasa.dost.gov.ph",
+      fetched_at: "2026-10-20T08:00:00Z",
+      issued_at_pst: "11:00 AM, 20 October 2026",
+      cyclone_name: "ROSAL",
+      has_active_cyclone: true,
+      tcws_cebu: { active: false, signal_level: 0, wind_speed_kmh: null, areas_affected: [] },
+      heavy_rainfall_alert: { level: "none", warning_type: null, description: "", advisory_areas: [] },
+      storm_center: {
+        lat: 16.5,
+        lon: 132.0,
+        movement: "West Northwest at 15 km/h",
+        max_sustained_winds_kmh: 185,
+      },
+      parse_confidence: "high",
+      parse_notes: null,
+    };
+
+    renderForecastDrawer(container, null, true, () => {}, mockBulletin);
+
+    expect(container.innerHTML).toContain("Active Cyclone Monitored: ROSAL");
+    expect(container.innerHTML).toContain("Active inside the Philippine Area of Responsibility (PAR)");
+    expect(container.innerHTML).toContain("No TCWS signals currently hoisted for Cebu Province");
+    expect(container.innerHTML).toContain("16.5°N, 132.0°E");
+    expect(container.innerHTML).toContain("West Northwest at 15 km/h");
+    expect(container.innerHTML).toContain("Max Winds: 185 km/h");
+  });
+
   it("renders PAGASA TCWS Signal card with storm details when active for Cebu", () => {
     const container = createMockElement();
     const mockBulletin: PagasaBulletin = {

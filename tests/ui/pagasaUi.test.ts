@@ -162,6 +162,39 @@ describe("Header PAGASA Severe Weather Chip Integration", () => {
     expect(container.innerHTML).toContain("tcws-active");
   });
 
+  it("renders monitored status chip when cyclone is active in PAR but no signal in Cebu", () => {
+    const container = createMockElement();
+    const pagasaMonitored: FeedState<PagasaBulletin | null> = {
+      status: "success",
+      dataSource: "live",
+      data: {
+        id: "b-monitored",
+        source_url: "https://pagasa.dost.gov.ph",
+        fetched_at: "2026-10-20T08:00:00Z",
+        issued_at_pst: "11:00 AM, 20 October 2026",
+        cyclone_name: "ROSAL",
+        has_active_cyclone: true,
+        tcws_cebu: { active: false, signal_level: 0, wind_speed_kmh: null, areas_affected: [] },
+        heavy_rainfall_alert: { level: "none", warning_type: null, description: "", advisory_areas: [] },
+        storm_center: { lat: 16.5, lon: 132.0, movement: "West Northwest" },
+        parse_confidence: "high",
+        parse_notes: null,
+      },
+    };
+
+    renderHeader(
+      container,
+      "both",
+      mockPower,
+      mockEq,
+      { onLayerChange: vi.fn(), onLegendToggle: vi.fn(), onAboutToggle: vi.fn() },
+      { pagasaState: pagasaMonitored }
+    );
+
+    expect(container.innerHTML).toContain("PAGASA: ROSAL (Monitored)");
+    expect(container.innerHTML).toContain("monitoring");
+  });
+
   it("renders normal status chip when no cyclone or flood warning is active", () => {
     const container = createMockElement();
     const pagasaNormal: FeedState<PagasaBulletin | null> = {
@@ -221,6 +254,32 @@ describe("Status Popover PAGASA Feed Row", () => {
     expect(container.innerHTML).toContain("PAGASA Severe Weather");
     expect(container.innerHTML).toContain("DOST-PAGASA");
     expect(container.innerHTML).toContain("TCWS Signal #1 in effect for Cebu (LEON)");
+  });
+
+  it("renders monitored cyclone details in status popover when active in PAR but not in Cebu", () => {
+    const container = createMockElement();
+    const pagasaMonitored: FeedState<PagasaBulletin | null> = {
+      status: "success",
+      dataSource: "live",
+      data: {
+        id: "b-pop-monitored",
+        source_url: "https://pagasa.dost.gov.ph",
+        fetched_at: "2026-10-20T08:00:00Z",
+        issued_at_pst: "11:00 AM, 20 October 2026",
+        cyclone_name: "ROSAL",
+        has_active_cyclone: true,
+        tcws_cebu: { active: false, signal_level: 0, wind_speed_kmh: null, areas_affected: [] },
+        heavy_rainfall_alert: { level: "none", warning_type: null, description: "", advisory_areas: [] },
+        storm_center: null,
+        parse_confidence: "high",
+        parse_notes: null,
+      },
+    };
+
+    renderStatusPopover(container, true, mockPower, mockEq, null, () => {}, pagasaMonitored);
+
+    expect(container.innerHTML).toContain('Active cyclone "ROSAL" in PAR');
+    expect(container.innerHTML).toContain("No TCWS signals currently hoisted for Cebu Province");
   });
 });
 

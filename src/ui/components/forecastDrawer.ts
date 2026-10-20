@@ -36,13 +36,45 @@ function renderPagasaSection(bulletin: PagasaBulletin | null | undefined): strin
     : false;
 
   if (!isTcwsActive && !isRainActive) {
+    const noticeTag = isBulletinStale
+      ? `<span class="bulletin-stale-tag" style="background: rgba(245, 158, 11, 0.15); color: #FCD34D; border: 1px solid rgba(245, 158, 11, 0.35); padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 600;">⚠️ Advisory: ${escapeHtml(issuedText)}</span>`
+      : `<span style="font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono);">Issued: ${escapeHtml(issuedText)}</span>`;
+
+    if (bulletin.has_active_cyclone) {
+      const stormTitle = bulletin.cyclone_name
+        ? `Active Cyclone Monitored: ${escapeHtml(bulletin.cyclone_name)}`
+        : "Active Tropical Cyclone Monitored";
+      const centerDetails = bulletin.storm_center
+        ? `<div style="font-size: 0.72rem; color: #93C5FD; font-family: var(--font-mono); margin-top: 4px;">
+            Eye: ${bulletin.storm_center.lat.toFixed(1)}°N, ${bulletin.storm_center.lon.toFixed(1)}°E
+            ${bulletin.storm_center.movement ? ` • Moving: ${escapeHtml(bulletin.storm_center.movement)}` : ""}
+            ${bulletin.storm_center.max_sustained_winds_kmh ? ` • Max Winds: ${bulletin.storm_center.max_sustained_winds_kmh} km/h` : ""}
+           </div>`
+        : "";
+
+      return `
+        <div class="pagasa-status-banner monitoring" style="background: rgba(14, 116, 144, 0.16); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; ${isBulletinStale ? 'border-color: rgba(245, 158, 11, 0.4);' : ''}">
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+            <div style="display: flex; align-items: flex-start; gap: 8px;">
+              <span style="display: inline-flex; align-items: center; color: #38BDF8; margin-top: 2px;" aria-hidden="true">${ICONS.shield}</span>
+              <div>
+                <strong style="color: #38BDF8; font-size: 0.85rem;">${stormTitle}</strong>
+                <div style="font-size: 0.74rem; color: #E2E8F0; margin-top: 2px;">
+                  Active inside the Philippine Area of Responsibility (PAR). No TCWS signals currently hoisted for Cebu Province. Monitoring track for Visayas / regional impact.
+                </div>
+                ${centerDetails}
+              </div>
+            </div>
+            ${noticeTag}
+          </div>
+        </div>
+      `;
+    }
+
     const statusColor = isBulletinStale ? "#FBBF24" : "#34D399";
     const statusTitle = isBulletinStale
       ? `PAGASA Civic Status: Normal (${issuedFormatted?.relative ? 'Issued ' + issuedFormatted.relative : 'Previous Bulletin'})`
       : "PAGASA Civic Status: Normal";
-    const noticeTag = isBulletinStale
-      ? `<span class="bulletin-stale-tag" style="background: rgba(245, 158, 11, 0.15); color: #FCD34D; border: 1px solid rgba(245, 158, 11, 0.35); padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 600;">⚠️ Advisory: ${escapeHtml(issuedText)}</span>`
-      : `<span style="font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono);">Issued: ${escapeHtml(issuedText)}</span>`;
 
     return `
       <div class="pagasa-status-banner normal" style="${isBulletinStale ? 'border-color: rgba(245, 158, 11, 0.4);' : ''}">

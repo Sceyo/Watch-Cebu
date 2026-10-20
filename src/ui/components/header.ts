@@ -75,6 +75,8 @@ export function renderHeader(
       } else if (bulletin.heavy_rainfall_alert && bulletin.heavy_rainfall_alert.level !== "none") {
         const rColor = bulletin.heavy_rainfall_alert.level === "red" ? "#EF4444" : bulletin.heavy_rainfall_alert.level === "orange" ? "#F97316" : "#EAB308";
         pagasaChip = `<button class="freshness-chip storm-chip active rainfall-active" id="btn-header-storm" style="border-color: ${rColor}; color: #FDE047; background: rgba(245, 158, 11, 0.15);" title="Heavy Rainfall Warning: ${bulletin.heavy_rainfall_alert.level.toUpperCase()} — Click for details"><span class="pulse-dot" style="background: ${rColor};"></span>Rainfall: ${bulletin.heavy_rainfall_alert.level.toUpperCase()}</button>`;
+      } else if (bulletin.has_active_cyclone && bulletin.cyclone_name) {
+        pagasaChip = `<button class="freshness-chip live storm-monitoring" id="btn-header-storm" style="border-color: rgba(56, 189, 248, 0.45); color: #38BDF8; background: rgba(56, 189, 248, 0.12);" title="PAGASA Monitoring: ${bulletin.cyclone_name} (Outside Cebu Warning Area) — Click for forecast"><span class="live-dot" style="background: #38BDF8;"></span>PAGASA: ${bulletin.cyclone_name} (Monitored)</button>`;
       } else {
         pagasaChip = `<button class="freshness-chip live" id="btn-header-storm" title="PAGASA Severe Weather: Normal — Click for weather forecast"><span class="live-dot"></span>PAGASA: Normal</button>`;
       }

@@ -100,6 +100,10 @@ describe("Welcome Modal & Onboarding Guide Component", () => {
     expect(container.innerHTML).toContain("Brownout Schedules");
     expect(container.innerHTML).toContain("Earthquakes, Storms &amp; Air Quality");
     expect(container.innerHTML).toContain("Works on Weak Signal");
+    expect(container.innerHTML).toContain("24/7 Emergency Hotlines");
+    expect(container.innerHTML).toContain("welcome-emergency-bar");
+    expect(container.innerHTML).toContain('href="tel:0322557371"');
+    expect(container.innerHTML).toContain('href="tel:911"');
     expect(container.innerHTML).toContain("Covers VECO areas only");
     expect(container.innerHTML).toContain('id="btn-welcome-pin"');
     expect(container.innerHTML).toContain('id="btn-welcome-explore"');
