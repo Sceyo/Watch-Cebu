@@ -126,6 +126,38 @@ describe("Day Tabs Filter Bar", () => {
     expect(container.innerHTML).toContain("Today");
     expect(container.innerHTML).toContain("Oct 18");
   });
+
+  it("highlights specific selected date tab as active and un-highlights All Week", () => {
+    const container = createMockElement();
+    renderDayTabs(container, mockFutureAdvisories, "2026-10-20", () => {}, "2026-10-15");
+
+    expect(container.innerHTML).toContain('data-date="2026-10-20" role="tab" aria-selected="true"');
+    expect(container.innerHTML).toContain('class="day-tab active"');
+    expect(container.innerHTML).toContain('data-date="all" role="tab" aria-selected="false"');
+  });
+
+  it("preserves horizontal scroll position when re-rendering day tabs", () => {
+    let scrollLeftVal = 142;
+    const mockScrollContainer: any = {
+      get scrollLeft() {
+        return scrollLeftVal;
+      },
+      set scrollLeft(v: number) {
+        scrollLeftVal = v;
+      },
+    };
+    const container = createMockElement();
+    container.querySelector = vi.fn((sel: string) => {
+      if (sel.includes("day-tabs-scroll")) return mockScrollContainer;
+      return null;
+    });
+
+    renderDayTabs(container, mockFutureAdvisories, "all", () => {}, "2026-10-15");
+    expect(scrollLeftVal).toBe(142);
+
+    renderDayTabs(container, mockFutureAdvisories, "2026-10-20", () => {}, "2026-10-15");
+    expect(scrollLeftVal).toBe(142);
+  });
 });
 
 describe("Civic Search Feedback Toast Notifications", () => {
@@ -188,5 +220,24 @@ describe("Global WCAG 2.2 Focus Appearance (:focus-visible)", () => {
     expect(cssContent).toContain("outline-offset: 2px !important;");
     expect(cssContent).toContain(".day-tab:focus-visible");
     expect(cssContent).toContain(".search-submit-btn:focus-visible");
+  });
+});
+
+describe("Search Suggestions Stacking & Z-Index Architecture", () => {
+  it("enforces higher stacking context for search row over layer bar and banner in main.css", () => {
+    const cssPath = path.resolve(__dirname, "../../src/ui/styles/main.css");
+    const cssContent = fs.readFileSync(cssPath, "utf-8");
+
+    // Search row & wrapper priority
+    expect(cssContent).toMatch(/\.map-search-row\s*\{[^}]*z-index:\s*200;/);
+    expect(cssContent).toMatch(/\.search-input-wrapper\s*\{[^}]*z-index:\s*200;/);
+
+    // Layer bar and pinned banner constrained below search
+    expect(cssContent).toMatch(/\.mobile-layer-segmented-bar\s*\{[^}]*z-index:\s*10;/);
+    expect(cssContent).toMatch(/\.my-barangay-status-banner\s*\{[^}]*z-index:\s*10;/);
+
+    // Suggestions dropdown positioned directly below input with high elevation
+    expect(cssContent).toMatch(/\.search-suggestions-dropdown\s*\{[^}]*top:\s*calc\(100%\s*\+\s*4px\);/);
+    expect(cssContent).toMatch(/\.search-suggestions-dropdown\s*\{[^}]*z-index:\s*1050;/);
   });
 });

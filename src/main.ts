@@ -536,7 +536,7 @@ function updateUI() {
         (date) => {
           filterState.selectedDate = date;
           mapController?.renderPowerAdvisories(powerFeedState.data, filterState, myBarangay);
-          if (currentViewMode === "list") updateUI();
+          updateUI();
         },
         undefined,
         powerFeedState.dataSource === "fixture_fallback"

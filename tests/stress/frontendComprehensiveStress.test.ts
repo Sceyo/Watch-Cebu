@@ -23,6 +23,7 @@ import { renderAbout } from "../../src/ui/components/about.js";
 import { renderLegend } from "../../src/ui/components/legend.js";
 import { renderForecastDrawer } from "../../src/ui/components/forecastDrawer.js";
 import { renderAirQualityDrawer } from "../../src/ui/components/airQualityDrawer.js";
+import { renderDayTabs } from "../../src/ui/components/dayTabs.js";
 import { renderOfflineBanner } from "../../src/ui/components/offlineBanner.js";
 import { getMyBarangay, setMyBarangay, getMyBarangayStatus } from "../../src/ui/services/myBarangay.js";
 import { lookupCebuLocation } from "../../src/ui/services/cebuLocations.js";
@@ -698,6 +699,33 @@ describe("Front-End Comprehensive Stress Suite", () => {
 
       const duration = performance.now() - start;
       expect(duration).toBeLessThan(150);
+    });
+
+    it("handles 100 rapid date tab selections and re-renders with 100% active state fidelity", () => {
+      const container = createMockElement("day-tabs-container");
+      const advisories = generateMockPowerAdvisories(50);
+      const dates = ["all", "2026-10-18", "2026-10-19", "2026-10-20", "2026-10-21"];
+      let activeDate = "all";
+
+      const start = performance.now();
+      for (let i = 0; i < 100; i++) {
+        activeDate = dates[i % dates.length];
+        renderDayTabs(container, advisories, activeDate, (date) => {
+          activeDate = date;
+        }, "2026-10-18");
+
+        // Verify active state in rendered DOM
+        if (activeDate === "all") {
+          expect(container.innerHTML).toContain('data-date="all" role="tab" aria-selected="true"');
+          expect(container.innerHTML).toContain('class="day-tab active"');
+        } else {
+          expect(container.innerHTML).toContain(`data-date="${activeDate}" role="tab" aria-selected="true"`);
+          expect(container.innerHTML).toContain('data-date="all" role="tab" aria-selected="false"');
+        }
+      }
+
+      const duration = performance.now() - start;
+      expect(duration).toBeLessThan(100);
     });
   });
 });

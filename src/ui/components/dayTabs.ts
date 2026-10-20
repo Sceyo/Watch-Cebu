@@ -47,8 +47,14 @@ export function renderDayTabs(
   const sortedDates = Object.keys(distribution).sort();
   const totalCount = advisories.length;
 
+  // Preserve horizontal scroll position across re-renders
+  const scrollContainer = typeof container.querySelector === "function"
+    ? container.querySelector<HTMLElement>(".day-tabs-scroll")
+    : null;
+  const prevScrollLeft = scrollContainer ? scrollContainer.scrollLeft : 0;
+
   let tabsHtml = `
-    <button class="day-tab ${selectedDate === 'all' ? 'active' : ''}" data-date="all">
+    <button class="day-tab ${selectedDate === 'all' ? 'active' : ''}" data-date="all" role="tab" aria-selected="${selectedDate === 'all'}">
       <span class="tab-label">All Week</span>
       <span class="tab-badge">${totalCount}</span>
     </button>
@@ -57,7 +63,8 @@ export function renderDayTabs(
   for (const date of sortedDates) {
     const count = distribution[date];
     const label = formatTabDateLabel(date);
-    const isActive = selectedDate === date ? "active" : "";
+    const isTabActive = selectedDate === date;
+    const isActive = isTabActive ? "active" : "";
     const isPast = date < currentToday;
     const isToday = date === currentToday;
     const pastClass = isPast ? " past-tab" : "";
@@ -65,7 +72,7 @@ export function renderDayTabs(
     const todayTag = isToday ? ` <span class="today-tag">Today</span>` : "";
 
     tabsHtml += `
-      <button class="day-tab ${isActive}${pastClass}${todayClass}" data-date="${date}">
+      <button class="day-tab ${isActive}${pastClass}${todayClass}" data-date="${date}" role="tab" aria-selected="${isTabActive}">
         <span class="tab-label">${label}${todayTag}</span>
         <span class="tab-badge">${count}</span>
       </button>
@@ -78,10 +85,29 @@ export function renderDayTabs(
     </div>
   `;
 
+  const newScrollContainer = typeof container.querySelector === "function"
+    ? container.querySelector<HTMLElement>(".day-tabs-scroll")
+    : null;
+  if (newScrollContainer) {
+    if (prevScrollLeft > 0) {
+      newScrollContainer.scrollLeft = prevScrollLeft;
+    } else if (selectedDate !== "all") {
+      const activeTab = newScrollContainer.querySelector<HTMLElement>(".day-tab.active");
+      if (activeTab && typeof activeTab.scrollIntoView === "function") {
+        activeTab.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
+      }
+    }
+  }
+
   const tabs = container.querySelectorAll<HTMLButtonElement>(".day-tab");
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => {
       const date = tab.getAttribute("data-date") || "all";
+      tabs.forEach((t) => {
+        const isTarget = t === tab;
+        t.classList.toggle("active", isTarget);
+        t.setAttribute("aria-selected", isTarget ? "true" : "false");
+      });
       onSelectDate(date);
     });
   });
