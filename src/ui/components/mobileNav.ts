@@ -164,6 +164,8 @@ export function renderStatusPopover(
       pagasaDetail = `TCWS Signal #${b.tcws_cebu.signal_level} in effect for Cebu (${b.cyclone_name || 'Active Cyclone'}).`;
     } else if (b.heavy_rainfall_alert && b.heavy_rainfall_alert.level !== "none") {
       pagasaDetail = `Heavy Rainfall Alert: ${b.heavy_rainfall_alert.level.toUpperCase()} level warning in effect.`;
+    } else if (b.has_active_cyclone && b.cyclone_name) {
+      pagasaDetail = `Active cyclone "${b.cyclone_name}" in PAR. No TCWS signals currently hoisted for Cebu Province.`;
     } else {
       pagasaDetail = "No active storm signals or heavy rainfall alerts in Cebu.";
     }

@@ -3580,3 +3580,63 @@ textarea:focus-visible,
   text-decoration: none;
 }
 
+
+.welcome-feat-phone {
+  background: rgba(239, 68, 68, 0.15);
+  color: #EF4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.welcome-emergency-bar {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.emergency-bar-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.emergency-bar-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #FCA5A5;
+}
+
+.emergency-bar-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.welcome-emergency-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  min-height: 28px;
+}
+
+.welcome-emergency-chip:hover,
+.welcome-emergency-chip:focus-visible {
+  background: rgba(239, 68, 68, 0.35);
+  border-color: #EF4444;
+  color: #FFFFFF;
+}
