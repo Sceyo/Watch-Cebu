@@ -1,8 +1,8 @@
 {
-  "id": "4583d75f5dd9c6771689f460182481de04b29d2796f81d49047195b188a3a4e7",
+  "id": "b34dcd3d7763d8da189ca301686118af744bf27ef6e18168f7f6a61943556922",
   "source_url": "https://bagong.pagasa.dost.gov.ph/weather",
-  "fetched_at": "2026-10-21T03:11:04.032Z",
-  "issued_at_pst": "2026-10-21T03:11:04.032Z",
+  "fetched_at": "2026-10-21T11:06:36.078Z",
+  "issued_at_pst": "2026-10-21T11:06:36.078Z",
   "cyclone_name": "ROSAL",
   "has_active_cyclone": true,
   "tcws_cebu": {
