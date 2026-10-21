@@ -3113,7 +3113,7 @@ textarea:focus-visible,
 }
 
 .welcome-modal-card {
-  max-width: 490px;
+  max-width: 520px;
   width: 100%;
   max-height: 90dvh;
   overflow-y: auto;
@@ -3372,9 +3372,10 @@ textarea:focus-visible,
   width: 100%;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 480px) {
   .welcome-action-buttons {
     grid-template-columns: 1fr;
+    gap: 8px;
   }
 }
 
@@ -3383,36 +3384,54 @@ textarea:focus-visible,
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 10px 16px;
-  background: #0284C7;
+  gap: 7px;
+  padding: 11px 14px;
+  background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
   color: #FFFFFF;
-  border: none;
+  border: 1px solid rgba(56, 189, 248, 0.4);
   border-radius: 10px;
   font-weight: 700;
-  font-size: 0.90rem;
+  font-size: 0.86rem;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
   cursor: pointer;
   transition: all 0.15s ease;
-  min-height: 42px;
+  min-height: 44px;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
 }
 
 .welcome-btn-primary:hover {
-  background: #0369A1;
+  background: linear-gradient(135deg, #0369A1 0%, #075985 100%);
+  border-color: rgba(56, 189, 248, 0.65);
   transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.45);
+}
+
+.welcome-btn-primary:active {
+  transform: translateY(0);
+}
+
+.welcome-btn-primary .btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .welcome-btn-secondary {
   width: 100%;
-  padding: 10px 16px;
-  background: rgba(255, 255, 255, 0.06);
+  padding: 11px 14px;
+  background: rgba(255, 255, 255, 0.05);
   color: #F8FAFC;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 10px;
   font-size: 0.86rem;
   font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
   cursor: pointer;
   transition: all 0.15s ease;
-  min-height: 42px;
+  min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3422,6 +3441,12 @@ textarea:focus-visible,
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.35);
   color: #FFFFFF;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.welcome-btn-secondary:active {
+  transform: translateY(0);
 }
 
 .welcome-link-btn {
