@@ -372,7 +372,7 @@ function updateUI() {
       mapEl.style.display = "none";
       listViewEl.style.display = "block";
       document.getElementById("map-container")?.classList.add("list-mode");
-      renderListView(listViewEl, powerFeedState.data, filterState, {
+      renderListView(listViewEl, currentLayer, powerFeedState.data, eqFeedState.data, filterState, {
         onSelectAdvisory: (advisory) => {
           currentViewMode = "map";
           updateUI();
@@ -382,6 +382,14 @@ function updateUI() {
             updateUI();
             focusActiveDrawer();
           }
+        },
+        onSelectEarthquake: (event) => {
+          currentViewMode = "map";
+          updateUI();
+          mapController?.zoomToLocation(event.lat, event.lon, 11);
+          selectedLocation = { type: "earthquake", event };
+          updateUI();
+          focusActiveDrawer();
         },
         onPinBarangay: (brgy) => {
           const newPinned = myBarangay === brgy ? null : brgy;
