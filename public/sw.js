@@ -8,7 +8,7 @@
  * 4. Graceful offline fallback.
  */
 
-const CACHE_VERSION = "watch-cebu-v6";
+const CACHE_VERSION = "watch-cebu-v7";
 const STATIC_CACHE = `static-${CACHE_VERSION}`;
 const API_CACHE = `api-${CACHE_VERSION}`;
 const TILE_CACHE = `tiles-${CACHE_VERSION}`;
@@ -126,21 +126,23 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(
       caches.open(TILE_CACHE).then(async (cache) => {
         const cachedTile = await cache.match(request);
-
-        const fetchPromise = fetch(request)
-          .then((networkResponse) => {
+        if (cachedTile) {
+          fetch(request).then((networkResponse) => {
             if (networkResponse && networkResponse.status === 200) {
               cache.put(request, networkResponse.clone());
               trimCache(TILE_CACHE, MAX_CACHED_TILES);
             }
-            return networkResponse;
-          })
-          .catch(() => {
-            // Return cached tile if network fails
-            return cachedTile;
-          });
+          }).catch(() => {});
+          return cachedTile;
+        }
 
-        return cachedTile || fetchPromise;
+        return fetch(request).then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            cache.put(request, networkResponse.clone());
+            trimCache(TILE_CACHE, MAX_CACHED_TILES);
+          }
+          return networkResponse;
+        });
       })
     );
     return;

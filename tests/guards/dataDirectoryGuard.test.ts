@@ -10,7 +10,7 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { readdirSync, readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from "fs";
+import { readdirSync, readFileSync, writeFileSync, mkdirSync, rmSync, existsSync, realpathSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash } from "crypto";
@@ -18,7 +18,7 @@ import { getDataDir } from "../../server/api.js";
 import { execSync } from "child_process";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT_DIR = join(__dirname, "../..");
+const ROOT_DIR = realpathSync(join(__dirname, "../.."));
 const DATA_DIR = join(ROOT_DIR, "data");
 const GUARD_TMP_DIR = join(ROOT_DIR, "tests", "fixtures", "tmp_guard_verification");
 

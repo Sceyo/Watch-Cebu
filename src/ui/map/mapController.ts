@@ -95,6 +95,25 @@ export class MapController {
     // Zoom control at bottom-right for thumb accessibility
     L.control.zoom({ position: "bottomright" }).addTo(this.map);
 
+    // Responsive Mobile & Viewport Auto-Invalidate Guard
+    // Prevents grey/white unrendered tile areas when mobile keyboards open/close
+    if (typeof ResizeObserver !== "undefined") {
+      const containerEl = document.getElementById(elementId);
+      if (containerEl) {
+        new ResizeObserver(() => {
+          this.map.invalidateSize();
+        }).observe(containerEl);
+      }
+    }
+    if (typeof window !== "undefined") {
+      const onResize = () => { this.map.invalidateSize(); };
+      window.addEventListener("resize", onResize, { passive: true });
+      window.addEventListener("orientationchange", onResize, { passive: true });
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", onResize, { passive: true });
+      }
+    }
+
     this.powerLayerGroup = L.layerGroup().addTo(this.map);
     this.earthquakeLayerGroup = L.layerGroup().addTo(this.map);
     this.pagasaLayerGroup = L.layerGroup().addTo(this.map);
