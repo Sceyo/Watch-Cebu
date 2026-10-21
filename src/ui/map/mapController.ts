@@ -45,6 +45,7 @@ export class MapController {
   private pagasaLayerGroup: L.LayerGroup;
   private onSelectLocation?: (details: SelectedLocationDetails) => void;
   private userLocationMarker?: L.CircleMarker;
+  private userAccuracyCircle?: L.Circle;
 
   constructor(elementId: string) {
     // Metro Cebu coordinates (10.3157°N, 123.8854°E)
@@ -103,10 +104,27 @@ export class MapController {
     this.onSelectLocation = callback;
   }
 
-  centerOnUser(coords: { lat: number; lon: number }): void {
+  centerOnUser(coords: { lat: number; lon: number; accuracy?: number }): void {
     if (this.userLocationMarker) {
       this.map.removeLayer(this.userLocationMarker);
+      this.userLocationMarker = undefined;
     }
+    if (this.userAccuracyCircle) {
+      this.map.removeLayer(this.userAccuracyCircle);
+      this.userAccuracyCircle = undefined;
+    }
+
+    if (coords.accuracy && coords.accuracy > 20 && coords.accuracy < 25000) {
+      this.userAccuracyCircle = L.circle([coords.lat, coords.lon], {
+        radius: coords.accuracy,
+        color: "#38BDF8",
+        fillColor: "#0284C7",
+        fillOpacity: 0.12,
+        weight: 1.5,
+        dashArray: "4, 4",
+      }).addTo(this.map);
+    }
+
     this.userLocationMarker = L.circleMarker([coords.lat, coords.lon], {
       radius: 9,
       fillColor: "#3B82F6",
@@ -117,7 +135,8 @@ export class MapController {
       className: "user-gps-pulse-marker",
     }).addTo(this.map);
 
-    this.map.setView([coords.lat, coords.lon], 14, { animate: true });
+    const targetZoom = coords.accuracy && coords.accuracy > 2000 ? 12 : 15;
+    this.map.setView([coords.lat, coords.lon], targetZoom, { animate: true });
   }
 
   panToLocation(coords: { lat: number; lon: number }, zoom = 15): void {

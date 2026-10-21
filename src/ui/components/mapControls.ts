@@ -18,7 +18,7 @@ import { getCebuSearchSuggestions } from "../services/cebuLocations.js";
 export interface MapControlsCallbacks {
   onSearchChange: (query: string) => void;
   onSearchSubmit?: (query: string) => void;
-  onLocateUser: (coords: { lat: number; lon: number }) => void;
+  onLocateUser: (coords: { lat: number; lon: number; accuracy?: number }) => void;
   onLayerChange: (layer: LayerSelection) => void;
   onToast: (msg: string) => void;
   onViewModeToggle?: () => void;
@@ -292,30 +292,29 @@ export function renderMapControls(
     locateBtn.classList.add("locating");
     callbacks.onToast("Locating your position in Cebu...");
 
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        locateBtn.classList.remove("locating");
-        const lat = pos.coords.latitude;
-        const lon = pos.coords.longitude;
+    const onGeoOk = (pos: GeolocationPosition) => {
+      locateBtn.classList.remove("locating");
+      const { latitude: lat, longitude: lon, accuracy } = pos.coords;
 
-        if (lat < 6.2 || lat > 14.6 || lon < 119.5 || lon > 128.2) {
-          callbacks.onToast("Your location is outside the Metro Cebu watch area.");
-          return;
-        }
+      if (lat < 6.2 || lat > 14.6 || lon < 119.5 || lon > 128.2) {
+        callbacks.onToast("Your location is outside the Metro Cebu watch area.");
+        return;
+      }
 
-        callbacks.onLocateUser({ lat, lon });
-        callbacks.onToast("Centered map on your position.");
-      },
-      (err) => {
-        locateBtn.classList.remove("locating");
-        if (err.code === err.PERMISSION_DENIED) {
-          callbacks.onToast("Location access permission denied.");
-        } else {
-          callbacks.onToast("Unable to determine your location.");
-        }
-      },
-      { timeout: 10000, maximumAge: 60000 }
-    );
+      callbacks.onLocateUser({ lat, lon, accuracy });
+      callbacks.onToast(accuracy > 1500 ? `Estimated location (~${Math.round(accuracy / 1000)}km radius).` : `Centered on location (±${Math.round(accuracy)}m).`);
+    };
+
+    const onGeoErr = (e: GeolocationPositionError, retry = false) => {
+      if (retry && e.code !== e.PERMISSION_DENIED) {
+        navigator.geolocation.getCurrentPosition(onGeoOk, (e2) => onGeoErr(e2, false), { enableHighAccuracy: false, timeout: 8000, maximumAge: 60000 });
+        return;
+      }
+      locateBtn.classList.remove("locating");
+      callbacks.onToast(e.code === e.PERMISSION_DENIED ? "Location permission denied." : "Unable to determine location.");
+    };
+
+    navigator.geolocation.getCurrentPosition(onGeoOk, (e) => onGeoErr(e, true), { enableHighAccuracy: true, timeout: 7000, maximumAge: 0 });
   });
 
   // Pinned barangay actions
