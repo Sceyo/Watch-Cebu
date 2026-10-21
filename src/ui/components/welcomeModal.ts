@@ -109,46 +109,24 @@ export function renderWelcomeModal(
   `;
 
   // Attach event listeners
-  const closeBtn = container.querySelector<HTMLButtonElement>("#btn-welcome-close");
-  closeBtn?.addEventListener("click", () => {
+  const dismissAnd = (action?: () => void) => {
     markWelcomeGuideSeen();
     onDismiss();
-  });
+    action?.();
+  };
 
-  const pinBtn = container.querySelector<HTMLButtonElement>("#btn-welcome-pin");
-  pinBtn?.addEventListener("click", () => {
-    markWelcomeGuideSeen();
-    if (onPinBarangay) {
-      onPinBarangay();
-    } else {
-      onDismiss();
-    }
-  });
-
-  const exploreBtn = container.querySelector<HTMLButtonElement>("#btn-welcome-explore");
-  exploreBtn?.addEventListener("click", () => {
-    markWelcomeGuideSeen();
-    onDismiss();
-  });
-
-  const aboutBtn = container.querySelector<HTMLButtonElement>("#btn-welcome-about");
-  aboutBtn?.addEventListener("click", () => {
-    markWelcomeGuideSeen();
-    onDismiss();
-    onOpenAbout();
-  });
+  container.querySelector<HTMLButtonElement>("#btn-welcome-close")?.addEventListener("click", () => dismissAnd());
+  container.querySelector<HTMLButtonElement>("#btn-welcome-pin")?.addEventListener("click", () => dismissAnd(onPinBarangay));
+  container.querySelector<HTMLButtonElement>("#btn-welcome-explore")?.addEventListener("click", () => dismissAnd());
+  container.querySelector<HTMLButtonElement>("#btn-welcome-about")?.addEventListener("click", () => dismissAnd(onOpenAbout));
 
   const hotlinesCard = container.querySelector<HTMLElement>("#welcome-card-hotlines");
-  const handleHotlinesClick = () => {
-    markWelcomeGuideSeen();
-    onDismiss();
-    onOpenAbout("hotlines");
-  };
-  hotlinesCard?.addEventListener("click", handleHotlinesClick);
+  const onHotlines = () => dismissAnd(() => onOpenAbout("hotlines"));
+  hotlinesCard?.addEventListener("click", onHotlines);
   hotlinesCard?.addEventListener("keydown", (e: KeyboardEvent) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
-      handleHotlinesClick();
+      onHotlines();
     }
   });
 }
