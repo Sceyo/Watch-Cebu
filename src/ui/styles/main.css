@@ -450,7 +450,9 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   overflow: hidden;
 }
 
-#map {
+#map,
+.leaflet-container {
+  background: #090D16 !important;
   width: 100%;
   height: 100%;
 }
