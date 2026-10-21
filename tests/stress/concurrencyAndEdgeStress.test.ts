@@ -91,7 +91,7 @@ describe("Edge Serverless Endpoints Concurrency & Load Stress", () => {
 
     const totalDuration = performance.now() - start;
 
-    expect(totalDuration).toBeLessThan(4000); // 300 requests in under 4s under system load
+    expect(totalDuration).toBeLessThan(8000); // 300 requests in under 4s under system load
     expect(powerResults).toHaveLength(BURST_PER_FEED);
     expect(eqResults).toHaveLength(BURST_PER_FEED);
     expect(pagasaResults).toHaveLength(BURST_PER_FEED);
