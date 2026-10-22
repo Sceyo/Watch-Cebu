@@ -844,8 +844,7 @@ export class MapController {
             (window.innerWidth < 768 ||
               (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
 
-          const targetLat = !isMobile ? coords[0] + 0.0035 : coords[0];
-          this.map.flyTo([targetLat, coords[1]], 14, { duration: 0.8 });
+          this.map.flyTo([coords[0], coords[1]], 9.5, { duration: 0.8 });
 
           if (isMobile && this.onSelectLocation) {
             this.onSelectLocation({ type: "earthquake", event: eq });

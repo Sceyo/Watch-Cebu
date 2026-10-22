@@ -53,10 +53,6 @@ export function renderWelcomeModal(
         <button class="welcome-close-btn" id="btn-welcome-close" aria-label="Dismiss guide" title="Dismiss guide">${ICONS.close}</button>
       </div>
 
-      <div class="welcome-tagline">
-        Check brownouts, earthquakes, storms, and air quality in Metro Cebu. Free, no sign-up.
-      </div>
-
       <div class="welcome-features-list">
         ${[
           { c: "welcome-feat-bolt", i: ICONS.bolt, t: "Brownout Schedules", d: "Planned outages from Visayan Electric (VECO). Search or pin your barangay to see if you're affected." },
