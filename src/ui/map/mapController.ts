@@ -64,8 +64,8 @@ export class MapController {
     // Dark-themed tile layer (CartoDB Dark Matter with decoupled high-contrast labels)
     const cartoKey = (import.meta.env?.VITE_CARTO_API_KEY as string | undefined)?.trim();
     const keyParam = cartoKey ? `?key=${encodeURIComponent(cartoKey)}` : "";
-    const baseTileUrl = `https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png${keyParam}`;
-    const labelsTileUrl = `https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png${keyParam}`;
+    const baseTileUrl = `https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png${keyParam}`;
+    const labelsTileUrl = `https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png${keyParam}`;
 
     L.tileLayer(baseTileUrl, {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
