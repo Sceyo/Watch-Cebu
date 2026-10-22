@@ -365,8 +365,8 @@
       "Don Gil Garcia St"
     ],
     "areas_affected_raw": "Portion of Capitol Site, Cebu City, along Don Mariano Cui St., Don Julio Llorente St., Rosal St., C. Rodriguez St., Osmeña Blvd., and Don Gil Garcia St.",
-    "lat": 10.3246868,
-    "lon": 123.8902409,
+    "lat": 10.3145,
+    "lon": 123.8907,
     "coordinate_source": "osm_point",
     "geocode_query": null,
     "geocode_provider": null,
