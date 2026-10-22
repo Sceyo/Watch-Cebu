@@ -26,8 +26,10 @@ import type { Plugin, ViteDevServer } from "vite";
 import {
   getPowerAdvisories,
   getEarthquakeEvents,
+  getPagasaBulletin,
   getPowerAdvisoriesSnapshot,
   getEarthquakeEventsSnapshot,
+  getPagasaBulletinSnapshot,
 } from "./api.js";
 
 const USE_SNAPSHOT = process.env.WATCH_CEBU_USE_SNAPSHOT === "true";
@@ -67,6 +69,22 @@ export function watchCebuDevMiddleware(): Plugin {
             const data = USE_SNAPSHOT
               ? await getEarthquakeEventsSnapshot()
               : await getEarthquakeEvents();
+            res.setHeader("Content-Type", "application/json; charset=utf-8");
+            res.statusCode = 200;
+            res.end(JSON.stringify(data));
+          } catch (err: any) {
+            res.setHeader("Content-Type", "application/json; charset=utf-8");
+            res.statusCode = 500;
+            res.end(JSON.stringify({ error: err?.message || String(err) }));
+          }
+          return;
+        }
+
+        if (url === "/api/pagasa") {
+          try {
+            const data = USE_SNAPSHOT
+              ? await getPagasaBulletinSnapshot()
+              : await getPagasaBulletin();
             res.setHeader("Content-Type", "application/json; charset=utf-8");
             res.statusCode = 200;
             res.end(JSON.stringify(data));
