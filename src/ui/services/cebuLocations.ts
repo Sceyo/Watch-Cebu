@@ -1434,7 +1434,9 @@ export const CEBU_LOCATIONS: CebuLocation[] = [
     "lon": 123.89122,
     "type": "barangay",
     "alt": [
-      "Sambag 2"
+      "Sambag II",
+      "Sambag 2",
+      "Sambag 2 Cebu City"
     ]
   },
   {
@@ -2387,7 +2389,7 @@ export const CEBU_LOCATIONS: CebuLocation[] = [
   },
   {
     "name": "Bacayan",
-    "city": "Mandaue City",
+    "city": "Cebu City",
     "lat": 10.38555,
     "lon": 123.91988,
     "type": "barangay",
@@ -3747,6 +3749,154 @@ export const CEBU_LOCATIONS: CebuLocation[] = [
     "lon": 123.80344,
     "type": "barangay",
     "alt": []
+  },
+  {
+    "name": "Busay",
+    "city": "Cebu City",
+    "lat": 10.3621,
+    "lon": 123.8767,
+    "type": "barangay",
+    "alt": [
+      "Barangay Busay",
+      "Sitio Busay"
+    ]
+  },
+  {
+    "name": "Pit-os",
+    "city": "Cebu City",
+    "lat": 10.3956,
+    "lon": 123.9304,
+    "type": "barangay",
+    "alt": [
+      "Barangay Pit-os",
+      "Pit-Os",
+      "Pitos"
+    ]
+  },
+  {
+    "name": "Budlaan",
+    "city": "Cebu City",
+    "lat": 10.3789,
+    "lon": 123.9103,
+    "type": "barangay",
+    "alt": [
+      "Barangay Budlaan"
+    ]
+  },
+  {
+    "name": "Cambinocot",
+    "city": "Cebu City",
+    "lat": 10.4358,
+    "lon": 123.9211,
+    "type": "barangay",
+    "alt": [
+      "Barangay Cambinocot"
+    ]
+  },
+  {
+    "name": "Paril",
+    "city": "Cebu City",
+    "lat": 10.4561,
+    "lon": 123.9135,
+    "type": "barangay",
+    "alt": [
+      "Barangay Paril"
+    ]
+  },
+  {
+    "name": "Mabini",
+    "city": "Cebu City",
+    "lat": 10.4072,
+    "lon": 123.9254,
+    "type": "barangay",
+    "alt": [
+      "Barangay Mabini"
+    ]
+  },
+  {
+    "name": "Agsungot",
+    "city": "Cebu City",
+    "lat": 10.4285,
+    "lon": 123.9056,
+    "type": "barangay",
+    "alt": [
+      "Barangay Agsungot"
+    ]
+  },
+  {
+    "name": "Bonbon",
+    "city": "Cebu City",
+    "lat": 10.3125,
+    "lon": 123.8214,
+    "type": "barangay",
+    "alt": [
+      "Barangay Bonbon"
+    ]
+  },
+  {
+    "name": "Babag",
+    "city": "Cebu City",
+    "lat": 10.3298,
+    "lon": 123.8447,
+    "type": "barangay",
+    "alt": [
+      "Barangay Babag",
+      "Babag 1",
+      "Babag 2"
+    ]
+  },
+  {
+    "name": "Sinsin",
+    "city": "Cebu City",
+    "lat": 10.3042,
+    "lon": 123.7744,
+    "type": "barangay",
+    "alt": [
+      "Barangay Sinsin"
+    ]
+  },
+  {
+    "name": "Toong",
+    "city": "Cebu City",
+    "lat": 10.2917,
+    "lon": 123.8431,
+    "type": "barangay",
+    "alt": [
+      "Barangay Toong"
+    ]
+  },
+  {
+    "name": "Lusaran",
+    "city": "Cebu City",
+    "lat": 10.4503,
+    "lon": 123.8291,
+    "type": "barangay",
+    "alt": [
+      "Barangay Lusaran"
+    ]
+  },
+  {
+    "name": "Lorega San Miguel",
+    "city": "Cebu City",
+    "lat": 10.3094,
+    "lon": 123.9015,
+    "type": "barangay",
+    "alt": [
+      "Lorega",
+      "Barangay Lorega"
+    ]
+  },
+  {
+    "name": "Santo Niño",
+    "city": "Cebu City",
+    "lat": 10.2936,
+    "lon": 123.9022,
+    "type": "barangay",
+    "alt": [
+      "Sto. Niño",
+      "Sto Nino",
+      "Barangay Santo Niño"
+    ]
   }
 ];
 

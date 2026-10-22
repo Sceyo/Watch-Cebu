@@ -413,20 +413,22 @@
     "overnight_span": false,
     "duration_hours": 2.5,
     "purpose": "To improve the reliability of the distribution system serving Brgy. Tangke by facilitating relocation of guy",
-    "city": "Cebu City",
-    "barangay": [],
+    "city": "Naga City",
+    "barangay": [
+      "Tangke"
+    ],
     "streets": [
       "Brgy. Tangke Road"
     ],
     "areas_affected_raw": "Portion of Tangke, City of Naga, along Brgy. Tangke Road.",
-    "lat": null,
-    "lon": null,
-    "coordinate_source": null,
+    "lat": 10.2161148,
+    "lon": 123.7535324,
+    "coordinate_source": "osm_point",
     "geocode_query": null,
     "geocode_provider": null,
     "business_confidence": "scheduled",
-    "parse_confidence": "low",
-    "parse_notes": "Could not identify VECO city in: \"Portion of Tangke, City of Naga, along Brgy. Tangke Road.\"; No barangay identified for Cebu City"
+    "parse_confidence": "high",
+    "parse_notes": null
   },
   {
     "id": "dadf5f31d39144b36b7138aa2fc6f5fb5d4bb4f8b733047c53f4dae1a18f606b",
