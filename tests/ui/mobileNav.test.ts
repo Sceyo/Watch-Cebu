@@ -16,10 +16,12 @@ function createMockElement(): any {
   const listeners: Record<string, ((...args: any[]) => void)[]> = {};
   const attrs: Record<string, string> = {};
   const classListSet = new Set<string>();
+  const childrenMap: Record<string, any> = {};
   let innerHTMLValue = "";
 
   const elem: any = {
     className: "",
+    style: {},
     classList: {
       add: (cls: string) => classListSet.add(cls),
       remove: (cls: string) => classListSet.delete(cls),
@@ -39,9 +41,16 @@ function createMockElement(): any {
       if (!listeners[event]) listeners[event] = [];
       listeners[event].push(handler);
     }),
+    click: vi.fn(() => {
+      listeners["click"]?.forEach((fn) => fn({ preventDefault: () => {} }));
+    }),
     querySelector: vi.fn((sel: string) => {
-      if (innerHTMLValue.includes(sel.replace(/^[#.]/, ""))) {
-        return createMockElement();
+      const key = sel.replace(/^[#.]/, "");
+      if (innerHTMLValue.includes(key)) {
+        if (!childrenMap[key]) {
+          childrenMap[key] = createMockElement();
+        }
+        return childrenMap[key];
       }
       return null;
     }),
@@ -219,6 +228,24 @@ describe("Map Controls Component (H5 & C2)", () => {
     expect(container.innerHTML).toContain('value="Tipolo"');
     expect(container.innerHTML).toContain('id="btn-clear-search"');
     expect(container.innerHTML).toContain('style="display: flex;"');
+  });
+
+  it("calls onLocateStart when locate button is clicked to ensure view switches to map mode", () => {
+    const container = createMockElement();
+    const callbacks = {
+      onSearchChange: vi.fn(),
+      onLocateStart: vi.fn(),
+      onLocateUser: vi.fn(),
+      onLayerChange: vi.fn(),
+      onToast: vi.fn(),
+    };
+
+    renderMapControls(container, "power", callbacks);
+    const locateBtn = container.querySelector<HTMLButtonElement>("#btn-locate-me");
+    expect(locateBtn).not.toBeNull();
+    locateBtn?.click();
+
+    expect(callbacks.onLocateStart).toHaveBeenCalled();
   });
 
   it("consistently provides Filter button on pinned banner without unfilter (User Request)", () => {

@@ -18,6 +18,7 @@ import { getCebuSearchSuggestions } from "../services/cebuLocations.js";
 export interface MapControlsCallbacks {
   onSearchChange: (query: string) => void;
   onSearchSubmit?: (query: string) => void;
+  onLocateStart?: () => void;
   onLocateUser: (coords: { lat: number; lon: number; accuracy?: number }) => void;
   onLayerChange: (layer: LayerSelection) => void;
   onToast: (msg: string) => void;
@@ -125,7 +126,7 @@ export function renderMapControls(
   let activeIndex = -1;
 
   const hideSuggestions = () => {
-    if (dropdown) {
+    if (dropdown && dropdown.style) {
       dropdown.style.display = "none";
       dropdown.innerHTML = "";
       activeIndex = -1;
@@ -284,6 +285,7 @@ export function renderMapControls(
   const locateBtn = container.querySelector<HTMLButtonElement>("#btn-locate-me");
   locateBtn?.addEventListener("click", () => {
     hideSuggestions();
+    callbacks.onLocateStart?.();
     if (!navigator.geolocation) {
       callbacks.onToast("Geolocation is not supported by your browser.");
       return;
