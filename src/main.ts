@@ -381,7 +381,7 @@ function updateUI() {
           updateUI();
           mapController?.invalidateSize();
           if (advisory.lat !== null && advisory.lon !== null) {
-            mapController?.panToLocation({ lat: advisory.lat, lon: advisory.lon }, 15);
+            mapController?.panToLocation({ lat: advisory.lat, lon: advisory.lon }, 15, true);
             focusActiveDrawer();
           }
         },
@@ -390,7 +390,7 @@ function updateUI() {
           selectedLocation = { type: "earthquake", event };
           updateUI();
           mapController?.invalidateSize();
-          mapController?.zoomToLocation(event.lat, event.lon, 11);
+          mapController?.panToLocation({ lat: event.lat, lon: event.lon }, 13, true);
           focusActiveDrawer();
         },
         onPinBarangay: (brgy) => {

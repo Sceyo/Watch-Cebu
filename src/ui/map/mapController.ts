@@ -158,8 +158,44 @@ export class MapController {
     this.map.setView([coords.lat, coords.lon], targetZoom, { animate: true });
   }
 
-  panToLocation(coords: { lat: number; lon: number }, zoom = 15): void {
-    this.map.setView([coords.lat, coords.lon], zoom, { animate: true });
+  openPopupForCoordinates(coords: { lat: number; lon: number }): void {
+    const isMobile =
+      typeof window !== "undefined" &&
+      (window.innerWidth < 768 ||
+        (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
+    if (isMobile) return;
+
+    let opened = false;
+    this.powerLayerGroup.eachLayer((layer: any) => {
+      if (!opened && layer.getLatLng && Math.abs(layer.getLatLng().lat - coords.lat) < 0.0001) {
+        layer.openPopup();
+        opened = true;
+      }
+    });
+    if (!opened) {
+      this.earthquakeLayerGroup.eachLayer((layer: any) => {
+        if (!opened && layer.getLatLng && Math.abs(layer.getLatLng().lat - coords.lat) < 0.002) {
+          layer.openPopup();
+          opened = true;
+        }
+      });
+    }
+  }
+
+  panToLocation(coords: { lat: number; lon: number }, zoom = 15, openPopup = false): void {
+    const isDesktop =
+      typeof window !== "undefined" &&
+      window.innerWidth >= 768 &&
+      (!window.matchMedia || !window.matchMedia("(pointer: coarse)").matches);
+
+    // On desktop when opening popup, offset latitude slightly north (+0.0018 at z16, +0.0025 at z15)
+    // so both the marker pin (below) and the popup balloon (above) fit comfortably in view together
+    const offsetLat = isDesktop && openPopup ? (zoom >= 16 ? 0.0018 : 0.0025) : 0;
+    this.map.setView([coords.lat + offsetLat, coords.lon], zoom, { animate: true });
+
+    if (openPopup && isDesktop) {
+      this.openPopupForCoordinates(coords);
+    }
   }
 
   invalidateSize(): void {
@@ -263,7 +299,7 @@ export class MapController {
         html,
         iconSize: [28, 28],
         iconAnchor: [14, 14],
-        popupAnchor: [0, -16],
+        popupAnchor: [0, -20],
       });
 
       const marker = L.marker([first.lat, first.lon], { icon: customIcon });
@@ -302,21 +338,21 @@ export class MapController {
         }
 
         const favoriteBadge = isFavorite ? `
-          <span class="popup-badge" style="background: rgba(245, 158, 11, 0.2); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.5);">
-            <span aria-hidden="true" style="color: #FCD34D;">${ICONS.starFilled}</span> Favorite Area
+          <span class="popup-badge favorite-badge-solid">
+            ★ Favorite
           </span>
         ` : "";
 
         popupBodyHtml = `
           <div class="popup-card power-popup ${isFavorite ? 'is-favorite-popup' : ''}">
-            <div class="popup-header">
-              <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+            <div class="popup-top-meta">
+              <div class="popup-badges-cluster">
                 <span class="popup-badge" style="background: ${status.hex}22; color: ${status.hex}; border: 1px solid ${status.hex}55;">
                   ${status.glyph ? status.glyph + ' ' : ''}${status.label}
                 </span>
                 ${favoriteBadge}
               </div>
-              <span class="popup-city">${a.city}</span>
+              <span class="popup-city-tag">${a.city}</span>
             </div>
             <h3 class="popup-title">${barangayName}</h3>
             
@@ -387,25 +423,25 @@ export class MapController {
         }
 
         const favoriteBadge = isFavorite ? `
-          <span class="popup-badge" style="background: rgba(245, 158, 11, 0.2); color: #F59E0B; border: 1px solid rgba(245, 158, 11, 0.5);">
-            <span aria-hidden="true" style="color: #FCD34D;">${ICONS.starFilled}</span> Favorite Area
+          <span class="popup-badge favorite-badge-solid">
+            ★ Favorite
           </span>
         ` : "";
 
         popupBodyHtml = `
           <div class="popup-card power-popup multi-advisory-popup ${isFavorite ? 'is-favorite-popup' : ''}">
-            <div class="popup-header">
-              <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+            <div class="popup-top-meta">
+              <div class="popup-badges-cluster">
                 <span class="popup-badge" style="background: ${bestStatus.hex}22; color: ${bestStatus.hex}; border: 1px solid ${bestStatus.hex}55;">
                   ${group.length} Advisories
                 </span>
                 ${favoriteBadge}
               </div>
-              <span class="popup-city">${first.city}</span>
+              <span class="popup-city-tag">${first.city}</span>
             </div>
             <h3 class="popup-title">${barangayName}</h3>
             <p style="font-size: 0.72rem; color: var(--text-muted); margin: 0 0 6px 0;">Multiple scheduled interruptions at this location:</p>
-            <div class="popup-multi-list" style="max-height: 220px; overflow-y: auto;">
+            <div class="popup-multi-list" style="max-height: 200px; overflow-y: auto;">
               ${itemsHtml}
             </div>
           </div>
@@ -414,9 +450,11 @@ export class MapController {
 
       marker.bindPopup(popupBodyHtml, {
         maxWidth: 340,
+        minWidth: 260,
+        className: isFavorite ? "is-favorite-popup-wrapper" : "",
         autoPan: true,
-        autoPanPaddingTopLeft: L.point(20, 165),
-        autoPanPaddingBottomRight: L.point(20, 40),
+        autoPanPaddingTopLeft: L.point(20, 110),
+        autoPanPaddingBottomRight: L.point(20, 75),
         keepInView: true,
       });
 
@@ -546,9 +584,10 @@ export class MapController {
 
       marker.bindPopup(popupHtml, {
         maxWidth: 340,
+        minWidth: 260,
         autoPan: true,
-        autoPanPaddingTopLeft: L.point(20, 165),
-        autoPanPaddingBottomRight: L.point(20, 40),
+        autoPanPaddingTopLeft: L.point(20, 110),
+        autoPanPaddingBottomRight: L.point(20, 75),
         keepInView: true,
       });
 
@@ -774,20 +813,20 @@ export class MapController {
         if (matchedPower.length === 1) {
           const adv = matchedPower[0];
           const coords: [number, number] = [adv.lat!, adv.lon!];
-          this.map.flyTo(coords, 16, { duration: 1.0 });
-
           const isMobile =
             typeof window !== "undefined" &&
             (window.innerWidth < 768 ||
               (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
+
+          // On desktop, offset camera latitude slightly north (+0.0018 at zoom 16)
+          // so that BOTH the marker pin and the entire popup card above it are visible simultaneously
+          const targetLat = !isMobile ? coords[0] + 0.0018 : coords[0];
+          this.map.flyTo([targetLat, coords[1]], 16, { duration: 0.8 });
+
           if (isMobile && this.onSelectLocation) {
             this.onSelectLocation({ type: "power", advisories: [adv] });
           } else {
-            this.powerLayerGroup.eachLayer((layer: any) => {
-              if (layer.getLatLng && Math.abs(layer.getLatLng().lat - adv.lat!) < 0.0001) {
-                layer.openPopup();
-              }
-            });
+            this.openPopupForCoordinates({ lat: adv.lat!, lon: adv.lon! });
           }
 
           const locLabel = adv.barangay[0] || adv.city;
@@ -800,20 +839,18 @@ export class MapController {
         } else {
           const eq = matchedEq[0];
           const coords: [number, number] = [eq.lat, eq.lon];
-          this.map.flyTo(coords, 14, { duration: 1.0 });
-
           const isMobile =
             typeof window !== "undefined" &&
             (window.innerWidth < 768 ||
               (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
+
+          const targetLat = !isMobile ? coords[0] + 0.0035 : coords[0];
+          this.map.flyTo([targetLat, coords[1]], 14, { duration: 0.8 });
+
           if (isMobile && this.onSelectLocation) {
             this.onSelectLocation({ type: "earthquake", event: eq });
           } else {
-            this.earthquakeLayerGroup.eachLayer((layer: any) => {
-              if (layer.getLatLng && Math.abs(layer.getLatLng().lat - eq.lat) < 0.001) {
-                layer.openPopup();
-              }
-            });
+            this.openPopupForCoordinates({ lat: eq.lat, lon: eq.lon });
           }
 
           return {

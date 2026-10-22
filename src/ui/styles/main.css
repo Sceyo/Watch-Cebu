@@ -720,69 +720,149 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
 }
 
 .leaflet-popup-content {
-  margin: 14px !important;
-  line-height: 1.4 !important;
+  margin: 10px 12px !important;
+  line-height: 1.35 !important;
 }
 
 .leaflet-popup-tip {
   background: var(--bg-secondary) !important;
 }
 
+/* --------------------------------------------------------------------------
+   Favorite Location Leaflet Balloon Customization
+   Makes outline the favorite amber color (#F59E0B) and fills insides with matching amber tint
+   -------------------------------------------------------------------------- */
+.is-favorite-popup-wrapper .leaflet-popup-content-wrapper {
+  border: 1.5px solid #F59E0B !important;
+  background: linear-gradient(165deg, rgba(245, 158, 11, 0.22) 0%, rgba(38, 28, 12, 0.96) 35%, rgba(15, 23, 42, 0.98) 100%) !important;
+  box-shadow: 0 0 22px rgba(245, 158, 11, 0.35), 0 10px 25px -5px rgba(0, 0, 0, 0.8) !important;
+}
+
+.is-favorite-popup-wrapper .leaflet-popup-tip {
+  background: #231c0e !important;
+  border-left: 1.5px solid #F59E0B !important;
+  border-top: 1.5px solid #F59E0B !important;
+}
+
+.is-favorite-popup-wrapper .leaflet-popup-close-button {
+  color: #F59E0B !important;
+  font-size: 18px !important;
+  padding: 6px !important;
+}
+
+.is-favorite-popup-wrapper .leaflet-popup-close-button:hover {
+  color: #FDE68A !important;
+}
+
+.popup-card.is-favorite-popup .popup-title {
+  border-bottom-color: rgba(245, 158, 11, 0.35) !important;
+}
+
+.popup-card.is-favorite-popup .popup-field-streets .field-value {
+  background: rgba(245, 158, 11, 0.1) !important;
+  border-color: rgba(245, 158, 11, 0.3) !important;
+}
+
+.popup-card.is-favorite-popup .popup-purpose {
+  background: rgba(245, 158, 11, 0.08) !important;
+  border: 1px solid rgba(245, 158, 11, 0.2) !important;
+}
+
+.popup-card.is-favorite-popup .popup-provenance-box {
+  background: rgba(245, 158, 11, 0.08) !important;
+  border-color: rgba(245, 158, 11, 0.3) !important;
+}
+
+.popup-card.is-favorite-popup .source-link {
+  color: #FBBF24 !important;
+}
+
+.popup-card.is-favorite-popup .source-link:hover {
+  color: #FDE68A !important;
+}
+
 .popup-card {
-  font-size: 0.85rem;
-  max-height: calc(100vh - 220px);
+  font-size: 0.82rem;
+  max-height: min(290px, calc(100vh - 240px));
   overflow-y: auto;
   scrollbar-width: thin;
   padding-right: 2px;
 }
 
+.popup-top-meta,
 .popup-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.popup-badges-cluster {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
 }
 
 .popup-badge {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  padding: 2px 8px;
+  padding: 2px 7px;
   border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
 }
 
-.popup-city {
-  font-size: 0.75rem;
+.popup-badge.favorite-badge-solid {
+  background: #F59E0B !important;
+  color: #0F172A !important;
+  border: 1px solid #D97706 !important;
+  font-weight: 800 !important;
+  font-size: 0.68rem !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+.popup-city,
+.popup-city-tag {
+  font-size: 0.72rem;
   color: var(--text-muted);
   font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .popup-title {
-  font-size: 1.05rem;
+  font-size: 1.02rem;
   font-weight: 700;
   color: #FFFFFF;
-  margin-bottom: 10px;
+  margin: 0 0 6px 0;
   border-bottom: 1px solid var(--border-color);
-  padding-bottom: 6px;
+  padding-bottom: 5px;
+  line-height: 1.25;
 }
 
 .popup-field-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 4px;
-  font-size: 0.8rem;
+  margin-bottom: 3px;
+  font-size: 0.78rem;
 }
 
 .popup-field-streets {
   flex-direction: column;
   align-items: flex-start;
-  gap: 4px;
-  margin-top: 6px;
-  margin-bottom: 6px;
+  gap: 3px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .popup-field-streets .field-label {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: #94A3B8;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -791,17 +871,17 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
 
 .popup-field-streets .field-value {
   text-align: left;
-  line-height: 1.45;
+  line-height: 1.4;
   word-break: break-word;
   white-space: normal;
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(51, 65, 85, 0.6);
-  padding: 6px 10px;
-  border-radius: 6px;
+  padding: 4px 8px;
+  border-radius: 5px;
   width: 100%;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   color: #F1F5F9;
-  max-height: 100px;
+  max-height: 65px;
   overflow-y: auto;
   scrollbar-width: thin;
 }
@@ -858,20 +938,23 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
 }
 
 .popup-purpose {
-  margin-top: 8px;
-  padding: 6px 8px;
+  margin-top: 5px;
+  padding: 5px 8px;
   background: var(--bg-primary);
-  border-radius: 6px;
-  font-size: 0.78rem;
+  border-radius: 5px;
+  font-size: 0.75rem;
   color: var(--text-secondary);
+  max-height: 55px;
+  overflow-y: auto;
+  scrollbar-width: thin;
 }
 
 .popup-provenance-box {
-  margin-top: 10px;
-  padding: 8px;
+  margin-top: 6px;
+  padding: 6px 8px;
   background: var(--bg-primary);
   border: 1px solid var(--border-color);
-  border-radius: 6px;
+  border-radius: 5px;
 }
 
 .source-highlight {
@@ -903,8 +986,8 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
 }
 
 .popup-footer {
-  margin-top: 12px;
-  padding-top: 8px;
+  margin-top: 6px;
+  padding-top: 5px;
   border-top: 1px solid var(--border-color);
   text-align: center;
 }

@@ -280,6 +280,30 @@ describe("MapController — Favorite Barangay & Earthquake Enhancements", () => 
     const lastCall = calls[calls.length - 1][0];
     expect(lastCall.html).toContain("--pin-color: #F59E0B");
     expect(lastCall.html).toContain("is-favorite");
+
+    // Verify favorite popup receives amber balloon class and solid badge without wrapping gap
+    const markerMock = (L.marker as any).mock.results[0]?.value;
+    expect(markerMock.bindPopup).toHaveBeenCalledWith(
+      expect.stringContaining("favorite-badge-solid"),
+      expect.objectContaining({
+        className: "is-favorite-popup-wrapper",
+        autoPanPaddingBottomRight: expect.anything(),
+      })
+    );
+  });
+
+  it("offsets desktop target latitude when focusing with openPopup to show marker and info card simultaneously", () => {
+    const dummyMap = (controller as any).map;
+    dummyMap.setView.mockClear();
+
+    // Call panToLocation with openPopup = true
+    controller.panToLocation({ lat: 10.33, lon: 123.90 }, 15, true);
+
+    expect(dummyMap.setView).toHaveBeenCalledWith(
+      expect.arrayContaining([expect.any(Number), 123.90]),
+      15,
+      { animate: true }
+    );
   });
 
   it("renders distant microquakes when showMicroQuakes is true", async () => {
