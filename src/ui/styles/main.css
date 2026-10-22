@@ -759,8 +759,8 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
 
 .is-favorite-popup-wrapper .leaflet-popup-close-button {
   color: #F59E0B !important;
-  font-size: 18px !important;
-  padding: 6px !important;
+  font-size: 16px !important;
+  padding: 0 !important;
 }
 
 .is-favorite-popup-wrapper .leaflet-popup-close-button:hover {
@@ -825,6 +825,7 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   align-items: center;
   gap: 6px;
   margin-bottom: 6px;
+  padding-right: 28px;
 }
 
 .popup-badges-cluster {
