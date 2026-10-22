@@ -302,7 +302,7 @@ export function renderMapControls(
       }
 
       callbacks.onLocateUser({ lat, lon, accuracy });
-      callbacks.onToast(accuracy > 1500 ? `Estimated location (~${Math.round(accuracy / 1000)}km radius).` : `Centered on location (±${Math.round(accuracy)}m).`);
+      callbacks.onToast("Centered map on your position.");
     };
 
     const onGeoErr = (e: GeolocationPositionError, retry = false) => {
