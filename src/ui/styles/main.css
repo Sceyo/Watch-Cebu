@@ -747,12 +747,12 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
    -------------------------------------------------------------------------- */
 .is-favorite-popup-wrapper .leaflet-popup-content-wrapper {
   border: 1.5px solid #F59E0B !important;
-  background: linear-gradient(165deg, rgba(245, 158, 11, 0.22) 0%, rgba(38, 28, 12, 0.96) 35%, rgba(15, 23, 42, 0.98) 100%) !important;
+  background: linear-gradient(165deg, rgba(245, 158, 11, 0.24) 0%, rgba(38, 28, 12, 0.98) 35%, rgba(24, 18, 9, 0.99) 100%) !important;
   box-shadow: 0 0 22px rgba(245, 158, 11, 0.35), 0 10px 25px -5px rgba(0, 0, 0, 0.8) !important;
 }
 
 .is-favorite-popup-wrapper .leaflet-popup-tip {
-  background: #231c0e !important;
+  background: #181209 !important;
   border-left: 1.5px solid #F59E0B !important;
   border-top: 1.5px solid #F59E0B !important;
 }
@@ -786,12 +786,21 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   border-color: rgba(245, 158, 11, 0.3) !important;
 }
 
+.popup-card.is-favorite-popup .popup-footer {
+  border-top: 1px solid rgba(245, 158, 11, 0.25) !important;
+}
+
 .popup-card.is-favorite-popup .source-link {
+  background: rgba(245, 158, 11, 0.14) !important;
+  border: 1px solid rgba(245, 158, 11, 0.38) !important;
   color: #FBBF24 !important;
 }
 
 .popup-card.is-favorite-popup .source-link:hover {
+  background: rgba(245, 158, 11, 0.24) !important;
+  border-color: rgba(245, 158, 11, 0.65) !important;
   color: #FDE68A !important;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.25) !important;
 }
 
 .popup-card {
@@ -1005,10 +1014,61 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
 }
 
 .popup-footer {
-  margin-top: 6px;
-  padding-top: 5px;
-  border-top: 1px solid var(--border-color);
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   text-align: center;
+}
+
+.popup-footer .source-link,
+.sheet-card-footer .source-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 7px 12px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.28);
+  color: #60A5FA;
+  transition: all 0.15s ease-in-out;
+}
+
+.popup-footer .source-link:hover,
+.sheet-card-footer .source-link:hover {
+  background: rgba(59, 130, 246, 0.18);
+  border-color: rgba(59, 130, 246, 0.5);
+  color: #93C5FD;
+  text-decoration: none;
+}
+
+.popup-card.earthquake-popup .source-link {
+  background: rgba(167, 139, 250, 0.1);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  color: #C4B5FD;
+}
+
+.popup-card.earthquake-popup .source-link:hover {
+  background: rgba(167, 139, 250, 0.2);
+  border-color: rgba(167, 139, 250, 0.55);
+  color: #DDD6FE;
+}
+
+.popup-card.storm-popup .source-link {
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38BDF8;
+}
+
+.popup-card.storm-popup .source-link:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: rgba(56, 189, 248, 0.55);
+  color: #7DD3FC;
 }
 
 .source-link {
