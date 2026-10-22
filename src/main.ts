@@ -317,7 +317,19 @@ function updateUI() {
             showToast(res.message);
           }
         },
+        onLocateStart: () => {
+          if (currentViewMode !== "map") {
+            currentViewMode = "map";
+            updateUI();
+            mapController?.invalidateSize();
+          }
+        },
         onLocateUser: (coords) => {
+          if (currentViewMode !== "map") {
+            currentViewMode = "map";
+            updateUI();
+            mapController?.invalidateSize();
+          }
           mapController?.centerOnUser(coords);
         },
         onLayerChange: (layer) => {
