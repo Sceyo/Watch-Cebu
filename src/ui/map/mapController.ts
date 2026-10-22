@@ -166,19 +166,19 @@ export class MapController {
     this.map.invalidateSize();
   }
 
-  setLayerVisibility(selection: LayerSelection): void {
+  setLayerVisibility(selection: LayerSelection, shouldRefocus = false): void {
     if (selection === "power") {
       if (!this.map.hasLayer(this.powerLayerGroup)) this.map.addLayer(this.powerLayerGroup);
       if (this.map.hasLayer(this.earthquakeLayerGroup)) this.map.removeLayer(this.earthquakeLayerGroup);
-      this.fitBoundsIfNotEmpty();
+      if (shouldRefocus) this.fitBoundsIfNotEmpty();
     } else if (selection === "earthquakes") {
       if (this.map.hasLayer(this.powerLayerGroup)) this.map.removeLayer(this.powerLayerGroup);
       if (!this.map.hasLayer(this.earthquakeLayerGroup)) this.map.addLayer(this.earthquakeLayerGroup);
-      this.focusCebuIsland();
+      if (shouldRefocus) this.focusCebuIsland();
     } else {
       if (!this.map.hasLayer(this.powerLayerGroup)) this.map.addLayer(this.powerLayerGroup);
       if (!this.map.hasLayer(this.earthquakeLayerGroup)) this.map.addLayer(this.earthquakeLayerGroup);
-      this.focusCebuIsland();
+      if (shouldRefocus) this.focusCebuIsland();
     }
   }
 

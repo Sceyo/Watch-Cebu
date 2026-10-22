@@ -192,7 +192,7 @@ function updateUI() {
       {
         onLayerChange: (layer) => {
           currentLayer = layer;
-          mapController?.setLayerVisibility(currentLayer);
+          mapController?.setLayerVisibility(currentLayer, true);
           updateUI();
         },
         onLegendToggle: () => {
@@ -322,7 +322,7 @@ function updateUI() {
         },
         onLayerChange: (layer) => {
           currentLayer = layer;
-          mapController?.setLayerVisibility(currentLayer);
+          mapController?.setLayerVisibility(currentLayer, true);
           updateUI();
         },
         onToast: (msg) => {
@@ -348,11 +348,13 @@ function updateUI() {
         },
         onSelectMyBarangay: (barangay) => {
           filterState.searchQuery = barangay;
-          mapController?.renderPowerAdvisories(powerFeedState.data, filterState, myBarangay);
-          if (currentViewMode === "map") {
-            mapController?.searchAndZoom(barangay, powerFeedState.data, eqFeedState.data);
+          if (currentViewMode !== "map") {
+            currentViewMode = "map";
           }
           updateUI();
+          mapController?.invalidateSize();
+          mapController?.renderPowerAdvisories(powerFeedState.data, filterState, myBarangay);
+          mapController?.searchAndZoom(barangay, powerFeedState.data, eqFeedState.data);
         },
       },
       {
@@ -375,20 +377,20 @@ function updateUI() {
       renderListView(listViewEl, currentLayer, powerFeedState.data, eqFeedState.data, filterState, {
         onSelectAdvisory: (advisory) => {
           currentViewMode = "map";
+          selectedLocation = { type: "power", advisories: [advisory] };
           updateUI();
+          mapController?.invalidateSize();
           if (advisory.lat !== null && advisory.lon !== null) {
-            mapController?.panToLocation({ lat: advisory.lat, lon: advisory.lon });
-            selectedLocation = { type: "power", advisories: [advisory] };
-            updateUI();
+            mapController?.panToLocation({ lat: advisory.lat, lon: advisory.lon }, 15);
             focusActiveDrawer();
           }
         },
         onSelectEarthquake: (event) => {
           currentViewMode = "map";
-          updateUI();
-          mapController?.zoomToLocation(event.lat, event.lon, 11);
           selectedLocation = { type: "earthquake", event };
           updateUI();
+          mapController?.invalidateSize();
+          mapController?.zoomToLocation(event.lat, event.lon, 11);
           focusActiveDrawer();
         },
         onPinBarangay: (brgy) => {
@@ -643,7 +645,7 @@ function updateUI() {
 
   // Update map layer rendering
   if (mapController) {
-    mapController.setLayerVisibility(currentLayer);
+    mapController.setLayerVisibility(currentLayer, false);
     mapController.renderPowerAdvisories(powerFeedState.data, filterState, myBarangay);
     mapController.renderEarthquakeEvents(eqFeedState.data, filterState);
     mapController.renderPagasaBulletin(pagasaFeedState.data);
