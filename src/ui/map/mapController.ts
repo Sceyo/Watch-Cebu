@@ -133,7 +133,7 @@ export class MapController {
       this.userAccuracyCircle = undefined;
     }
 
-    if (coords.accuracy && coords.accuracy > 20 && coords.accuracy < 25000) {
+    if (coords.accuracy && coords.accuracy > 20 && coords.accuracy < 2000) {
       this.userAccuracyCircle = L.circle([coords.lat, coords.lon], {
         radius: coords.accuracy,
         color: "#38BDF8",
@@ -154,8 +154,8 @@ export class MapController {
       className: "user-gps-pulse-marker",
     }).addTo(this.map);
 
-    const targetZoom = coords.accuracy && coords.accuracy > 2000 ? 12 : 15;
-    this.map.setView([coords.lat, coords.lon], targetZoom, { animate: true });
+    // Always zoom directly in to zoom 15 (initial zoom in to user location)
+    this.map.setView([coords.lat, coords.lon], 15, { animate: true });
   }
 
   openPopupForCoordinates(coords: { lat: number; lon: number }): void {
