@@ -106,7 +106,23 @@ export function to24Hour(t: string): string | null {
  * VECO's areas text format: "Portion of [Barangay], [City], along [Streets]."
  * The city always follows the barangay list and a comma.
  */
+const VECO_CITY_ALIASES: Record<string, VECOCity> = {
+  "city of naga": "Naga City",
+  "city of talisay": "Talisay City",
+  "city of mandaue": "Mandaue City",
+  "city of cebu": "Cebu City",
+  "municipality of consolacion": "Consolacion",
+  "municipality of liloan": "Liloan",
+  "municipality of minglanilla": "Minglanilla",
+  "municipality of san fernando": "San Fernando",
+};
+
 export function extractCity(areasAffectedRaw: string): VECOCity | null {
+  for (const [alias, canonical] of Object.entries(VECO_CITY_ALIASES)) {
+    if (new RegExp(`\\b${escapeRegex(alias)}\\b`, "i").test(areasAffectedRaw)) {
+      return canonical;
+    }
+  }
   for (const city of VECO_CITIES) {
     // Case-insensitive match for the city name followed by comma or end
     if (new RegExp(`\\b${escapeRegex(city)}\\b`, "i").test(areasAffectedRaw)) {
@@ -137,7 +153,7 @@ export function extractBarangay(areasAffectedRaw: string, city: VECOCity): strin
   }
 
   // Match "Portion of [X], [Y], CityName,"
-  const m = areasAffectedRaw.match(/Portion of ([^,]+(?:,[^,]+)*),\s*(?:Cebu City|Mandaue City|Talisay City|Naga City|Consolacion|Liloan|Minglanilla|San Fernando)/i);
+  const m = areasAffectedRaw.match(/Portion of ([^,]+(?:,[^,]+)*),\s*(?:Cebu City|City of Cebu|Mandaue City|City of Mandaue|Talisay City|City of Talisay|Naga City|City of Naga|Consolacion|Municipality of Consolacion|Liloan|Municipality of Liloan|Minglanilla|Municipality of Minglanilla|San Fernando|Municipality of San Fernando)/i);
   if (!m) return [];
   // Split by "&" and "," — barangays may be joined with either
   return m[1]

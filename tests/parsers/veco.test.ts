@@ -354,6 +354,14 @@ describe("extractCity", () => {
     expect(extractCity("Portion of Tayud & Yati, Liloan, along Bayong-Yati Road")).toBe("Liloan");
   });
 
+  it("extracts City of Naga as Naga City", () => {
+    expect(extractCity("Portion of Tangke, City of Naga, along Brgy. Tangke Road.")).toBe("Naga City");
+  });
+
+  it("extracts City of Talisay as Talisay City", () => {
+    expect(extractCity("Portion of San Roque, City of Talisay, along Street")).toBe("Talisay City");
+  });
+
   it("returns null for unknown city", () => {
     expect(extractCity("Portion of Somewhere, UnknownPlace, along Road")).toBeNull();
   });
