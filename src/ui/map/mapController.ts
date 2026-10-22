@@ -64,14 +64,13 @@ export class MapController {
     // Dark-themed tile layer (CartoDB Dark Matter with decoupled high-contrast labels)
     const cartoKey = (import.meta.env?.VITE_CARTO_API_KEY as string | undefined)?.trim();
     const keyParam = cartoKey ? `?key=${encodeURIComponent(cartoKey)}` : "";
-    const baseTileUrl = `https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png${keyParam}`;
-    const labelsTileUrl = `https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png${keyParam}`;
+    const baseTileUrl = `https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png${keyParam}`;
+    const labelsTileUrl = `https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png${keyParam}`;
 
     L.tileLayer(baseTileUrl, {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       subdomains: "abcd",
       maxZoom: 19,
-      detectRetina: true,
     }).addTo(this.map);
 
     // Dedicated high-contrast label pane: sits above storm track / vector layers (z-index 450)
@@ -89,7 +88,6 @@ export class MapController {
       maxZoom: 19,
       pane: "labelsPane",
       className: "map-labels-tiles",
-      detectRetina: true,
     }).addTo(this.map);
 
     // Zoom control at bottom-right for thumb accessibility

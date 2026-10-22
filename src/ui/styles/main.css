@@ -457,9 +457,9 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   height: 100%;
 }
 
-/* High-Contrast Basemap Street & Barangay Labels (Crisp, No Halo Bloom) */
+/* High-Contrast Basemap Street & Barangay Labels (Crisp White, Drop Shadow) */
 .map-labels-tiles {
-  filter: brightness(1.5) contrast(1.2);
+  filter: brightness(2.8) contrast(1.8) drop-shadow(0 0 1px rgba(0, 0, 0, 0.95));
   image-rendering: -webkit-optimize-contrast;
 }
 
