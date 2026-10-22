@@ -13,12 +13,13 @@
 
 import { describe, it, expect, vi } from "vitest";
 import { renderListView } from "../../src/ui/components/listView.js";
-import type { PowerAdvisory } from "../../types/index.js";
+import type { PowerAdvisory, EarthquakeEvent } from "../../types/index.js";
 import type { FilterState } from "../../src/ui/types.js";
 
 function createMockElement(): any {
   const listeners: Record<string, ((...args: any[]) => void)[]> = {};
   const attrs: Record<string, string> = {};
+  const btnCache: Record<string, any[]> = {};
   let innerHTMLValue = "";
 
   const elem: any = {
@@ -38,10 +39,23 @@ function createMockElement(): any {
       if (!listeners[event]) listeners[event] = [];
       listeners[event].push(handler);
     }),
+    click: vi.fn(() => {
+      if (listeners["click"]) {
+        listeners["click"].forEach((h) => h());
+      }
+    }),
     querySelectorAll: vi.fn((sel: string) => {
-      // Very simple mock querySelectorAll to find matching buttons in HTML
+      if (btnCache[sel]) return btnCache[sel];
       const matches: any[] = [];
-      if (sel.includes(".btn-locate-advisory")) {
+      if (sel.includes(".btn-locate-earthquake")) {
+        const regex = /class="[^"]*btn-locate-earthquake[^"]*"\s+data-id="([^"]+)"/g;
+        let match;
+        while ((match = regex.exec(innerHTMLValue)) !== null) {
+          const btn = createMockElement();
+          btn.setAttribute("data-id", match[1]);
+          matches.push(btn);
+        }
+      } else if (sel.includes(".btn-locate-advisory")) {
         const regex = /class="[^"]*btn-locate-advisory[^"]*"\s+data-id="([^"]+)"/g;
         let match;
         while ((match = regex.exec(innerHTMLValue)) !== null) {
@@ -58,6 +72,7 @@ function createMockElement(): any {
           matches.push(btn);
         }
       }
+      btnCache[sel] = matches;
       return matches;
     }),
   };
@@ -210,5 +225,129 @@ describe("List View Alternative Component", () => {
     // Should include Banilad and NOT include Cabancalan because Banilad is a physical location match
     expect(container.innerHTML).toContain("Banilad");
     expect(container.innerHTML).not.toContain("Cabancalan");
+  });
+const sampleEarthquakes: EarthquakeEvent[] = [
+  {
+    id: "eq-1",
+    source_url: "https://earthquake.phivolcs.dost.gov.ph/sample1.html",
+    fetched_at: "2026-10-21T07:00:00Z",
+    datetime_pst: "2026-10-21T06:34:42+08:00",
+    datetime_utc: "2026-10-20T22:34:42.000Z",
+    lat: 10.58,
+    lon: 123.05,
+    coordinate_source: "bulletin",
+    location_description: "003 km S 23° E of Murcia (Negros Occidental)",
+    nearest_town: "Murcia",
+    nearest_province: "Negros Occidental",
+    depth_km: 20,
+    magnitude: 3.0,
+    magnitude_type: "ML",
+    origin_type: "VOLCANO-TECTONIC",
+    reported_intensities: "Instrumental Intensity I - Bago City",
+    expecting_damage: false,
+    expecting_aftershocks: false,
+    issued_on_pst: "2026-10-21T07:04:00+08:00",
+    distance_from_cebu_km: 96,
+    within_watch_radius: true,
+    parse_confidence: "high",
+    parse_notes: null,
+  },
+  {
+    id: "eq-2",
+    source_url: "https://earthquake.phivolcs.dost.gov.ph/sample2.html",
+    fetched_at: "2026-10-21T07:00:00Z",
+    datetime_pst: "2026-10-21T10:36:07+08:00",
+    datetime_utc: "2026-10-21T02:36:07.000Z",
+    lat: 10.81,
+    lon: 121.93,
+    coordinate_source: "bulletin",
+    location_description: "010 km N 78° W of Sibalom (Antique)",
+    nearest_town: "Sibalom",
+    nearest_province: "Antique",
+    depth_km: 15,
+    magnitude: 3.4,
+    magnitude_type: "Ms",
+    origin_type: "TECTONIC",
+    reported_intensities: "Intensity II - Sibalom",
+    expecting_damage: false,
+    expecting_aftershocks: false,
+    issued_on_pst: "2026-10-21T13:52:00+08:00",
+    distance_from_cebu_km: 221,
+    within_watch_radius: true,
+    parse_confidence: "high",
+    parse_notes: null,
+  },
+];
+
+  it("renders earthquakes when currentLayer is 'earthquakes'", () => {
+    const container = createMockElement();
+    const filter: FilterState = { selectedDate: "all", minMagnitude: 0 };
+
+    renderListView(container, "earthquakes", sampleAdvisories, sampleEarthquakes, filter, {
+      onSelectAdvisory: vi.fn(),
+      onSelectEarthquake: vi.fn(),
+    });
+
+    expect(container.innerHTML).toContain("Recent Regional Earthquakes (PHIVOLCS)");
+    expect(container.innerHTML).toContain("2 events");
+    expect(container.innerHTML).toContain("Murcia");
+    expect(container.innerHTML).toContain("96 km from Cebu");
+    expect(container.innerHTML).toContain("Sibalom");
+    expect(container.innerHTML).toContain("221 km from Cebu");
+    expect(container.innerHTML).not.toContain("Talamban");
+  });
+
+  it("renders power advisories first and earthquakes lowest at the bottom when currentLayer is 'both'", () => {
+    const container = createMockElement();
+    const filter: FilterState = { selectedDate: "all", minMagnitude: 0 };
+
+    renderListView(container, "both", sampleAdvisories, sampleEarthquakes, filter, {
+      onSelectAdvisory: vi.fn(),
+      onSelectEarthquake: vi.fn(),
+    });
+
+    // Both power advisories and earthquakes are rendered
+    expect(container.innerHTML).toContain("Talamban");
+    expect(container.innerHTML).toContain("Murcia");
+    expect(container.innerHTML).toContain("list-earthquakes-section");
+
+    // Earthquakes section appears AFTER power advisories in HTML structure
+    const powerIndex = container.innerHTML.indexOf("Talamban");
+    const quakeIndex = container.innerHTML.indexOf("list-earthquakes-section");
+    expect(quakeIndex).toBeGreaterThan(powerIndex);
+  });
+
+  it("triggers onSelectEarthquake when 'View on Map' is clicked on an earthquake card", () => {
+    const container = createMockElement();
+    const filter: FilterState = { selectedDate: "all", minMagnitude: 0 };
+    const onSelectEarthquake = vi.fn();
+
+    renderListView(container, "earthquakes", sampleAdvisories, sampleEarthquakes, filter, {
+      onSelectAdvisory: vi.fn(),
+      onSelectEarthquake,
+    });
+
+    const eqButtons = container.querySelectorAll(".btn-locate-earthquake");
+    expect(eqButtons.length).toBe(2);
+
+    // Simulate clicking View on Map for eq-2
+    eqButtons[0].click();
+
+    expect(onSelectEarthquake).toHaveBeenCalledWith(
+      expect.objectContaining({ id: "eq-2" }) // Most recent is eq-2 (10:36 AM vs 6:34 AM)
+    );
+  });
+
+  it("renders empty state for earthquakes when no quakes match search", () => {
+    const container = createMockElement();
+    const filter: FilterState = { selectedDate: "all", minMagnitude: 0, searchQuery: "Bohol" };
+
+    renderListView(container, "earthquakes", sampleAdvisories, sampleEarthquakes, filter, {
+      onSelectAdvisory: vi.fn(),
+      onSelectEarthquake: vi.fn(),
+    });
+
+    expect(container.innerHTML).toContain("No Earthquakes Found");
+    expect(container.innerHTML).toContain('No seismic events match "Bohol"');
   });
 });

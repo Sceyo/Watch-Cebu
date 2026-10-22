@@ -2992,6 +2992,15 @@ textarea:focus-visible,
   box-shadow: 0 6px 20px rgba(245, 158, 11, 0.2);
 }
 
+.list-earthquake-card:hover {
+  border-color: rgba(245, 158, 11, 0.5);
+}
+
+.list-earthquakes-section {
+  border-top: 1px dashed rgba(255, 255, 255, 0.12);
+  padding-top: 24px;
+}
+
 .card-top-row {
   display: flex;
   align-items: center;

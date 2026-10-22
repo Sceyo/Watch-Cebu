@@ -166,18 +166,19 @@ export class MapController {
     this.map.invalidateSize();
   }
 
-  setLayerVisibility(selection: LayerSelection): void {
+  setLayerVisibility(selection: LayerSelection, shouldRefocus = false): void {
     if (selection === "power") {
       if (!this.map.hasLayer(this.powerLayerGroup)) this.map.addLayer(this.powerLayerGroup);
       if (this.map.hasLayer(this.earthquakeLayerGroup)) this.map.removeLayer(this.earthquakeLayerGroup);
-      this.fitBoundsIfNotEmpty();
+      if (shouldRefocus) this.fitBoundsIfNotEmpty();
     } else if (selection === "earthquakes") {
       if (this.map.hasLayer(this.powerLayerGroup)) this.map.removeLayer(this.powerLayerGroup);
       if (!this.map.hasLayer(this.earthquakeLayerGroup)) this.map.addLayer(this.earthquakeLayerGroup);
-      this.fitBoundsIfNotEmpty();
+      if (shouldRefocus) this.focusCebuIsland();
     } else {
       if (!this.map.hasLayer(this.powerLayerGroup)) this.map.addLayer(this.powerLayerGroup);
       if (!this.map.hasLayer(this.earthquakeLayerGroup)) this.map.addLayer(this.earthquakeLayerGroup);
+      if (shouldRefocus) this.focusCebuIsland();
     }
   }
 
@@ -686,6 +687,19 @@ export class MapController {
       paddingTopLeft: [60, 60],
       paddingBottomRight: [60, 60],
     };
+  }
+
+  /**
+   * Smoothly frames the entire Cebu Island and its immediate surrounding Visayan waters.
+   * Anchors the view from Daanbantayan / Bantayan in the north to Santander in the south,
+   * ensuring regional earthquake events are viewed in geographical context with Cebu.
+   */
+  focusCebuIsland(): void {
+    const cebuIslandBounds = L.latLngBounds([9.40, 123.25], [11.35, 124.30]);
+    this.map.fitBounds(cebuIslandBounds, {
+      ...this.getSafeZonePadding(),
+      maxZoom: 9,
+    });
   }
 
   fitBoundsIfNotEmpty(): void {
