@@ -389,21 +389,33 @@ function updateUI() {
       renderListView(listViewEl, currentLayer, powerFeedState.data, eqFeedState.data, filterState, {
         onSelectAdvisory: (advisory) => {
           currentViewMode = "map";
-          selectedLocation = { type: "power", advisories: [advisory] };
+          const isMobile =
+            typeof window !== "undefined" &&
+            (window.innerWidth < 768 ||
+              (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
+          selectedLocation = isMobile ? { type: "power", advisories: [advisory] } : null;
           updateUI();
           mapController?.invalidateSize();
           if (advisory.lat !== null && advisory.lon !== null) {
             mapController?.panToLocation({ lat: advisory.lat, lon: advisory.lon }, 15, true);
-            focusActiveDrawer();
+            if (isMobile) {
+              focusActiveDrawer();
+            }
           }
         },
         onSelectEarthquake: (event) => {
           currentViewMode = "map";
-          selectedLocation = { type: "earthquake", event };
+          const isMobile =
+            typeof window !== "undefined" &&
+            (window.innerWidth < 768 ||
+              (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
+          selectedLocation = isMobile ? { type: "earthquake", event } : null;
           updateUI();
           mapController?.invalidateSize();
-          mapController?.panToLocation({ lat: event.lat, lon: event.lon }, 13, true);
-          focusActiveDrawer();
+          mapController?.panToLocation({ lat: event.lat, lon: event.lon }, 9.5, true);
+          if (isMobile) {
+            focusActiveDrawer();
+          }
         },
         onPinBarangay: (brgy) => {
           const newPinned = myBarangay === brgy ? null : brgy;
@@ -638,13 +650,14 @@ function updateUI() {
           updateUI();
           return;
         }
+        currentViewMode = "list";
         updateUI();
         const searchInput = (document.getElementById("map-search-input") || document.getElementById("civic-search-input")) as HTMLInputElement | null;
         if (searchInput) {
           searchInput.focus();
           searchInput.scrollIntoView({ behavior: "smooth", block: "nearest" });
         }
-        showToast("Type your barangay to check outages or pin it.");
+        showToast("Search your barangay in the list to check or pin.");
       }
     );
   }

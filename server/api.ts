@@ -525,6 +525,34 @@ export async function getEarthquakeEvents(
   }
 }
 
+/**
+ * Scrape-live path for DOST-PAGASA severe weather bulletin (used during local dev).
+ * Caches in-memory for 10 minutes. Falls back to bundled fallback if upstream hangs.
+ */
+export async function getPagasaBulletin(
+  options: ServerApiOptions = {}
+): Promise<ApiResponse<PagasaBulletin>> {
+  const cache = options.cache || serverCache;
+  const cached = cache.get<ApiResponse<PagasaBulletin>>("pagasa");
+  if (cached) {
+    return cached;
+  }
+
+  const fetchedAt = new Date().toISOString();
+  try {
+    const bulletin = await fetchPagasaBulletin();
+    const response: ApiResponse<PagasaBulletin> = {
+      data_source: "live",
+      fetched_at: fetchedAt,
+      data: bulletin,
+    };
+    cache.set("pagasa", response, 10 * 60 * 1000);
+    return response;
+  } catch (err: any) {
+    return getPagasaBulletinFallback(`Live scrape failed: ${err?.message || String(err)}`, options);
+  }
+}
+
 // ─── Snapshot read path (production) ──────────────────────────────────────────
 // These functions are what a production adapter (added in Stage 5) wires to the
 // /api/* routes. The scrape-live functions above remain for local development.

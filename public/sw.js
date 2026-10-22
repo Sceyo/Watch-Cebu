@@ -105,7 +105,7 @@ self.addEventListener("fetch", (event) => {
               data_source: "offline_cache",
               error: "Device is currently offline and no cached advisory was found.",
               offline: true,
-              data: []
+              data: url.pathname.includes("pagasa") ? null : []
             }),
             {
               status: 200,

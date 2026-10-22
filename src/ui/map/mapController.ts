@@ -71,7 +71,6 @@ export class MapController {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       subdomains: "abcd",
       maxZoom: 19,
-      detectRetina: true,
     }).addTo(this.map);
 
     // Dedicated high-contrast label pane: sits above storm track / vector layers (z-index 450)
@@ -89,7 +88,6 @@ export class MapController {
       maxZoom: 19,
       pane: "labelsPane",
       className: "map-labels-tiles",
-      detectRetina: true,
     }).addTo(this.map);
 
     // Zoom control at bottom-right for thumb accessibility
@@ -844,8 +842,7 @@ export class MapController {
             (window.innerWidth < 768 ||
               (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
 
-          const targetLat = !isMobile ? coords[0] + 0.0035 : coords[0];
-          this.map.flyTo([targetLat, coords[1]], 14, { duration: 0.8 });
+          this.map.flyTo([coords[0], coords[1]], 9.5, { duration: 0.8 });
 
           if (isMobile && this.onSelectLocation) {
             this.onSelectLocation({ type: "earthquake", event: eq });

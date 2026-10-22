@@ -19,6 +19,7 @@ import {
   getEarthquakeEvents,
   getEarthquakeEventsFallback,
   getEarthquakeEventsSnapshot,
+  getPagasaBulletin,
 } from "../../server/api.js";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -149,6 +150,33 @@ describe("Server API Layer — Earthquake Events", () => {
     expect(res.data_source).toBe("fixture_fallback");
     expect(res.parse_notes).toContain("PHIVOLCS server 503");
     expect(res.data.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("getPagasaBulletin serves from cache when fresh", async () => {
+    const mockCache = new MemoryCache();
+    const fakeLiveResponse = {
+      data_source: "live" as const,
+      fetched_at: new Date().toISOString(),
+      data: { cyclone_name: "TEST" } as any,
+    };
+    mockCache.set("pagasa", fakeLiveResponse, 60000);
+
+    const res = await getPagasaBulletin({ cache: mockCache });
+    expect(res).toBe(fakeLiveResponse);
+  });
+
+  it("getPagasaBulletin handles upstream fetch errors gracefully by returning baseline bulletin", async () => {
+    const mockCache = new MemoryCache();
+    const originalFetch = globalThis.fetch;
+    globalThis.fetch = vi.fn().mockRejectedValue(new Error("PAGASA 500"));
+
+    try {
+      const res = await getPagasaBulletin({ cache: mockCache });
+      expect(res.data_source).toBe("live");
+      expect(res.data.parse_notes).toContain("Failed to fetch live PAGASA bulletin");
+    } finally {
+      globalThis.fetch = originalFetch;
+    }
   });
 });
 
