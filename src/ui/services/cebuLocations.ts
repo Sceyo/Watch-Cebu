@@ -990,8 +990,8 @@ export const CEBU_LOCATIONS: CebuLocation[] = [
   {
     "name": "Capitol Site",
     "city": "Cebu City",
-    "lat": 10.32469,
-    "lon": 123.89024,
+    "lat": 10.3145,
+    "lon": 123.8907,
     "type": "barangay",
     "alt": []
   },

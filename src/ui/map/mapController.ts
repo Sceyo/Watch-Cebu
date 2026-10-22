@@ -449,8 +449,8 @@ export class MapController {
       }
 
       marker.bindPopup(popupBodyHtml, {
-        maxWidth: 340,
-        minWidth: 260,
+        maxWidth: 350,
+        minWidth: 280,
         className: isFavorite ? "is-favorite-popup-wrapper" : "",
         autoPan: true,
         autoPanPaddingTopLeft: L.point(20, 110),
@@ -583,8 +583,8 @@ export class MapController {
       `;
 
       marker.bindPopup(popupHtml, {
-        maxWidth: 340,
-        minWidth: 260,
+        maxWidth: 350,
+        minWidth: 280,
         autoPan: true,
         autoPanPaddingTopLeft: L.point(20, 110),
         autoPanPaddingBottomRight: L.point(20, 75),

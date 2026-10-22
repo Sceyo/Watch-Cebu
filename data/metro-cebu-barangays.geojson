@@ -392,19 +392,19 @@
         "alt_names": [],
         "psgc_code": "0730600020",
         "admin_level": 10,
-        "osm_id": 4674145780,
+        "osm_id": 8960487917,
         "osm_type": "node",
         "source": "osm_point",
         "centroid": [
-          123.8902409,
-          10.3246868
+          123.8907,
+          10.3145
         ]
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          123.8902409,
-          10.3246868
+          123.8907,
+          10.3145
         ]
       }
     },

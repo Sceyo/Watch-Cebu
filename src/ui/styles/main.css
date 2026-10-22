@@ -720,8 +720,21 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
 }
 
 .leaflet-popup-content {
-  margin: 10px 12px !important;
+  margin: 12px 14px !important;
   line-height: 1.35 !important;
+  overflow: visible !important;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  top: 8px !important;
+  right: 10px !important;
+  padding: 0 !important;
+  width: 20px !important;
+  height: 20px !important;
+  font-size: 16px !important;
+  line-height: 20px !important;
+  text-align: center !important;
+  z-index: 10 !important;
 }
 
 .leaflet-popup-tip {
@@ -783,10 +796,17 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
 
 .popup-card {
   font-size: 0.82rem;
-  max-height: min(290px, calc(100vh - 240px));
-  overflow-y: auto;
-  scrollbar-width: thin;
-  padding-right: 2px;
+  max-height: none;
+  overflow: visible;
+  padding-right: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.popup-card::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .popup-top-meta,
@@ -876,14 +896,13 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   white-space: normal;
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(51, 65, 85, 0.6);
-  padding: 4px 8px;
+  padding: 6px 8px;
   border-radius: 5px;
   width: 100%;
   font-size: 0.78rem;
   color: #F1F5F9;
-  max-height: 65px;
-  overflow-y: auto;
-  scrollbar-width: thin;
+  max-height: none;
+  overflow: visible;
 }
 
 .popup-field-intensities {
@@ -939,14 +958,14 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
 
 .popup-purpose {
   margin-top: 5px;
-  padding: 5px 8px;
+  padding: 6px 8px;
   background: var(--bg-primary);
   border-radius: 5px;
-  font-size: 0.75rem;
+  font-size: 0.76rem;
   color: var(--text-secondary);
-  max-height: 55px;
-  overflow-y: auto;
-  scrollbar-width: thin;
+  line-height: 1.35;
+  max-height: none;
+  overflow: visible;
 }
 
 .popup-provenance-box {
