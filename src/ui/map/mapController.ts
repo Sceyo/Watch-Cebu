@@ -157,23 +157,43 @@ export class MapController {
   }
 
   openPopupForCoordinates(coords: { lat: number; lon: number }): void {
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
     if (isMobile) return;
 
-    let opened = false;
+    let closestLayer: any = null;
+    let minDistance = 0.005;
+
     this.powerLayerGroup.eachLayer((layer: any) => {
-      if (!opened && layer.getLatLng && Math.abs(layer.getLatLng().lat - coords.lat) < 0.0001) {
-        layer.openPopup();
-        opened = true;
+      if (layer.getLatLng) {
+        const ll = layer.getLatLng();
+        const d = Math.hypot(ll.lat - coords.lat, ll.lng - coords.lon);
+        if (d < minDistance) {
+          minDistance = d;
+          closestLayer = layer;
+        }
       }
     });
-    if (!opened) {
-      this.earthquakeLayerGroup.eachLayer((layer: any) => {
-        if (!opened && layer.getLatLng && Math.abs(layer.getLatLng().lat - coords.lat) < 0.002) {
-          layer.openPopup();
-          opened = true;
+
+    if (closestLayer) {
+      closestLayer.openPopup();
+      return;
+    }
+
+    let closestEq: any = null;
+    let minEqDist = 0.05;
+    this.earthquakeLayerGroup.eachLayer((layer: any) => {
+      if (layer.getLatLng) {
+        const ll = layer.getLatLng();
+        const d = Math.hypot(ll.lat - coords.lat, ll.lng - coords.lon);
+        if (d < minEqDist) {
+          minEqDist = d;
+          closestEq = layer;
         }
-      });
+      }
+    });
+
+    if (closestEq) {
+      closestEq.openPopup();
     }
   }
 
@@ -183,13 +203,15 @@ export class MapController {
       window.innerWidth >= 768;
 
     // Center directly on coordinates so location is centered in viewport
+    if (typeof this.map.invalidateSize === "function") {
+      this.map.invalidateSize({ animate: false });
+    }
     this.map.setView([coords.lat, coords.lon], zoom, { animate: true });
 
     if (openPopup && isDesktop) {
-      this.openPopupForCoordinates(coords);
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         this.openPopupForCoordinates(coords);
-      }, 100);
+      });
     }
   }
 
@@ -448,8 +470,7 @@ export class MapController {
         autoPan: true,
         autoPanPaddingTopLeft: L.point(20, 60),
         autoPanPaddingBottomRight: L.point(20, 25),
-        keepInView: true,
-      });
+              });
 
       this.powerLayerGroup.addLayer(marker);
     }
@@ -579,8 +600,7 @@ export class MapController {
         autoPan: true,
         autoPanPaddingTopLeft: L.point(20, 60),
         autoPanPaddingBottomRight: L.point(20, 25),
-        keepInView: true,
-      });
+              });
 
       this.earthquakeLayerGroup.addLayer(marker);
     }
@@ -810,7 +830,13 @@ export class MapController {
           if (isMobile && this.onSelectLocation) {
             this.onSelectLocation({ type: "power", advisories: [adv] });
           } else {
-            this.openPopupForCoordinates({ lat: adv.lat!, lon: adv.lon! });
+            if (typeof this.map.once === "function") {
+              this.map.once("moveend", () => {
+                this.openPopupForCoordinates({ lat: adv.lat!, lon: adv.lon! });
+              });
+            } else {
+              this.openPopupForCoordinates({ lat: adv.lat!, lon: adv.lon! });
+            }
           }
 
           const locLabel = adv.barangay[0] || adv.city;
@@ -830,7 +856,13 @@ export class MapController {
           if (isMobile && this.onSelectLocation) {
             this.onSelectLocation({ type: "earthquake", event: eq });
           } else {
-            this.openPopupForCoordinates({ lat: eq.lat, lon: eq.lon });
+            if (typeof this.map.once === "function") {
+              this.map.once("moveend", () => {
+                this.openPopupForCoordinates({ lat: eq.lat, lon: eq.lon });
+              });
+            } else {
+              this.openPopupForCoordinates({ lat: eq.lat, lon: eq.lon });
+            }
           }
 
           return {

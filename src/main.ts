@@ -395,6 +395,10 @@ function updateUI() {
             currentLayer = "power";
             mapController?.setLayerVisibility("power");
           }
+          if (filterState.selectedDate !== "all" && advisory.date && filterState.selectedDate !== advisory.date) {
+            filterState.selectedDate = advisory.date;
+            mapController?.renderPowerAdvisories(powerFeedState.data, filterState, myBarangay);
+          }
           const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
           selectedLocation = isMobile ? { type: "power", advisories: [advisory] } : null;
           updateUI();
@@ -402,13 +406,13 @@ function updateUI() {
           const targetLat = advisory.lat;
           const targetLon = advisory.lon;
           if (targetLat !== null && targetLon !== null) {
-            setTimeout(() => {
+            requestAnimationFrame(() => {
               mapController?.invalidateSize();
               mapController?.panToLocation({ lat: targetLat, lon: targetLon }, 15, true);
               if (isMobile) {
                 focusActiveDrawer();
               }
-            }, 30);
+            });
           }
         },
         onSelectEarthquake: (event) => {
@@ -421,13 +425,13 @@ function updateUI() {
           selectedLocation = isMobile ? { type: "earthquake", event } : null;
           updateUI();
           mapController?.invalidateSize();
-          setTimeout(() => {
+          requestAnimationFrame(() => {
             mapController?.invalidateSize();
             mapController?.panToLocation({ lat: event.lat, lon: event.lon }, 9.5, true);
             if (isMobile) {
               focusActiveDrawer();
             }
-          }, 30);
+          });
         },
         onPinBarangay: (brgy) => {
           const newPinned = myBarangay === brgy ? null : brgy;
