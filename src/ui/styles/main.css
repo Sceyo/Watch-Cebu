@@ -798,16 +798,32 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
 }
 
 .popup-card.is-favorite-popup .source-link {
-  background: rgba(245, 158, 11, 0.14) !important;
-  border: 1px solid rgba(245, 158, 11, 0.38) !important;
   color: #FBBF24 !important;
 }
 
+.popup-card.is-favorite-popup .popup-footer .source-link {
+  background: rgba(245, 158, 11, 0.14) !important;
+  border: 1px solid rgba(245, 158, 11, 0.38) !important;
+}
+
 .popup-card.is-favorite-popup .source-link:hover {
+  color: #FDE68A !important;
+}
+
+.popup-card.is-favorite-popup .popup-footer .source-link:hover {
   background: rgba(245, 158, 11, 0.24) !important;
   border-color: rgba(245, 158, 11, 0.65) !important;
-  color: #FDE68A !important;
   box-shadow: 0 0 12px rgba(245, 158, 11, 0.25) !important;
+}
+
+/* Inline "Verify Post" links in multi-advisory popups: plain highlighted text, no box */
+.popup-multi-list .source-link {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .popup-card {
