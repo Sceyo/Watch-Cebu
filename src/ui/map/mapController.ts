@@ -202,11 +202,18 @@ export class MapController {
       typeof window !== "undefined" &&
       window.innerWidth >= 768;
 
-    // Center directly on coordinates so location is centered in viewport
+    if (typeof (this.map as any).stop === "function") {
+      (this.map as any).stop();
+    }
+    if (typeof this.map.closePopup === "function") {
+      this.map.closePopup();
+    }
     if (typeof this.map.invalidateSize === "function") {
       this.map.invalidateSize({ animate: false });
     }
-    this.map.setView([coords.lat, coords.lon], zoom, { animate: true });
+
+    const offsetLat = isDesktop && openPopup ? (zoom >= 16 ? 0.0018 : zoom >= 14 ? 0.0022 : 0) : 0;
+    this.map.setView([coords.lat + offsetLat, coords.lon], zoom, { animate: false });
 
     if (openPopup && isDesktop) {
       requestAnimationFrame(() => {
