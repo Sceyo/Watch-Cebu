@@ -28,6 +28,16 @@ export interface ListViewCallbacks {
 }
 
 function matchesPhysicalLocation(a: PowerAdvisory, q: string): boolean {
+  if (q.includes(",")) {
+    const [bPart, cPart] = q.split(",").map((x) => x.trim()).filter(Boolean);
+    if (bPart && cPart) {
+      return (
+        (a.city.toLowerCase().includes(cPart) || cPart.includes(a.city.toLowerCase())) &&
+        (a.barangay.some((b) => b.toLowerCase().includes(bPart)) ||
+          a.streets.some((st) => st.toLowerCase().includes(bPart)))
+      );
+    }
+  }
   return (
     a.barangay.some((b) => b.toLowerCase().includes(q)) ||
     a.city.toLowerCase().includes(q) ||

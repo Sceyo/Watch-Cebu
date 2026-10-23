@@ -30,6 +30,16 @@ export interface SearchAndZoomResult {
 }
 
 function matchesPhysicalLocation(a: PowerAdvisory, q: string): boolean {
+  if (q.includes(",")) {
+    const [bPart, cPart] = q.split(",").map((x) => x.trim()).filter(Boolean);
+    if (bPart && cPart) {
+      return (
+        (a.city.toLowerCase().includes(cPart) || cPart.includes(a.city.toLowerCase())) &&
+        (a.barangay.some((b) => b.toLowerCase().includes(bPart) || bPart.includes(b.toLowerCase())) ||
+          a.streets.some((st) => st.toLowerCase().includes(bPart) || bPart.includes(st.toLowerCase())))
+      );
+    }
+  }
   return (
     a.barangay.some((b) => b.toLowerCase().includes(q) || q.includes(b.toLowerCase())) ||
     a.city.toLowerCase().includes(q) ||
@@ -212,7 +222,7 @@ export class MapController {
       this.map.invalidateSize({ animate: false });
     }
 
-    const offsetLat = isDesktop && openPopup ? (zoom >= 16 ? 0.0018 : zoom >= 14 ? 0.0022 : 0) : 0;
+    const offsetLat = isDesktop && openPopup ? (zoom >= 16 ? 0.0020 : zoom >= 14 ? 0.0036 : 0) : 0;
     this.map.setView([coords.lat + offsetLat, coords.lon], zoom, { animate: false });
 
     if (openPopup && isDesktop) {
@@ -475,7 +485,7 @@ export class MapController {
         minWidth: 280,
         className: isFavorite ? "is-favorite-popup-wrapper" : "",
         autoPan: true,
-        autoPanPaddingTopLeft: L.point(20, 60),
+        autoPanPaddingTopLeft: L.point(20, 120),
         autoPanPaddingBottomRight: L.point(20, 25),
               });
 
@@ -605,7 +615,7 @@ export class MapController {
         maxWidth: 350,
         minWidth: 280,
         autoPan: true,
-        autoPanPaddingTopLeft: L.point(20, 60),
+        autoPanPaddingTopLeft: L.point(20, 120),
         autoPanPaddingBottomRight: L.point(20, 25),
               });
 

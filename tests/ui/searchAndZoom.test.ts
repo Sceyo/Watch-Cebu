@@ -350,6 +350,34 @@ describe("MapController — Favorite Barangay & Earthquake Enhancements", () => 
       const limited = cebuLocations.getCebuSearchSuggestions("Cebu", undefined, 3);
       expect(limited.length).toBeLessThanOrEqual(3);
     });
+
+    it("disambiguates duplicate barangay names across cities (San Isidro in Talisay City vs San Fernando)", async () => {
+      const suggestions = cebuLocations.getCebuSearchSuggestions("San Isidro", ["san isidro__san fernando"]);
+      const sf = suggestions.find((x) => x.name === "San Isidro" && x.city === "San Fernando");
+      const talisay = suggestions.find((x) => x.name === "San Isidro" && x.city === "Talisay City");
+      expect(sf?.hasOutage).toBe(true);
+      expect(talisay?.hasOutage).toBe(false);
+
+      const sanFernandoAdv = {
+        ...mockAdvisory,
+        id: "pow-sf-si",
+        city: "San Fernando",
+        barangay: ["San Isidro"],
+        lat: 10.1717,
+        lon: 123.7156,
+      };
+
+      const resTalisay = await controller.searchAndZoom("San Isidro, Talisay City", [sanFernandoAdv], []);
+      expect(resTalisay.found).toBe(true);
+      expect(resTalisay.tier).toBe(2);
+      expect(resTalisay.message).toContain("San Isidro, Talisay City");
+      expect(resTalisay.coords?.[0]).toBeCloseTo(10.25989, 4);
+
+      const resSF = await controller.searchAndZoom("San Isidro, San Fernando", [sanFernandoAdv], []);
+      expect(resSF.found).toBe(true);
+      expect(resSF.tier).toBe(1);
+      expect(resSF.coords).toEqual([10.1717, 123.7156]);
+    });
   });
 });
 

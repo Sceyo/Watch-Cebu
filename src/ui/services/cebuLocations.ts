@@ -3988,8 +3988,18 @@ export function lookupCebuLocation(query: string): CebuLocation | null {
   const qNorm = normalizeText(q);
   const qClean = cleanQuery(q);
   const qCleanNorm = normalizeText(qClean);
-  const qHead = q.split(",")[0].trim().toLowerCase();
-  const qHeadNorm = normalizeText(qHead);
+  const parts = q.split(",").map((x) => x.trim()).filter(Boolean);
+  const qHead = (parts[0] || q).toLowerCase();
+  const qHeadNorm = normalizeText(cleanQuery(qHead));
+  const qCity = parts.length > 1 ? normalizeText(parts[1]) : "";
+  if (qCity && qCity !== "cebu" && qCity !== "philippines") {
+    const cm = CEBU_LOCATIONS.find((loc) => {
+      const ln = normalizeText(loc.name);
+      const cn = normalizeText(loc.city);
+      return (loc.name.toLowerCase() === qHead || ln === qHeadNorm) && (cn === qCity || cn.includes(qCity) || qCity.includes(cn));
+    });
+    if (cm) return cm;
+  }
 
   // 1. Exact canonical name match (direct or cleaned)
   const exact = CEBU_LOCATIONS.find((loc) => {
@@ -4076,15 +4086,18 @@ export function getCebuSearchSuggestions(
   const results: SearchSuggestion[] = [];
   const seen = new Set<string>();
 
+  const hasCityKeys = outageSet ? Array.from(outageSet).some((k) => k.includes("__")) : false;
   const checkAndAdd = (loc: CebuLocation): boolean => {
     const key = `${loc.name}__${loc.city}`;
     if (seen.has(key)) return false;
     seen.add(key);
+    const nl = loc.name.toLowerCase();
+    const cl = loc.city.toLowerCase();
     results.push({
       name: loc.name,
       city: loc.city,
       type: loc.type,
-      hasOutage: Boolean(outageSet && outageSet.has(loc.name.toLowerCase())),
+      hasOutage: Boolean(outageSet && (hasCityKeys ? outageSet.has(`${nl}__${cl}`) : outageSet.has(nl))),
     });
     return results.length >= maxResults;
   };

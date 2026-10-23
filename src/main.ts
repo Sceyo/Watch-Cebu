@@ -292,7 +292,7 @@ function updateUI() {
   for (const adv of powerFeedState.data) {
     if (Array.isArray(adv.barangay)) {
       for (const b of adv.barangay) {
-        if (b) advisoryBarangays.add(b.toLowerCase().trim());
+        if (b) advisoryBarangays.add(`${b.toLowerCase().trim()}__${(adv.city || "").toLowerCase().trim()}`);
       }
     }
   }

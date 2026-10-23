@@ -163,7 +163,7 @@ export function renderMapControls(
     dropdown.innerHTML = suggestions
       .map(
         (s, idx) => `
-        <button type="button" class="suggestion-item" data-index="${idx}" data-name="${escapeHtml(s.name)}" role="option">
+        <button type="button" class="suggestion-item" data-index="${idx}" data-name="${escapeHtml(s.name.toLowerCase() !== s.city.toLowerCase() ? `${s.name}, ${s.city}` : s.name)}" role="option">
           <span class="suggestion-main">
             <span class="suggestion-pin" aria-hidden="true">${ICONS.mapPin}</span>
             <span class="suggestion-name">${escapeHtml(s.name)}</span>
