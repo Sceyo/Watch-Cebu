@@ -399,11 +399,16 @@ function updateUI() {
           selectedLocation = isMobile ? { type: "power", advisories: [advisory] } : null;
           updateUI();
           mapController?.invalidateSize();
-          if (advisory.lat !== null && advisory.lon !== null) {
-            mapController?.panToLocation({ lat: advisory.lat, lon: advisory.lon }, 15, true);
-            if (isMobile) {
-              focusActiveDrawer();
-            }
+          const targetLat = advisory.lat;
+          const targetLon = advisory.lon;
+          if (targetLat !== null && targetLon !== null) {
+            setTimeout(() => {
+              mapController?.invalidateSize();
+              mapController?.panToLocation({ lat: targetLat, lon: targetLon }, 15, true);
+              if (isMobile) {
+                focusActiveDrawer();
+              }
+            }, 30);
           }
         },
         onSelectEarthquake: (event) => {
@@ -416,10 +421,13 @@ function updateUI() {
           selectedLocation = isMobile ? { type: "earthquake", event } : null;
           updateUI();
           mapController?.invalidateSize();
-          mapController?.panToLocation({ lat: event.lat, lon: event.lon }, 9.5, true);
-          if (isMobile) {
-            focusActiveDrawer();
-          }
+          setTimeout(() => {
+            mapController?.invalidateSize();
+            mapController?.panToLocation({ lat: event.lat, lon: event.lon }, 9.5, true);
+            if (isMobile) {
+              focusActiveDrawer();
+            }
+          }, 30);
         },
         onPinBarangay: (brgy) => {
           const newPinned = myBarangay === brgy ? null : brgy;

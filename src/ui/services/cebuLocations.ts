@@ -2870,13 +2870,51 @@ export const CEBU_LOCATIONS: CebuLocation[] = [
     "alt": []
   },
   {
-    "name": "Poblacion Ward Ⅰ",
+    "name": "Poblacion Ward I",
     "city": "Minglanilla",
     "lat": 10.24456,
     "lon": 123.79796,
     "type": "barangay",
     "alt": [
-      "Poblacion 1"
+      "Poblacion 1",
+      "Poblacion Ward 1",
+      "Poblacion Ward I",
+      "Ward 1",
+      "Ward I",
+      "Ward Ⅰ",
+      "Poblacion Ward Ⅰ"
+    ]
+  },
+  {
+    "name": "Poblacion Ward II",
+    "city": "Minglanilla",
+    "lat": 10.2424,
+    "lon": 123.7945,
+    "type": "barangay",
+    "alt": [
+      "Poblacion 2",
+      "Poblacion Ward 2",
+      "Poblacion Ward II",
+      "Ward 2",
+      "Ward II",
+      "Ward Ⅱ",
+      "Poblacion Ward Ⅱ"
+    ]
+  },
+  {
+    "name": "Poblacion Ward III",
+    "city": "Minglanilla",
+    "lat": 10.2471,
+    "lon": 123.7978,
+    "type": "barangay",
+    "alt": [
+      "Poblacion 3",
+      "Poblacion Ward 3",
+      "Poblacion Ward III",
+      "Ward 3",
+      "Ward III",
+      "Ward Ⅲ",
+      "Poblacion Ward Ⅲ"
     ]
   },
   {
@@ -3896,6 +3934,29 @@ export const CEBU_LOCATIONS: CebuLocation[] = [
       "Sto. Niño",
       "Sto Nino",
       "Barangay Santo Niño"
+    ]
+  }
+,
+  {
+    "name": "North Reclamation Area",
+    "city": "Cebu City",
+    "lat": 10.3128,
+    "lon": 123.9215,
+    "type": "landmark",
+    "alt": [
+      "North Reclamation",
+      "NRA",
+      "North Reclamation Area, Cebu City"
+    ]
+  },
+  {
+    "name": "Liburon",
+    "city": "San Fernando",
+    "lat": 10.1833,
+    "lon": 123.6488,
+    "type": "barangay",
+    "alt": [
+      "Liburon, San Fernando"
     ]
   }
 ];

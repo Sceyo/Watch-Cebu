@@ -50,7 +50,17 @@ export interface CoordinateResolution {
 export type GeocodeFetcher = (query: string) => Promise<{ lat: number; lon: number } | null>;
 
 function normalizeStr(s: string): string {
-  return (s || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+  let str = (s || "").toLowerCase();
+  str = str
+    .replace(/Ⅰ/g, "1")
+    .replace(/Ⅱ/g, "2")
+    .replace(/Ⅲ/g, "3")
+    .replace(/Ⅳ/g, "4")
+    .replace(/Ⅴ/g, "5")
+    .replace(/Ⅵ/g, "6")
+    .replace(/Ⅶ/g, "7")
+    .replace(/Ⅷ/g, "8");
+  return str.replace(/[^a-z0-9]/g, "");
 }
 
 export interface CentroidResult {
@@ -78,6 +88,7 @@ export class BarangayCentroidLookup {
       collection = JSON.parse(readFileSync(defaultPath, "utf-8"));
     }
     this.buildMap(collection);
+    this.registerCuratedFallbacks();
   }
 
   private buildMap(collection: GeoJsonCollection): void {
@@ -94,6 +105,71 @@ export class BarangayCentroidLookup {
         for (const alt of f.properties.alt_names) {
           this.lookupMap.set(`${city}::${normalizeStr(alt)}`, record);
         }
+      }
+    }
+  }
+
+  private registerCuratedFallbacks(): void {
+    const fallbacks: Array<{
+      city: VECOCity;
+      canonicalName: string;
+      names: string[];
+      lat: number;
+      lon: number;
+      source: CoordinateSourceVECO;
+    }> = [
+      {
+        city: "Minglanilla",
+        canonicalName: "Poblacion Ward I",
+        names: ["Ward I", "Ward 1", "Poblacion Ward 1", "Poblacion Ward I", "Poblacion 1"],
+        lat: 10.2445568,
+        lon: 123.7979595,
+        source: "osm_point",
+      },
+      {
+        city: "Minglanilla",
+        canonicalName: "Poblacion Ward II",
+        names: ["Ward II", "Ward 2", "Poblacion Ward 2", "Poblacion Ward II", "Poblacion 2"],
+        lat: 10.2424,
+        lon: 123.7945,
+        source: "osm_point",
+      },
+      {
+        city: "Minglanilla",
+        canonicalName: "Poblacion Ward III",
+        names: ["Ward III", "Ward 3", "Poblacion Ward 3", "Poblacion Ward III", "Poblacion 3"],
+        lat: 10.2471,
+        lon: 123.7978,
+        source: "osm_point",
+      },
+      {
+        city: "Cebu City",
+        canonicalName: "North Reclamation Area",
+        names: ["North Reclamation Area", "North Reclamation", "NRA"],
+        lat: 10.3128,
+        lon: 123.9215,
+        source: "osm_point",
+      },
+      {
+        city: "San Fernando",
+        canonicalName: "Liburon",
+        names: ["Liburon"],
+        lat: 10.1833,
+        lon: 123.6488,
+        source: "osm_point",
+      },
+    ];
+
+    for (const item of fallbacks) {
+      const record: CentroidResult = {
+        lat: item.lat,
+        lon: item.lon,
+        source: item.source,
+        canonicalName: item.canonicalName,
+        city: item.city,
+      };
+      for (const name of item.names) {
+        this.lookupMap.set(`${item.city}::${normalizeStr(name)}`, record);
       }
     }
   }

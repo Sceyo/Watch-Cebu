@@ -73,6 +73,24 @@ describe("Cebu Locations Offline Index (Tier 2)", () => {
     expect(lookupCebuLocation("Manila Ocean Park")).toBeNull();
     expect(lookupCebuLocation("")).toBeNull();
   });
+
+  it("resolves previously missing locations (Ward II, Liburon, North Reclamation Area)", () => {
+    const ward2 = lookupCebuLocation("Ward II");
+    expect(ward2).not.toBeNull();
+    expect(ward2?.city).toBe("Minglanilla");
+
+    const ward2Alt = lookupCebuLocation("Ward 2");
+    expect(ward2Alt).not.toBeNull();
+    expect(ward2Alt?.city).toBe("Minglanilla");
+
+    const nra = lookupCebuLocation("North Reclamation Area");
+    expect(nra).not.toBeNull();
+    expect(nra?.city).toBe("Cebu City");
+
+    const liburon = lookupCebuLocation("Liburon");
+    expect(liburon).not.toBeNull();
+    expect(liburon?.city).toBe("San Fernando");
+  });
 });
 
 describe("Cebu Bounded Online Geocoding (Tier 3)", () => {

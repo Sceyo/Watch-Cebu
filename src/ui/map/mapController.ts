@@ -182,10 +182,8 @@ export class MapController {
       typeof window !== "undefined" &&
       window.innerWidth >= 768;
 
-    // On desktop when opening popup, offset latitude slightly north (+0.0018 at z16, +0.0025 at z15)
-    // so both the marker pin (below) and the popup balloon (above) fit comfortably in view together
-    const offsetLat = isDesktop && openPopup ? (zoom >= 16 ? 0.0018 : 0.0025) : 0;
-    this.map.setView([coords.lat + offsetLat, coords.lon], zoom, { animate: true });
+    // Center directly on coordinates so location is centered in viewport
+    this.map.setView([coords.lat, coords.lon], zoom, { animate: true });
 
     if (openPopup && isDesktop) {
       this.openPopupForCoordinates(coords);
@@ -448,8 +446,8 @@ export class MapController {
         minWidth: 280,
         className: isFavorite ? "is-favorite-popup-wrapper" : "",
         autoPan: true,
-        autoPanPaddingTopLeft: L.point(20, 110),
-        autoPanPaddingBottomRight: L.point(20, 75),
+        autoPanPaddingTopLeft: L.point(20, 60),
+        autoPanPaddingBottomRight: L.point(20, 25),
         keepInView: true,
       });
 
@@ -579,8 +577,8 @@ export class MapController {
         maxWidth: 350,
         minWidth: 280,
         autoPan: true,
-        autoPanPaddingTopLeft: L.point(20, 110),
-        autoPanPaddingBottomRight: L.point(20, 75),
+        autoPanPaddingTopLeft: L.point(20, 60),
+        autoPanPaddingBottomRight: L.point(20, 25),
         keepInView: true,
       });
 
@@ -807,8 +805,7 @@ export class MapController {
 
           // On desktop, offset camera latitude slightly north (+0.0018 at zoom 16)
           // so that BOTH the marker pin and the entire popup card above it are visible simultaneously
-          const targetLat = !isMobile ? coords[0] + 0.0018 : coords[0];
-          this.map.flyTo([targetLat, coords[1]], 16, { duration: 0.8 });
+          this.map.flyTo([coords[0], coords[1]], 16, { duration: 0.8 });
 
           if (isMobile && this.onSelectLocation) {
             this.onSelectLocation({ type: "power", advisories: [adv] });

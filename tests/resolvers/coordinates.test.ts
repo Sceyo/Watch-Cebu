@@ -73,6 +73,26 @@ describe("BarangayCentroidLookup", () => {
     expect(coords!.lon).toBeCloseTo(123.874, 2);
   });
 
+  it("resolves curated fallbacks: Ward II in Minglanilla, North Reclamation Area in Cebu City, and Liburon in San Fernando", () => {
+    const ward2 = centroidLookup.lookup("Ward II", "Minglanilla");
+    expect(ward2).not.toBeNull();
+    expect(ward2!.source).toBe("osm_point");
+    expect(ward2!.lat).toBeCloseTo(10.2424, 2);
+    expect(ward2!.lon).toBeCloseTo(123.7945, 2);
+
+    const ward2Alt = centroidLookup.lookup("Ward 2", "Minglanilla");
+    expect(ward2Alt).not.toBeNull();
+    expect(ward2Alt!.lat).toBeCloseTo(10.2424, 2);
+
+    const nra = centroidLookup.lookup("North Reclamation Area", "Cebu City");
+    expect(nra).not.toBeNull();
+    expect(nra!.lat).toBeCloseTo(10.3128, 2);
+
+    const liburon = centroidLookup.lookup("Liburon", "San Fernando");
+    expect(liburon).not.toBeNull();
+    expect(liburon!.lat).toBeCloseTo(10.1833, 2);
+  });
+
   it("resolves Talamban as genuine osm_point", () => {
     const coords = centroidLookup.lookup("Talamban", "Cebu City");
     expect(coords).not.toBeNull();

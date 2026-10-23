@@ -89,14 +89,14 @@
       "Lower Tiber Road"
     ],
     "areas_affected_raw": "Portion of Calajo-an , Ward I & Ward II, Minglanilla, along portions of 18 De Julio Street , A. Apostol Street , Bacay Road , Cebu South Road , Gimenez Street, & Lower Tiber Road",
-    "lat": null,
-    "lon": null,
-    "coordinate_source": null,
+    "lat": 10.2424,
+    "lon": 123.7945,
+    "coordinate_source": "osm_point",
     "geocode_query": null,
     "geocode_provider": null,
     "business_confidence": "scheduled",
     "parse_confidence": "high",
-    "parse_notes": "Coordinates unresolved for barangay: \"Ward II\" in Minglanilla"
+    "parse_notes": null
   },
   {
     "id": "518e8038a9ecb8fa0994bf474b0e83c6930f089c8aa1a71b1f6b0b3b0f4f188e",
@@ -465,14 +465,14 @@
       "S. Osmeña Boulevard"
     ],
     "areas_affected_raw": "Portion of Cebu City (Mabolo & North Reclamation Area) along portions of Mc Arthur Boulevard & S. Osmeña Boulevard,",
-    "lat": null,
-    "lon": null,
-    "coordinate_source": null,
+    "lat": 10.3128,
+    "lon": 123.9215,
+    "coordinate_source": "osm_point",
     "geocode_query": null,
     "geocode_provider": null,
     "business_confidence": "scheduled",
     "parse_confidence": "high",
-    "parse_notes": "Coordinates unresolved for barangay: \"North Reclamation Area\" in Cebu City"
+    "parse_notes": null
   },
   {
     "id": "9d430e5845d6b757e0796930bbea8d2bfa34543470f231431de1e5887656b65f",
@@ -1041,14 +1041,14 @@
       "Tinubdan Brgy Rd"
     ],
     "areas_affected_raw": "Portion of Balud, Basak, Bugho, Cabatbatan, Lantawan, Liburon, Magsico, Panadtaran, Poblacion South, Tabionan, Tananas, Tinubdan & Tonggo, San Fernando, along portions of Cebu South Rd., Cebu South Road, Tabionan Brgy Rd., & Tinubdan Brgy Rd.",
-    "lat": null,
-    "lon": null,
-    "coordinate_source": null,
+    "lat": 10.1833,
+    "lon": 123.6488,
+    "coordinate_source": "osm_point",
     "geocode_query": null,
     "geocode_provider": null,
     "business_confidence": "scheduled",
     "parse_confidence": "high",
-    "parse_notes": "Coordinates unresolved for barangay: \"Liburon\" in San Fernando"
+    "parse_notes": null
   },
   {
     "id": "16161b8ba5357f4711f10455592d38726ad98a9addcf8f90429869ab8f09e5e2",

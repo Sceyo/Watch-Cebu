@@ -938,8 +938,9 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   width: 100%;
   font-size: 0.78rem;
   color: #F1F5F9;
-  max-height: none;
-  overflow: visible;
+  max-height: 110px;
+  overflow-y: auto;
+  scrollbar-width: thin;
 }
 
 .popup-field-intensities {
@@ -1001,8 +1002,9 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   font-size: 0.76rem;
   color: var(--text-secondary);
   line-height: 1.35;
-  max-height: none;
-  overflow: visible;
+  max-height: 90px;
+  overflow-y: auto;
+  scrollbar-width: thin;
 }
 
 .popup-provenance-box {
