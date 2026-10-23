@@ -302,7 +302,7 @@ describe("MapController — Favorite Barangay & Earthquake Enhancements", () => 
     expect(dummyMap.setView).toHaveBeenCalledWith(
       expect.arrayContaining([expect.any(Number), 123.90]),
       15,
-      { animate: true }
+      { animate: false }
     );
   });
 
