@@ -157,10 +157,7 @@ export class MapController {
   }
 
   openPopupForCoordinates(coords: { lat: number; lon: number }): void {
-    const isMobile =
-      typeof window !== "undefined" &&
-      (window.innerWidth < 768 ||
-        (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
     if (isMobile) return;
 
     let opened = false;
@@ -183,8 +180,7 @@ export class MapController {
   panToLocation(coords: { lat: number; lon: number }, zoom = 15, openPopup = false): void {
     const isDesktop =
       typeof window !== "undefined" &&
-      window.innerWidth >= 768 &&
-      (!window.matchMedia || !window.matchMedia("(pointer: coarse)").matches);
+      window.innerWidth >= 768;
 
     // On desktop when opening popup, offset latitude slightly north (+0.0018 at z16, +0.0025 at z15)
     // so both the marker pin (below) and the popup balloon (above) fit comfortably in view together
@@ -193,6 +189,9 @@ export class MapController {
 
     if (openPopup && isDesktop) {
       this.openPopupForCoordinates(coords);
+      setTimeout(() => {
+        this.openPopupForCoordinates(coords);
+      }, 100);
     }
   }
 
@@ -245,8 +244,6 @@ export class MapController {
       list.push(a);
       coordMap.set(key, list);
     }
-
-    const isMobileOrTouch = typeof window !== "undefined" && (window.innerWidth < 768 || (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
 
     for (const group of coordMap.values()) {
       const first = group[0];
@@ -304,7 +301,7 @@ export class MapController {
 
       // Click behavior: on mobile/touch, open bottom sheet; on desktop, allow bound popup to open
       marker.on("click", (evt) => {
-        const isMobile = typeof window !== "undefined" && (window.innerWidth < 768 || (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
+        const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
         if (isMobile && this.onSelectLocation) {
           marker.closePopup();
           L.DomEvent.stopPropagation(evt);
@@ -484,8 +481,6 @@ export class MapController {
       return e.within_watch_radius;
     });
 
-    const isMobileOrTouch = typeof window !== "undefined" && (window.innerWidth < 768 || (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
-
     for (const e of filtered) {
       const severity = computeEarthquakeSeverity(e.magnitude);
       const eqDate = formatPhilippineDateTime(e.datetime_pst);
@@ -514,7 +509,7 @@ export class MapController {
       const marker = L.marker([e.lat, e.lon], { icon: customIcon });
 
       marker.on("click", (evt) => {
-        const isMobile = typeof window !== "undefined" && (window.innerWidth < 768 || (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
+        const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
         if (isMobile && this.onSelectLocation) {
           marker.closePopup();
           L.DomEvent.stopPropagation(evt);
@@ -708,10 +703,7 @@ export class MapController {
     paddingTopLeft: [number, number];
     paddingBottomRight: [number, number];
   } {
-    const isMobile =
-      typeof window !== "undefined" &&
-      (window.innerWidth < 768 ||
-        (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
     if (isMobile) {
       return {
@@ -811,10 +803,7 @@ export class MapController {
         if (matchedPower.length === 1) {
           const adv = matchedPower[0];
           const coords: [number, number] = [adv.lat!, adv.lon!];
-          const isMobile =
-            typeof window !== "undefined" &&
-            (window.innerWidth < 768 ||
-              (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
+          const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
           // On desktop, offset camera latitude slightly north (+0.0018 at zoom 16)
           // so that BOTH the marker pin and the entire popup card above it are visible simultaneously
@@ -837,10 +826,7 @@ export class MapController {
         } else {
           const eq = matchedEq[0];
           const coords: [number, number] = [eq.lat, eq.lon];
-          const isMobile =
-            typeof window !== "undefined" &&
-            (window.innerWidth < 768 ||
-              (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
+          const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
           this.map.flyTo([coords[0], coords[1]], 9.5, { duration: 0.8 });
 

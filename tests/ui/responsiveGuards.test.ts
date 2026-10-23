@@ -57,6 +57,10 @@ describe("Responsive CSS & Touch Target Guards", () => {
     expect(css).toMatch(/@media\s*\(prefers-reduced-motion:\s*reduce\)/);
     expect(css).toMatch(/animation-duration:\s*0\.01ms/);
   });
+
+  it("strictly suppresses mobile bottom sheet on desktop screens (min-width: 768px)", () => {
+    expect(css).toMatch(/@media\s*\(min-width:\s*768px\)[^{]*\{[^}]*\.mobile-bottom-sheet[^}]*display:\s*none\s*!important/s);
+  });
 });
 
 describe("Air Quality Multi-Tier Hazard Verification", () => {

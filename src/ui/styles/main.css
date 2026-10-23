@@ -2301,6 +2301,13 @@ button, a, input, select, textarea, .day-tab, .layer-btn, .bottom-action-btn {
   transform: translateY(0);
 }
 
+@media (min-width: 768px) {
+  .mobile-bottom-sheet,
+  #mobile-bottom-sheet {
+    display: none !important;
+  }
+}
+
 .sheet-header {
   padding: 6px 16px 10px 16px;
   border-bottom: 1px solid var(--border-color);

@@ -132,7 +132,8 @@ function getActiveDrawerElement(): HTMLElement | null {
   if (isLegendOpen) return document.getElementById("legend-drawer");
   if (isAboutOpen) return document.getElementById("about-drawer");
   if (isStatusPopoverOpen) return document.getElementById("status-popover");
-  if (selectedLocation) return document.getElementById("mobile-bottom-sheet");
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  if (isMobile && selectedLocation) return document.getElementById("mobile-bottom-sheet");
   return null;
 }
 
@@ -162,13 +163,14 @@ function updateUI() {
   const mobileBottomSheetEl = document.getElementById("mobile-bottom-sheet");
   const statusPopoverEl = document.getElementById("status-popover");
 
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
   const isAnyDrawerOpen =
     isLegendOpen ||
     isAboutOpen ||
     isAirQualityOpen ||
     isForecastOpen ||
     isStatusPopoverOpen ||
-    selectedLocation !== null ||
+    (isMobile && selectedLocation !== null) ||
     isWelcomeOpen;
 
   if (backdropEl) {
@@ -389,10 +391,11 @@ function updateUI() {
       renderListView(listViewEl, currentLayer, powerFeedState.data, eqFeedState.data, filterState, {
         onSelectAdvisory: (advisory) => {
           currentViewMode = "map";
-          const isMobile =
-            typeof window !== "undefined" &&
-            (window.innerWidth < 768 ||
-              (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
+          if (currentLayer === "earthquakes") {
+            currentLayer = "power";
+            mapController?.setLayerVisibility("power");
+          }
+          const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
           selectedLocation = isMobile ? { type: "power", advisories: [advisory] } : null;
           updateUI();
           mapController?.invalidateSize();
@@ -405,10 +408,11 @@ function updateUI() {
         },
         onSelectEarthquake: (event) => {
           currentViewMode = "map";
-          const isMobile =
-            typeof window !== "undefined" &&
-            (window.innerWidth < 768 ||
-              (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
+          if (currentLayer === "power") {
+            currentLayer = "earthquakes";
+            mapController?.setLayerVisibility("earthquakes");
+          }
+          const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
           selectedLocation = isMobile ? { type: "earthquake", event } : null;
           updateUI();
           mapController?.invalidateSize();
@@ -506,7 +510,7 @@ function updateUI() {
   if (mobileBottomSheetEl) {
     renderMobileBottomSheet(
       mobileBottomSheetEl,
-      selectedLocation,
+      isMobile ? selectedLocation : null,
       () => {
         selectedLocation = null;
         document.body.classList.remove("modal-open");
@@ -681,8 +685,11 @@ async function init() {
   // Initialize Map centered on Metro Cebu
   mapController = new MapController("map");
 
-  // Wire mobile/touch selection callback to bottom sheet (C1)
+  // Wire mobile selection callback to bottom sheet (C1)
   mapController.setOnSelectLocation((details) => {
+    if (typeof window !== "undefined" && window.innerWidth >= 768) {
+      return;
+    }
     selectedLocation = details;
     isLegendOpen = false;
     isAboutOpen = false;
@@ -695,6 +702,14 @@ async function init() {
 
   // Initial UI render
   updateUI();
+
+  // Reset mobile bottom sheet when resizing to desktop
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 768 && selectedLocation !== null) {
+      selectedLocation = null;
+      updateUI();
+    }
+  });
 
   // Backdrop click listener to close open drawer or bottom sheet
   const backdropEl = document.getElementById("drawer-backdrop");
