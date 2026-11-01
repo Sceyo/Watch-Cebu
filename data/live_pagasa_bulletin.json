@@ -1,8 +1,8 @@
 {
-  "id": "a8620a9839b238f4b115970b07ac464cbbb94ac9988e98c40a75ef88ae74491d",
+  "id": "736c6f45aa590a68b48a4919a217ca932749e829bca67886419974a301470d0f",
   "source_url": "https://bagong.pagasa.dost.gov.ph/weather",
-  "fetched_at": "2026-11-01T12:38:18.124Z",
-  "issued_at_pst": "2026-11-01T12:38:18.124Z",
+  "fetched_at": "2026-11-01T19:20:52.612Z",
+  "issued_at_pst": "2026-11-01T19:20:52.612Z",
   "cyclone_name": null,
   "has_active_cyclone": true,
   "tcws_cebu": {
