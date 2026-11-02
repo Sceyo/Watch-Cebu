@@ -51,3 +51,47 @@ export interface EarthquakeSeverityStyle {
   hasShockwave: boolean;
   description: string;
 }
+
+
+export type FloodHazardVar = 1 | 2 | 3;
+export type FloodHazardTier = "low" | "medium" | "high";
+
+export interface FloodHazardStyle {
+  varCode: FloodHazardVar;
+  tier: FloodHazardTier;
+  label: string;
+  depthRange: string;
+  hex: string;
+  strokeHex: string;
+  fillOpacity: number;
+  description: string;
+}
+
+export interface FloodHazardFeature {
+  type: "Feature";
+  properties: {
+    Var: FloodHazardVar;
+    hazard_level?: string;
+    depth_range?: string;
+    return_period?: string;
+    zone_name?: string;
+    [key: string]: any;
+  };
+  geometry: {
+    type: "Polygon" | "MultiPolygon";
+    coordinates: number[][][] | number[][][][];
+  };
+}
+
+export interface FloodHazardCollection {
+  type: "FeatureCollection";
+  metadata?: {
+    source: string;
+    return_period: string;
+    license: string;
+    coverage?: string;
+    total_features?: number;
+    retrieved_at?: string;
+  };
+  features: FloodHazardFeature[];
+}
