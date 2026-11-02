@@ -11,7 +11,8 @@
 
 import L from "leaflet";
 import type { PowerAdvisory, EarthquakeEvent, PagasaBulletin } from "../../types/index.js";
-import type { LayerSelection, FilterState, SelectedLocationDetails } from "../types.js";
+import type { LayerSelection, FilterState, SelectedLocationDetails, FloodHazardCollection } from "../types.js";
+import { getFloodHazardStyle } from "../services/floodHazards.js";
 import { computePowerStatus, computeEarthquakeSeverity, renderEarthquakeMarkerSvg, cleanTownName } from "./markerStyles.js";
 import {
   formatPhilippineDateTime,
@@ -55,6 +56,7 @@ export class MapController {
   private powerLayerGroup: L.LayerGroup;
   private earthquakeLayerGroup: L.LayerGroup;
   private pagasaLayerGroup: L.LayerGroup;
+  private floodLayerGroup: L.LayerGroup;
   private onSelectLocation?: (details: SelectedLocationDetails) => void;
   private userLocationMarker?: L.CircleMarker;
   private userAccuracyCircle?: L.Circle;
@@ -84,6 +86,15 @@ export class MapController {
       subdomains: "abcd",
       maxZoom: 19,
     }).addTo(this.map);
+
+    // Dedicated flood hazard pane: sits above dark base tiles (z-index 200),
+    // below street labels (z-index 450) and below marker pins (z-index 600)
+    if (typeof this.map.createPane === "function") {
+      const floodPane = this.map.createPane("floodHazardPane");
+      if (floodPane && floodPane.style) {
+        floodPane.style.zIndex = "380";
+      }
+    }
 
     // Dedicated high-contrast label pane: sits above storm track / vector layers (z-index 450)
     // and below interactive civic markers (markerPane is at z-index 600)
@@ -127,6 +138,7 @@ export class MapController {
     this.powerLayerGroup = L.layerGroup().addTo(this.map);
     this.earthquakeLayerGroup = L.layerGroup().addTo(this.map);
     this.pagasaLayerGroup = L.layerGroup().addTo(this.map);
+    this.floodLayerGroup = L.layerGroup();
   }
 
   setOnSelectLocation(callback: (details: SelectedLocationDetails) => void): void {
@@ -731,6 +743,94 @@ export class MapController {
     });
 
     this.pagasaLayerGroup.addLayer(marker);
+  }
+
+  setFloodLayerVisibility(visible: boolean): void {
+    if (visible) {
+      if (!this.map.hasLayer(this.floodLayerGroup)) {
+        this.map.addLayer(this.floodLayerGroup);
+      }
+    } else {
+      if (this.map.hasLayer(this.floodLayerGroup)) {
+        this.map.removeLayer(this.floodLayerGroup);
+      }
+    }
+  }
+
+  isFloodLayerVisible(): boolean {
+    return Boolean(this.map.hasLayer(this.floodLayerGroup));
+  }
+
+  renderFloodHazards(collection: FloodHazardCollection | null): void {
+    this.floodLayerGroup.clearLayers();
+    if (!collection || !Array.isArray(collection.features) || collection.features.length === 0) {
+      return;
+    }
+
+    const geoJsonLayer = L.geoJSON(collection as any, {
+      pane: "floodHazardPane",
+      style: (feature: any) => {
+        const style = getFloodHazardStyle(feature?.properties?.Var);
+        return {
+          fillColor: style.hex,
+          fillOpacity: style.fillOpacity,
+          color: style.strokeHex,
+          weight: 1,
+          opacity: 0.85,
+        };
+      },
+      onEachFeature: (feature: any, layer: any) => {
+        const props = feature?.properties || {};
+        const style = getFloodHazardStyle(props.Var);
+        const zoneName = props.zone_name ? escapeHtml(props.zone_name) : "Metro Cebu Inundation Zone";
+        const returnPeriod = props.return_period ? escapeHtml(props.return_period) : "100-Year";
+
+        const popupHtml = `
+          <div class="popup-card flood-popup">
+            <div class="popup-header">
+              <span class="popup-badge" style="background: ${style.hex}22; color: ${style.hex}; border: 1px solid ${style.hex}55;">
+                ${escapeHtml(style.label)}
+              </span>
+              <span class="popup-city">Project NOAH</span>
+            </div>
+            <h3 class="popup-title" style="color: ${style.hex};">${zoneName}</h3>
+            <p class="popup-time">${escapeHtml(returnPeriod)} Return Period</p>
+
+            <div class="popup-field-row">
+              <span class="field-label">Est. Water Depth:</span>
+              <span class="field-value">${escapeHtml(style.depthRange)}</span>
+            </div>
+            <div class="popup-field-row">
+              <span class="field-label">Susceptibility:</span>
+              <span class="field-value">${escapeHtml(style.description)}</span>
+            </div>
+
+            <div class="popup-provenance-box">
+              <div class="popup-field-row">
+                <span class="field-label">Data Source:</span>
+                <span class="field-value source-highlight bulletin">UP Project NOAH (ODC-ODbL)</span>
+              </div>
+            </div>
+
+            <div class="popup-footer">
+              <a href="https://noah.up.edu.ph/know-your-hazards" target="_blank" rel="noopener noreferrer" class="source-link">
+                Verify Project NOAH ↗
+              </a>
+            </div>
+          </div>
+        `;
+
+        layer.bindPopup(popupHtml, {
+          maxWidth: 320,
+          minWidth: 260,
+          autoPan: true,
+          autoPanPaddingTopLeft: L.point(20, 140),
+          autoPanPaddingBottomRight: L.point(20, 30),
+        });
+      },
+    });
+
+    this.floodLayerGroup.addLayer(geoJsonLayer);
   }
 
   /**
