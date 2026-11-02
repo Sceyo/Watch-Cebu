@@ -20,6 +20,7 @@ import {
   getEarthquakeEventsFallback,
   getEarthquakeEventsSnapshot,
   getPagasaBulletin,
+  getPagasaBulletinSnapshot,
 } from "../../server/api.js";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -165,15 +166,16 @@ describe("Server API Layer — Earthquake Events", () => {
     expect(res).toBe(fakeLiveResponse);
   });
 
-  it("getPagasaBulletin handles upstream fetch errors gracefully by returning baseline bulletin", async () => {
+  it("getPagasaBulletin handles upstream fetch errors gracefully by returning fixture_fallback without caching", async () => {
     const mockCache = new MemoryCache();
     const originalFetch = globalThis.fetch;
     globalThis.fetch = vi.fn().mockRejectedValue(new Error("PAGASA 500"));
 
     try {
       const res = await getPagasaBulletin({ cache: mockCache });
-      expect(res.data_source).toBe("live");
-      expect(res.data.parse_notes).toContain("Failed to fetch live PAGASA bulletin");
+      expect(res.data_source).toBe("fixture_fallback");
+      expect(res.parse_notes).toContain("Failed to fetch live PAGASA bulletin");
+      expect(mockCache.get("pagasa")).toBeNull();
     } finally {
       globalThis.fetch = originalFetch;
     }
@@ -391,6 +393,69 @@ describe("Server API Layer — Snapshot Read Path (Production)", () => {
 
     expect(res.data_source).toBe("snapshot");
     expect(res.data[0].id).toBe("valid-power");
+  });
+
+  it("getEarthquakeEventsSnapshot serves valid empty array [] when status_earthquakes.json has status 'ok' and record_count 0", async () => {
+    const { writeFileSync } = await import("fs");
+    const fakeLivePath = join(TMP_DIR, "live_earthquake_events.json");
+    const fakeStatusPath = join(TMP_DIR, "status_earthquakes.json");
+
+    writeFileSync(fakeLivePath, "[]\n", "utf-8");
+    writeFileSync(
+      fakeStatusPath,
+      JSON.stringify({
+        last_checked_at: new Date().toISOString(),
+        last_successful_update: new Date().toISOString(),
+        record_count: 0,
+        status: "ok",
+      }),
+      "utf-8"
+    );
+
+    const res = await getEarthquakeEventsSnapshot({
+      liveEqPath: fakeLivePath,
+      statusEqPath: fakeStatusPath,
+    });
+
+    expect(res.data_source).toBe("snapshot");
+    expect(res.data).toEqual([]);
+  });
+
+  it("getPagasaBulletinSnapshot attaches staleness warning when last_successful_update is >6h ago", async () => {
+    const { writeFileSync } = await import("fs");
+    const fakeLivePath = join(TMP_DIR, "live_pagasa_bulletin.json");
+    const fakeStatusPath = join(TMP_DIR, "status_pagasa.json");
+
+    writeFileSync(
+      fakeLivePath,
+      JSON.stringify({
+        id: "pagasa-1",
+        has_active_cyclone: false,
+        tcws_cebu: { active: false, signal_level: 0, wind_speed_kmh: null, areas_affected: [] },
+        heavy_rainfall_alert: { level: "none", warning_type: null, description: "None", advisory_areas: [] },
+      }),
+      "utf-8"
+    );
+    const tenHoursAgo = new Date(Date.now() - 10 * 60 * 60 * 1000).toISOString();
+    writeFileSync(
+      fakeStatusPath,
+      JSON.stringify({
+        last_checked_at: new Date().toISOString(),
+        last_successful_update: tenHoursAgo,
+        record_count: 1,
+        status: "ok",
+      }),
+      "utf-8"
+    );
+
+    const res = await getPagasaBulletinSnapshot({
+      livePagasaPath: fakeLivePath,
+      statusPagasaPath: fakeStatusPath,
+    });
+
+    expect(res.data_source).toBe("snapshot");
+    expect(res.parse_notes).toContain("PAGASA snapshot is stale: last updated");
+    expect(res.parse_notes).toContain("threshold: 6h");
   });
 });
 

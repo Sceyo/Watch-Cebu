@@ -107,6 +107,47 @@ describe("PAGASA Weather Parser — Functional Scenarios", () => {
     expect(result.heavy_rainfall_alert.level).toBe("yellow");
     expect(result.heavy_rainfall_alert.description).toContain("Heavy rains expected");
   });
+
+  it("does not assign Red Rainfall Warning to Cebu when Red is for another province and Cebu is under Yellow Warning", () => {
+    const html = `
+      <html>
+        <body>
+          <h1>HEAVY RAINFALL WARNING NO. 05</h1>
+          <p>Issued at 2:00 PM, 14 October 2026</p>
+          <p>RED WARNING LEVEL: Southern Leyte and Surigao del Norte. Torrential rains causing serious flooding.</p>
+          <p>ORANGE WARNING LEVEL: Bohol and Siquijor. Flooding is threatening.</p>
+          <p>YELLOW WARNING LEVEL: Cebu (Metro Cebu, Toledo, Carcar) and Negros Oriental. Flooding in low-lying areas.</p>
+        </body>
+      </html>
+    `;
+
+    const result = parsePagasaBulletinHtml(html);
+
+    expect(result.heavy_rainfall_alert.level).toBe("yellow");
+    expect(result.heavy_rainfall_alert.advisory_areas).toContain("Metro Cebu");
+  });
+
+  it("extracts max_sustained_winds_kmh and gustiness_kmh into storm_center when present", () => {
+    const html = `
+      <html>
+        <body>
+          <h1>TROPICAL CYCLONE BULLETIN NO. 08</h1>
+          <h2>TYPHOON "KRISTINE"</h2>
+          <p>The center of the eye was estimated at 12.3°N, 124.8°E moving West Northwest at 25 km/h with maximum sustained winds of 130 km/h near the center and gustiness of up to 165 km/h.</p>
+          <h3>SIGNAL NO. 1</h3>
+          <p>Visayas: Northern Cebu</p>
+        </body>
+      </html>
+    `;
+
+    const result = parsePagasaBulletinHtml(html);
+
+    expect(result.storm_center).not.toBeNull();
+    expect(result.storm_center?.lat).toBe(12.3);
+    expect(result.storm_center?.lon).toBe(124.8);
+    expect(result.storm_center?.max_sustained_winds_kmh).toBe(130);
+    expect(result.storm_center?.gustiness_kmh).toBe(165);
+  });
 });
 
 describe("PAGASA Parser — Security & Adversarial Input Threat Model", () => {

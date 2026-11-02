@@ -78,10 +78,30 @@ export function removeFavorite(barangay: string): void {
   }
 }
 
+export function clearAllFavorites(): void {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    // Local storage unavailable
+  }
+}
+
 export function isFavorite(barangay: string): boolean {
   if (!barangay) return false;
   const clean = barangay.trim().toLowerCase();
   return getFavorites().some((b) => b.toLowerCase() === clean);
+}
+
+export function toggleFavoriteBarangay(barangay: string): { isNowPinned: boolean; primary: string | null } {
+  const clean = barangay.trim();
+  if (!clean) return { isNowPinned: false, primary: getMyBarangay() };
+  if (isFavorite(clean)) {
+    removeFavorite(clean);
+    return { isNowPinned: false, primary: getMyBarangay() };
+  } else {
+    setMyBarangay(clean);
+    return { isNowPinned: true, primary: getMyBarangay() };
+  }
 }
 
 export interface MyBarangayStatus {

@@ -104,7 +104,7 @@ export function renderLegend(
           <div class="eq-sample" style="width: 14px; height: 14px; background: #A78BFA;"></div>
           <div class="item-text">
             <span class="item-name">Magnitude &lt; 3.0</span>
-            <span class="item-sub">Minor micro-earthquake, rarely felt (hidden by default if &gt;100km away).</span>
+            <span class="item-sub">Minor micro-earthquake, rarely felt (can be filtered below if &gt;100km away).</span>
           </div>
         </div>
 

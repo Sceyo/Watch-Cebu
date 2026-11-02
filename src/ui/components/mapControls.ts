@@ -40,9 +40,15 @@ export function renderMapControls(
   callbacks: MapControlsCallbacks,
   extra?: MapControlsExtraState
 ): void {
+  const existingInput = container.querySelector<HTMLInputElement>("#map-search-input");
+  const wasFocused = existingInput ? (typeof document !== "undefined" && document.activeElement === existingInput) : false;
+  const prevVal = existingInput ? existingInput.value : null;
+  const selStart = existingInput ? existingInput.selectionStart : null;
+  const selEnd = existingInput ? existingInput.selectionEnd : null;
+
   const viewMode = extra?.viewMode || "map";
   const myBarangay = extra?.myBarangayStatus;
-  const currentSearch = extra?.searchQuery || "";
+  const currentSearch = (extra?.searchQuery != null ? extra.searchQuery : prevVal) || "";
 
   let pinnedBannerHtml = "";
   if (myBarangay) {
@@ -124,6 +130,17 @@ export function renderMapControls(
   const clearBtn = container.querySelector<HTMLButtonElement>("#btn-clear-search");
   const dropdown = container.querySelector<HTMLDivElement>("#search-suggestions-dropdown");
   let activeIndex = -1;
+
+  if (wasFocused && searchInput) {
+    searchInput.focus();
+    if (selStart !== null && selEnd !== null) {
+      try {
+        searchInput.setSelectionRange(selStart, selEnd);
+      } catch {
+        // Ignore if unsupported in environment
+      }
+    }
+  }
 
   const hideSuggestions = () => {
     if (dropdown && dropdown.style) {
@@ -254,13 +271,19 @@ export function renderMapControls(
     });
   }
 
-  // Hide suggestions when clicking outside container
+  // Hide suggestions when clicking outside container (cleanly removing prior listener)
   if (typeof document !== "undefined") {
-    document.addEventListener("click", (e) => {
+    const existingListener = (container as unknown as { _outsideClickListener?: (e: MouseEvent) => void })._outsideClickListener;
+    if (existingListener) {
+      document.removeEventListener("click", existingListener);
+    }
+    const outsideListener = (e: MouseEvent) => {
       if (typeof container.contains === "function" && !container.contains(e.target as Node)) {
         hideSuggestions();
       }
-    });
+    };
+    (container as unknown as { _outsideClickListener?: (e: MouseEvent) => void })._outsideClickListener = outsideListener;
+    document.addEventListener("click", outsideListener);
   }
 
   if (searchForm) {

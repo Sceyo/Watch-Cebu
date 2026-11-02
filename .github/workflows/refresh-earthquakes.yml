@@ -1,4 +1,4 @@
-﻿# Watch Cebu — Earthquake Data Refresh
+# Watch Cebu — Earthquake Data Refresh
 #
 # Runs every 10 minutes to fetch the latest PHIVOLCS earthquake bulletins
 # within 300km of Cebu City and write them to data/live_earthquake_events.json.
@@ -46,6 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       WATCH_CEBU_FEED: earthquakes  # script reads this and processes ONLY the earthquake feed
+      DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
 
     steps:
       - name: Checkout repository
@@ -83,8 +84,8 @@ jobs:
       - name: Notify on staleness breach
         # Only fires when the fetch step failed — not on routine successful runs.
         if: steps.fetch.outcome == 'failure' && env.DISCORD_WEBHOOK_URL != ''
-        env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+
         run: |
           RUN_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           curl -s -X POST "$DISCORD_WEBHOOK_URL" \

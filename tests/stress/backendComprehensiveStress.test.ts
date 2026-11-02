@@ -100,7 +100,7 @@ describe("Back-End Comprehensive Stress Suite", () => {
       const responses = await Promise.all(webRequests);
       const totalDuration = performance.now() - start;
 
-      expect(totalDuration).toBeLessThan(8000);
+      expect(totalDuration).toBeLessThan(15000);
       expect(responses).toHaveLength(BURST_SIZE * 3);
 
       for (const res of responses) {

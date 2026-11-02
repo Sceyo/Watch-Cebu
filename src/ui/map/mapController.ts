@@ -18,9 +18,11 @@ import {
   formatReadableDate,
   formatPhilippineTimeRange,
   normalizeStreetList,
+  escapeHtml,
 } from "../../utils/index.js";
 import { ICONS } from "../components/icons.js";
 import { lookupCebuLocation, geocodeCebuOnline } from "../services/cebuLocations.js";
+import { isFavorite as isSavedFavorite } from "../services/myBarangay.js";
 
 export interface SearchAndZoomResult {
   found: boolean;
@@ -306,10 +308,12 @@ export class MapController {
 
       // Check if this coordinate represents the user's favorite/pinned barangay
       const isFavorite = Boolean(
-        myBarangay &&
         group.some((a) => {
-          const mBrgy = a.barangay.some((b) => b.toLowerCase() === myBarangay.toLowerCase());
-          const mCity = a.city.toLowerCase() === myBarangay.toLowerCase();
+          const mBrgy = a.barangay.some(
+            (b) => (myBarangay && b.toLowerCase() === myBarangay.toLowerCase()) || isSavedFavorite(b)
+          );
+          const mCity =
+            (myBarangay && a.city.toLowerCase() === myBarangay.toLowerCase()) || isSavedFavorite(a.city);
           return mBrgy || mCity;
         })
       );
@@ -347,14 +351,14 @@ export class MapController {
       });
 
       // Desktop popup content
-      const barangayName = first.barangay.join(", ") || "Unspecified area";
+      const barangayName = escapeHtml(first.barangay.join(", ") || "Unspecified area");
       let popupBodyHtml = "";
 
       if (group.length === 1) {
         const a = group[0];
         const status = bestStatus;
         const cleanStreets = normalizeStreetList(a.streets);
-        const streetsText = cleanStreets.length > 0 ? cleanStreets.join(", ") : (a.areas_affected_raw || "Not specified");
+        const streetsText = escapeHtml(cleanStreets.length > 0 ? cleanStreets.join(", ") : (a.areas_affected_raw || "Not specified"));
         const locationSourceLabel = isManual ? "Manually verified (SRP Administrative Spine)" : "OpenStreetMap node";
         const readableDate = formatReadableDate(a.date);
         const timeRangePht = formatPhilippineTimeRange(a.start_time, a.end_time, a.overnight_span);
@@ -384,13 +388,13 @@ export class MapController {
                 </span>
                 ${favoriteBadge}
               </div>
-              <span class="popup-city-tag">${a.city}</span>
+              <span class="popup-city-tag">${escapeHtml(a.city)}</span>
             </div>
             <h3 class="popup-title">${barangayName}</h3>
             
             <div class="popup-field-row">
               <span class="field-label">Date:</span>
-              <span class="field-value">${readableDate} <span style="font-size: 0.72rem; color: var(--text-muted);">(${a.date})</span></span>
+              <span class="field-value">${readableDate} <span style="font-size: 0.72rem; color: var(--text-muted);">(${escapeHtml(a.date)})</span></span>
             </div>
             <div class="popup-field-row">
               <span class="field-label">Time:</span>
@@ -402,7 +406,7 @@ export class MapController {
             </div>
             <div class="popup-purpose">
               <span class="field-label">Purpose:</span>
-              <p>${a.purpose}</p>
+              <p>${escapeHtml(a.purpose)}</p>
             </div>
 
             <div class="popup-provenance-box">
@@ -414,7 +418,7 @@ export class MapController {
             </div>
 
             <div class="popup-footer">
-              <a href="${a.source_url}" target="_blank" rel="noopener noreferrer" class="source-link">
+              <a href="${escapeHtml(a.source_url)}" target="_blank" rel="noopener noreferrer" class="source-link">
                 Verify VECO Advisory Post ↗
               </a>
             </div>
@@ -427,7 +431,7 @@ export class MapController {
           const a = group[i];
           const status = computePowerStatus(a.date, a.start_time, a.end_time);
           const cleanStreets = normalizeStreetList(a.streets);
-          const streetsText = cleanStreets.length > 0 ? cleanStreets.join(", ") : (a.areas_affected_raw || "Not specified");
+          const streetsText = escapeHtml(cleanStreets.length > 0 ? cleanStreets.join(", ") : (a.areas_affected_raw || "Not specified"));
           const readableDate = formatReadableDate(a.date);
           const timeRangePht = formatPhilippineTimeRange(a.start_time, a.end_time, a.overnight_span);
 
@@ -443,10 +447,10 @@ export class MapController {
                 <strong style="color: var(--text-primary);">Streets:</strong> ${streetsText}
               </div>
               <div style="font-size: 0.72rem; color: var(--text-muted); line-height: 1.3;">
-                ${a.purpose}
+                ${escapeHtml(a.purpose)}
               </div>
               <div style="margin-top: 4px;">
-                <a href="${a.source_url}" target="_blank" rel="noopener noreferrer" class="source-link" style="font-size: 0.7rem;">
+                <a href="${escapeHtml(a.source_url)}" target="_blank" rel="noopener noreferrer" class="source-link" style="font-size: 0.7rem;">
                   Verify Post ↗
                 </a>
               </div>
@@ -469,7 +473,7 @@ export class MapController {
                 </span>
                 ${favoriteBadge}
               </div>
-              <span class="popup-city-tag">${first.city}</span>
+              <span class="popup-city-tag">${escapeHtml(first.city)}</span>
             </div>
             <h3 class="popup-title">${barangayName}</h3>
             <p style="font-size: 0.72rem; color: var(--text-muted); margin: 0 0 6px 0;">Multiple scheduled interruptions at this location:</p>
@@ -553,7 +557,7 @@ export class MapController {
         }
       });
 
-      const reportedIntensityText = e.reported_intensities ? e.reported_intensities : "Not reported";
+      const reportedIntensityText = e.reported_intensities ? escapeHtml(e.reported_intensities) : "Not reported";
       const damageText = e.expecting_damage ? "Yes (Assessments underway)" : "No";
       const aftershocksText = e.expecting_aftershocks ? "Yes" : "No";
 
@@ -561,11 +565,11 @@ export class MapController {
         <div class="popup-card earthquake-popup">
           <div class="popup-header">
             <span class="popup-badge" style="background: ${severity.hex}22; color: ${severity.hex}; border: 1px solid ${severity.hex}55;">
-              M${e.magnitude.toFixed(1)} ${e.magnitude_type || "ML"} · ${severity.label}
+              M${e.magnitude.toFixed(1)} ${escapeHtml(e.magnitude_type || "ML")} · ${severity.label}
             </span>
             <span class="popup-city">${e.distance_from_cebu_km} km from Cebu</span>
           </div>
-          <h3 class="popup-title">${e.location_description}</h3>
+          <h3 class="popup-title">${escapeHtml(e.location_description)}</h3>
 
           <div class="popup-field-row">
             <span class="field-label">Date:</span>
@@ -581,7 +585,7 @@ export class MapController {
           </div>
           <div class="popup-field-row">
             <span class="field-label">Depth:</span>
-            <span class="field-value">${e.depth_km} km (${e.origin_type})</span>
+            <span class="field-value">${e.depth_km} km (${escapeHtml(e.origin_type)})</span>
           </div>
           <div class="popup-field-row popup-field-intensities">
             <span class="field-label">Intensities:</span>
@@ -604,7 +608,7 @@ export class MapController {
           </div>
 
           <div class="popup-footer">
-            <a href="${e.source_url}" target="_blank" rel="noopener noreferrer" class="source-link">
+            <a href="${escapeHtml(e.source_url)}" target="_blank" rel="noopener noreferrer" class="source-link">
               Verify PHIVOLCS Bulletin ↗
             </a>
           </div>
@@ -632,7 +636,7 @@ export class MapController {
 
     const { lat, lon, movement, max_sustained_winds_kmh, gustiness_kmh } = bulletin.storm_center;
     const isTcwsActive = bulletin.tcws_cebu?.active;
-    const cycloneName = bulletin.cyclone_name || "Active Cyclone";
+    const cycloneName = escapeHtml(bulletin.cyclone_name || "Active Cyclone");
     const sigLevel = bulletin.tcws_cebu?.signal_level ?? 0;
 
     // Outer Wind Buffer (120 km radius circle)
@@ -691,7 +695,7 @@ export class MapController {
 
         <div class="popup-field-row">
           <span class="field-label">Movement:</span>
-          <span class="field-value">${movement || 'Stationary or slow'}</span>
+          <span class="field-value">${movement ? escapeHtml(movement) : 'Stationary or slow'}</span>
         </div>
         ${max_sustained_winds_kmh ? `
           <div class="popup-field-row">
@@ -712,7 +716,7 @@ export class MapController {
         </div>
 
         <div class="popup-footer">
-          <a href="${bulletin.source_url}" target="_blank" rel="noopener noreferrer" class="source-link">
+          <a href="${escapeHtml(bulletin.source_url)}" target="_blank" rel="noopener noreferrer" class="source-link">
             Verify PAGASA Bulletin ↗
           </a>
         </div>

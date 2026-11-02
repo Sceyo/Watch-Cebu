@@ -23,6 +23,7 @@ import {
   escapeHtml,
 } from "../../utils/index.js";
 import { ICONS } from "./icons.js";
+import { isFavorite } from "../services/myBarangay.js";
 
 export interface MobileBottomBarCallbacks {
   onForecastToggle: () => void;
@@ -244,19 +245,22 @@ export function renderMobileBottomSheet(
   if (details.type === "power") {
     const advisories = details.advisories;
     const isMulti = advisories.length > 1;
-    const barangayName = advisories[0]?.barangay.join(", ") || "Unspecified area";
-    const cityName = advisories[0]?.city || "Metro Cebu";
+    const barangayName = escapeHtml(advisories[0]?.barangay.join(", ") || "Unspecified area");
+    const cityName = escapeHtml(advisories[0]?.city || "Metro Cebu");
     const isManual = advisories[0]?.coordinate_source === "manual_verified";
     const sourceLabel = isManual ? "Verified Landmark (SRP Spine)" : "Approximate Barangay Center (OpenStreetMap)";
-    const primaryBarangay = advisories[0]?.barangay[0] || cityName;
-    const isPinned = Boolean(myBarangay && primaryBarangay.toLowerCase() === myBarangay.toLowerCase());
+    const primaryBarangay = advisories[0]?.barangay[0] || advisories[0]?.city || "Metro Cebu";
+    const isPinned = Boolean(
+      (myBarangay && primaryBarangay.toLowerCase() === myBarangay.toLowerCase()) ||
+      isFavorite(primaryBarangay)
+    );
 
     let advisoryCardsHtml = "";
     for (let i = 0; i < advisories.length; i++) {
       const a = advisories[i];
       const status = computePowerStatus(a.date, a.start_time, a.end_time);
       const cleanStreets = normalizeStreetList(a.streets);
-      const streetsText = cleanStreets.length > 0 ? cleanStreets.join(", ") : (a.areas_affected_raw || "Not specified");
+      const streetsText = escapeHtml(cleanStreets.length > 0 ? cleanStreets.join(", ") : (a.areas_affected_raw || "Not specified"));
       const readableDate = formatReadableDate(a.date);
       const timeRangePht = formatPhilippineTimeRange(a.start_time, a.end_time, a.overnight_span);
 
@@ -277,11 +281,11 @@ export function renderMobileBottomSheet(
 
           <div class="sheet-field-group">
             <span class="field-label">Maintenance Purpose:</span>
-            <p class="sheet-purpose-val">${a.purpose}</p>
+            <p class="sheet-purpose-val">${escapeHtml(a.purpose)}</p>
           </div>
 
           <div class="sheet-card-footer">
-            <a href="${a.source_url}" target="_blank" rel="noopener noreferrer" class="source-link">
+            <a href="${escapeHtml(a.source_url)}" target="_blank" rel="noopener noreferrer" class="source-link">
               Verify Official VECO Post ↗
             </a>
           </div>
@@ -298,7 +302,7 @@ export function renderMobileBottomSheet(
             <h3 class="sheet-title">${barangayName} ${isMulti ? `<span class="sheet-multi-count">(${advisories.length} Advisories)</span>` : ""}</h3>
           </div>
           <div class="sheet-header-actions" style="display: flex; align-items: center; gap: 8px;">
-            <button class="sheet-pin-btn ${isPinned ? 'is-pinned' : ''}" id="btn-sheet-pin" title="Pin ${primaryBarangay} as home area" aria-label="Pin as home area">
+            <button class="sheet-pin-btn ${isPinned ? 'is-pinned' : ''}" id="btn-sheet-pin" title="Pin ${escapeHtml(primaryBarangay)} as home area" aria-label="Pin as home area">
               <span aria-hidden="true" style="display: inline-flex; align-items: center;">${isPinned ? ICONS.starFilled : ICONS.star}</span>
               <span class="pin-btn-text">${isPinned ? 'Pinned Area' : 'Pin Area'}</span>
             </button>
@@ -326,7 +330,7 @@ export function renderMobileBottomSheet(
     const e = details.event;
     const severity = computeEarthquakeSeverity(e.magnitude);
     const eqDate = formatPhilippineDateTime(e.datetime_pst);
-    const reportedIntensityText = e.reported_intensities ? e.reported_intensities : "Not reported";
+    const reportedIntensityText = e.reported_intensities ? escapeHtml(e.reported_intensities) : "Not reported";
     const damageText = e.expecting_damage ? "Yes (Assessments underway)" : "No";
     const aftershocksText = e.expecting_aftershocks ? "Yes" : "No";
 
@@ -336,7 +340,7 @@ export function renderMobileBottomSheet(
         <div class="sheet-header-title-row">
           <div class="sheet-title-box">
             <span class="sheet-city-tag">${e.distance_from_cebu_km} km from Cebu</span>
-            <h3 class="sheet-title">${e.location_description}</h3>
+            <h3 class="sheet-title">${escapeHtml(e.location_description)}</h3>
           </div>
           <button class="sheet-close-btn" id="btn-close-sheet" aria-label="Close details" title="Close">${ICONS.close}</button>
         </div>
@@ -345,7 +349,7 @@ export function renderMobileBottomSheet(
       <div class="sheet-body">
         <div class="sheet-status-row" style="margin-bottom: 12px;">
           <span class="popup-badge" style="background: ${severity.hex}22; color: ${severity.hex}; border: 1px solid ${severity.hex}55; font-size: 0.85rem;">
-            M${e.magnitude.toFixed(1)} ${e.magnitude_type || "ML"} · ${severity.label}
+            M${e.magnitude.toFixed(1)} ${escapeHtml(e.magnitude_type || "ML")} · ${severity.label}
           </span>
           <span class="sheet-time-badge">${eqDate.full}</span>
         </div>
@@ -357,7 +361,7 @@ export function renderMobileBottomSheet(
           </div>
           <div class="sheet-metric-item">
             <span class="sheet-metric-label">Origin</span>
-            <span class="sheet-metric-val">${e.origin_type}</span>
+            <span class="sheet-metric-val">${escapeHtml(e.origin_type)}</span>
           </div>
           <div class="sheet-metric-item">
             <span class="sheet-metric-label">Damage Expected</span>
@@ -382,7 +386,7 @@ export function renderMobileBottomSheet(
         </div>
 
         <div class="sheet-card-footer" style="margin-top: 12px;">
-          <a href="${e.source_url}" target="_blank" rel="noopener noreferrer" class="source-link">
+          <a href="${escapeHtml(e.source_url)}" target="_blank" rel="noopener noreferrer" class="source-link">
             Verify Official PHIVOLCS Bulletin ↗
           </a>
         </div>

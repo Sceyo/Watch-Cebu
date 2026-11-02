@@ -116,19 +116,35 @@ export function parsePagasaBulletinHtml(
 
   const rainfallMatch = fullText.match(/HEAVY\s+RAINFALL\s+WARNING|COLOR-CODED\s+RAINFALL|THUNDERSTORM\s+ADVISORY/i);
   if (rainfallMatch) {
-    if (/\bCebu\b/i.test(fullText)) {
-      if (/\bRED\s+(?:WARNING|ALERT)\b/i.test(fullText)) {
-        rainfallLevel = "red";
-        rainfallDesc = "Torrential rains expected (>30 mm/hr). Severe flooding and landslides expected; immediate evacuation in hazard zones.";
+    const levelConfigs: Array<{
+      level: HeavyRainfallAlertLevel;
+      regex: RegExp;
+      desc: string;
+    }> = [
+      {
+        level: "red",
+        regex: /\bRED\s+(?:WARNING|ALERT)(?:\s+LEVEL)?\b([\s\S]*?)(?=\b(?:ORANGE|YELLOW)\s+(?:WARNING|ALERT)|\bMEANWHILE\b|$)/i,
+        desc: "Torrential rains expected (>30 mm/hr). Severe flooding and landslides expected; immediate evacuation in hazard zones.",
+      },
+      {
+        level: "orange",
+        regex: /\bORANGE\s+(?:WARNING|ALERT)(?:\s+LEVEL)?\b([\s\S]*?)(?=\b(?:RED|YELLOW)\s+(?:WARNING|ALERT)|\bMEANWHILE\b|$)/i,
+        desc: "Intense rains expected (15–30 mm/hr). Flooding threatening; prepare for potential evacuation.",
+      },
+      {
+        level: "yellow",
+        regex: /\bYELLOW\s+(?:WARNING|ALERT)(?:\s+LEVEL)?\b([\s\S]*?)(?=\b(?:RED|ORANGE)\s+(?:WARNING|ALERT)|\bMEANWHILE\b|$)/i,
+        desc: "Heavy rains expected (7.5–15 mm/hr). Localized flooding possible in low-lying and river areas.",
+      },
+    ];
+
+    for (const cfg of levelConfigs) {
+      const match = fullText.match(cfg.regex);
+      if (match && match[1] && /\bCebu\b/i.test(match[1])) {
+        rainfallLevel = cfg.level;
+        rainfallDesc = cfg.desc;
         rainfallAreas.push("Metro Cebu");
-      } else if (/\bORANGE\s+(?:WARNING|ALERT)\b/i.test(fullText)) {
-        rainfallLevel = "orange";
-        rainfallDesc = "Intense rains expected (15–30 mm/hr). Flooding threatening; prepare for potential evacuation.";
-        rainfallAreas.push("Metro Cebu");
-      } else if (/\bYELLOW\s+(?:WARNING|ALERT)\b/i.test(fullText)) {
-        rainfallLevel = "yellow";
-        rainfallDesc = "Heavy rains expected (7.5–15 mm/hr). Localized flooding possible in low-lying and river areas.";
-        rainfallAreas.push("Metro Cebu");
+        break;
       }
     }
   }
@@ -145,7 +161,18 @@ export function parsePagasaBulletinHtml(
       if (moveMatch) {
         movement = sanitize(moveMatch[1], 40);
       }
-      stormCenter = { lat, lon, movement };
+      const windsMatch = fullText.match(/maximum\s+sustained\s+winds\s+of\s+(\d{1,3})\s*km\/h/i);
+      const gustMatch = fullText.match(/gustiness\s+of\s+(?:up\s+to\s+)?(\d{1,3})\s*km\/h/i);
+      const max_sustained_winds_kmh = windsMatch ? parseInt(windsMatch[1], 10) : undefined;
+      const gustiness_kmh = gustMatch ? parseInt(gustMatch[1], 10) : undefined;
+
+      stormCenter = {
+        lat,
+        lon,
+        movement,
+        ...(max_sustained_winds_kmh !== undefined ? { max_sustained_winds_kmh } : {}),
+        ...(gustiness_kmh !== undefined ? { gustiness_kmh } : {}),
+      };
     }
   }
 

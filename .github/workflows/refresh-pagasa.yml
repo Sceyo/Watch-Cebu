@@ -40,6 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       WATCH_CEBU_FEED: pagasa  # script reads this and processes ONLY the pagasa feed
+      DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
 
     steps:
       - name: Checkout repository
@@ -73,8 +74,8 @@ jobs:
 
       - name: Notify on staleness breach
         if: steps.fetch.outcome == 'failure' && env.DISCORD_WEBHOOK_URL != ''
-        env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+
         run: |
           RUN_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           curl -s -X POST "$DISCORD_WEBHOOK_URL" \

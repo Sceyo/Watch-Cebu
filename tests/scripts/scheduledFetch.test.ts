@@ -128,13 +128,12 @@ describe("Scheduled Fetch Script (scripts/run_scheduled_fetch.ts)", () => {
     expect(powerStatusAfter).toBe(powerStatusBefore);
   }, 60_000);
 
-  it("flags staleness by setting exit code 1 when last_successful_update is older than threshold", () => {
-    // Intentionally write a status file with last_successful_update > 48 hours ago in isolated test dir
+  it("flags staleness by setting exit code 1 when scrape fails and last_successful_update is older than threshold", () => {
     const threeDaysAgo = new Date(Date.now() - 72 * 60 * 60 * 1000).toISOString();
     writeFileSync(
       POWER_STATUS,
       JSON.stringify({
-        last_checked_at: new Date().toISOString(),
+        last_checked_at: threeDaysAgo,
         last_successful_update: threeDaysAgo,
         record_count: 51,
         status: "ok",
@@ -142,8 +141,30 @@ describe("Scheduled Fetch Script (scripts/run_scheduled_fetch.ts)", () => {
       "utf-8"
     );
 
-    const statusData = JSON.parse(readFileSync(POWER_STATUS, "utf-8"));
-    const age = Date.now() - new Date(statusData.last_successful_update).getTime();
-    expect(age).toBeGreaterThan(48 * 60 * 60 * 1000);
-  });
+    let error: any = null;
+    let stderrOutput = "";
+    try {
+      execSync("npx tsx scripts/run_scheduled_fetch.ts", {
+        cwd: ROOT_DIR,
+        env: {
+          ...process.env,
+          WATCH_CEBU_FEED: "power",
+          WATCH_CEBU_DATA_DIR: TEST_DATA_DIR,
+          WATCH_CEBU_FORCE_FAIL: "Simulated upstream outage",
+        },
+        stdio: "pipe",
+      });
+    } catch (err: any) {
+      error = err;
+      stderrOutput = err.stderr ? err.stderr.toString() : "";
+    }
+
+    expect(error).not.toBeNull();
+    expect(error.status).toBe(1);
+    expect(stderrOutput).toContain("[STALE] power feed has not updated in");
+
+    const updatedStatus = JSON.parse(readFileSync(POWER_STATUS, "utf-8"));
+    expect(updatedStatus.status).toBe("error");
+    expect(updatedStatus.last_successful_update).toBe(threeDaysAgo);
+  }, 60_000);
 });

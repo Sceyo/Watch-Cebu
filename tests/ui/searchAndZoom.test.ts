@@ -292,6 +292,33 @@ describe("MapController — Favorite Barangay & Earthquake Enhancements", () => 
     );
   });
 
+  it("highlights all saved multi-favorite barangays on the map, not just primary myBarangay", async () => {
+    const mockStorage: Record<string, string> = {};
+    (globalThis as any).localStorage = {
+      getItem: (key: string) => mockStorage[key] || null,
+      setItem: (key: string, val: string) => { mockStorage[key] = val; },
+      removeItem: (key: string) => { delete mockStorage[key]; },
+      clear: () => { for (const k in mockStorage) delete mockStorage[k]; },
+    };
+
+    const L = (await import("leaflet")).default;
+    const { setMyBarangay, clearAllFavorites } = await import("../../src/ui/services/myBarangay.js");
+    clearAllFavorites();
+    setMyBarangay("Lahug");
+    setMyBarangay("Talamban"); // Talamban is primary, Lahug is secondary favorite
+
+    (L.divIcon as any).mockClear();
+    controller.renderPowerAdvisories([mockAdvisory], { selectedDate: "all", minMagnitude: 0 }, "Talamban");
+
+    const calls = (L.divIcon as any).mock.calls;
+    expect(calls.length).toBeGreaterThan(0);
+    const lastCall = calls[calls.length - 1][0];
+    expect(lastCall.html).toContain("is-favorite");
+
+    clearAllFavorites();
+    delete (globalThis as any).localStorage;
+  });
+
   it("offsets desktop target latitude when focusing with openPopup to show marker and info card simultaneously", () => {
     const dummyMap = (controller as any).map;
     dummyMap.setView.mockClear();
