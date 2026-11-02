@@ -9,5 +9,8 @@ export default defineConfig({
     reporters: ["verbose"],
     testTimeout: 30000,
     globalSetup: ["tests/setup/globalDataGuard.ts"],
+    env: {
+      WATCH_CEBU_USE_SNAPSHOT: "true",
+    },
   },
 });

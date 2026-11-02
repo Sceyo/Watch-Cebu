@@ -25,6 +25,7 @@ export interface MapControlsCallbacks {
   onViewModeToggle?: () => void;
   onClearMyBarangay?: () => void;
   onSelectMyBarangay?: (barangay: string) => void;
+  onFloodHazardToggle?: () => void;
 }
 
 export interface MapControlsExtraState {
@@ -32,6 +33,8 @@ export interface MapControlsExtraState {
   myBarangayStatus?: MyBarangayStatus | null;
   searchQuery?: string;
   advisoryBarangays?: Set<string> | string[];
+  isFloodHazardActive?: boolean;
+  isFloodHazardLoading?: boolean;
 }
 
 export function renderMapControls(
@@ -103,6 +106,17 @@ export function renderMapControls(
 
         <button id="btn-locate-me" class="map-ctrl-btn btn-locate-me" aria-label="Locate me on map" title="Center on my location">
           <span class="ctrl-icon" aria-hidden="true" style="display: inline-flex; align-items: center;">${ICONS.crosshair}</span>
+        </button>
+
+        <button
+          id="btn-toggle-flood-hazard"
+          class="map-ctrl-btn btn-flood-hazard ${extra?.isFloodHazardActive ? 'active' : ''} ${extra?.isFloodHazardLoading ? 'loading' : ''}"
+          aria-label="Toggle Project NOAH flood hazard overlay"
+          aria-pressed="${extra?.isFloodHazardActive ? 'true' : 'false'}"
+          title="Toggle Project NOAH 100-Year Flood Risk"
+        >
+          <span class="ctrl-icon" aria-hidden="true" style="display: inline-flex; align-items: center;">${ICONS.flood}</span>
+          <span class="view-mode-label">Flood Risk</span>
         </button>
       </div>
 
@@ -302,6 +316,13 @@ export function renderMapControls(
   viewModeBtn?.addEventListener("click", () => {
     hideSuggestions();
     callbacks.onViewModeToggle?.();
+  });
+
+  // Flood Risk Toggle listener
+  const floodBtn = container.querySelector<HTMLButtonElement>("#btn-toggle-flood-hazard");
+  floodBtn?.addEventListener("click", () => {
+    hideSuggestions();
+    callbacks.onFloodHazardToggle?.();
   });
 
   // Locate Me listener

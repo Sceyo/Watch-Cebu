@@ -140,8 +140,41 @@ export function renderLegend(
         </div>
       </div>
 
+      <!-- Section 4: Flood Susceptibility (Project NOAH) -->
+      <div class="legend-section">
+        <h3 class="section-title"><span style="display: inline-flex; align-items: center; margin-right: 6px; color: #38BDF8;" aria-hidden="true">${ICONS.flood}</span>Flood Susceptibility (Project NOAH)</h3>
+        <p class="section-desc">100-year return period flood inundation zones across Metro Cebu from UP Project NOAH (ODC-ODbL):</p>
+
+        <div class="legend-item">
+          <div class="color-swatch-circle" style="background: rgba(250, 204, 21, 0.4); border: 1.5px solid #FACC15;">
+          </div>
+          <div class="item-text">
+            <span class="item-name" style="color: #FACC15;">Low Hazard (0 – 0.5m)</span>
+            <span class="item-sub">Estimated flood depth up to knee height (0 to 0.5 meters). Safe for larger vehicles.</span>
+          </div>
+        </div>
+
+        <div class="legend-item">
+          <div class="color-swatch-circle" style="background: rgba(249, 115, 22, 0.45); border: 1.5px solid #F97316;">
+          </div>
+          <div class="item-text">
+            <span class="item-name" style="color: #F97316;">Medium Hazard (0.5 – 1.5m)</span>
+            <span class="item-sub">Estimated flood depth from waist to chest height (0.5 to 1.5 meters). Impassable to light vehicles.</span>
+          </div>
+        </div>
+
+        <div class="legend-item">
+          <div class="color-swatch-circle" style="background: rgba(239, 68, 68, 0.5); border: 1.5px solid #EF4444;">
+          </div>
+          <div class="item-text">
+            <span class="item-name" style="color: #EF4444;">High Hazard (&gt; 1.5m)</span>
+            <span class="item-sub">Estimated flood depth exceeding 1.5 meters. Critical danger zone; evacuation advisory.</span>
+          </div>
+        </div>
+      </div>
+
       <div class="legend-footer">
-        <p>Advisories sourced from <strong>Visayan Electric (VECO)</strong> and <strong>DOST-PHIVOLCS</strong>. Map coordinates are approximate points from OpenStreetMap contributors (community map), not official boundaries.</p>
+        <p>Advisories sourced from <strong>Visayan Electric (VECO)</strong>, <strong>DOST-PHIVOLCS</strong>, and <strong>UP Project NOAH</strong> (ODC-ODbL). Map coordinates are approximate points from OpenStreetMap contributors (community map), not official boundaries.</p>
       </div>
     </div>
   `;

@@ -1,11 +1,16 @@
-import { getPagasaBulletinSnapshot, GitHubSnapshotSource } from "../server/api.js";
+import { getPagasaBulletinSnapshot, GitHubSnapshotSource, FileSnapshotSource } from "../server/api.js";
 
 // Production Vercel Serverless Function for /api/pagasa
-// Fetches PAGASA bulletin snapshot from public GitHub repository at runtime and CDN-caches it at edge.
-const githubSource = new GitHubSnapshotSource();
+// Fetches PAGASA bulletin snapshot from public GitHub repository at runtime in production (and local files during test/dev).
+function getSnapshotSource() {
+  if (process.env.WATCH_CEBU_USE_SNAPSHOT === "true") {
+    return new FileSnapshotSource();
+  }
+  return new GitHubSnapshotSource();
+}
 
 export default async function handler(req: any, res: any) {
-  const result = await getPagasaBulletinSnapshot({ snapshotSource: githubSource });
+  const result = await getPagasaBulletinSnapshot({ snapshotSource: getSnapshotSource() });
 
   if (res && typeof res.setHeader === "function") {
     res.setHeader("Content-Type", "application/json; charset=utf-8");
@@ -25,7 +30,7 @@ export default async function handler(req: any, res: any) {
 }
 
 export async function GET(request: Request) {
-  const result = await getPagasaBulletinSnapshot({ snapshotSource: githubSource });
+  const result = await getPagasaBulletinSnapshot({ snapshotSource: getSnapshotSource() });
   return new Response(JSON.stringify(result), {
     status: 200,
     headers: {

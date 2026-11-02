@@ -10,7 +10,7 @@
  * 6. getEarthquakeEvents fallback returns data_source: "fixture_fallback" with parse_notes.
  */
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterAll } from "vitest";
 import { MemoryCache } from "../../server/cache.js";
 import {
   getPowerAdvisories,
@@ -183,7 +183,7 @@ describe("Server API Layer — Earthquake Events", () => {
 });
 
 describe("Server API Layer — Snapshot Read Path (Production)", () => {
-  const TMP_DIR = join(ROOT_DIR, "tests", "fixtures", "tmp_snapshot_test");
+  const TMP_DIR = join(ROOT_DIR, "tests", "fixtures", "tmp_snapshot_test_scratch");
 
   beforeEach(async () => {
     const { mkdirSync, rmSync, existsSync } = await import("fs");
@@ -191,6 +191,13 @@ describe("Server API Layer — Snapshot Read Path (Production)", () => {
       rmSync(TMP_DIR, { recursive: true, force: true });
     }
     mkdirSync(TMP_DIR, { recursive: true });
+  });
+
+  afterAll(async () => {
+    const { rmSync, existsSync } = await import("fs");
+    if (existsSync(TMP_DIR)) {
+      rmSync(TMP_DIR, { recursive: true, force: true });
+    }
   });
 
   it("getPowerAdvisoriesSnapshot returns snapshot data with data_source: 'snapshot' when file exists", async () => {

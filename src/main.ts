@@ -39,6 +39,7 @@ import {
 } from "./ui/services/forecast.js";
 import { renderForecastDrawer } from "./ui/components/forecastDrawer.js";
 import { renderMapControls } from "./ui/components/mapControls.js";
+import { fetchFloodHazards, getCachedFloodHazards } from "./ui/services/floodHazards.js";
 import { renderUrgentAlertBanner } from "./ui/components/urgentAlertBanner.js";
 import { renderListView } from "./ui/components/listView.js";
 import { getMyBarangay, setMyBarangay, toggleFavoriteBarangay, getMyBarangayStatus } from "./ui/services/myBarangay.js";
@@ -68,6 +69,8 @@ let filterState: FilterState = {
 
 let isLegendOpen = false;
 let isAboutOpen = false;
+let isFloodHazardActive = false;
+let isFloodHazardLoading = false;
 let isAirQualityOpen = false;
 let isForecastOpen = false;
 let isStatusPopoverOpen = false;
@@ -370,12 +373,50 @@ function updateUI(shouldRenderMapLayers = true) {
           mapController?.renderPowerAdvisories(powerFeedState.data, filterState, myBarangay);
           mapController?.searchAndZoom(barangay, powerFeedState.data, eqFeedState.data);
         },
+        onFloodHazardToggle: async () => {
+          if (isFloodHazardLoading) return;
+          isFloodHazardActive = !isFloodHazardActive;
+
+          if (isFloodHazardActive) {
+            const cached = getCachedFloodHazards();
+            if (cached) {
+              mapController?.renderFloodHazards(cached);
+              mapController?.setFloodLayerVisibility(true);
+              showToast("Project NOAH 100-year flood hazard zones enabled.");
+              updateUI(false);
+              return;
+            }
+
+            isFloodHazardLoading = true;
+            updateUI(false);
+            try {
+              const data = await fetchFloodHazards();
+              isFloodHazardLoading = false;
+              if (isFloodHazardActive) {
+                mapController?.renderFloodHazards(data);
+                mapController?.setFloodLayerVisibility(true);
+                showToast("Project NOAH 100-year flood hazard zones enabled.");
+              }
+            } catch {
+              isFloodHazardLoading = false;
+              isFloodHazardActive = false;
+              showToast("Failed to load flood hazard data. Please check network connection.");
+            }
+            updateUI(false);
+          } else {
+            mapController?.setFloodLayerVisibility(false);
+            showToast("Flood hazard overlay hidden.");
+            updateUI(false);
+          }
+        },
       },
       {
         viewMode: currentViewMode,
         myBarangayStatus,
         searchQuery: filterState.searchQuery,
         advisoryBarangays,
+        isFloodHazardActive,
+        isFloodHazardLoading,
       }
     );
   }
