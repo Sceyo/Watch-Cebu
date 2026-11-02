@@ -38,3 +38,6 @@ coverage/
 # certs/phivolcs-intermediate.pem (public certificate, required at runtime)
 # .env.example (template only, contains no real secrets)
 # data/*.json (scheduled-job-written snapshots, intentionally versioned)
+
+# Superpowers temporary workspace
+.superpowers/
