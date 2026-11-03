@@ -48,4 +48,22 @@ describe("Project NOAH Regional Flood Hazard Static Assets", () => {
     const metro = JSON.parse(readFileSync(metroPath, "utf-8"));
     expect(legacy.features.length).toBe(metro.features.length);
   });
+
+  it("strictly confines all regional flood hazard features to Cebu Province (zero Leyte, Bohol, or Negros leakage)", () => {
+    for (const reg of regions) {
+      const assetPath = join(dataDir, reg.file);
+      const geojson = JSON.parse(readFileSync(assetPath, "utf-8"));
+      for (const f of geojson.features) {
+        const coords = f.geometry.type === "Polygon" ? f.geometry.coordinates[0] : f.geometry.coordinates[0][0];
+        for (const [lon, lat] of coords) {
+          // Zero Leyte (lon >= 124.35 when lat >= 10.85)
+          expect(lat >= 10.85 && lon >= 124.35).toBe(false);
+          // Zero Bohol (lon >= 123.75 when lat <= 10.15)
+          expect(lat <= 10.15 && lon >= 123.75).toBe(false);
+          // Zero Negros west
+          expect(lon >= 123.25).toBe(true);
+        }
+      }
+    }
+  });
 });
