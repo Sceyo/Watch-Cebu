@@ -8,7 +8,7 @@
  * - Zero Node.js runtime imports (browser & PWA safe).
  */
 
-import type { FloodHazardCollection, FloodHazardStyle, FloodHazardVar } from "../types.js";
+import type { FloodHazardCollection, FloodHazardStyle, FloodHazardVar, FloodRegion } from "../types.js";
 
 export const FLOOD_HAZARD_STYLES: Record<FloodHazardVar, FloodHazardStyle> = {
   1: {
@@ -53,66 +53,161 @@ export function getFloodHazardStyle(varCode: number | null | undefined): FloodHa
   return FLOOD_HAZARD_STYLES[1];
 }
 
-let cachedFloodHazards: FloodHazardCollection | null = null;
-let inFlightFetch: Promise<FloodHazardCollection> | null = null;
+const REGIONAL_ASSET_PATHS: Record<FloodRegion, string> = {
+  metro: "/data/cebu-flood-metro.geojson",
+  north: "/data/cebu-flood-north.geojson",
+  south: "/data/cebu-flood-south.geojson",
+};
+
+const cachedFloodHazards = new Map<FloodRegion, FloodHazardCollection>();
+const inFlightFetches = new Map<FloodRegion, Promise<FloodHazardCollection>>();
 
 /**
- * Returns the currently cached flood hazard collection in memory, or null if not yet loaded.
+ * Returns the currently cached flood hazard collection in memory for a region, or null if not yet loaded.
+ * Defaults to "metro" for backwards compatibility.
  */
-export function getCachedFloodHazards(): FloodHazardCollection | null {
-  return cachedFloodHazards;
+export function getCachedFloodHazards(region: FloodRegion = "metro"): FloodHazardCollection | null {
+  return cachedFloodHazards.get(region) ?? null;
 }
 
 /**
- * Resets the in-memory cache and in-flight promise (used for testing and cache-busting).
+ * Returns all currently loaded regional flood hazard collections.
+ */
+export function getAllCachedFloodHazards(): FloodHazardCollection[] {
+  return Array.from(cachedFloodHazards.values());
+}
+
+/**
+ * Returns a list of all flood regions currently loaded into memory.
+ */
+export function getLoadedFloodRegions(): FloodRegion[] {
+  return Array.from(cachedFloodHazards.keys());
+}
+
+/**
+ * Resets the in-memory cache and in-flight promises across all regions (used for testing and cache-busting).
  */
 export function resetFloodHazardsCache(): void {
-  cachedFloodHazards = null;
-  inFlightFetch = null;
+  cachedFloodHazards.clear();
+  inFlightFetches.clear();
 }
 
 /**
- * Lazily fetches and caches the Metro Cebu 100-year flood hazards GeoJSON asset.
- * Deduplicates concurrent calls so multiple triggers share a single network request (Review Focus #2).
- * Resets in-flight state upon network error so subsequent user retries can succeed (Review Focus #3).
+ * Lazily fetches and caches regional 100-year flood hazards GeoJSON assets (Metro, North, or South).
+ * Deduplicates concurrent calls per region so multiple triggers share a single network request.
+ * Resets in-flight state upon network error so subsequent user retries can succeed.
+ * Fully backwards-compatible with `fetchFloodHazards(customFetch)` calls.
  */
 export async function fetchFloodHazards(
-  customFetch: typeof fetch = typeof window !== "undefined" ? window.fetch.bind(window) : fetch
+  regionOrFetch?: FloodRegion | typeof fetch,
+  customFetch?: typeof fetch
 ): Promise<FloodHazardCollection> {
-  if (cachedFloodHazards) {
-    return cachedFloodHazards;
+  let region: FloodRegion = "metro";
+  let fetchFn: typeof fetch = typeof window !== "undefined" ? window.fetch.bind(window) : fetch;
+
+  if (typeof regionOrFetch === "function") {
+    fetchFn = regionOrFetch;
+  } else if (typeof regionOrFetch === "string") {
+    region = regionOrFetch;
+    if (customFetch) {
+      fetchFn = customFetch;
+    }
+  } else if (customFetch) {
+    fetchFn = customFetch;
   }
 
-  if (inFlightFetch) {
-    return inFlightFetch;
+  const existing = cachedFloodHazards.get(region);
+  if (existing) {
+    return existing;
   }
 
-  inFlightFetch = (async () => {
+  const inFlight = inFlightFetches.get(region);
+  if (inFlight) {
+    return inFlight;
+  }
+
+  const assetUrl = REGIONAL_ASSET_PATHS[region] ?? REGIONAL_ASSET_PATHS.metro;
+
+  const fetchPromise = (async () => {
     try {
-      const response = await customFetch("/data/cebu-flood-hazards.geojson", {
+      const response = await fetchFn(assetUrl, {
         headers: { Accept: "application/geo+json, application/json" },
       });
 
       if (!response.ok) {
-        throw new Error(`Failed to load Project NOAH flood hazard data: HTTP ${response.status}`);
+        throw new Error(`Failed to load Project NOAH flood hazard data for ${region}: HTTP ${response.status}`);
       }
 
       const data = (await response.json()) as FloodHazardCollection;
       if (!data || data.type !== "FeatureCollection" || !Array.isArray(data.features)) {
-        throw new Error("Invalid flood hazard GeoJSON format received.");
+        throw new Error(`Invalid flood hazard GeoJSON format received for ${region}.`);
       }
 
-      cachedFloodHazards = data;
+      cachedFloodHazards.set(region, data);
       return data;
     } catch (err) {
-      // Clear in-flight promise on error to allow clean retries
-      inFlightFetch = null;
+      inFlightFetches.delete(region);
       throw err;
     } finally {
-      // After completion, clear in-flight pointer so subsequent calls read cachedFloodHazards
-      inFlightFetch = null;
+      inFlightFetches.delete(region);
     }
   })();
 
-  return inFlightFetch;
+  inFlightFetches.set(region, fetchPromise);
+  return fetchPromise;
+}
+
+/**
+ * Classifies a latitude/longitude pair into its corresponding Cebu flood region:
+ * - "north": Northern Cebu & islands (lat >= 10.45)
+ * - "south": Southern Cebu & West Coast (lat < 10.20 or lon < 123.75)
+ * - "metro": Central Metro Cebu urban corridor (10.20 <= lat < 10.45, lon >= 123.75)
+ */
+export function getRegionForCoordinates(lat: number, lon: number): FloodRegion {
+  if (lat >= 10.45) {
+    return "north";
+  }
+  if (lat < 10.20 || lon < 123.75) {
+    return "south";
+  }
+  return "metro";
+}
+
+export interface LatLngBoundsLiteral {
+  north: number;
+  south: number;
+  east: number;
+  west: number;
+}
+
+/**
+ * Determines which flood regions intersect the given map bounding box.
+ * Accepts either Leaflet LatLngBounds instances or LatLngBoundsLiteral objects.
+ */
+export function getRegionsForBounds(
+  bounds: LatLngBoundsLiteral | { getNorth(): number; getSouth(): number; getEast(): number; getWest(): number }
+): FloodRegion[] {
+  const n = typeof (bounds as any).getNorth === "function" ? (bounds as any).getNorth() : (bounds as LatLngBoundsLiteral).north;
+  const s = typeof (bounds as any).getSouth === "function" ? (bounds as any).getSouth() : (bounds as LatLngBoundsLiteral).south;
+  const e = typeof (bounds as any).getEast === "function" ? (bounds as any).getEast() : (bounds as LatLngBoundsLiteral).east;
+  const w = typeof (bounds as any).getWest === "function" ? (bounds as any).getWest() : (bounds as LatLngBoundsLiteral).west;
+
+  const regions: FloodRegion[] = [];
+
+  // Metro bounds: lat ~10.18 to 10.48, lon ~123.72 to 124.08
+  if (n >= 10.18 && s <= 10.48 && e >= 123.72 && w <= 124.08) {
+    regions.push("metro");
+  }
+
+  // North bounds: lat >= 10.42
+  if (n >= 10.42) {
+    regions.push("north");
+  }
+
+  // South bounds: lat <= 10.22 or west coast lon <= 123.75
+  if (s <= 10.22 || w <= 123.75) {
+    regions.push("south");
+  }
+
+  return regions.length > 0 ? regions : ["metro"];
 }

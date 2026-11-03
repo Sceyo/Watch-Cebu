@@ -53,6 +53,7 @@ export interface EarthquakeSeverityStyle {
 }
 
 
+export type FloodRegion = "metro" | "north" | "south";
 export type FloodHazardVar = 1 | 2 | 3;
 export type FloodHazardTier = "low" | "medium" | "high";
 
@@ -89,6 +90,7 @@ export interface FloodHazardCollection {
     source: string;
     return_period: string;
     license: string;
+    region?: FloodRegion | string;
     coverage?: string;
     total_features?: number;
     retrieved_at?: string;
