@@ -1,11 +1,11 @@
 /**
- * Project NOAH Metro Cebu 100-Year Flood Hazard Extraction Script.
+ * Project NOAH Regional Flood Hazard Extraction Script (Cebu Province).
  *
  * Queries Project NOAH's open ODC-ODbL PMTiles archive on Hugging Face
  * (bettergovph/project-noah-hazard-maps) via HTTP Range requests (206 Partial Content)
- * for Metro Cebu zoom-12 tiles, decodes MVT protobuf geometries, simplifies coordinates
- * for mobile LTE performance (< 600 KB uncompressed), and writes
- * public/data/cebu-flood-hazards.geojson.
+ * for Metro, North, and South Cebu zoom-12 tiles, decodes MVT protobuf geometries,
+ * simplifies coordinates for mobile performance (< 400 KB per chunk), and writes
+ * static GeoJSON assets in public/data/.
  */
 
 import zlib from "zlib";
@@ -32,6 +32,467 @@ export const METRO_CEBU_TILES: FloodHazardTile[] = [
   { z: 12, x: 3458, y: 1928, len: 133437, offset: 482160722 },
   { z: 12, x: 3458, y: 1929, len: 96659,  offset: 482301726 },
   { z: 12, x: 3458, y: 1930, len: 47920,  offset: 482398385 },
+];
+
+export const NORTH_CEBU_TILES: FloodHazardTile[] = [
+  {
+    "z": 12,
+    "x": 3455,
+    "y": 1918,
+    "len": 11622,
+    "offset": 398020266
+  },
+  {
+    "z": 12,
+    "x": 3455,
+    "y": 1919,
+    "len": 67094,
+    "offset": 397953172
+  },
+  {
+    "z": 12,
+    "x": 3456,
+    "y": 1918,
+    "len": 1325,
+    "offset": 479075359
+  },
+  {
+    "z": 12,
+    "x": 3456,
+    "y": 1919,
+    "len": 29650,
+    "offset": 479095421
+  },
+  {
+    "z": 12,
+    "x": 3456,
+    "y": 1920,
+    "len": 20745,
+    "offset": 479125071
+  },
+  {
+    "z": 12,
+    "x": 3456,
+    "y": 1924,
+    "len": 1969,
+    "offset": 481191587
+  },
+  {
+    "z": 12,
+    "x": 3456,
+    "y": 1925,
+    "len": 67165,
+    "offset": 481193556
+  },
+  {
+    "z": 12,
+    "x": 3456,
+    "y": 1926,
+    "len": 153711,
+    "offset": 481260721
+  },
+  {
+    "z": 12,
+    "x": 3456,
+    "y": 1927,
+    "len": 136087,
+    "offset": 481606721
+  },
+  {
+    "z": 12,
+    "x": 3457,
+    "y": 1917,
+    "len": 538,
+    "offset": 479074821
+  },
+  {
+    "z": 12,
+    "x": 3457,
+    "y": 1918,
+    "len": 15608,
+    "offset": 479076684
+  },
+  {
+    "z": 12,
+    "x": 3457,
+    "y": 1919,
+    "len": 3129,
+    "offset": 479092292
+  },
+  {
+    "z": 12,
+    "x": 3457,
+    "y": 1920,
+    "len": 1154,
+    "offset": 479145816
+  },
+  {
+    "z": 12,
+    "x": 3457,
+    "y": 1921,
+    "len": 10581,
+    "offset": 479146970
+  },
+  {
+    "z": 12,
+    "x": 3457,
+    "y": 1922,
+    "len": 13034,
+    "offset": 479233086
+  },
+  {
+    "z": 12,
+    "x": 3457,
+    "y": 1923,
+    "len": 75535,
+    "offset": 479157551
+  },
+  {
+    "z": 12,
+    "x": 3457,
+    "y": 1924,
+    "len": 127850,
+    "offset": 481063737
+  },
+  {
+    "z": 12,
+    "x": 3457,
+    "y": 1925,
+    "len": 121683,
+    "offset": 480942054
+  },
+  {
+    "z": 12,
+    "x": 3457,
+    "y": 1926,
+    "len": 94114,
+    "offset": 481414432
+  },
+  {
+    "z": 12,
+    "x": 3457,
+    "y": 1927,
+    "len": 98175,
+    "offset": 481508546
+  },
+  {
+    "z": 12,
+    "x": 3458,
+    "y": 1918,
+    "len": 1188,
+    "offset": 479059891
+  },
+  {
+    "z": 12,
+    "x": 3458,
+    "y": 1919,
+    "len": 54279,
+    "offset": 479005612
+  },
+  {
+    "z": 12,
+    "x": 3458,
+    "y": 1920,
+    "len": 76635,
+    "offset": 479749476
+  },
+  {
+    "z": 12,
+    "x": 3458,
+    "y": 1921,
+    "len": 106590,
+    "offset": 479642886
+  },
+  {
+    "z": 12,
+    "x": 3458,
+    "y": 1922,
+    "len": 135299,
+    "offset": 479246120
+  },
+  {
+    "z": 12,
+    "x": 3458,
+    "y": 1923,
+    "len": 145258,
+    "offset": 479381419
+  },
+  {
+    "z": 12,
+    "x": 3458,
+    "y": 1924,
+    "len": 150088,
+    "offset": 480658426
+  },
+  {
+    "z": 12,
+    "x": 3458,
+    "y": 1925,
+    "len": 133540,
+    "offset": 480808514
+  },
+  {
+    "z": 12,
+    "x": 3458,
+    "y": 1926,
+    "len": 115704,
+    "offset": 480494178
+  },
+  {
+    "z": 12,
+    "x": 3458,
+    "y": 1927,
+    "len": 119262,
+    "offset": 480374916
+  },
+  {
+    "z": 12,
+    "x": 3459,
+    "y": 1918,
+    "len": 9363,
+    "offset": 479061079
+  },
+  {
+    "z": 12,
+    "x": 3459,
+    "y": 1919,
+    "len": 41607,
+    "offset": 478964005
+  },
+  {
+    "z": 12,
+    "x": 3459,
+    "y": 1920,
+    "len": 18071,
+    "offset": 479826111
+  },
+  {
+    "z": 12,
+    "x": 3459,
+    "y": 1921,
+    "len": 26679,
+    "offset": 479616207
+  },
+  {
+    "z": 12,
+    "x": 3459,
+    "y": 1922,
+    "len": 40843,
+    "offset": 479575364
+  },
+  {
+    "z": 12,
+    "x": 3459,
+    "y": 1923,
+    "len": 48687,
+    "offset": 479526677
+  },
+  {
+    "z": 12,
+    "x": 3459,
+    "y": 1924,
+    "len": 22881,
+    "offset": 480635545
+  },
+  {
+    "z": 12,
+    "x": 3459,
+    "y": 1925,
+    "len": 4972,
+    "offset": 480630573
+  },
+  {
+    "z": 12,
+    "x": 3459,
+    "y": 1926,
+    "len": 20691,
+    "offset": 480609882
+  },
+  {
+    "z": 12,
+    "x": 3459,
+    "y": 1927,
+    "len": 27120,
+    "offset": 480347796
+  },
+  {
+    "z": 12,
+    "x": 3461,
+    "y": 1926,
+    "len": 868,
+    "offset": 480346928
+  },
+  {
+    "z": 12,
+    "x": 3462,
+    "y": 1917,
+    "len": 51253,
+    "offset": 478707757
+  },
+  {
+    "z": 12,
+    "x": 3462,
+    "y": 1918,
+    "len": 14791,
+    "offset": 478759010
+  },
+  {
+    "z": 12,
+    "x": 3463,
+    "y": 1917,
+    "len": 125351,
+    "offset": 478582406
+  },
+  {
+    "z": 12,
+    "x": 3463,
+    "y": 1918,
+    "len": 105831,
+    "offset": 478773801
+  },
+  {
+    "z": 12,
+    "x": 3463,
+    "y": 1919,
+    "len": 84373,
+    "offset": 478879632
+  },
+  {
+    "z": 12,
+    "x": 3463,
+    "y": 1920,
+    "len": 53619,
+    "offset": 479844182
+  },
+  {
+    "z": 12,
+    "x": 3463,
+    "y": 1921,
+    "len": 121391,
+    "offset": 479897801
+  },
+  {
+    "z": 12,
+    "x": 3463,
+    "y": 1922,
+    "len": 122266,
+    "offset": 480019192
+  }
+];
+
+export const SOUTH_CEBU_TILES: FloodHazardTile[] = [
+  {
+    "z": 12,
+    "x": 3456,
+    "y": 1925,
+    "len": 67165,
+    "offset": 481193556
+  },
+  {
+    "z": 12,
+    "x": 3456,
+    "y": 1926,
+    "len": 153711,
+    "offset": 481260721
+  },
+  {
+    "z": 12,
+    "x": 3456,
+    "y": 1927,
+    "len": 136087,
+    "offset": 481606721
+  },
+  {
+    "z": 12,
+    "x": 3456,
+    "y": 1935,
+    "len": 5582,
+    "offset": 482677442
+  },
+  {
+    "z": 12,
+    "x": 3456,
+    "y": 1936,
+    "len": 2876,
+    "offset": 505468395
+  },
+  {
+    "z": 12,
+    "x": 3456,
+    "y": 1937,
+    "len": 5500,
+    "offset": 505471271
+  },
+  {
+    "z": 12,
+    "x": 3456,
+    "y": 1938,
+    "len": 33166,
+    "offset": 505476771
+  },
+  {
+    "z": 12,
+    "x": 3457,
+    "y": 1925,
+    "len": 121683,
+    "offset": 480942054
+  },
+  {
+    "z": 12,
+    "x": 3457,
+    "y": 1926,
+    "len": 94114,
+    "offset": 481414432
+  },
+  {
+    "z": 12,
+    "x": 3457,
+    "y": 1927,
+    "len": 98175,
+    "offset": 481508546
+  },
+  {
+    "z": 12,
+    "x": 3457,
+    "y": 1934,
+    "len": 5187,
+    "offset": 482696420
+  },
+  {
+    "z": 12,
+    "x": 3457,
+    "y": 1935,
+    "len": 13396,
+    "offset": 482683024
+  },
+  {
+    "z": 12,
+    "x": 3457,
+    "y": 1936,
+    "len": 192960,
+    "offset": 505275435
+  },
+  {
+    "z": 12,
+    "x": 3457,
+    "y": 1937,
+    "len": 144031,
+    "offset": 505131404
+  },
+  {
+    "z": 12,
+    "x": 3457,
+    "y": 1938,
+    "len": 9133,
+    "offset": 505509937
+  },
+  {
+    "z": 12,
+    "x": 3457,
+    "y": 1939,
+    "len": 851,
+    "offset": 505519070
+  }
 ];
 
 export function rotateHilbert(n: number, xy: [number, number], rx: number, ry: number): void {
@@ -90,7 +551,14 @@ export function ringArea(ring: [number, number][]): number {
   return Math.abs(area) / 2;
 }
 
-export function decodeMvt(buf: Buffer, z: number, x: number, y: number): any[] {
+export function decodeMvt(
+  buf: Buffer,
+  z: number,
+  x: number,
+  y: number,
+  tolSq = 0.000004,
+  minArea = 0.000002
+): any[] {
   let offset = 0;
 
   function readVarint(): number {
@@ -274,9 +742,9 @@ export function decodeMvt(buf: Buffer, z: number, x: number, y: number): any[] {
             const lat = (latRad * 180) / Math.PI;
             return [Number(lon.toFixed(5)), Number(lat.toFixed(5))];
           });
-          return simplifyRing(wgsRing);
+          return simplifyRing(wgsRing, tolSq);
         })
-        .filter((r) => r.length >= 4 && ringArea(r) >= 0.000002);
+        .filter((r) => r.length >= 4 && ringArea(r) >= minArea);
 
       if (geoRings.length === 0) continue;
 
@@ -305,23 +773,33 @@ export function decodeMvt(buf: Buffer, z: number, x: number, y: number): any[] {
   return features;
 }
 
-export async function extractMetroCebuFloodHazards(
-  outputPath = path.join(process.cwd(), "public", "data", "cebu-flood-hazards.geojson")
+export async function extractTilesToGeoJSON(
+  tiles: FloodHazardTile[],
+  regionName: string,
+  coverageDesc: string,
+  outputPath: string,
+  tolSq = 0.000004,
+  minArea = 0.000002
 ): Promise<void> {
   const pmtilesUrl =
     "https://huggingface.co/datasets/bettergovph/project-noah-hazard-maps/resolve/main/PMTiles/layers/flood_100yr.pmtiles";
 
   const allFeatures: any[] = [];
-  for (const t of METRO_CEBU_TILES) {
-    const start = 117561 + t.offset;
-    const end = start + t.len - 1;
-    const res = await fetch(pmtilesUrl, { headers: { Range: `bytes=${start}-${end}` } });
-    if (!res.ok) {
-      throw new Error(`Failed to fetch tile ${t.z}/${t.x}/${t.y}: HTTP ${res.status}`);
-    }
-    const pbf = zlib.gunzipSync(Buffer.from(await res.arrayBuffer()));
-    const feats = decodeMvt(pbf, t.z, t.x, t.y);
-    allFeatures.push(...feats);
+  for (let i = 0; i < tiles.length; i += 4) {
+    const batch = tiles.slice(i, i + 4);
+    await Promise.all(
+      batch.map(async (t) => {
+        const start = 117561 + t.offset;
+        const end = start + t.len - 1;
+        const res = await fetch(pmtilesUrl, { headers: { Range: `bytes=${start}-${end}` } });
+        if (!res.ok) {
+          throw new Error(`Failed to fetch tile ${t.z}/${t.x}/${t.y}: HTTP ${res.status}`);
+        }
+        const pbf = zlib.gunzipSync(Buffer.from(await res.arrayBuffer()));
+        const feats = decodeMvt(pbf, t.z, t.x, t.y, tolSq, minArea);
+        allFeatures.push(...feats);
+      })
+    );
   }
 
   const geojson = {
@@ -329,9 +807,10 @@ export async function extractMetroCebuFloodHazards(
     metadata: {
       source: "UP Project NOAH (Nationwide Operational Assessment of Hazards)",
       source_dataset: "bettergovph/project-noah-hazard-maps",
+      region: regionName,
       return_period: "100-Year Return Period",
       license: "ODC-ODbL 1.0 (Open Data Commons Open Database License)",
-      coverage: "Metro Cebu (Cebu City, Mandaue, Lapu-Lapu, Talisay, Cordova, Consolacion, Liloan, Minglanilla)",
+      coverage: coverageDesc,
       total_features: allFeatures.length,
       retrieved_at: new Date().toISOString(),
     },
@@ -342,9 +821,50 @@ export async function extractMetroCebuFloodHazards(
   fs.writeFileSync(outputPath, JSON.stringify(geojson), "utf-8");
 }
 
+export async function extractMetroCebuFloodHazards(
+  outputPath = path.join(process.cwd(), "public", "data", "cebu-flood-hazards.geojson")
+): Promise<void> {
+  await extractTilesToGeoJSON(
+    METRO_CEBU_TILES,
+    "metro",
+    "Metro Cebu (Cebu City, Mandaue, Lapu-Lapu, Talisay, Cordova, Consolacion, Liloan, Minglanilla)",
+    outputPath
+  );
+  // Also write cebu-flood-metro.geojson
+  const metroAlias = path.join(path.dirname(outputPath), "cebu-flood-metro.geojson");
+  fs.copyFileSync(outputPath, metroAlias);
+}
+
+export async function extractRegionalFloodHazards(): Promise<void> {
+  const dataDir = path.join(process.cwd(), "public", "data");
+
+  // 1. Metro
+  await extractMetroCebuFloodHazards(path.join(dataDir, "cebu-flood-hazards.geojson"));
+
+  // 2. North (using tolSq 0.000007, minArea 0.000004 for crisp mobile compression < 350 KB)
+  await extractTilesToGeoJSON(
+    NORTH_CEBU_TILES,
+    "north",
+    "North Cebu (Compostela, Danao, Carmen, Catmon, Sogod, Borbon, Tabogon, Bogo, Medellin, Daanbantayan, Bantayan Island, Camotes)",
+    path.join(dataDir, "cebu-flood-north.geojson"),
+    0.000007,
+    0.000004
+  );
+
+  // 3. South
+  await extractTilesToGeoJSON(
+    SOUTH_CEBU_TILES,
+    "south",
+    "South & West Cebu (Naga, San Fernando, Carcar, Sibonga, Argao, Dalaguete, Oslob, Santander, Toledo, Balamban, Tuburan)",
+    path.join(dataDir, "cebu-flood-south.geojson"),
+    0.000004,
+    0.000002
+  );
+}
+
 if (process.argv[1] && process.argv[1].endsWith("extract_noah_cebu.ts")) {
-  extractMetroCebuFloodHazards()
-    .then(() => console.log("Extracted Metro Cebu flood hazards successfully."))
+  extractRegionalFloodHazards()
+    .then(() => console.log("Extracted regional Cebu flood hazards successfully."))
     .catch((err) => {
       console.error("Extraction failed:", err);
       process.exit(1);
