@@ -11,7 +11,7 @@
 
 import L from "leaflet";
 import type { PowerAdvisory, EarthquakeEvent, PagasaBulletin } from "../../types/index.js";
-import type { LayerSelection, FilterState, SelectedLocationDetails, FloodHazardCollection } from "../types.js";
+import type { LayerSelection, FilterState, SelectedLocationDetails, FloodHazardCollection, FloodRegion } from "../types.js";
 import { getFloodHazardStyle } from "../services/floodHazards.js";
 import { computePowerStatus, computeEarthquakeSeverity, renderEarthquakeMarkerSvg, cleanTownName } from "./markerStyles.js";
 import {
@@ -57,6 +57,7 @@ export class MapController {
   private earthquakeLayerGroup: L.LayerGroup;
   private pagasaLayerGroup: L.LayerGroup;
   private floodLayerGroup: L.LayerGroup;
+  private loadedFloodRegions = new Set<FloodRegion>();
   private onSelectLocation?: (details: SelectedLocationDetails) => void;
   private userLocationMarker?: L.CircleMarker;
   private userAccuracyCircle?: L.Circle;
@@ -761,11 +762,50 @@ export class MapController {
     return Boolean(this.map.hasLayer(this.floodLayerGroup));
   }
 
-  renderFloodHazards(collection: FloodHazardCollection | null): void {
+  clearFloodHazards(): void {
     this.floodLayerGroup.clearLayers();
-    if (!collection || !Array.isArray(collection.features) || collection.features.length === 0) {
+    this.loadedFloodRegions.clear();
+  }
+
+  isFloodRegionLoaded(region: FloodRegion): boolean {
+    return this.loadedFloodRegions.has(region);
+  }
+
+  getLoadedFloodRegions(): FloodRegion[] {
+    return Array.from(this.loadedFloodRegions);
+  }
+
+  getBounds(): L.LatLngBounds {
+    return this.map.getBounds();
+  }
+
+  onMoveEnd(callback: () => void): () => void {
+    this.map.on("moveend", callback);
+    return () => {
+      this.map.off("moveend", callback);
+    };
+  }
+
+  renderFloodHazards(collection: FloodHazardCollection | null, region?: FloodRegion): void {
+    if (!collection) {
+      this.clearFloodHazards();
       return;
     }
+
+    if (!Array.isArray(collection.features) || collection.features.length === 0) {
+      return;
+    }
+
+    const targetRegion: FloodRegion =
+      region ??
+      (collection.metadata?.region && ["metro", "north", "south"].includes(collection.metadata.region as any)
+        ? (collection.metadata.region as FloodRegion)
+        : "metro");
+
+    if (this.loadedFloodRegions.has(targetRegion)) {
+      return;
+    }
+    this.loadedFloodRegions.add(targetRegion);
 
     const geoJsonLayer = L.geoJSON(collection as any, {
       pane: "floodHazardPane",
@@ -782,7 +822,13 @@ export class MapController {
       onEachFeature: (feature: any, layer: any) => {
         const props = feature?.properties || {};
         const style = getFloodHazardStyle(props.Var);
-        const zoneName = props.zone_name ? escapeHtml(props.zone_name) : "Metro Cebu Inundation Zone";
+        const defaultZoneName =
+          targetRegion === "north"
+            ? "North Cebu Inundation Zone"
+            : targetRegion === "south"
+            ? "South Cebu Inundation Zone"
+            : "Metro Cebu Inundation Zone";
+        const zoneName = props.zone_name ? escapeHtml(props.zone_name) : defaultZoneName;
         const returnPeriod = props.return_period ? escapeHtml(props.return_period) : "100-Year";
 
         const popupHtml = `
@@ -820,9 +866,10 @@ export class MapController {
           </div>
         `;
 
+        const isNarrowMobile = typeof window !== "undefined" && window.innerWidth <= 420;
         layer.bindPopup(popupHtml, {
-          maxWidth: 320,
-          minWidth: 260,
+          maxWidth: isNarrowMobile ? 280 : 320,
+          minWidth: isNarrowMobile ? 240 : 260,
           autoPan: true,
           autoPanPaddingTopLeft: L.point(20, 140),
           autoPanPaddingBottomRight: L.point(20, 30),
