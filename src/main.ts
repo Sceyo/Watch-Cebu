@@ -39,7 +39,7 @@ import {
 } from "./ui/services/forecast.js";
 import { renderForecastDrawer } from "./ui/components/forecastDrawer.js";
 import { renderMapControls } from "./ui/components/mapControls.js";
-import { fetchFloodHazards, getCachedFloodHazards } from "./ui/services/floodHazards.js";
+import { fetchFloodHazards, getCachedFloodHazards, getRegionsForBounds, getRegionForCoordinates } from "./ui/services/floodHazards.js";
 import { renderUrgentAlertBanner } from "./ui/components/urgentAlertBanner.js";
 import { renderListView } from "./ui/components/listView.js";
 import { getMyBarangay, setMyBarangay, toggleFavoriteBarangay, getMyBarangayStatus } from "./ui/services/myBarangay.js";
@@ -378,9 +378,29 @@ function updateUI(shouldRenderMapLayers = true) {
           isFloodHazardActive = !isFloodHazardActive;
 
           if (isFloodHazardActive) {
-            const cached = getCachedFloodHazards();
-            if (cached) {
-              mapController?.renderFloodHazards(cached);
+            const bounds = mapController?.getBounds();
+            const neededRegions = bounds ? getRegionsForBounds(bounds) : ["metro" as const];
+
+            const unrenderedRegions = neededRegions.filter(
+              (r) => !mapController?.isFloodRegionLoaded(r)
+            );
+
+            if (unrenderedRegions.length === 0) {
+              mapController?.setFloodLayerVisibility(true);
+              showToast("Project NOAH 100-year flood hazard zones enabled.");
+              updateUI(false);
+              return;
+            }
+
+            const uncachedRegions = unrenderedRegions.filter(
+              (r) => !getCachedFloodHazards(r)
+            );
+
+            if (uncachedRegions.length === 0) {
+              for (const r of unrenderedRegions) {
+                const cached = getCachedFloodHazards(r);
+                if (cached) mapController?.renderFloodHazards(cached, r);
+              }
               mapController?.setFloodLayerVisibility(true);
               showToast("Project NOAH 100-year flood hazard zones enabled.");
               updateUI(false);
@@ -390,17 +410,35 @@ function updateUI(shouldRenderMapLayers = true) {
             isFloodHazardLoading = true;
             updateUI(false);
             try {
-              const data = await fetchFloodHazards();
+              for (const r of unrenderedRegions) {
+                const cached = getCachedFloodHazards(r);
+                if (cached) mapController?.renderFloodHazards(cached, r);
+              }
+
+              const fetched = await Promise.all(
+                uncachedRegions.map(async (r) => ({
+                  region: r,
+                  data: await fetchFloodHazards(r),
+                }))
+              );
+
               isFloodHazardLoading = false;
               if (isFloodHazardActive) {
-                mapController?.renderFloodHazards(data);
+                for (const { region, data } of fetched) {
+                  mapController?.renderFloodHazards(data, region);
+                }
                 mapController?.setFloodLayerVisibility(true);
                 showToast("Project NOAH 100-year flood hazard zones enabled.");
               }
             } catch {
               isFloodHazardLoading = false;
-              isFloodHazardActive = false;
-              showToast("Failed to load flood hazard data. Please check network connection.");
+              if ((mapController?.getLoadedFloodRegions()?.length ?? 0) === 0) {
+                isFloodHazardActive = false;
+                showToast("Failed to load flood hazard data. Please check network connection.");
+              } else {
+                mapController?.setFloodLayerVisibility(true);
+                showToast("Project NOAH flood zones loaded with partial regional coverage.");
+              }
             }
             updateUI(false);
           } else {
@@ -735,6 +773,30 @@ function updateUI(shouldRenderMapLayers = true) {
 async function init() {
   // Initialize Map centered on Metro Cebu
   mapController = new MapController("map");
+
+  // Dynamically load provincial flood hazard chunks when panning/zooming while Flood Risk is active
+  let floodMoveEndTimer: any = null;
+  mapController.onMoveEnd(() => {
+    if (!isFloodHazardActive) return;
+    if (floodMoveEndTimer) clearTimeout(floodMoveEndTimer);
+    floodMoveEndTimer = setTimeout(async () => {
+      if (!isFloodHazardActive) return;
+      const bounds = mapController?.getBounds();
+      if (!bounds) return;
+      const intersectingRegions = getRegionsForBounds(bounds);
+      for (const reg of intersectingRegions) {
+        if (mapController?.isFloodRegionLoaded(reg)) continue;
+        try {
+          const data = await fetchFloodHazards(reg);
+          if (isFloodHazardActive) {
+            mapController?.renderFloodHazards(data, reg);
+          }
+        } catch (err) {
+          console.warn(`[Watch Cebu] Background load for flood region ${reg} failed:`, err);
+        }
+      }
+    }, 350);
+  });
 
   // Wire mobile selection callback to bottom sheet (C1)
   mapController.setOnSelectLocation((details) => {

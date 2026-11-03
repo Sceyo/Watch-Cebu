@@ -116,7 +116,10 @@ export function renderMapControls(
           title="Toggle Project NOAH 100-Year Flood Risk"
         >
           <span class="ctrl-icon" aria-hidden="true" style="display: inline-flex; align-items: center;">${ICONS.flood}</span>
-          <span class="view-mode-label">Flood Risk</span>
+          <span class="view-mode-label">
+            <span class="label-full">Flood Risk</span>
+            <span class="label-short">Flood</span>
+          </span>
         </button>
       </div>
 

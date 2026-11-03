@@ -3027,6 +3027,23 @@ textarea:focus-visible,
   cursor: wait;
 }
 
+.btn-flood-hazard .label-short {
+  display: none;
+}
+
+@media (max-width: 420px) {
+  .btn-flood-hazard .label-full {
+    display: none;
+  }
+  .btn-flood-hazard .label-short {
+    display: inline;
+  }
+  .btn-flood-hazard {
+    min-width: 52px;
+    padding: 0 6px;
+  }
+}
+
 .popup-card.flood-popup {
   border-top: 3px solid #38BDF8;
 }
