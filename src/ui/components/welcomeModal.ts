@@ -58,6 +58,7 @@ export function renderWelcomeModal(
           { c: "welcome-feat-bolt", i: ICONS.bolt, t: "Brownout Schedules", d: "Planned outages from Visayan Electric (VECO). Search or pin your barangay to see if you're affected." },
           { c: "welcome-feat-quake", i: ICONS.earthquake, t: "Earthquakes, Storms &amp; Air Quality", d: "Recent quakes near Cebu, official PAGASA storm warnings, and live air quality updates." },
           { c: "welcome-feat-shield", i: ICONS.shield, t: "Works on Weak Signal (Offline PWA)", d: "Opens even when connection is slow. Add to Home Screen for offline access. Zero ads, zero accounts." },
+          { c: "welcome-feat-flood", i: ICONS.flood, t: "Flood Susceptibility (Project NOAH)", d: "Toggle 100-year flood risk layers to check low, medium, and high depth zones in your area." },
         ].map(f => `
           <div class="welcome-feature-item">
             <div class="welcome-feature-icon ${f.c}">${f.i}</div>
@@ -84,7 +85,7 @@ export function renderWelcomeModal(
       <!-- One-line coverage notice -->
       <div class="welcome-coverage-notice">
         <span class="coverage-notice-icon" aria-hidden="true">${ICONS.info}</span>
-        <span><strong>Unofficial.</strong> Covers VECO areas only (Cebu City, Mandaue, Talisay, Minglanilla, Naga, San Fernando, Consolacion, Liloan). Does not cover Lapu-Lapu or provincial towns.</span>
+        <span><strong>Civic Boundaries &amp; Scope:</strong> Covers VECO areas only for power outages (Cebu City, Mandaue, Talisay, Minglanilla, Naga, San Fernando, Consolacion, Liloan). Flood overlays reflect UP Project NOAH 100-year susceptibility simulations (advisory reference, not live road sensors).</span>
       </div>
 
       <div class="welcome-modal-footer">
