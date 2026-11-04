@@ -1,16 +1,20 @@
 {
   "$schema": "https://json.schemastore.org/web-manifest.json",
   "id": "watch-cebu-civic-map",
-  "name": "Watch Cebu — Civic Awareness Map",
+  "name": "Watch Cebu — Civic Awareness & Multi-Hazard Map",
   "short_name": "Watch Cebu",
-  "description": "Metro Cebu civic awareness map for scheduled power interruptions, earthquakes, air quality, and severe weather.",
+  "description": "Cebu civic awareness map for scheduled power interruptions, earthquakes, air quality, severe weather, and flood hazard models.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#020617",
   "theme_color": "#0F172A",
-  "categories": ["utilities", "news", "weather"],
+  "categories": [
+    "utilities",
+    "news",
+    "weather"
+  ],
   "icons": [
     {
       "src": "/icons/icon.svg",
