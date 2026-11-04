@@ -15,7 +15,10 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "test:scenarios": "vitest run tests/e2e/fullSystemScenarios.test.ts",
+    "test:local": "tsx scripts/run_local_test_suite.ts",
+    "test:local:fast": "tsx scripts/run_local_test_suite.ts --fast"
   },
   "keywords": [
     "cebu",
