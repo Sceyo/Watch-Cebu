@@ -11,6 +11,7 @@ import type { LayerSelection, FeedState } from "../types.js";
 import type { PowerAdvisory, EarthquakeEvent, PagasaBulletin } from "../../types/index.js";
 import type { AirQualityReading } from "../services/airQuality.js";
 import { ICONS } from "./icons.js";
+import { escapeHtml } from "../../utils/index.js";
 
 export interface HeaderCallbacks {
   onLayerChange: (layer: LayerSelection) => void;
@@ -44,7 +45,7 @@ export function renderHeader(
       return `<span class="freshness-chip error">${label}: Offline</span>`;
     }
     if (state.dataSource === "fixture_fallback") {
-      return `<span class="freshness-chip fallback" title="${state.parseNotes || ''}">⚠️ ${label}: Backup Fixture Data</span>`;
+      return `<span class="freshness-chip fallback" title="${escapeHtml(state.parseNotes || '')}">⚠️ ${label}: Backup Fixture Data</span>`;
     }
     return `<span class="freshness-chip live"><span class="live-dot"></span>${label}: Live · Verified</span>`;
   };
@@ -67,16 +68,16 @@ export function renderHeader(
     } else if (pState.status === "error") {
       pagasaChip = `<button class="freshness-chip error" id="btn-header-storm" title="PAGASA feed unreachable">PAGASA: Offline</button>`;
     } else if (pState.dataSource === "fixture_fallback") {
-      pagasaChip = `<button class="freshness-chip fallback" id="btn-header-storm" title="${pState.parseNotes || 'Backup Fixture Data'}">⚠️ PAGASA: Backup Data</button>`;
+      pagasaChip = `<button class="freshness-chip fallback" id="btn-header-storm" title="${escapeHtml(pState.parseNotes || 'Backup Fixture Data')}">⚠️ PAGASA: Backup Data</button>`;
     } else if (pState.data) {
       const bulletin = pState.data;
       if (bulletin.tcws_cebu?.active) {
-        pagasaChip = `<button class="freshness-chip storm-chip active tcws-active" id="btn-header-storm" style="border-color: #EF4444; color: #FCA5A5; background: rgba(239, 68, 68, 0.15);" title="Active TCWS Signal #${bulletin.tcws_cebu.signal_level} for Cebu — Click for details"><span class="pulse-dot" style="background: #EF4444;"></span>TCWS #${bulletin.tcws_cebu.signal_level}: ${bulletin.cyclone_name || 'Active'}</button>`;
+        pagasaChip = `<button class="freshness-chip storm-chip active tcws-active" id="btn-header-storm" style="border-color: #EF4444; color: #FCA5A5; background: rgba(239, 68, 68, 0.15);" title="Active TCWS Signal #${bulletin.tcws_cebu.signal_level} for Cebu — Click for details"><span class="pulse-dot" style="background: #EF4444;"></span>TCWS #${bulletin.tcws_cebu.signal_level}: ${escapeHtml(bulletin.cyclone_name || 'Active')}</button>`;
       } else if (bulletin.heavy_rainfall_alert && bulletin.heavy_rainfall_alert.level !== "none") {
         const rColor = bulletin.heavy_rainfall_alert.level === "red" ? "#EF4444" : bulletin.heavy_rainfall_alert.level === "orange" ? "#F97316" : "#EAB308";
         pagasaChip = `<button class="freshness-chip storm-chip active rainfall-active" id="btn-header-storm" style="border-color: ${rColor}; color: #FDE047; background: rgba(245, 158, 11, 0.15);" title="Heavy Rainfall Warning: ${bulletin.heavy_rainfall_alert.level.toUpperCase()} — Click for details"><span class="pulse-dot" style="background: ${rColor};"></span>Rainfall: ${bulletin.heavy_rainfall_alert.level.toUpperCase()}</button>`;
       } else if (bulletin.has_active_cyclone && bulletin.cyclone_name) {
-        pagasaChip = `<button class="freshness-chip live storm-monitoring" id="btn-header-storm" style="border-color: rgba(56, 189, 248, 0.45); color: #38BDF8; background: rgba(56, 189, 248, 0.12);" title="PAGASA Monitoring: ${bulletin.cyclone_name} (Outside Cebu Warning Area) — Click for forecast"><span class="live-dot" style="background: #38BDF8;"></span>PAGASA: ${bulletin.cyclone_name} (Monitored)</button>`;
+        pagasaChip = `<button class="freshness-chip live storm-monitoring" id="btn-header-storm" style="border-color: rgba(56, 189, 248, 0.45); color: #38BDF8; background: rgba(56, 189, 248, 0.12);" title="PAGASA Monitoring: ${escapeHtml(bulletin.cyclone_name)} (Outside Cebu Warning Area) — Click for forecast"><span class="live-dot" style="background: #38BDF8;"></span>PAGASA: ${escapeHtml(bulletin.cyclone_name)} (Monitored)</button>`;
       } else {
         pagasaChip = `<button class="freshness-chip live" id="btn-header-storm" title="PAGASA Severe Weather: Normal — Click for weather forecast"><span class="live-dot"></span>PAGASA: Normal</button>`;
       }

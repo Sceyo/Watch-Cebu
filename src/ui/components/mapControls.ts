@@ -25,6 +25,7 @@ export interface MapControlsCallbacks {
   onViewModeToggle?: () => void;
   onClearMyBarangay?: () => void;
   onSelectMyBarangay?: (barangay: string) => void;
+  onFloodHazardToggle?: () => void;
 }
 
 export interface MapControlsExtraState {
@@ -32,6 +33,8 @@ export interface MapControlsExtraState {
   myBarangayStatus?: MyBarangayStatus | null;
   searchQuery?: string;
   advisoryBarangays?: Set<string> | string[];
+  isFloodHazardActive?: boolean;
+  isFloodHazardLoading?: boolean;
 }
 
 export function renderMapControls(
@@ -40,9 +43,15 @@ export function renderMapControls(
   callbacks: MapControlsCallbacks,
   extra?: MapControlsExtraState
 ): void {
+  const existingInput = container.querySelector<HTMLInputElement>("#map-search-input");
+  const wasFocused = existingInput ? (typeof document !== "undefined" && document.activeElement === existingInput) : false;
+  const prevVal = existingInput ? existingInput.value : null;
+  const selStart = existingInput ? existingInput.selectionStart : null;
+  const selEnd = existingInput ? existingInput.selectionEnd : null;
+
   const viewMode = extra?.viewMode || "map";
   const myBarangay = extra?.myBarangayStatus;
-  const currentSearch = extra?.searchQuery || "";
+  const currentSearch = (extra?.searchQuery != null ? extra.searchQuery : prevVal) || "";
 
   let pinnedBannerHtml = "";
   if (myBarangay) {
@@ -98,6 +107,20 @@ export function renderMapControls(
         <button id="btn-locate-me" class="map-ctrl-btn btn-locate-me" aria-label="Locate me on map" title="Center on my location">
           <span class="ctrl-icon" aria-hidden="true" style="display: inline-flex; align-items: center;">${ICONS.crosshair}</span>
         </button>
+
+        <button
+          id="btn-toggle-flood-hazard"
+          class="map-ctrl-btn btn-flood-hazard ${extra?.isFloodHazardActive ? 'active' : ''} ${extra?.isFloodHazardLoading ? 'loading' : ''}"
+          aria-label="Toggle Project NOAH flood hazard overlay"
+          aria-pressed="${extra?.isFloodHazardActive ? 'true' : 'false'}"
+          title="Toggle Project NOAH 100-Year Flood Risk"
+        >
+          <span class="ctrl-icon" aria-hidden="true" style="display: inline-flex; align-items: center;">${ICONS.flood}</span>
+          <span class="view-mode-label">
+            <span class="label-full">Flood Risk</span>
+            <span class="label-short">Flood</span>
+          </span>
+        </button>
       </div>
 
       <!-- Pinned Barangay Banner -->
@@ -124,6 +147,17 @@ export function renderMapControls(
   const clearBtn = container.querySelector<HTMLButtonElement>("#btn-clear-search");
   const dropdown = container.querySelector<HTMLDivElement>("#search-suggestions-dropdown");
   let activeIndex = -1;
+
+  if (wasFocused && searchInput) {
+    searchInput.focus();
+    if (selStart !== null && selEnd !== null) {
+      try {
+        searchInput.setSelectionRange(selStart, selEnd);
+      } catch {
+        // Ignore if unsupported in environment
+      }
+    }
+  }
 
   const hideSuggestions = () => {
     if (dropdown && dropdown.style) {
@@ -254,13 +288,19 @@ export function renderMapControls(
     });
   }
 
-  // Hide suggestions when clicking outside container
+  // Hide suggestions when clicking outside container (cleanly removing prior listener)
   if (typeof document !== "undefined") {
-    document.addEventListener("click", (e) => {
+    const existingListener = (container as unknown as { _outsideClickListener?: (e: MouseEvent) => void })._outsideClickListener;
+    if (existingListener) {
+      document.removeEventListener("click", existingListener);
+    }
+    const outsideListener = (e: MouseEvent) => {
       if (typeof container.contains === "function" && !container.contains(e.target as Node)) {
         hideSuggestions();
       }
-    });
+    };
+    (container as unknown as { _outsideClickListener?: (e: MouseEvent) => void })._outsideClickListener = outsideListener;
+    document.addEventListener("click", outsideListener);
   }
 
   if (searchForm) {
@@ -279,6 +319,13 @@ export function renderMapControls(
   viewModeBtn?.addEventListener("click", () => {
     hideSuggestions();
     callbacks.onViewModeToggle?.();
+  });
+
+  // Flood Risk Toggle listener
+  const floodBtn = container.querySelector<HTMLButtonElement>("#btn-toggle-flood-hazard");
+  floodBtn?.addEventListener("click", () => {
+    hideSuggestions();
+    callbacks.onFloodHazardToggle?.();
   });
 
   // Locate Me listener

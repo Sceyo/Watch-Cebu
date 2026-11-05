@@ -161,9 +161,16 @@ async function main() {
     // Ensure data directory exists on first run
     if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true });
 
+    if (process.env.WATCH_CEBU_FORCE_FAIL) {
+      throw new Error(process.env.WATCH_CEBU_FORCE_FAIL);
+    }
+
     if (FEED === "power") {
       log("Fetching VECO power advisories...");
       const result = await getPowerAdvisories();
+      if (result.data_source === "fixture_fallback") {
+        throw new Error(result.parse_notes || "Power scrape fell back to fixture");
+      }
       recordCount = result.data.length;
       log(`Fetched ${recordCount} power advisories (data_source: ${result.data_source})`);
 
@@ -175,6 +182,9 @@ async function main() {
     } else if (FEED === "earthquakes") {
       log("Fetching PHIVOLCS earthquake events...");
       const result = await getEarthquakeEvents();
+      if (result.data_source === "fixture_fallback") {
+        throw new Error(result.parse_notes || "Earthquake scrape fell back to fixture");
+      }
       recordCount = result.data.length;
       log(`Fetched ${recordCount} earthquake events within 300km watch radius (data_source: ${result.data_source})`);
 
@@ -186,6 +196,9 @@ async function main() {
     } else {
       log("Fetching PAGASA severe weather and flood bulletin...");
       const bulletin = await fetchPagasaBulletin();
+      if (bulletin.parse_notes?.startsWith("Failed to fetch live PAGASA bulletin:")) {
+        throw new Error(bulletin.parse_notes);
+      }
       recordCount = 1;
       log(`Fetched PAGASA bulletin (cyclone: ${bulletin.cyclone_name || "none"}, tcws: ${bulletin.tcws_cebu.signal_level}, rainfall: ${bulletin.heavy_rainfall_alert.level})`);
 

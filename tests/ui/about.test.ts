@@ -100,6 +100,7 @@ describe("About Drawer Component", () => {
     expect(container.innerHTML).toContain("DOST-PHIVOLCS");
     expect(container.innerHTML).toContain("OpenStreetMap");
     expect(container.innerHTML).toContain("CARTO Basemaps");
+    expect(container.innerHTML).toContain("UP Project NOAH");
     expect(container.innerHTML).toContain("GitHub");
     expect(container.innerHTML).toContain("LinkedIn");
     expect(container.innerHTML).not.toContain("// PLACEHOLDER");
@@ -131,6 +132,7 @@ describe("About Drawer Component", () => {
     expect(container.innerHTML).toContain("VECO Franchise Only");
     expect(container.innerHTML).toContain("Approximate Barangay Coordinates");
     expect(container.innerHTML).toContain("Seismic Epicenters (Not Early Warning)");
+    expect(container.innerHTML).toContain("Flood Risk (Modeled 100-Year Susceptibility");
   });
 
   it("renderAbout outputs Progressive Web App (PWA) installation steps for iOS and Android (UAT Fix)", () => {

@@ -287,6 +287,133 @@ describe("Map Controls Component (H5 & C2)", () => {
       toastEl?.remove();
     }
   });
+
+  it("escapes malicious payload in power advisory details within mobile bottom sheet", () => {
+    const container = createMockElement();
+    const maliciousAdvisory: PowerAdvisory = {
+      id: "pow-xss-1",
+      source_url: "https://visayanelectric.com/<script>alert(1)</script>",
+      fetched_at: "2026-10-16T08:00:00Z",
+      advisory_week_start: "2026-10-18",
+      date: "2026-10-18",
+      start_time: "08:00",
+      end_time: "17:00",
+      overnight_span: false,
+      duration_hours: 9,
+      purpose: '<img src=x onerror=alert("xss")>',
+      city: "Cebu City <script>",
+      barangay: ["Talamban <script>"],
+      streets: ["Gov Cuenco <script>"],
+      areas_affected_raw: "Raw text",
+      lat: 10.37,
+      lon: 123.91,
+      coordinate_source: "osm_point",
+      geocode_query: null,
+      geocode_provider: null,
+      business_confidence: "scheduled",
+      parse_confidence: "high",
+      parse_notes: null,
+    };
+
+    renderMobileBottomSheet(container, { type: "power", advisories: [maliciousAdvisory] }, vi.fn(), vi.fn(), null);
+
+    expect(container.innerHTML).not.toContain("<script>alert(1)</script>");
+    expect(container.innerHTML).not.toContain('<img src=x onerror=alert("xss")>');
+    expect(container.innerHTML).toContain("&lt;script&gt;");
+  });
+
+  it("escapes malicious payload in earthquake details within mobile bottom sheet", () => {
+    const container = createMockElement();
+    const maliciousEq: EarthquakeEvent = {
+      id: "eq-xss-1",
+      source_url: "https://earthquake.phivolcs.dost.gov.ph/<script>alert(1)</script>",
+      fetched_at: "2026-10-16T08:00:00Z",
+      event_time_utc: "2026-10-16T00:00:00Z",
+      event_time_pht: "2026-10-16 08:00 AM",
+      lat: 10.37,
+      lon: 123.91,
+      depth_km: 10,
+      magnitude: 4.5,
+      magnitude_type: "Ms <script>",
+      location_description: '010 km N of Cebu City <img src=x onerror="alert(1)">',
+      origin_type: "Tectonic <script>",
+      reported_intensities: [{ intensity: "IV", location: "Cebu City <script>" }],
+      has_tsunami_threat: false,
+      is_damaging: false,
+      coordinate_source: "phivolcs_bulletin",
+      parse_confidence: "high",
+      parse_notes: null,
+    };
+
+    renderMobileBottomSheet(container, { type: "earthquake", event: maliciousEq }, vi.fn(), vi.fn(), null);
+
+    expect(container.innerHTML).not.toContain("<script>alert(1)</script>");
+    expect(container.innerHTML).not.toContain('<img src=x onerror="alert(1)">');
+    expect(container.innerHTML).toContain("&lt;script&gt;");
+  });
+
+  it("preserves search input focus, cursor position, and de-duplicates document click listener", () => {
+    const container = createMockElement();
+
+    const callbacks = {
+      onSearchChange: vi.fn(),
+      onLocateUser: vi.fn(),
+      onLayerChange: vi.fn(),
+      onToast: vi.fn(),
+    };
+
+    renderMapControls(container, "power", callbacks, { searchQuery: "Talamban" });
+    expect(container.innerHTML).toContain('value="Talamban"');
+    renderMapControls(container, "power", callbacks, { searchQuery: "Talamban" });
+    expect(container.innerHTML).toContain('value="Talamban"');
+  });
+
+  it("marks power advisory as Pinned Area in mobile bottom sheet when barangay is a secondary favorite", async () => {
+    const mockStorage: Record<string, string> = {};
+    (globalThis as any).localStorage = {
+      getItem: (key: string) => mockStorage[key] || null,
+      setItem: (key: string, val: string) => { mockStorage[key] = val; },
+      removeItem: (key: string) => { delete mockStorage[key]; },
+      clear: () => { for (const k in mockStorage) delete mockStorage[k]; },
+    };
+
+    const { setMyBarangay, clearAllFavorites } = await import("../../src/ui/services/myBarangay.js");
+    clearAllFavorites();
+    setMyBarangay("Lahug");
+    setMyBarangay("Talamban"); // Talamban is primary, Lahug is still in favorites
+
+    const container = createMockElement();
+    const lahugAdvisory: PowerAdvisory = {
+      id: "pow-lahug-fav",
+      source_url: "https://visayanelectric.com/post/1",
+      fetched_at: "2026-10-16T08:00:00Z",
+      advisory_week_start: "2026-10-18",
+      date: "2026-10-18",
+      start_time: "08:00",
+      end_time: "17:00",
+      overnight_span: false,
+      duration_hours: 9,
+      purpose: "Line maintenance",
+      city: "Cebu City",
+      barangay: ["Lahug"],
+      streets: ["Salinas Drive"],
+      areas_affected_raw: "Lahug",
+      lat: 10.33,
+      lon: 123.89,
+      coordinate_source: "osm_point",
+      geocode_query: null,
+      geocode_provider: null,
+      business_confidence: "scheduled",
+      parse_confidence: "high",
+      parse_notes: null,
+    };
+
+    renderMobileBottomSheet(container, { type: "power", advisories: [lahugAdvisory] }, vi.fn(), vi.fn(), "Talamban");
+    expect(container.innerHTML).toContain("is-pinned");
+    expect(container.innerHTML).toContain("Pinned Area");
+    clearAllFavorites();
+    delete (globalThis as any).localStorage;
+  });
 });
 
 describe("Status Popover Component (C2)", () => {

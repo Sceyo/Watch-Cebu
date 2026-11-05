@@ -104,6 +104,7 @@ describe("Welcome Modal & Onboarding Guide Component", () => {
     expect(container.innerHTML).toContain("Brownout Schedules");
     expect(container.innerHTML).toContain("Earthquakes, Storms &amp; Air Quality");
     expect(container.innerHTML).toContain("Works on Weak Signal");
+    expect(container.innerHTML).toContain("Flood Susceptibility (Project NOAH)");
     expect(container.innerHTML).toContain("24/7 Emergency Hotlines");
     expect(container.innerHTML).toContain('id="welcome-card-hotlines"');
     expect(container.innerHTML).toContain("welcome-feature-interactive");

@@ -536,9 +536,11 @@ export function normalizeStreetList(streets: string[]): string[] {
 
 /**
  * Escapes HTML characters to prevent XSS.
+ * Safely handles null, undefined, or non-string inputs.
  */
-export function escapeHtml(str: string): string {
-  return str
+export function escapeHtml(str?: string | null): string {
+  if (str == null) return "";
+  return String(str)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")

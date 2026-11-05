@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Data Source Warning Banner Component.
  *
  * Implements Stage 3 Requirement:
@@ -8,23 +8,29 @@
  */
 
 import type { FeedState } from "../types.js";
-import type { PowerAdvisory, EarthquakeEvent } from "../../types/index.js";
+import type { PowerAdvisory, EarthquakeEvent, PagasaBulletin } from "../../types/index.js";
+import { escapeHtml } from "../../utils/index.js";
 
 let bannerDismissed = false;
 
 export function renderDataSourceBanner(
   container: HTMLElement,
   powerState: FeedState<PowerAdvisory[]>,
-  eqState: FeedState<EarthquakeEvent[]>
+  eqState: FeedState<EarthquakeEvent[]>,
+  pagasaState?: FeedState<PagasaBulletin | null>
 ): void {
   const fallbacks: string[] = [];
 
   if (powerState.dataSource === "fixture_fallback") {
-    fallbacks.push(`<strong>Power:</strong> Live VECO advisory scrape couldn't complete (${powerState.parseNotes || 'Source unreachable'}). Displaying verified September 6–12 backup advisory fixture.`);
+    fallbacks.push(`<strong>Power:</strong> Live VECO advisory scrape couldn't complete (${escapeHtml(powerState.parseNotes || 'Source unreachable')}). Displaying verified backup advisory fixture.`);
   }
 
   if (eqState.dataSource === "fixture_fallback") {
-    fallbacks.push(`<strong>Earthquakes:</strong> Live PHIVOLCS feed couldn't complete (${eqState.parseNotes || 'Source unreachable'}). Displaying verified backup bulletin fixture.`);
+    fallbacks.push(`<strong>Earthquakes:</strong> Live PHIVOLCS feed couldn't complete (${escapeHtml(eqState.parseNotes || 'Source unreachable')}). Displaying verified backup bulletin fixture.`);
+  }
+
+  if (pagasaState?.dataSource === "fixture_fallback") {
+    fallbacks.push(`<strong>Weather (PAGASA):</strong> Live PAGASA severe weather feed couldn't complete (${escapeHtml(pagasaState.parseNotes || 'Source unreachable')}). Displaying verified backup bulletin fixture.`);
   }
 
   if (fallbacks.length === 0 || bannerDismissed) {

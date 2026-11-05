@@ -39,9 +39,10 @@ import {
 } from "./ui/services/forecast.js";
 import { renderForecastDrawer } from "./ui/components/forecastDrawer.js";
 import { renderMapControls } from "./ui/components/mapControls.js";
+import { fetchFloodHazards, getCachedFloodHazards, getRegionsForBounds, getRegionForCoordinates } from "./ui/services/floodHazards.js";
 import { renderUrgentAlertBanner } from "./ui/components/urgentAlertBanner.js";
 import { renderListView } from "./ui/components/listView.js";
-import { getMyBarangay, setMyBarangay, getMyBarangayStatus } from "./ui/services/myBarangay.js";
+import { getMyBarangay, setMyBarangay, toggleFavoriteBarangay, getMyBarangayStatus } from "./ui/services/myBarangay.js";
 import {
   renderMobileBottomBar,
   renderStatusPopover,
@@ -68,6 +69,8 @@ let filterState: FilterState = {
 
 let isLegendOpen = false;
 let isAboutOpen = false;
+let isFloodHazardActive = false;
+let isFloodHazardLoading = false;
 let isAirQualityOpen = false;
 let isForecastOpen = false;
 let isStatusPopoverOpen = false;
@@ -117,7 +120,7 @@ function closeAllDrawers() {
       markWelcomeGuideSeen();
     }
     document.body.classList.remove("modal-open");
-    updateUI();
+    updateUI(false);
     if (lastFocusedTrigger) {
       lastFocusedTrigger.focus();
       lastFocusedTrigger = null;
@@ -149,7 +152,7 @@ function focusActiveDrawer() {
   }, 50);
 }
 
-function updateUI() {
+function updateUI(shouldRenderMapLayers = true) {
   const headerEl = document.getElementById("app-header");
   const dayTabsEl = document.getElementById("day-tabs-bar");
   const bannerEl = document.getElementById("data-source-banner-container");
@@ -305,7 +308,7 @@ function updateUI() {
           filterState.searchQuery = query;
           mapController?.renderPowerAdvisories(powerFeedState.data, filterState, myBarangay);
           mapController?.renderEarthquakeEvents(eqFeedState.data, filterState);
-          if (currentViewMode === "list") updateUI();
+          if (currentViewMode === "list") updateUI(false);
         },
         onSearchSubmit: async (query) => {
           if (currentViewMode === "list") {
@@ -344,21 +347,21 @@ function updateUI() {
         },
         onViewModeToggle: () => {
           currentViewMode = currentViewMode === "map" ? "list" : "map";
-          updateUI();
+          updateUI(false);
           if (currentViewMode === "map") {
             setTimeout(() => mapController?.invalidateSize(), 50);
           }
         },
         onClearMyBarangay: () => {
           const prev = myBarangay;
-          setMyBarangay(null);
-          myBarangay = null;
+          const { primary } = prev ? toggleFavoriteBarangay(prev) : { primary: null };
+          myBarangay = primary;
           if (prev && filterState.searchQuery && filterState.searchQuery.toLowerCase().trim() === prev.toLowerCase().trim()) {
             filterState.searchQuery = "";
           }
-          mapController?.renderPowerAdvisories(powerFeedState.data, filterState, null);
-          showToast("Unpinned home barangay.");
-          updateUI();
+          mapController?.renderPowerAdvisories(powerFeedState.data, filterState, myBarangay);
+          showToast(prev ? `Unpinned ${prev}.` : "Unpinned home barangay.");
+          updateUI(false);
         },
         onSelectMyBarangay: (barangay) => {
           filterState.searchQuery = barangay;
@@ -370,12 +373,88 @@ function updateUI() {
           mapController?.renderPowerAdvisories(powerFeedState.data, filterState, myBarangay);
           mapController?.searchAndZoom(barangay, powerFeedState.data, eqFeedState.data);
         },
+        onFloodHazardToggle: async () => {
+          if (isFloodHazardLoading) return;
+          isFloodHazardActive = !isFloodHazardActive;
+
+          if (isFloodHazardActive) {
+            const bounds = mapController?.getBounds();
+            const neededRegions = bounds ? getRegionsForBounds(bounds) : ["metro" as const];
+
+            const unrenderedRegions = neededRegions.filter(
+              (r) => !mapController?.isFloodRegionLoaded(r)
+            );
+
+            if (unrenderedRegions.length === 0) {
+              mapController?.setFloodLayerVisibility(true);
+              showToast("Project NOAH 100-year flood hazard zones enabled.");
+              updateUI(false);
+              return;
+            }
+
+            const uncachedRegions = unrenderedRegions.filter(
+              (r) => !getCachedFloodHazards(r)
+            );
+
+            if (uncachedRegions.length === 0) {
+              for (const r of unrenderedRegions) {
+                const cached = getCachedFloodHazards(r);
+                if (cached) mapController?.renderFloodHazards(cached, r);
+              }
+              mapController?.setFloodLayerVisibility(true);
+              showToast("Project NOAH 100-year flood hazard zones enabled.");
+              updateUI(false);
+              return;
+            }
+
+            isFloodHazardLoading = true;
+            updateUI(false);
+            try {
+              for (const r of unrenderedRegions) {
+                const cached = getCachedFloodHazards(r);
+                if (cached) mapController?.renderFloodHazards(cached, r);
+              }
+
+              const fetched = await Promise.all(
+                uncachedRegions.map(async (r) => ({
+                  region: r,
+                  data: await fetchFloodHazards(r),
+                }))
+              );
+
+              isFloodHazardLoading = false;
+              if (isFloodHazardActive) {
+                for (const { region, data } of fetched) {
+                  mapController?.renderFloodHazards(data, region);
+                }
+                mapController?.setFloodLayerVisibility(true);
+                showToast("Project NOAH 100-year flood hazard zones enabled.");
+              }
+            } catch {
+              isFloodHazardLoading = false;
+              if ((mapController?.getLoadedFloodRegions()?.length ?? 0) === 0) {
+                isFloodHazardActive = false;
+                showToast("Failed to load flood hazard data. Please check network connection.");
+              } else {
+                mapController?.setFloodLayerVisibility(true);
+                showToast("Project NOAH flood zones loaded with partial regional coverage.");
+              }
+            }
+            updateUI(false);
+          } else {
+            mapController?.setFloodLayerVisibility(false);
+            showToast("Flood hazard overlay hidden.");
+            updateUI(false);
+          }
+        },
       },
       {
         viewMode: currentViewMode,
         myBarangayStatus,
         searchQuery: filterState.searchQuery,
         advisoryBarangays,
+        isFloodHazardActive,
+        isFloodHazardLoading,
       }
     );
   }
@@ -434,11 +513,10 @@ function updateUI() {
           });
         },
         onPinBarangay: (brgy) => {
-          const newPinned = myBarangay === brgy ? null : brgy;
-          setMyBarangay(newPinned);
-          myBarangay = newPinned;
-          mapController?.renderPowerAdvisories(powerFeedState.data, filterState, newPinned);
-          showToast(newPinned ? `⭐ Pinned ${newPinned} as your home area.` : "Unpinned home area.");
+          const { isNowPinned, primary } = toggleFavoriteBarangay(brgy);
+          myBarangay = primary;
+          mapController?.renderPowerAdvisories(powerFeedState.data, filterState, myBarangay);
+          showToast(isNowPinned ? `⭐ Pinned ${brgy} as your home area.` : `Unpinned ${brgy}.`);
           updateUI();
         },
         myBarangay,
@@ -473,7 +551,7 @@ function updateUI() {
             lastFocusedTrigger = document.getElementById("btn-bottom-forecast");
             focusActiveDrawer();
           }
-          updateUI();
+          updateUI(false);
         },
         onAirQualityToggle: () => {
           isAirQualityOpen = !isAirQualityOpen;
@@ -486,7 +564,7 @@ function updateUI() {
             lastFocusedTrigger = document.getElementById("btn-bottom-air");
             focusActiveDrawer();
           }
-          updateUI();
+          updateUI(false);
         },
         onLegendToggle: () => {
           isLegendOpen = !isLegendOpen;
@@ -499,7 +577,7 @@ function updateUI() {
             lastFocusedTrigger = document.getElementById("btn-bottom-legend");
             focusActiveDrawer();
           }
-          updateUI();
+          updateUI(false);
         },
         onAboutToggle: () => {
           isAboutOpen = !isAboutOpen;
@@ -512,7 +590,7 @@ function updateUI() {
             lastFocusedTrigger = document.getElementById("btn-bottom-about");
             focusActiveDrawer();
           }
-          updateUI();
+          updateUI(false);
         },
       }
     );
@@ -526,14 +604,13 @@ function updateUI() {
       () => {
         selectedLocation = null;
         document.body.classList.remove("modal-open");
-        updateUI();
+        updateUI(false);
       },
       (brgy) => {
-        const newPinned = myBarangay === brgy ? null : brgy;
-        setMyBarangay(newPinned);
-        myBarangay = newPinned;
-        mapController?.renderPowerAdvisories(powerFeedState.data, filterState, newPinned);
-        showToast(newPinned ? `⭐ Pinned ${newPinned} as your home area.` : "Unpinned home area.");
+        const { isNowPinned, primary } = toggleFavoriteBarangay(brgy);
+        myBarangay = primary;
+        mapController?.renderPowerAdvisories(powerFeedState.data, filterState, myBarangay);
+        showToast(isNowPinned ? `⭐ Pinned ${brgy} as your home area.` : `Unpinned ${brgy}.`);
         updateUI();
       },
       myBarangay
@@ -570,7 +647,7 @@ function updateUI() {
   }
 
   if (bannerEl) {
-    renderDataSourceBanner(bannerEl, powerFeedState, eqFeedState);
+    renderDataSourceBanner(bannerEl, powerFeedState, eqFeedState, pagasaFeedState);
     renderOfflineBanner(bannerEl, isOnline());
   }
 
@@ -685,7 +762,7 @@ function updateUI() {
   }
 
   // Update map layer rendering
-  if (mapController) {
+  if (mapController && shouldRenderMapLayers) {
     mapController.setLayerVisibility(currentLayer, false);
     mapController.renderPowerAdvisories(powerFeedState.data, filterState, myBarangay);
     mapController.renderEarthquakeEvents(eqFeedState.data, filterState);
@@ -696,6 +773,30 @@ function updateUI() {
 async function init() {
   // Initialize Map centered on Metro Cebu
   mapController = new MapController("map");
+
+  // Dynamically load provincial flood hazard chunks when panning/zooming while Flood Risk is active
+  let floodMoveEndTimer: any = null;
+  mapController.onMoveEnd(() => {
+    if (!isFloodHazardActive) return;
+    if (floodMoveEndTimer) clearTimeout(floodMoveEndTimer);
+    floodMoveEndTimer = setTimeout(async () => {
+      if (!isFloodHazardActive) return;
+      const bounds = mapController?.getBounds();
+      if (!bounds) return;
+      const intersectingRegions = getRegionsForBounds(bounds);
+      for (const reg of intersectingRegions) {
+        if (mapController?.isFloodRegionLoaded(reg)) continue;
+        try {
+          const data = await fetchFloodHazards(reg);
+          if (isFloodHazardActive) {
+            mapController?.renderFloodHazards(data, reg);
+          }
+        } catch (err) {
+          console.warn(`[Watch Cebu] Background load for flood region ${reg} failed:`, err);
+        }
+      }
+    }, 350);
+  });
 
   // Wire mobile selection callback to bottom sheet (C1)
   mapController.setOnSelectLocation((details) => {
@@ -777,7 +878,8 @@ async function init() {
       isAirQualityOpen ||
       isForecastOpen ||
       isStatusPopoverOpen ||
-      selectedLocation !== null;
+      selectedLocation !== null ||
+      isWelcomeOpen;
 
     if (!isAnyOpen) return;
 

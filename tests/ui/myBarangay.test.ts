@@ -164,4 +164,34 @@ describe("My Barangay Service", () => {
     expect(getFavorites()).toEqual(["Mabolo"]);
     expect(getMyBarangay()).toBe("Mabolo");
   });
+
+  it("toggles favorite barangay without clearing other saved favorites", async () => {
+    const { toggleFavoriteBarangay, getFavorites } = await import(
+      "../../src/ui/services/myBarangay.js"
+    );
+
+    // 1. Toggle Lahug on
+    const res1 = toggleFavoriteBarangay("Lahug");
+    expect(res1.isNowPinned).toBe(true);
+    expect(res1.primary).toBe("Lahug");
+    expect(getFavorites()).toEqual(["Lahug"]);
+
+    // 2. Toggle Talamban on
+    const res2 = toggleFavoriteBarangay("Talamban");
+    expect(res2.isNowPinned).toBe(true);
+    expect(res2.primary).toBe("Talamban");
+    expect(getFavorites()).toEqual(["Talamban", "Lahug"]);
+
+    // 3. Toggle Talamban off -> Lahug remains as primary!
+    const res3 = toggleFavoriteBarangay("Talamban");
+    expect(res3.isNowPinned).toBe(false);
+    expect(res3.primary).toBe("Lahug");
+    expect(getFavorites()).toEqual(["Lahug"]);
+
+    // 4. Toggle Lahug off -> none left
+    const res4 = toggleFavoriteBarangay("Lahug");
+    expect(res4.isNowPinned).toBe(false);
+    expect(res4.primary).toBeNull();
+    expect(getFavorites()).toEqual([]);
+  });
 });

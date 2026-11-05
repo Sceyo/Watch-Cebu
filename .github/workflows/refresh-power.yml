@@ -1,4 +1,4 @@
-﻿# Watch Cebu — Power Data Refresh
+# Watch Cebu — Power Data Refresh
 #
 # Runs every 4 hours to fetch the latest VECO service interruption advisory
 # and write it to data/live_power_advisories.json.
@@ -40,6 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       WATCH_CEBU_FEED: power  # script reads this and processes ONLY the power feed
+      DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
 
     steps:
       - name: Checkout repository
@@ -86,8 +87,8 @@ jobs:
         # Uses the DISCORD_WEBHOOK_URL repo secret (Settings → Secrets → Actions).
         # If DISCORD_WEBHOOK_URL is not set, this step is silently skipped.
         if: steps.fetch.outcome == 'failure' && env.DISCORD_WEBHOOK_URL != ''
-        env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+
         run: |
           RUN_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           curl -s -X POST "$DISCORD_WEBHOOK_URL" \

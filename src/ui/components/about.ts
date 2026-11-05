@@ -16,7 +16,7 @@ export const ABOUT_METADATA = {
   tagline: "Civic Awareness & Critical Infrastructure Tracker",
   version: "Stage 6 Production Preview",
   description:
-    "Watch Cebu is an open, independent civic transparency platform monitoring scheduled power interruptions, seismic activity, air quality, and daily weather forecasts across Metro Cebu and the Visayas. Data is parsed directly from public utility and agency announcements with coordinate mapping from OpenStreetMap and atmospheric models from Open-Meteo.",
+    "Watch Cebu is an open, independent civic transparency platform monitoring scheduled power interruptions, seismic activity, air quality, daily weather forecasts, and flood susceptibility modeling across Cebu and the Visayas. Data is parsed directly from public utility and agency announcements with coordinate mapping from OpenStreetMap, atmospheric models from Open-Meteo, and flood hazard simulations from UP Project NOAH.",
   githubUrl: "https://github.com/Sceyo",
   linkedinUrl: "https://www.linkedin.com/in/francis-aliser/",
   feedbackUrl: "https://github.com/Sceyo/Watch-Cebu/issues",
@@ -126,6 +126,7 @@ export function renderAbout(
           { i: ICONS.air, c: "#34D399", n: "Open-Meteo", d: "Real-time air quality index (AQI) and 24-hour hourly weather forecast metrics for Metro Cebu." },
           { i: ICONS.mapPin, c: "#60A5FA", n: "OpenStreetMap Contributors", d: "Approximate barangay locations from OpenStreetMap community mapping (ODbL). Points, not official boundaries." },
           { i: ICONS.map, c: "#CBD5E1", n: "CARTO Basemaps", d: "Dark Matter high-contrast map tiles for control-room civic clarity." },
+          { i: ICONS.flood, c: "#38BDF8", n: "UP Project NOAH", d: "Nationwide Operational Assessment of Hazards 100-year flood depth simulation models (ODC-ODbL) indicating low, medium, and high susceptibility zones." },
         ].map(s => `
           <div class="legend-item" style="align-items: flex-start;">
             <span style="display: inline-flex; align-items: center; color: ${s.c}; margin-top: 2px;">${s.i}</span>
@@ -170,6 +171,12 @@ export function renderAbout(
               c: "#34D399",
               t: "Weather & Disaster Orders",
               b: "Weather forecasts (Open-Meteo) and storm signals (DOST-PAGASA) for situational awareness. Watch Cebu does not issue official evacuation orders or class suspensions.",
+            },
+            {
+              i: ICONS.flood,
+              c: "#38BDF8",
+              t: "Flood Risk (Modeled 100-Year Susceptibility, Not Live Inundation)",
+              b: "Flood polygons originate from UP Project NOAH (100-year return period hydrological models). They indicate <em>statistical susceptibility and estimated water depths (0-0.5m low, 0.5-1.5m medium, &gt;1.5m high)</em>, NOT live real-time flood sensor telemetry or road water levels during ongoing rainfall. Always monitor PAGASA and local DRRMO advisories during typhoons.",
             },
             {
               i: ICONS.shield,

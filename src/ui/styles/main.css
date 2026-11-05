@@ -2813,6 +2813,16 @@ textarea:focus-visible,
     font-size: 0.78rem;
   }
 
+  .btn-flood-hazard {
+    min-width: 66px;
+    height: 40px;
+    min-height: 40px;
+    max-height: 40px;
+    padding: 0 8px;
+    gap: 4px;
+    font-size: 0.78rem;
+  }
+
   .btn-locate-me {
     width: 40px;
     height: 40px;
@@ -2970,6 +2980,72 @@ textarea:focus-visible,
   background: rgba(56, 189, 248, 0.15) !important;
   border-color: #38BDF8 !important;
   color: #FFFFFF !important;
+}
+
+.btn-flood-hazard {
+  min-width: 82px;
+  height: 42px;
+  min-height: 42px;
+  max-height: 42px;
+  padding: 0 10px;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  background: rgba(15, 23, 42, 0.94) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--text-muted, #94A3B8) !important;
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1)) !important;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.btn-flood-hazard:hover {
+  background: rgba(56, 189, 248, 0.12) !important;
+  border-color: rgba(56, 189, 248, 0.5) !important;
+  color: #38BDF8 !important;
+}
+
+.btn-flood-hazard.active {
+  background: rgba(56, 189, 248, 0.2) !important;
+  border-color: #38BDF8 !important;
+  color: #38BDF8 !important;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+}
+
+.btn-flood-hazard.loading {
+  opacity: 0.65;
+  pointer-events: none;
+  cursor: wait;
+}
+
+.btn-flood-hazard .label-short {
+  display: none;
+}
+
+@media (max-width: 420px) {
+  .btn-flood-hazard .label-full {
+    display: none;
+  }
+  .btn-flood-hazard .label-short {
+    display: inline;
+  }
+  .btn-flood-hazard {
+    min-width: 52px;
+    padding: 0 6px;
+  }
+}
+
+.popup-card.flood-popup {
+  border-top: 3px solid #38BDF8;
 }
 
 .view-mode-label {
@@ -3790,6 +3866,12 @@ textarea:focus-visible,
   background: rgba(139, 92, 246, 0.15);
   color: #A78BFA;
   border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.welcome-feat-flood {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38BDF8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
 }
 
 .welcome-feat-shield {

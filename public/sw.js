@@ -8,7 +8,7 @@
  * 4. Graceful offline fallback.
  */
 
-const CACHE_VERSION = "watch-cebu-v7";
+const CACHE_VERSION = "watch-cebu-v9";
 const STATIC_CACHE = `static-${CACHE_VERSION}`;
 const API_CACHE = `api-${CACHE_VERSION}`;
 const TILE_CACHE = `tiles-${CACHE_VERSION}`;
@@ -189,6 +189,7 @@ self.addEventListener("fetch", (event) => {
             url.pathname.endsWith(".css") ||
             url.pathname.endsWith(".svg") ||
             url.pathname.endsWith(".png") ||
+            url.pathname.endsWith(".geojson") ||
             url.hostname.includes("fonts.gstatic.com") ||
             url.hostname.includes("fonts.googleapis.com"))
         ) {

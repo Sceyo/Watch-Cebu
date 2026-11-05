@@ -79,6 +79,17 @@ const SAMPLE_EQ_JSON_PATH = join(ROOT_DIR, "data", "sample_earthquake_events.jso
 // Staleness thresholds for snapshot monitoring
 const STALE_POWER_MS = 48 * 60 * 60 * 1000;     // 48 hours
 const STALE_EQ_MS   = 24 * 60 * 60 * 1000;       // 24 hours
+const STALE_PAGASA_MS = 6 * 60 * 60 * 1000;      // 6 hours
+
+function isVerifiedEmptySnapshot(status: FeedStatus | null): boolean {
+  return Boolean(
+    status &&
+    typeof status === "object" &&
+    !Array.isArray(status) &&
+    status.status === "ok" &&
+    status.record_count === 0
+  );
+}
 
 export interface ApiResponse<T> {
   /** "live" = freshly scraped; "snapshot" = read from scheduled-job file; "fixture_fallback" = bundled sample */
@@ -138,20 +149,20 @@ export class FileSnapshotSource implements ISnapshotSource {
     const livePath = this.options.livePowerPath || join(dataDir, "live_power_advisories.json");
     const statusPath = this.options.statusPowerPath || join(dataDir, "status_power.json");
 
-    if (!existsSync(livePath)) {
-      return null;
-    }
-
-    const data: PowerAdvisory[] = JSON.parse(readFileSync(livePath, "utf-8"));
-    if (!Array.isArray(data) || data.length === 0) {
-      return null;
-    }
-
     let status: FeedStatus | null = null;
     if (existsSync(statusPath)) {
       try {
         status = JSON.parse(readFileSync(statusPath, "utf-8"));
       } catch {}
+    }
+
+    if (!existsSync(livePath)) {
+      return null;
+    }
+
+    const data: PowerAdvisory[] = JSON.parse(readFileSync(livePath, "utf-8"));
+    if (!Array.isArray(data) || (data.length === 0 && !isVerifiedEmptySnapshot(status))) {
+      return null;
     }
 
     return { data, status };
@@ -162,20 +173,20 @@ export class FileSnapshotSource implements ISnapshotSource {
     const livePath = this.options.liveEqPath || join(dataDir, "live_earthquake_events.json");
     const statusPath = this.options.statusEqPath || join(dataDir, "status_earthquakes.json");
 
-    if (!existsSync(livePath)) {
-      return null;
-    }
-
-    const data: EarthquakeEvent[] = JSON.parse(readFileSync(livePath, "utf-8"));
-    if (!Array.isArray(data) || data.length === 0) {
-      return null;
-    }
-
     let status: FeedStatus | null = null;
     if (existsSync(statusPath)) {
       try {
         status = JSON.parse(readFileSync(statusPath, "utf-8"));
       } catch {}
+    }
+
+    if (!existsSync(livePath)) {
+      return null;
+    }
+
+    const data: EarthquakeEvent[] = JSON.parse(readFileSync(livePath, "utf-8"));
+    if (!Array.isArray(data) || (data.length === 0 && !isVerifiedEmptySnapshot(status))) {
+      return null;
     }
 
     return { data, status };
@@ -237,27 +248,31 @@ export class GitHubSnapshotSource implements ISnapshotSource {
     const liveUrl = `${this.baseUrl}/live_power_advisories.json`;
     const statusUrl = `${this.baseUrl}/status_power.json`;
 
-    const liveRes = await this.fetchFn(liveUrl, {
-      headers: { "User-Agent": "WatchCebu/0.1.0 (Vercel Serverless Function)" },
-    });
+    const [liveRes, statusRes] = await Promise.all([
+      this.fetchFn(liveUrl, {
+        headers: { "User-Agent": "WatchCebu/0.1.0 (Vercel Serverless Function)" },
+        signal: AbortSignal.timeout(8_000),
+      }),
+      this.fetchFn(statusUrl, {
+        headers: { "User-Agent": "WatchCebu/0.1.0 (Vercel Serverless Function)" },
+        signal: AbortSignal.timeout(8_000),
+      }).catch(() => null),
+    ]);
+
     if (!liveRes.ok) {
       throw new Error(`GitHub raw power advisory returned HTTP ${liveRes.status} ${liveRes.statusText}`);
     }
-    const data: PowerAdvisory[] = await liveRes.json();
-    if (!Array.isArray(data) || data.length === 0) {
-      throw new Error("GitHub raw power snapshot is empty or malformed");
-    }
 
     let status: FeedStatus | null = null;
-    try {
-      const statusRes = await this.fetchFn(statusUrl, {
-        headers: { "User-Agent": "WatchCebu/0.1.0 (Vercel Serverless Function)" },
-      });
-      if (statusRes.ok) {
+    if (statusRes && statusRes.ok) {
+      try {
         status = await statusRes.json();
-      }
-    } catch {
-      // Status fetch failure does not discard valid power data
+      } catch {}
+    }
+
+    const data: PowerAdvisory[] = await liveRes.json();
+    if (!Array.isArray(data) || (data.length === 0 && !isVerifiedEmptySnapshot(status))) {
+      throw new Error("GitHub raw power snapshot is empty or malformed");
     }
 
     return { data, status };
@@ -267,27 +282,31 @@ export class GitHubSnapshotSource implements ISnapshotSource {
     const liveUrl = `${this.baseUrl}/live_earthquake_events.json`;
     const statusUrl = `${this.baseUrl}/status_earthquakes.json`;
 
-    const liveRes = await this.fetchFn(liveUrl, {
-      headers: { "User-Agent": "WatchCebu/0.1.0 (Vercel Serverless Function)" },
-    });
+    const [liveRes, statusRes] = await Promise.all([
+      this.fetchFn(liveUrl, {
+        headers: { "User-Agent": "WatchCebu/0.1.0 (Vercel Serverless Function)" },
+        signal: AbortSignal.timeout(8_000),
+      }),
+      this.fetchFn(statusUrl, {
+        headers: { "User-Agent": "WatchCebu/0.1.0 (Vercel Serverless Function)" },
+        signal: AbortSignal.timeout(8_000),
+      }).catch(() => null),
+    ]);
+
     if (!liveRes.ok) {
       throw new Error(`GitHub raw earthquake events returned HTTP ${liveRes.status} ${liveRes.statusText}`);
     }
-    const data: EarthquakeEvent[] = await liveRes.json();
-    if (!Array.isArray(data) || data.length === 0) {
-      throw new Error("GitHub raw earthquake snapshot is empty or malformed");
-    }
 
     let status: FeedStatus | null = null;
-    try {
-      const statusRes = await this.fetchFn(statusUrl, {
-        headers: { "User-Agent": "WatchCebu/0.1.0 (Vercel Serverless Function)" },
-      });
-      if (statusRes.ok) {
+    if (statusRes && statusRes.ok) {
+      try {
         status = await statusRes.json();
-      }
-    } catch {
-      // Status fetch failure does not discard valid earthquake data
+      } catch {}
+    }
+
+    const data: EarthquakeEvent[] = await liveRes.json();
+    if (!Array.isArray(data) || (data.length === 0 && !isVerifiedEmptySnapshot(status))) {
+      throw new Error("GitHub raw earthquake snapshot is empty or malformed");
     }
 
     return { data, status };
@@ -297,27 +316,31 @@ export class GitHubSnapshotSource implements ISnapshotSource {
     const liveUrl = `${this.baseUrl}/live_pagasa_bulletin.json`;
     const statusUrl = `${this.baseUrl}/status_pagasa.json`;
 
-    const liveRes = await this.fetchFn(liveUrl, {
-      headers: { "User-Agent": "WatchCebu/0.1.0 (Vercel Serverless Function)" },
-    });
+    const [liveRes, statusRes] = await Promise.all([
+      this.fetchFn(liveUrl, {
+        headers: { "User-Agent": "WatchCebu/0.1.0 (Vercel Serverless Function)" },
+        signal: AbortSignal.timeout(8_000),
+      }),
+      this.fetchFn(statusUrl, {
+        headers: { "User-Agent": "WatchCebu/0.1.0 (Vercel Serverless Function)" },
+        signal: AbortSignal.timeout(8_000),
+      }).catch(() => null),
+    ]);
+
     if (!liveRes.ok) {
       throw new Error(`GitHub raw PAGASA bulletin returned HTTP ${liveRes.status} ${liveRes.statusText}`);
     }
+
+    let status: FeedStatus | null = null;
+    if (statusRes && statusRes.ok) {
+      try {
+        status = await statusRes.json();
+      } catch {}
+    }
+
     const data: PagasaBulletin = await liveRes.json();
     if (!data || typeof data !== "object") {
       throw new Error("GitHub raw PAGASA snapshot is empty or malformed");
-    }
-
-    let status: FeedStatus | null = null;
-    try {
-      const statusRes = await this.fetchFn(statusUrl, {
-        headers: { "User-Agent": "WatchCebu/0.1.0 (Vercel Serverless Function)" },
-      });
-      if (statusRes.ok) {
-        status = await statusRes.json();
-      }
-    } catch {
-      // Status fetch failure does not discard valid PAGASA data
     }
 
     return { data, status };
@@ -541,6 +564,9 @@ export async function getPagasaBulletin(
   const fetchedAt = new Date().toISOString();
   try {
     const bulletin = await fetchPagasaBulletin();
+    if (bulletin.parse_notes?.startsWith("Failed to fetch live PAGASA bulletin:")) {
+      return getPagasaBulletinFallback(bulletin.parse_notes, options);
+    }
     const response: ApiResponse<PagasaBulletin> = {
       data_source: "live",
       fetched_at: fetchedAt,
@@ -585,7 +611,7 @@ export async function getPowerAdvisoriesSnapshot(
 
   try {
     const result = await source.readPowerSnapshot();
-    if (!result || !result.data || !Array.isArray(result.data) || result.data.length === 0) {
+    if (!result || !result.data || !Array.isArray(result.data) || (result.data.length === 0 && !isVerifiedEmptySnapshot(result.status))) {
       return getPowerAdvisoriesFallback("Power snapshot file not found or empty — job has not run yet", options);
     }
 
@@ -632,7 +658,7 @@ export async function getEarthquakeEventsSnapshot(
 
   try {
     const result = await source.readEarthquakeSnapshot();
-    if (!result || !result.data || !Array.isArray(result.data) || result.data.length === 0) {
+    if (!result || !result.data || !Array.isArray(result.data) || (result.data.length === 0 && !isVerifiedEmptySnapshot(result.status))) {
       return getEarthquakeEventsFallback("Earthquake snapshot file not found or empty — job has not run yet", options);
     }
 
@@ -678,10 +704,20 @@ export async function getPagasaBulletinSnapshot(
       );
     }
 
+    let stalenessNote: string | undefined;
+    if (result.status && result.status.last_successful_update) {
+      const age = Date.now() - new Date(result.status.last_successful_update).getTime();
+      if (age > STALE_PAGASA_MS) {
+        const ageHours = Math.round(age / 3_600_000);
+        stalenessNote = `PAGASA snapshot is stale: last updated ${ageHours}h ago (threshold: 6h)`;
+      }
+    }
+
     return {
       data_source: "snapshot",
       fetched_at: fetchedAt,
       data: result.data,
+      ...(stalenessNote ? { parse_notes: stalenessNote } : {}),
     };
   } catch (err: any) {
     return getPagasaBulletinFallback(
