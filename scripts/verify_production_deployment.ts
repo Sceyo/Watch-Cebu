@@ -151,13 +151,19 @@ async function main() {
     const desktopEval = await sendCommand("Runtime.evaluate", {
       expression: `
         (() => {
-          const powerText = document.querySelector(".header-freshness .freshness-chip:nth-child(1)")?.textContent || "";
-          const eqText = document.querySelector(".header-freshness .freshness-chip:nth-child(2)")?.textContent || "";
+          const exploreBtn = document.querySelector("#btn-welcome-explore");
+          exploreBtn?.click();
+          const powerText = document.querySelector(".freshness-chips .freshness-chip:nth-child(1)")?.textContent || "";
+          const eqText = document.querySelector(".freshness-chips .freshness-chip:nth-child(2)")?.textContent || "";
+          const airText = document.querySelector(".freshness-chips .freshness-chip:nth-child(3)")?.textContent || "";
+          const pagasaText = document.querySelector(".freshness-chips .freshness-chip:nth-child(4)")?.textContent || "";
           const markerCount = document.querySelectorAll(".leaflet-marker-icon").length;
           return {
             title: document.title,
             powerChip: powerText.trim(),
             eqChip: eqText.trim(),
+            airChip: airText.trim(),
+            pagasaChip: pagasaText.trim(),
             markerCount: markerCount,
           };
         })()

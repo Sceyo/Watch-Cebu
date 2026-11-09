@@ -34,7 +34,7 @@ import {
   type AirQualityReading,
 } from "./ui/services/airQuality.js";
 import {
-  fetchForecast,
+  fetchForecast, getCachedForecast,
   type ForecastResult,
 } from "./ui/services/forecast.js";
 import { renderForecastDrawer } from "./ui/components/forecastDrawer.js";
@@ -95,7 +95,7 @@ let pagasaFeedState: FeedState<PagasaBulletin | null> = {
 
 // Optimistic UI cache for instant header render
 let airQualityData: AirQualityReading | null = getCachedAirQuality();
-let forecastData: ForecastResult | null = null;
+let forecastData: ForecastResult | null = getCachedForecast();
 
 let mapController: MapController | null = null;
 
@@ -859,7 +859,7 @@ async function init() {
   });
 
   fetchForecast().then((forecast) => {
-    forecastData = forecast;
+    if (forecast.status === "success" || !forecastData) forecastData = forecast;
     if (isForecastOpen) {
       updateUI();
     }
@@ -930,6 +930,14 @@ async function init() {
       });
       fetchPagasaBulletin().then((state) => {
         pagasaFeedState = state;
+        updateUI();
+      });
+      fetchAirQuality().then((air) => {
+        airQualityData = air;
+        updateUI();
+      });
+      fetchForecast().then((forecast) => {
+        if (forecast.status === "success" || !forecastData) forecastData = forecast;
         updateUI();
       });
     } else {

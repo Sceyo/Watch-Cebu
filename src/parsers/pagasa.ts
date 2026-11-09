@@ -151,7 +151,7 @@ export function parsePagasaBulletinHtml(
 
   // 4. Parse Storm Center (if available)
   let stormCenter = null;
-  const eyeMatch = fullText.match(/(?:eye|center)[\s\S]{0,100}?([0-9]+\.?[0-9]*)\s*°?\s*N[^\d]*([0-9]+\.?[0-9]*)\s*°?\s*E/i);
+  const eyeMatch = fullText.match(/(?:eye|center)[\s\S]{0,250}?([0-9]+\.?[0-9]*)\s*°?\s*N[^\d]*([0-9]+\.?[0-9]*)\s*°?\s*E/i);
   if (eyeMatch) {
     const lat = parseFloat(eyeMatch[1]);
     const lon = parseFloat(eyeMatch[2]);
@@ -178,7 +178,7 @@ export function parsePagasaBulletinHtml(
 
   // 5. Issued Timestamp (PST)
   let issuedAtPst = fetchedAt;
-  const issuedMatch = fullText.match(/Issued\s+at\s+([0-9]{1,2}:[0-9]{2}\s*(?:AM|PM)[^,\n]*,\s*[0-9]{1,2}\s+[A-Za-z]+\s+[0-9]{4})/i);
+  const issuedMatch = fullText.match(/Issued\s+at:?\s+([0-9]{1,2}:[0-9]{2}\s*(?:AM|PM)[^,\n]*,\s*[0-9]{1,2}\s+[A-Za-z]+\s+[0-9]{4})/i);
   if (issuedMatch) {
     issuedAtPst = sanitize(issuedMatch[1], 80);
   }

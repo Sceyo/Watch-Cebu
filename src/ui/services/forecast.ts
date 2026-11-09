@@ -84,6 +84,26 @@ export function formatHourLabel(isoString: string): string {
   }
 }
 
+const FORECAST_CACHE_KEY = "watch_cebu_forecast_cache_v1";
+
+export function getCachedForecast(): ForecastResult | null {
+  try {
+    if (typeof localStorage === "undefined") return null;
+    const raw = localStorage.getItem(FORECAST_CACHE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+export function setCachedForecast(result: ForecastResult): void {
+  try {
+    if (typeof localStorage === "undefined") return;
+    localStorage.setItem(FORECAST_CACHE_KEY, JSON.stringify(result));
+  } catch {}
+}
+
 export async function fetchForecast(
   fetcher: typeof fetch = fetch
 ): Promise<ForecastResult> {
@@ -152,11 +172,13 @@ export async function fetchForecast(
       };
     });
 
-    return {
+    const finalResult: ForecastResult = {
       status: "success",
       fetchedAt: new Date().toISOString(),
       entries,
     };
+    setCachedForecast(finalResult);
+    return finalResult;
   } catch (err: any) {
     return {
       status: "error",

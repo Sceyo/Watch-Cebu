@@ -12,7 +12,7 @@
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript&logoColor=white" alt="TypeScript" /></a>
   <a href="https://leafletjs.com/"><img src="https://img.shields.io/badge/Leaflet-1.9.4-green?logo=leaflet&logoColor=white" alt="Leaflet" /></a>
   <a href="https://vitejs.dev/"><img src="https://img.shields.io/badge/Vite-7.x-646CFF?logo=vite&logoColor=white" alt="Vite" /></a>
-  <a href="https://vitest.dev/"><img src="https://img.shields.io/badge/Vitest-336%20Passed-FCC72B?logo=vitest&logoColor=black" alt="Vitest" /></a>
+  <a href="https://vitest.dev/"><img src="https://img.shields.io/badge/Vitest-443%20Passed-FCC72B?logo=vitest&logoColor=black" alt="Vitest" /></a>
   <a href="public/manifest.webmanifest"><img src="https://img.shields.io/badge/PWA-Installable-blueviolet?logo=pwa&logoColor=white" alt="PWA" /></a>
   <a href="#-1-veco-scheduled-power-outage-tracking--franchise-territory"><img src="https://img.shields.io/badge/VECO%20Coverage-100%25%20(674km²)-00C853?logo=openstreetmap&logoColor=white" alt="VECO Coverage" /></a>
   <a href="https://www.w3.org/WAI/WCAG22/quickref/"><img src="https://img.shields.io/badge/a11y-WCAG%202.2%20AA-brightgreen" alt="Accessibility" /></a>
@@ -65,8 +65,8 @@ Unlike traditional platforms riddled with ads, analytics trackers, and heavy dep
 ### 🌀 3. DOST-PAGASA Multi-Hazard Severe Weather & Storm Track
 - **Tropical Cyclone Wind Signals (TCWS #1 to #5)**: Parses active severe weather bulletins directly from DOST-PAGASA, identifying storm classification (*Tropical Depression, Tropical Storm, Severe Tropical Storm, Typhoon, Super Typhoon*), storm name, international codename, central pressure (hPa), and maximum sustained winds (km/h).
 - **Heavy Rainfall Warning System**: Automatically alerts users to active color-coded rainfall advisories (Yellow, Orange, Red) indicating expected downpour rates (mm/hr) and localized flood/landslide hazards.
-- **Interactive Leaflet Storm Track Layer**: Visualizes historical storm fixes, current eye position, animated forecast track line, and 72-hour cone of uncertainty directly on the dark basemap.
-- **Edge Serverless Endpoint (`/api/pagasa`)**: Serves severe weather bulletins with a 10-minute CDN cache (`s-maxage=600, stale-while-revalidate=1800`) and automatic fallback to verified backup fixtures if upstream government portals hang.
+- **Interactive Leaflet Storm Layer**: Visualizes the active storm eye position, 60 km inner gale buffer, and 120 km outer wind buffer directly on the dark basemap.
+- **Edge Serverless Endpoint (`/api/pagasa`)**: Serves severe weather bulletins with a 1-minute CDN cache (`s-maxage=60, stale-while-revalidate=300`) and automatic fallback to verified backup fixtures if upstream government portals hang.
 
 ### 🍃 4. Atmospheric Air Quality & Transboundary Haze Advisory
 - **Live Open-Meteo AQI Feed**: Tracks US AQI, PM2.5, PM10, Carbon Monoxide (CO), and Aerosol Optical Depth (AOD) for Metro Cebu.

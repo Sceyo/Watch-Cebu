@@ -82,7 +82,7 @@ self.addEventListener("fetch", (event) => {
 
   // Strategy 1: Civic API Endpoints (/api/power, /api/earthquakes)
   // Network-first with automatic update of API_CACHE, falling back to cached snapshot when offline
-  if (url.pathname.startsWith("/api/")) {
+  if (url.pathname.startsWith("/api/") || url.hostname.includes("open-meteo.com")) {
     event.respondWith(
       fetch(request)
         .then((networkResponse) => {

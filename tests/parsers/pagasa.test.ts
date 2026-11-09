@@ -148,6 +148,32 @@ describe("PAGASA Weather Parser — Functional Scenarios", () => {
     expect(result.storm_center?.max_sustained_winds_kmh).toBe(130);
     expect(result.storm_center?.gustiness_kmh).toBe(165);
   });
+
+  it("parses live PAGASA Synopsis format with 'Issued at:' colon and long-distance eye coordinates", () => {
+    const html = `
+      <html>
+        <body>
+          <div class="issue"><b>Issued at: 4:00 PM, 09 November 2026</b></div>
+          <div class="panel-body">
+            <p>At 3:00 PM today, the center of the eye of Typhoon "SAMUEL" {CEMPAKA} was estimated based on all available data at 1,405 km East Northeast of Extreme Northern Luzon (24.1°N, 135.0°E), with maximum sustained winds of 130 km/h near the center and gustiness of up to 160 km/h. It is moving East Northeastward at 10 km/h.</p>
+          </div>
+        </body>
+      </html>
+    `;
+
+    const result = parsePagasaBulletinHtml(html);
+
+    expect(result.has_active_cyclone).toBe(true);
+    expect(result.cyclone_name).toBe("SAMUEL");
+    expect(result.issued_at_pst).toBe("4:00 PM, 09 November 2026");
+    expect(result.storm_center).toEqual({
+      lat: 24.1,
+      lon: 135.0,
+      movement: "East Northeastward",
+      max_sustained_winds_kmh: 130,
+      gustiness_kmh: 160,
+    });
+  });
 });
 
 describe("PAGASA Parser — Security & Adversarial Input Threat Model", () => {
