@@ -1,9 +1,9 @@
 {
-  "id": "77ded0312b0f49e31c44e0829a6854ae19c9dfad16958dca2600d5e4ee15e38c",
+  "id": "67312991a67c40132fded57e6d7f9e65d31bd0042f3e4f70909420304f3c1b13",
   "source_url": "https://bagong.pagasa.dost.gov.ph/weather",
-  "fetched_at": "2026-11-09T00:29:10.955Z",
-  "issued_at_pst": "2026-11-09T00:29:10.955Z",
-  "cyclone_name": "CEMPAKA",
+  "fetched_at": "2026-11-09T10:52:03.410Z",
+  "issued_at_pst": "2026-11-09T10:52:03.410Z",
+  "cyclone_name": "SAMUEL",
   "has_active_cyclone": true,
   "tcws_cebu": {
     "active": false,
