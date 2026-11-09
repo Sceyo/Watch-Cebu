@@ -33,6 +33,7 @@ __pycache__/
 
 # Test coverage output
 coverage/
+verification-artifacts/
 
 # Keep committed intentionally — do not add:
 # certs/phivolcs-intermediate.pem (public certificate, required at runtime)
