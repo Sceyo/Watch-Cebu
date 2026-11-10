@@ -1,8 +1,8 @@
 {
-  "id": "56941a4d4b3e1f41eed5ca9767f5b0e4d71722dfc22b60bfbb9cdfdd8afc6232",
+  "id": "16900633785522c787d4cf768392e5dfef90b377c6e956d90fc66ac094963870",
   "source_url": "https://bagong.pagasa.dost.gov.ph/weather",
-  "fetched_at": "2026-11-10T05:50:41.335Z",
-  "issued_at_pst": "4:00 AM, 10 November 2026",
+  "fetched_at": "2026-11-10T14:16:29.316Z",
+  "issued_at_pst": "4:00 PM, 10 November 2026",
   "cyclone_name": "CEMPAKA",
   "has_active_cyclone": true,
   "tcws_cebu": {
