@@ -11,7 +11,7 @@ import type { LayerSelection, FeedState } from "../types.js";
 import type { PowerAdvisory, EarthquakeEvent, PagasaBulletin } from "../../types/index.js";
 import type { AirQualityReading } from "../services/airQuality.js";
 import { ICONS } from "./icons.js";
-import { escapeHtml } from "../../utils/index.js";
+import { escapeHtml, parseFlexibleDateTime } from "../../utils/index.js";
 
 export interface HeaderCallbacks {
   onLayerChange: (layer: LayerSelection) => void;
@@ -76,8 +76,9 @@ export function renderHeader(
       } else if (bulletin.heavy_rainfall_alert && bulletin.heavy_rainfall_alert.level !== "none") {
         const rColor = bulletin.heavy_rainfall_alert.level === "red" ? "#EF4444" : bulletin.heavy_rainfall_alert.level === "orange" ? "#F97316" : "#EAB308";
         pagasaChip = `<button class="freshness-chip storm-chip active rainfall-active" id="btn-header-storm" style="border-color: ${rColor}; color: #FDE047; background: rgba(245, 158, 11, 0.15);" title="Heavy Rainfall Warning: ${bulletin.heavy_rainfall_alert.level.toUpperCase()} — Click for details"><span class="pulse-dot" style="background: ${rColor};"></span>Rainfall: ${bulletin.heavy_rainfall_alert.level.toUpperCase()}</button>`;
-      } else if (bulletin.has_active_cyclone && bulletin.cyclone_name) {
-        pagasaChip = `<button class="freshness-chip live storm-monitoring" id="btn-header-storm" style="border-color: rgba(56, 189, 248, 0.45); color: #38BDF8; background: rgba(56, 189, 248, 0.12);" title="PAGASA Monitoring: ${escapeHtml(bulletin.cyclone_name)} (Outside Cebu Warning Area) — Click for forecast"><span class="live-dot" style="background: #38BDF8;"></span>PAGASA: ${escapeHtml(bulletin.cyclone_name)} (Monitored)</button>`;
+      } else if (bulletin.has_active_cyclone && (bulletin.cyclone_name || bulletin.storm_center)) {
+        const displayName = bulletin.cyclone_name || "Active Cyclone";
+        pagasaChip = `<button class="freshness-chip live storm-monitoring" id="btn-header-storm" style="border-color: rgba(56, 189, 248, 0.45); color: #38BDF8; background: rgba(56, 189, 248, 0.12);" title="PAGASA Monitoring: ${escapeHtml(displayName)} (Outside Cebu Warning Area) — Click for forecast"><span class="live-dot" style="background: #38BDF8;"></span>PAGASA: ${escapeHtml(displayName)} (Monitored)</button>`;
       } else {
         pagasaChip = `<button class="freshness-chip live" id="btn-header-storm" title="PAGASA Severe Weather: Normal — Click for weather forecast"><span class="live-dot"></span>PAGASA: Normal</button>`;
       }
@@ -96,8 +97,11 @@ export function renderHeader(
     extra?.pagasaState?.status === "loading";
 
   const nowMs = Date.now();
-  const isPagasaStale = extra?.pagasaState?.data?.issued_at_pst
-    ? (nowMs - new Date(extra.pagasaState.data.issued_at_pst).getTime() > 24 * 3600000)
+  const pagasaIssuedDate =
+    parseFlexibleDateTime(extra?.pagasaState?.data?.issued_at_pst) ||
+    parseFlexibleDateTime(extra?.pagasaState?.data?.fetched_at);
+  const isPagasaStale = pagasaIssuedDate
+    ? (nowMs - pagasaIssuedDate.getTime() > 24 * 3600000)
     : false;
   const isAirStale = Boolean(extra?.airQuality?.isStale);
   const isAnyStale = isPagasaStale || isAirStale;

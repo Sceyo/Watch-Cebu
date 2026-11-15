@@ -61,16 +61,17 @@ export function parsePagasaBulletinHtml(
   const safeHtml = html.slice(0, 1024 * 1024);
   const $ = cheerio.load(safeHtml);
 
-  // Remove scripts and style elements for clean text parsing
-  $("script, style, noscript, svg").remove();
+  // Remove scripts, styles, and site navigation chrome for clean bulletin text parsing
+  $("script, style, noscript, svg, nav, header, footer").remove();
   const fullText = $("body").text().replace(/\s+/g, " ");
 
-  // 1. Detect Active Tropical Cyclone
-  const hasCyclone = /TROPICAL\s+CYCLONE\s+BULLETIN/i.test(fullText) ||
-                     /TROPICAL\s+(DEPRESSION|STORM)|TYPHOON|SUPER\s+TYPHOON/i.test(fullText);
+  // 1. Detect Active Tropical Cyclone candidates
+  const hasCycloneKeyword =
+    /TROPICAL\s+CYCLONE\s+BULLETIN/i.test(fullText) ||
+    /TROPICAL\s+(DEPRESSION|STORM)|TYPHOON|SUPER\s+TYPHOON/i.test(fullText);
 
   let cycloneName: string | null = null;
-  if (hasCyclone) {
+  if (hasCycloneKeyword) {
     const nameMatch = fullText.match(/(?:TROPICAL\s+STORM|TYPHOON|SUPER\s+TYPHOON|TROPICAL\s+DEPRESSION)\s+["“']?([A-Z]{3,20})["”']?/i);
     if (nameMatch) {
       cycloneName = sanitize(nameMatch[1].toUpperCase(), 30);
@@ -81,7 +82,7 @@ export function parsePagasaBulletinHtml(
   let maxSignalForCebu: TcwsSignalLevel = 0;
   const cebuAreasAffected: string[] = [];
 
-  if (hasCyclone) {
+  if (hasCycloneKeyword) {
     // Scan sections for Signal No. 1 through Signal No. 5
     for (let sig = 5; sig >= 1; sig--) {
       // Look for Signal heading and the text block up to the next signal or disclaimer
@@ -183,6 +184,11 @@ export function parsePagasaBulletinHtml(
     issuedAtPst = sanitize(issuedMatch[1], 80);
   }
 
+  // Compute verified active cyclone state (requires an actual cyclone name, Cebu TCWS signal, or storm center)
+  const hasActiveCyclone = Boolean(
+    hasCycloneKeyword && (cycloneName !== null || maxSignalForCebu > 0 || stormCenter !== null)
+  );
+
   // Compute deterministic SHA-256 ID
   const id = makeId(sourceUrl, cycloneName || "NONE", String(maxSignalForCebu), rainfallLevel, issuedAtPst);
 
@@ -192,7 +198,7 @@ export function parsePagasaBulletinHtml(
     fetched_at: fetchedAt,
     issued_at_pst: issuedAtPst,
     cyclone_name: cycloneName,
-    has_active_cyclone: hasCyclone,
+    has_active_cyclone: hasActiveCyclone,
     tcws_cebu: {
       active: maxSignalForCebu > 0,
       signal_level: maxSignalForCebu,

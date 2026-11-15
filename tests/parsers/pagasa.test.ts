@@ -176,6 +176,46 @@ describe("PAGASA Weather Parser — Functional Scenarios", () => {
   });
 });
 
+// End of functional scenarios
+describe("PAGASA Parser — Navigation Chrome & False-Positive Cyclone Guards", () => {
+  it("ignores site navigation links mentioning 'Tropical Cyclone Bulletin' or 'Typhoon' when no active cyclone exists in the synopsis", () => {
+    const html = `
+      <html>
+        <body>
+          <header>
+            <nav>
+              <a href="/tropical-cyclone/severe-weather-bulletin">Tropical Cyclone Bulletin</a>
+              <a href="/tropical-cyclone/typhoon-track">Typhoon Track</a>
+            </nav>
+          </header>
+          <main>
+            <div class="issue"><b>Issued at: 4:00 PM, 13 November 2026</b></div>
+            <div class="panel-body">
+              <p>Synopsis: Easterlies affecting the eastern section of Visayas and Mindanao. Metro Cebu will experience partly cloudy to cloudy skies with isolated rainshowers.</p>
+            </div>
+          </main>
+          <footer>
+            <p>PAGASA Tropical Cyclone Warning Center</p>
+          </footer>
+        </body>
+      </html>
+    `;
+
+    const result = parsePagasaBulletinHtml(
+      html,
+      "https://bagong.pagasa.dost.gov.ph/weather",
+      "2026-11-13T13:52:50.831Z"
+    );
+
+    expect(result.has_active_cyclone).toBe(false);
+    expect(result.cyclone_name).toBeNull();
+    expect(result.storm_center).toBeNull();
+    expect(result.tcws_cebu.active).toBe(false);
+    expect(result.tcws_cebu.signal_level).toBe(0);
+    expect(result.issued_at_pst).toBe("4:00 PM, 13 November 2026");
+  });
+});
+
 describe("PAGASA Parser — Security & Adversarial Input Threat Model", () => {
   it("sanitizes XSS / script injection in cyclone names and text bodies", () => {
     const xssPayload = `

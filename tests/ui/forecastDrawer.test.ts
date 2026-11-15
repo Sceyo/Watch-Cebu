@@ -256,4 +256,28 @@ describe("Forecast Drawer Component — Accessibility and Rendering", () => {
     expect(container.innerHTML).toContain("Metro Cebu");
     expect(container.innerHTML).toContain("Talisay City");
   });
+
+  it("renders PAGASA Normal status when cached bulletin has has_active_cyclone=true without cyclone_name or storm_center, and parses PAGASA PST date", () => {
+    const container = createMockElement();
+    const recentIso = new Date().toISOString();
+    const mockBulletin: PagasaBulletin = {
+      id: "pagasa-false-pos",
+      source_url: "https://bagong.pagasa.dost.gov.ph/weather",
+      fetched_at: recentIso,
+      issued_at_pst: "4:00 PM, 13 November 2026",
+      cyclone_name: null,
+      has_active_cyclone: true,
+      tcws_cebu: { active: false, signal_level: 0, wind_speed_kmh: null, areas_affected: [] },
+      heavy_rainfall_alert: { level: "none", warning_type: null, description: "No active severe rainfall warning in effect for Metro Cebu.", advisory_areas: [] },
+      storm_center: null,
+      parse_confidence: "high",
+      parse_notes: null,
+    };
+
+    renderForecastDrawer(container, null, true, () => {}, mockBulletin);
+
+    expect(container.innerHTML).toContain("PAGASA Civic Status: Normal");
+    expect(container.innerHTML).not.toContain("Active Tropical Cyclone Monitored");
+    expect(container.innerHTML).toContain("Nov 13, 2026 · 4:00 PM PHT");
+  });
 });

@@ -357,6 +357,48 @@ const MONTH_MAP_FULL: Record<string, number> = {
 };
 
 /**
+ * Parses ISO timestamps as well as PAGASA human-readable PST timestamps
+ * (e.g. "4:00 PM, 13 November 2026") safely across V8 and Safari/WebKit.
+ */
+export function parseFlexibleDateTime(raw?: string | null): Date | null {
+  if (!raw) return null;
+  const trimmed = raw.trim();
+  if (!trimmed) return null;
+
+  const pagasaMatch = trimmed.match(
+    /^(\d{1,2}):(\d{2})\s*(AM|PM)[^,]*,\s*(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})$/i
+  );
+  if (pagasaMatch) {
+    let hour24 = parseInt(pagasaMatch[1], 10);
+    const min = parseInt(pagasaMatch[2], 10);
+    const period = pagasaMatch[3].toUpperCase();
+    const day = parseInt(pagasaMatch[4], 10);
+    const monthStr = pagasaMatch[5].toLowerCase();
+    const year = parseInt(pagasaMatch[6], 10);
+    const month = MONTH_MAP_FULL[monthStr] ?? MONTH_MAP[monthStr.slice(0, 3)];
+    if (
+      month !== undefined &&
+      hour24 >= 1 &&
+      hour24 <= 12 &&
+      min >= 0 &&
+      min <= 59 &&
+      day >= 1 &&
+      day <= 31
+    ) {
+      if (period === "AM") {
+        if (hour24 === 12) hour24 = 0;
+      } else {
+        if (hour24 !== 12) hour24 += 12;
+      }
+      return new Date(Date.UTC(year, month, day, hour24 - 8, min, 0));
+    }
+  }
+
+  const d = new Date(trimmed);
+  return isNaN(d.getTime()) ? null : d;
+}
+
+/**
  * Format an ISO timestamp (e.g. "2026-09-05T23:15:20+08:00") into friendly Philippine human-readable date & time.
  * Transforms raw database strings into accessible citizen formats:
  * - Date: "Sep 5, 2026"
@@ -375,8 +417,8 @@ export function formatPhilippineDateTime(
   if (!iso) {
     return { date: "Unknown date", time: "Unknown time", full: "Unknown", relative: null };
   }
-  const d = new Date(iso);
-  if (isNaN(d.getTime())) {
+  const d = parseFlexibleDateTime(iso);
+  if (!d) {
     return { date: iso, time: "", full: iso, relative: null };
   }
 
@@ -441,8 +483,8 @@ export function formatReadableDate(dateStr: string): string {
  */
 export function formatHumanTimestamp(isoString: string, now = new Date()): string {
   if (!isoString) return "Recently";
-  const d = new Date(isoString);
-  if (isNaN(d.getTime())) return isoString;
+  const d = parseFlexibleDateTime(isoString);
+  if (!d) return isoString;
 
   const dateStr = d.toLocaleDateString("en-US", {
     timeZone: "Asia/Manila",

@@ -20,6 +20,7 @@ import {
   formatPhilippineTimeRange,
   normalizeStreetList,
   formatHumanTimestamp,
+  parseFlexibleDateTime,
   escapeHtml,
 } from "../../utils/index.js";
 import { ICONS } from "./icons.js";
@@ -157,8 +158,10 @@ export function renderStatusPopover(
   let pagasaBadgeOverride: string | null = null;
   if (pagasaState?.data) {
     const b = pagasaState.data;
-    const isStale = b.issued_at_pst
-      ? (Date.now() - new Date(b.issued_at_pst).getTime() > 24 * 3600000)
+    const issuedDate =
+      parseFlexibleDateTime(b.issued_at_pst) || parseFlexibleDateTime(b.fetched_at);
+    const isStale = issuedDate
+      ? (Date.now() - issuedDate.getTime() > 24 * 3600000)
       : false;
 
     if (b.tcws_cebu?.active) {

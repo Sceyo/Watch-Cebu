@@ -9,7 +9,7 @@
 import type { ForecastResult, HourlyForecastEntry } from "../services/forecast.js";
 import type { PagasaBulletin } from "../../types/index.js";
 import { ICONS, getWeatherIconSvg } from "./icons.js";
-import { formatPhilippineDateTime } from "../../utils/index.js";
+import { formatPhilippineDateTime, parseFlexibleDateTime } from "../../utils/index.js";
 
 function escapeHtml(str: string): string {
   return str
@@ -31,8 +31,10 @@ function renderPagasaSection(bulletin: PagasaBulletin | null | undefined): strin
   const issuedFormatted = bulletin.issued_at_pst ? formatPhilippineDateTime(bulletin.issued_at_pst) : null;
   const issuedText = issuedFormatted ? issuedFormatted.full : (bulletin.issued_at_pst || "");
 
-  const isBulletinStale = bulletin.issued_at_pst
-    ? (Date.now() - new Date(bulletin.issued_at_pst).getTime() > 24 * 3600000)
+  const issuedDate =
+    parseFlexibleDateTime(bulletin.issued_at_pst) || parseFlexibleDateTime(bulletin.fetched_at);
+  const isBulletinStale = issuedDate
+    ? (Date.now() - issuedDate.getTime() > 24 * 3600000)
     : false;
 
   if (!isTcwsActive && !isRainActive) {
@@ -40,7 +42,7 @@ function renderPagasaSection(bulletin: PagasaBulletin | null | undefined): strin
       ? `<span class="bulletin-stale-tag" style="background: rgba(245, 158, 11, 0.15); color: #FCD34D; border: 1px solid rgba(245, 158, 11, 0.35); padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 600;">⚠️ Advisory: ${escapeHtml(issuedText)}</span>`
       : `<span style="font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono);">Issued: ${escapeHtml(issuedText)}</span>`;
 
-    if (bulletin.has_active_cyclone) {
+    if (bulletin.has_active_cyclone && (bulletin.cyclone_name || bulletin.storm_center)) {
       const stormTitle = bulletin.cyclone_name
         ? `Active Cyclone Monitored: ${escapeHtml(bulletin.cyclone_name)}`
         : "Active Tropical Cyclone Monitored";
