@@ -1,7 +1,6 @@
 {
-  "last_checked_at": "2026-11-20T20:46:54.163Z",
-  "last_successful_update": "2026-11-20T12:46:51.304Z",
-  "record_count": 6,
-  "status": "error",
-  "error_message": "Live scrape failed: fetch failed"
+  "last_checked_at": "2026-11-21T01:48:54.996Z",
+  "last_successful_update": "2026-11-21T01:48:54.996Z",
+  "record_count": 11,
+  "status": "ok"
 }
